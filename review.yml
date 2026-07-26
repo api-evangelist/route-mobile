@@ -1,0 +1,363 @@
+aid: route-mobile
+name: Route Mobile
+review:
+  question: >-
+    Does Route Mobile publish a real, self-serve public developer portal with downloadable
+    OpenAPI definitions, and what is its CAMARA / GSMA Open Gateway posture?
+  answer: true
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: India
+  tier: cpaas-aggregator
+findings:
+  summary: |
+    Route Mobile is squarely in the API-native, CPaaS-aggregator half of telecom. Its
+    developer surface is real, public, and self-serve: a ReadMe-hosted portal at
+    https://developer.rmlconnect.net/ (HTTP 200) documents roughly 108 REST operations
+    across SMS, WhatsApp Business Platform, RCS, Viber and transactional email, backed by
+    five machine-readable OpenAPI 3.0 definitions that the portal itself serves through the
+    ReadMe API registry. Four of the five are additionally mirrored, with Postman
+    collections and Redoc pages, in first-party repositories under the routemobile GitHub
+    account. No login wall stands between a developer and the reference documentation or
+    the specs; an account is required only to obtain credentials, which is normal for CPaaS.
+
+    On the sector's defining question the finding is negative and worth stating plainly.
+    Nothing in Route Mobile's public documentation — the 300-entry llms.txt index of the
+    entire portal, the five OpenAPI definitions, or the routemobile.com API and Developers
+    pages — mentions CAMARA, GSMA Open Gateway, Number Verification, Silent Authentication,
+    SIM Swap, Device Location, Quality on Demand, Carrier Billing, KYC Match, NEF/SCEF,
+    network slicing, edge/MEC, or CIBA. The only network-API story is at the parent level:
+    Proximus Global (Route Mobile's controlling shareholder, alongside BICS and Telesign)
+    launched "Konera", a network API aggregation platform, at Global Fintech Fest 2025 in
+    Mumbai, described as "aligned with the GSMA's CAMARA standardization initiative" and
+    targeting 92% of India by end of 2025. That announcement names no individual CAMARA API
+    and links to no documentation. It is a press release, not an implementation. Route
+    Mobile itself is not listed by the GSMA as an Open Gateway operator or channel partner,
+    and no TM Forum Open API conformance certification was found for the company.
+
+    The authentication model reflects the same generation gap. Route Mobile's live APIs use
+    legacy CPaaS credentials, not the OIDC/CIBA authorization CAMARA specifies: username and
+    password as query parameters for SMS, a static Authorization header token for the
+    MoEngage/WebEngage integration endpoints, JWT bearer tokens minted by per-product login
+    endpoints for WhatsApp, RCS and Viber, and owner_id plus token carried in the JSON
+    request body for SendClean email. No OAuth or OpenID Connect discovery document is
+    served on any probed host.
+  developerPortal:
+    url: https://developer.rmlconnect.net/
+    status: 200
+    platform: ReadMe (subdomain route-mobile-group, project route-mobile-project)
+    verdict: real self-serve portal
+    gated: false
+    note: >-
+      Full reference documentation, request/response schemas and the OpenAPI definitions are
+      readable anonymously. A commercial account is required only to obtain live credentials.
+    llmsTxt: https://developer.rmlconnect.net/llms.txt
+    documentedOperations: 108
+  probes:
+  - url: https://routemobile.com/
+    status: 200
+    note: Corporate site; product taxonomy for messaging, voice, email, identity, telecom.
+  - url: https://routemobile.com/api/
+    status: 200
+    note: >-
+      Legacy "API Documents and User Manuals" page — PDF HTTP/XML SMS specs, SMPP manual,
+      SOAP WSDL doc, DLR Push API PDF, plus desktop/Excel/mobile client downloads. Links out
+      to https://developer.rmlconnect.net/ and https://developers.routemobile.com/.
+  - url: https://routemobile.com/developers/
+    status: 200
+    note: Marketing landing page for the CPaaS developer story.
+  - url: https://developer.rmlconnect.net/
+    status: 200
+    note: The real developer portal.
+  - url: https://developers.routemobile.com/
+    status: 0
+    note: >-
+      Linked from routemobile.com/api/ and indexed publicly as a Postman-Documenter portal,
+      but the host did not respond within 45 seconds on repeated attempts (connection
+      timeout). Treated as effectively dead / superseded by developer.rmlconnect.net.
+  - url: https://developer.routemobile.com/
+    status: 0
+    note: DNS does not resolve.
+  - url: https://docs.routemobile.com/
+    status: 0
+    note: DNS does not resolve.
+  - url: https://api.routemobile.com/
+    status: 0
+    note: DNS does not resolve.
+  - url: https://routemobile.com/developer
+    status: 404
+  - url: https://api.rmlconnect.net/
+    status: 200
+    note: SMS API host; root path returns an "Access Denied!" page, as expected.
+  - url: https://apis.rmlconnect.net/
+    status: 404
+    note: >-
+      WhatsApp/RCS/Viber API host; root returns JSON {"status":"EXCEPTION_404_NOT_FOUND"},
+      confirming a live API gateway.
+  - url: https://api.rmlconnect.net/.well-known/openid-configuration
+    status: 404
+  - url: https://apis.rmlconnect.net/.well-known/openid-configuration
+    status: 404
+  - url: https://apis.rmlconnect.net/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://developer.rmlconnect.net/openapi.json
+    status: 200
+    note: Returns the portal HTML shell, not a spec. Not an OpenAPI endpoint.
+  - url: https://www.postman.com/routemobile/route-mobile-s-public-workspace
+    status: 200
+    note: >-
+      Confirmed via the Postman workspaces API — workspace id
+      4bcce6a0-e21b-4517-b9db-ddbfe667e11c, name "Route Mobile's Public Workspace",
+      visibilityStatus public, state published, team profile "Route Mobile".
+  - url: https://github.com/routemobile
+    status: 200
+    note: >-
+      GitHub user account (not an organization — api.github.com/orgs/routemobile returns
+      404) with 7 public repositories carrying API documentation, OpenAPI YAML and Postman
+      collections.
+  camara:
+    posture: >-
+      No CAMARA implementation of its own; CAMARA alignment claimed only at the parent level
+      through Proximus Global's Konera network-API aggregation platform — a press release,
+      not a callable Route Mobile endpoint.
+    apisFound: []
+    evidence:
+    - url: https://routemobile.com/press-release/proximus-global-unveils-konera-its-network-api-platform-for-seamless-connectivity-at-global-fintech-fest-2025/
+      status: 200
+      note: >-
+        Route Mobile's own newsroom carrying the Proximus Global Konera announcement.
+        Describes Konera as a "global network API aggregation platform" that brings
+        "APIs from different mobile operators (MNOs) under one roof", "aligned with the
+        GSMA's CAMARA standardization initiative". Names no individual CAMARA API, gives no
+        developer signup or documentation URL, and cites only Telesign "Phone ID and
+        intelligence API services" as an existing capability.
+    - url: https://developer.rmlconnect.net/llms.txt
+      status: 200
+      note: >-
+        Full 300-line index of every guide and reference page on the developer portal.
+        Contains zero occurrences of CAMARA, Open Gateway, Number Verification, SIM Swap,
+        Device Location, Quality on Demand, Carrier Billing, NEF, network exposure, TM Forum,
+        TMF, GraphQL, gRPC, AsyncAPI, CIBA or OAuth. The only standards-adjacent term present
+        is "webhook" (32 occurrences).
+    openGatewayMember: false
+    openGatewayNote: >-
+      Route Mobile does not appear on GSMA's published Open Gateway operator or channel
+      partner lists. Its parent group's carrier arm, BICS, is the entity with the 300+
+      operator relationships that Konera is built on.
+  tmForum:
+    conformanceFound: false
+    note: >-
+      No TM Forum Open API conformance certification (TMF620, TMF622, TMF641 or otherwise)
+      was found for Route Mobile, and no TM Forum reference appears anywhere in its public
+      documentation. This is notable given its BSS-adjacent operator products (SMSC as a
+      Service, Route Shield firewall, Route Hub, 365 ECM/Detect/Analytics), which are sold
+      to carriers but documented nowhere publicly.
+  threeGPP:
+    nefOrScef: false
+    networkSlicing: false
+    edgeMec: false
+    note: >-
+      No NEF, SCEF, 5G network slicing or edge/MEC exposure surface is documented. Route
+      Mobile buys operator connectivity rather than exposing its own network functions.
+  openapi:
+    downloadable: true
+    count: 5
+    sourceMechanism: >-
+      The portal is built on ReadMe; each reference page declares an oasPublicUrl of the form
+      "@route-mobile-project/v2.0#<registry-id>", and the definitions are served publicly and
+      anonymously from the ReadMe API registry at
+      https://dash.readme.com/api/v1/api-registry/<registry-id>. Fetched as JSON and stored
+      as YAML with no content modification.
+    specs:
+    - file: openapi/route-mobile-sms.yml
+      title: Route Mobile SMS APIs
+      openapi: 3.0.3
+      version: 1.0.0
+      paths: 14
+      operations: 14
+      servers:
+      - https://api.rmlconnect.net
+      - https://api.rmlconnect.net:8443
+      - http://api.rmlconnect.net
+      - https://client.rmlconnect.net
+      source: https://dash.readme.com/api/v1/api-registry/1lmzz4pimp5jmom0
+      sourceStatus: 200
+      fetched: '2026-07-25'
+      auth: username/password query parameters; static Authorization header token for MoEngage and WebEngage integration endpoints
+    - file: openapi/route-mobile-whatsapp-business.yml
+      title: Route Mobile WhatsApp Business API
+      openapi: 3.0.0
+      version: 1.8.0
+      paths: 33
+      operations: 33
+      servers:
+      - https://apis.rmlconnect.net
+      source: https://dash.readme.com/api/v1/api-registry/325sm62lnmppvg0mg
+      sourceStatus: 200
+      fetched: '2026-07-25'
+      mirror: https://raw.githubusercontent.com/routemobile/WhatsApp-Business-API/HEAD/openapi.yaml
+      mirrorStatus: 200
+      auth: HTTP bearer JWT from the Login API
+    - file: openapi/route-mobile-rcs.yml
+      title: Route Mobile Rich Communication Services (RCS) API Documentation
+      openapi: 3.0.0
+      version: 2.1.0
+      paths: 18
+      operations: 21
+      servers:
+      - https://apis.rmlconnect.net
+      source: https://dash.readme.com/api/v1/api-registry/rq1shjsp0mppvej26
+      sourceStatus: 200
+      fetched: '2026-07-25'
+      mirror: https://raw.githubusercontent.com/routemobile/RCS-Business-Messaging-API/HEAD/openapi.yaml
+      mirrorStatus: 200
+      auth: JWT in the Authorization header, obtained from /auth/v1/login/
+    - file: openapi/route-mobile-viber.yml
+      title: Route Mobile Viber OpenAPI Specification
+      openapi: 3.0.0
+      version: 1.5.0
+      paths: 15
+      operations: 16
+      servers:
+      - https://apis.rmlconnect.net
+      - '{client callback}'
+      source: https://dash.readme.com/api/v1/api-registry/1ug4emmppvewpk
+      sourceStatus: 200
+      fetched: '2026-07-25'
+      mirror: https://raw.githubusercontent.com/routemobile/Viber-Business-Messages-API/HEAD/openapi.yaml
+      mirrorStatus: 200
+      auth: JWT in the Authorization header, obtained from /auth/v1/login/
+    - file: openapi/route-mobile-sendclean-email.yml
+      title: SendClean Email API
+      openapi: 3.0.3
+      version: 1.0.0
+      paths: 24
+      operations: 24
+      servers:
+      - https://api.sendclean.net/v1.0
+      source: https://dash.readme.com/api/v1/api-registry/dfjrp3f4mohcbzid
+      sourceStatus: 200
+      fetched: '2026-07-25'
+      mirror: https://raw.githubusercontent.com/routemobile/Route-Mailer-API/HEAD/openapi.yaml
+      mirrorStatus: 200
+      mirrorNote: >-
+        The GitHub mirror is titled "Route Mobile Email API Documentation" and declares
+        server https://api.us1-mta1.sendclean.net; the live portal definition declares
+        https://api.sendclean.net/v1.0. The portal version was taken as canonical.
+      auth: owner_id and token fields in the JSON request body; no securitySchemes declared
+  auth:
+    schemes:
+    - product: SMS
+      scheme: username + password as query parameters
+    - product: SMS (MoEngage / WebEngage integrations)
+      scheme: apiKey — static Authorization request header
+    - product: WhatsApp Business
+      scheme: OAuth-style bearer JWT issued by a product-specific Login API (http bearer, bearerFormat JWT)
+    - product: RCS
+      scheme: JWT in Authorization header via /auth/v1/login/
+    - product: Viber
+      scheme: JWT in Authorization header via /auth/v1/login/
+    - product: SendClean Email
+      scheme: owner_id + token in the JSON request body
+    oauth2: false
+    mtls: false
+    ciba: false
+    cibaNote: >-
+      CIBA (Client-Initiated Backchannel Authentication), which CAMARA specifies for
+      network-based authorization, does not appear anywhere in Route Mobile's documentation
+      or specifications. Neither does OpenID Connect. No OIDC or OAuth discovery document is
+      served on api.rmlconnect.net or apis.rmlconnect.net.
+  webhooks:
+    present: true
+    asyncapi: false
+    note: >-
+      Callbacks are documented as ordinary REST endpoints the client implements, not as
+      OpenAPI callbacks objects and not as AsyncAPI. No spec declares a `webhooks` key or any
+      `callbacks` object. SendClean has first-class webhook management operations (add, list,
+      edit, delete, reset authentication key). WhatsApp, RCS and Viber each document a client
+      callback contract for delivery receipts and inbound messages, and the legacy SMS
+      platform ships a DLR Push API documented only as a PDF at
+      https://routemobile.com/pdf_files/developer/api/DLR-Push-API_FINAL_NEW.pdf.
+  sdks:
+    firstParty: false
+    note: >-
+      No first-party SDK packages were found on npm (no @routemobile scope, no routemobile
+      package) or PyPI (pypi.org/pypi/routemobile returns 404). The routemobile GitHub
+      account publishes documentation, OpenAPI YAML and Postman collections rather than
+      client libraries. Integration is via raw HTTP, the published Postman collections, or
+      the partner connectors Route Mobile maintains for Salesforce, Zoho, HubSpot, Zendesk
+      Sell, Freshworks, LeadSquared, WebEngage and MoEngage.
+  postman:
+    public: true
+    workspace: https://www.postman.com/routemobile/route-mobile-s-public-workspace
+    note: >-
+      Public, published team workspace (last updated 2021), plus current Postman collections
+      committed into the routemobile GitHub repositories for WhatsApp, RCS, Viber, Email and
+      Enterprise Voice 2.0.
+  graphql:
+    present: false
+  grpc:
+    present: false
+  legacyProtocols:
+    note: >-
+      Beyond REST, Route Mobile documents SMPP (RouteMobile SMPP Gateway Manual) and a SOAP
+      web service (SOAP Access Service v1.0.0) as PDFs on routemobile.com/api/ — the
+      carrier-era interfaces that still carry a large share of A2P traffic in India.
+  gaps:
+    note: >-
+      Several products marketed on routemobile.com have no public API documentation at all:
+      Number Lookup, Brandi5, Verified Messages, Verified Calls, Truecaller Verified Business,
+      VoicEX/CCaaS, OmniCent payments, Route Shield, Route Hub, SMSC as a Service, Instant
+      Virtual Number and the 365 ECM/Detect/Analytics telecom line. Two cards on the developer
+      portal home page — "OTP & Verify" (docs/otp-api) and "Roubot" (docs/roubot) — return
+      HTTP 404; OTP is in fact documented under the SMS reference as generateotp and
+      verifyotp.
+transports:
+- protocol: REST
+  scheme: https
+  baseURL: https://api.rmlconnect.net
+  documented: true
+  note: SMS, OTP, account and integration endpoints.
+- protocol: REST
+  scheme: https
+  baseURL: https://apis.rmlconnect.net
+  documented: true
+  note: WhatsApp Business, RCS and Viber endpoints.
+- protocol: REST
+  scheme: https
+  baseURL: https://api.sendclean.net/v1.0
+  documented: true
+  note: SendClean transactional email.
+- protocol: SMPP
+  documented: true
+  note: RouteMobile SMPP Gateway Manual published as PDF at routemobile.com/api/. No machine-readable definition.
+- protocol: SOAP
+  scheme: https
+  documented: true
+  note: SOAP Access Service v1.0.0 published as PDF at routemobile.com/api/. No WSDL located.
+- protocol: WebSocket
+  documented: false
+  note: No WebSocket surface is documented.
+- protocol: GraphQL
+  documented: false
+- protocol: gRPC
+  documented: false
+sources:
+- url: https://developer.rmlconnect.net/
+  type: DeveloperPortal
+  note: ReadMe-hosted developer hub, HTTP 200, anonymous access to all reference documentation.
+- url: https://developer.rmlconnect.net/llms.txt
+  type: Documentation
+  note: 300-line machine-readable index of every guide and reference page (73KB, HTTP 200).
+- url: https://routemobile.com/api/
+  type: Documentation
+  note: Legacy PDF API specifications, SMPP and SOAP manuals, desktop and Excel clients.
+- url: https://github.com/routemobile
+  type: SourceCode
+  note: Seven public repositories with OpenAPI YAML, Postman collections and Redoc pages.
+- url: https://www.postman.com/routemobile/route-mobile-s-public-workspace
+  type: PostmanCollection
+  note: Public published Postman workspace, verified through the Postman workspaces API.
+- url: https://routemobile.com/press-release/proximus-global-unveils-konera-its-network-api-platform-for-seamless-connectivity-at-global-fintech-fest-2025/
+  type: PressRelease
+  note: The entirety of Route Mobile's CAMARA/network-API evidence, at the parent-group level.

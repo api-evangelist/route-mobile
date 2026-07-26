@@ -1,0 +1,213 @@
+aid: route-mobile
+url: https://raw.githubusercontent.com/api-evangelist/route-mobile/refs/heads/main/apis.yml
+name: Route Mobile
+kind: company
+description: >-
+  Route Mobile Limited is a Mumbai-headquartered cloud communications platform
+  (CPaaS) provider and one of India's largest A2P messaging aggregators, listed on the
+  BSE and NSE and now majority-owned by Belgium's Proximus Group, where it sits alongside
+  BICS and Telesign inside Proximus Global. It sells enterprise messaging (SMS, WhatsApp
+  Business Platform, RCS, Viber, Google Business Messages, Telegram, Instagram), OTP and
+  identity verification, voice and cloud telephony, transactional email through SendClean,
+  URL shortening through Acculync, and a telecom-operator product line (SMSC-as-a-service,
+  the Route Shield SMS firewall, Route Hub, and Instant Virtual Numbers) that puts it on
+  both sides of the carrier relationship — reselling operator connectivity to enterprises
+  while also selling infrastructure back to operators. Its API posture is genuinely
+  self-serve and public: a ReadMe-hosted developer portal at developer.rmlconnect.net
+  documents roughly 108 REST operations across SMS, WhatsApp, RCS, Viber and email, backed
+  by five downloadable OpenAPI 3.0 definitions that are also mirrored in first-party GitHub
+  repositories with Postman collections and Redoc pages. That places Route Mobile firmly in
+  the CPaaS-aggregator half of telecom rather than the partner-gated operator half. On the
+  sector's defining standards question it is thinner than its marketing suggests: nothing in
+  its public documentation references CAMARA, GSMA Open Gateway, Number Verification, SIM
+  Swap, Device Location or CIBA, and its network-API story lives entirely at the parent
+  level, in Proximus Global's Konera aggregation platform announced as "aligned with GSMA's
+  CAMARA standardization initiative" — a press release, not a callable Route Mobile
+  endpoint. Authentication across its live APIs is legacy-CPaaS rather than telco-standard:
+  username and password query parameters for SMS, JWT bearer tokens minted by product-level
+  login endpoints for WhatsApp, RCS and Viber, and owner_id plus token in the request body
+  for email.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- India
+- CPaaS
+- Messaging
+- SMS
+- A2P Messaging
+- WhatsApp Business
+- RCS
+- Voice
+- Email
+- Identity Verification
+- OTP
+- Aggregator
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: route-mobile:route-mobile-sms-api
+  name: Route Mobile SMS API
+  description: Route Mobile's core A2P SMS platform — single, bulk, scheduled and personalised
+    SMS submission over HTTPS, credit checks, account details, OTP generation and
+    verification, DND/whitelist management, coverage map download, and pre-built submission
+    endpoints for the MoEngage and WebEngage marketing platforms. 14 documented operations
+    across the Message Sending, Account, OTP and Integrations tags. Authentication is via
+    username and password query parameters, with a static Authorization header token used
+    for the third-party integration endpoints.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - SMS
+  - A2P Messaging
+  - OTP
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-sms.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+- aid: route-mobile:route-mobile-whatsapp-business-api
+  name: Route Mobile WhatsApp Business API
+  description: Route Mobile is a Meta Business Solution Provider for the WhatsApp Business
+    Platform. The API covers JWT login, account management, template and session messaging,
+    bulk campaign upload and management, catalog and product-feed management for commerce,
+    media ID generation, opt-in management, reporting, and client callback registration —
+    33 documented operations across Authentication, Account Management, Messaging, Bulk
+    Campaigns, Catalog Management, Reports, Opt-in Management and Webhooks.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  baseURL: https://apis.rmlconnect.net
+  tags:
+  - WhatsApp Business
+  - Messaging
+  - Commerce
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-whatsapp-business.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+- aid: route-mobile:route-mobile-rcs-api
+  name: Route Mobile RCS Business Messaging API
+  description: Rich Communication Services business messaging — verified sender messaging with
+    rich cards, carousels and suggested replies, single and bulk message submission, an RCS
+    payment/bill-send endpoint, typing events, a file server for media upload, tester and
+    agent management, capability checks against handsets, opt-in management and inbound
+    callbacks. 18 documented paths and 21 operations, authenticated with a JWT obtained from
+    the login endpoint.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  baseURL: https://apis.rmlconnect.net
+  tags:
+  - RCS
+  - Messaging
+  - Rich Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-rcs.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+- aid: route-mobile:route-mobile-viber-api
+  name: Route Mobile Viber Business Messages API
+  description: Viber Business Messages — login, single and bulk message submission (text,
+    image, video, file and template messages), campaign management, media upload, summary and
+    graph reporting, report generation and download, and a client callback channel for
+    delivery receipts and inbound events. 15 documented paths and 16 operations across the
+    Viber Login, Client Callback, Business Messaging, Bulk Messaging and Reports tags,
+    authenticated with a JWT in the Authorization header.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  baseURL: https://apis.rmlconnect.net
+  tags:
+  - Viber
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+- aid: route-mobile:sendclean-email-api
+  name: SendClean Email API
+  description: SendClean is Route Mobile's transactional and bulk email product, exposed as a
+    JSON-over-HTTP-POST REST API. 24 documented operations covering SMTP user creation and
+    password reset, sending-domain and tracking-domain registration and verification, webhook
+    registration and key rotation, message send (including template send over HTTP GET),
+    message info lookup, error retrieval and account details. Every request carries owner_id
+    and token in the request body rather than a header.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  baseURL: https://api.sendclean.net/v1.0
+  tags:
+  - Email
+  - Transactional Email
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-sendclean-email.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-enterprise-voice-api
+  name: Route Mobile Enterprise Voice 2.0 API
+  description: Route Mobile's enterprise voice and cloud telephony surface, documented as
+    narrative guides on the developer portal (send message and template management calls)
+    and published as a first-party Postman collection in the routemobile GitHub
+    organization. No OpenAPI definition is published for voice, unlike the messaging and
+    email products.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis
+  tags:
+  - Voice
+  - Cloud Telephony
+  properties:
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/send-message-voice-apis
+  - type: PostmanCollection
+    url: https://github.com/routemobile/Enterprise-Voice-2.0-APIs
+common:
+- type: Website
+  url: https://routemobile.com/
+- type: Documentation
+  url: https://developer.rmlconnect.net/
+- type: DeveloperPortal
+  url: https://developer.rmlconnect.net/
+- type: APIDocuments
+  url: https://routemobile.com/api/
+- type: GitHubOrganization
+  url: https://github.com/routemobile
+- type: PostmanWorkspace
+  url: https://www.postman.com/routemobile/route-mobile-s-public-workspace
+- type: LLMsTxt
+  url: https://developer.rmlconnect.net/llms.txt
+- type: Blog
+  url: https://routemobile.com/blog/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/routemobilelimited/
+- type: SignUp
+  url: https://routemobile.com/contact-us/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,1750 @@
+openapi: 3.0.3
+info:
+  title: SendClean Email API
+  description: |
+    The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
+    sending/tracking domains, webhooks, and account information.
+
+    ## Base URL
+    All API calls are relative to:
+    ```
+    https://api.sendclean.net/v1.0
+    ```
+
+    ## Authentication
+    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
+
+    ## Request Format
+    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
+    - Request bodies must be `Content-Type: application/json`.
+    - Any non-200 HTTP response code indicates an error.
+
+    ## Response Format
+    All responses return JSON with a `status` field of either `"success"` or `"error"`.
+
+    ## Error Types
+    | Type | Description |
+    |------|-------------|
+    | `ValidationError` | Invalid or missing required parameters |
+    | `GeneralError` | Unexpected server-side error |
+    | `AuthenticationError` | `owner_id` and `token` did not match |
+  version: 1.0.0
+  contact:
+    email: support@sendclean.com
+servers:
+- url: https://api.sendclean.net/v1.0
+  description: Production API server
+tags:
+- name: SMTP Users
+  description: Manage SMTP sub-users (create, edit, reset password, list)
+- name: Sending Domains
+  description: Add, verify, list, and delete sending domains
+- name: Tracking Domains
+  description: Add, check, list, and delete tracking domains
+- name: Webhooks
+  description: Configure event webhooks for email delivery events
+- name: Messages
+  description: Send transactional emails and retrieve message info
+- name: Accounts
+  description: Retrieve account/user details
+components:
+  schemas:
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    SmtpUser:
+      type: object
+      properties:
+        smtp_user_name:
+          type: string
+          example: smtps456546
+        password:
+          type: string
+          example: cgvddgrsd
+        status:
+          type: string
+          enum:
+          - Enable
+          - Disable
+          example: Enable
+        total_limit:
+          type: integer
+          example: 200
+        hourly_limit:
+          type: integer
+          example: 20
+    AddSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - total_limit
+        - hourly_limit
+        properties:
+          total_limit:
+            type: integer
+            description: Total sending limit (positive integer)
+            example: 100
+          hourly_limit:
+            type: integer
+            description: Hourly sending limit (positive integer)
+            example: 10
+    AddSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: SMTP User Created
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: asfsf4w343
+    EditSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          total_limit:
+            type: integer
+            description: New total limit (positive integer)
+            example: 80
+          hourly_limit:
+            type: integer
+            description: New hourly limit (positive integer)
+            example: 15
+          status:
+            type: string
+            enum:
+            - Enable
+            - Disable
+            description: Enable or disable the SMTP user
+            example: Disable
+    ResetSmtpPasswordRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+    ResetSmtpPasswordResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: password reseted
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: 2fg345gy6r7
+    ListSmtpRequest:
+      $ref: '#/components/schemas/AuthFields'
+    ListSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        smtp_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpUser'
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
+    CheckSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        domain:
+          type: string
+          example: abc.com
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'No'
+        valid_signing:
+          type: string
+          enum:
+          - 'Yes'
+          - 'No'
+          example: 'No'
+    VerifySendingDomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        - mailbox
+        properties:
+          domain:
+            type: string
+            example: abc.com
+          mailbox:
+            type: string
+            description: Mailbox name to send verification instructions to
+            example: john
+    SendingDomainListEntry:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: abc.com
+        create_date:
+          type: integer
+          format: int64
+          description: Creation timestamp in microseconds
+          example: 67457775764
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+        verify_domain:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+    ListSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        sending_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendingDomainListEntry'
+    CheckTrackingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        domain:
+          type: string
+          example: abc.com
+        valid_tracking:
+          type: string
+          enum:
+          - 'Yes'
+          - 'No'
+          example: 'Yes'
+        cname:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+    TrackingDomainListEntry:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: abc.com
+        create_date:
+          type: integer
+          format: int64
+          description: Creation timestamp in microseconds
+          example: 67457775764
+        cname:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+    ListTrackingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        tracking_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingDomainListEntry'
+    AddWebhookRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+            description: Webhook URL. Must respond with 'God bless you, SendClean'
+            example: https://example.com/webhook
+          event:
+            type: string
+            description: Comma-separated list of events to subscribe to
+            example: send,open,click,soft_bounce,hard_bounce,spam
+          description:
+            type: string
+            description: Human-readable description
+            example: My webhook for open and click events
+          store_log:
+            type: string
+            enum:
+            - Enable
+            - Disable
+            example: Enable
+    EditWebhookRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - webhook_id
+        - url
+        properties:
+          webhook_id:
+            type: string
+            example: '424353445757557577457'
+          url:
+            type: string
+            description: Updated webhook URL. Must respond with 'God bless you, SendClean'
+            example: https://example.com/webhook
+          event:
+            type: string
+            example: open,click
+          description:
+            type: string
+            example: Updated description
+          store_log:
+            type: string
+            enum:
+            - Enable
+            - Disable
+    WebhookIdRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - webhook_id
+        properties:
+          webhook_id:
+            type: string
+            description: A valid webhook ID
+            example: '424353445757557577457'
+    KeyResetWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: Webhook key reseted
+        webhook_id:
+          type: string
+          example: '424353445757557577457'
+        key:
+          type: string
+          example: 2fg345gy6r7
+    WebhookListEntry:
+      type: object
+      properties:
+        webhook_id:
+          type: string
+          example: '424353445757557577457'
+        url:
+          type: string
+          example: http://abc.com/wh1.php
+        event:
+          type: string
+          example: open,click
+        key:
+          type: string
+          example: cgvddgrsd
+        store_log:
+          type: string
+          enum:
+          - Enable
+          - Disable
+        description:
+          type: string
+          example: this webhook for only open and click
+        create_date:
+          type: integer
+          format: int64
+          example: 754453534
+    ListWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        webhook_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookListEntry'
+    WebhookInfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        webhook_data:
+          type: object
+          properties:
+            webhook_id:
+              type: string
+              example: '405602261459333060372'
+            url:
+              type: string
+              example: http://xyz.com/webhook3.php
+            event:
+              type: string
+              example: open
+            description:
+              type: string
+              example: webhook for open events
+            store_log:
+              type: string
+              enum:
+              - Enable
+              - Disable
+            key:
+              type: string
+              example: aVLnPysvkKUU95AFrb47Zr
+            create_date:
+              type: integer
+              format: int64
+              example: 1459333060
+            last_success:
+              type: integer
+              format: int64
+              description: Timestamp of last successful delivery
+              example: 1459366666
+            total_event:
+              type: integer
+              description: Total events sent to this webhook URL
+              example: 23
+    Recipient:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: recipient@example.com
+        name:
+          type: string
+          description: Optional display name
+          example: Recipient Name
+        type:
+          type: string
+          enum:
+          - to
+          - cc
+          - bcc
+          default: to
+          description: Header type for the recipient
+    Attachment:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type of the attachment
+          example: text/plain
+        name:
+          type: string
+          description: File name of the attachment
+          example: myfile.txt
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded content of the attachment
+          example: ZXhhbXBsZSBmaWxl
+    EmbeddedImage:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type — must start with "image/"
+          example: image/png
+        name:
+          type: string
+          description: Content ID for the image. Reference in HTML as <img src="cid:THIS_VALUE">
+          example: IMAGECID
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded image content
+          example: ZXhhbXBsZSBmaWxl
+    MessageHeaders:
+      type: object
+      description: Optional custom headers for the message
+      properties:
+        Reply-To:
+          type: string
+          format: email
+          example: reply@example.com
+        X-Unique-Id:
+          type: string
+          description: Custom message ID for tracking via getMessageInfo
+          example: my-unique-id-123
+        X-STes-TrackOpen:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Enable or disable open tracking
+        X-STes-TrackClick:
+          type: string
+          enum:
+          - html
+          - text
+          - both
+          - 'no'
+          description: Enable or disable click tracking
+        X-STes-Autotext:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate plain-text version from HTML
+        X-STes-AutoHtml:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate HTML version from plain text
+        X-STes-TrackingDomain:
+          type: string
+          description: Custom domain for tracking opens and clicks
+        X-STes-SigningDomain:
+          type: string
+          description: Custom domain for SPF/DKIM signing
+        X-STes-ReturnPathDomain:
+          type: string
+          description: Custom domain for the return-path
+    SendMailMessage:
+      type: object
+      description: The message payload for sendMail
+      properties:
+        html:
+          type: string
+          description: Full HTML content of the email. Either html or text is required.
+          example: <h1>Hello World</h1>
+        text:
+          type: string
+          description: Full plain-text content of the email. Either html or text is required.
+          example: Hello World
+        subject:
+          type: string
+          description: Message subject line
+          example: Your order confirmation
+        from_email:
+          type: string
+          format: email
+          description: Sender email address
+          example: noreply@yourdomain.com
+        from_name:
+          type: string
+          description: Optional sender display name
+          example: SendClean Notifications
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+        headers:
+          $ref: '#/components/schemas/MessageHeaders'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        images:
+          type: array
+          description: Embedded inline images (referenced by CID in HTML)
+          items:
+            $ref: '#/components/schemas/EmbeddedImage'
+    SendMailRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/SendMailMessage'
+    SendMailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: message have been Queued ...
+    TemplateMessage:
+      type: object
+      required:
+      - template_id
+      properties:
+        template_id:
+          type: string
+          description: Previously created template ID
+          example: Template_Id_123
+        subject:
+          type: string
+          example: Order Confirmation
+        from_email:
+          type: string
+          format: email
+          example: noreply@yourdomain.com
+        from_name:
+          type: string
+          example: SendClean Notifications
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+        headers:
+          $ref: '#/components/schemas/MessageHeaders'
+        dynamic_value:
+          type: object
+          description: Key-value pairs to replace template placeholders. Field names are case-sensitive.
+          additionalProperties:
+            type: string
+          example:
+            NAME: John Doe
+            Email: john@example.com
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmbeddedImage'
+    SendTemplateRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/TemplateMessage'
+    MessageInfoRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - x_unique_id
+        properties:
+          x_unique_id:
+            type: string
+            description: The X-Unique-Id header value used when the message was sent
+            example: test
+          skip_page:
+            type: integer
+            description: Pagination offset (number of records to skip)
+            default: 0
+            example: 0
+    OpenData:
+      type: object
+      properties:
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the openers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each open event
+    ClickData:
+      type: object
+      properties:
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the clickers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each click event
+    MessageInfoEntry:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: this is subject ..
+        sender:
+          type: string
+          format: email
+          example: xyz@sendclean.com
+        email:
+          type: string
+          format: email
+          example: abc@sendclean.com
+        sendFrom:
+          type: string
+          description: IP address the email was sent from
+          example: 0.0.0.0
+        mailSize:
+          type: integer
+          example: 1919
+        attchSize:
+          type: integer
+          example: 0
+        status:
+          type: string
+          enum:
+          - delivered
+          - soft_bounce
+          - hard_bounce
+          - spam
+          - open
+          - click
+          - send
+          example: delivered
+        time:
+          type: integer
+          format: int64
+          description: Send timestamp in milliseconds
+          example: 1458034022169
+        open:
+          type: integer
+          description: Total open count
+          example: 1
+        openData:
+          $ref: '#/components/schemas/OpenData'
+        click:
+          type: integer
+          description: Total click count
+          example: 1
+        clickData:
+          $ref: '#/components/schemas/ClickData'
+    MessageInfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageInfoEntry'
+    AccountDetailRequest:
+      $ref: '#/components/schemas/AuthFields'
+    AccountDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        user_details:
+          type: object
+          description: Account and user detail fields (varies by plan)
+          additionalProperties: true
+paths:
+  /settings/addSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: Add a new SMTP user
+      description: Creates a new SMTP sub-user with defined sending limits.
+      operationId: addSmtpUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSmtpRequest'
+            example:
+              owner_id: example id
+              token: example token
+              total_limit: 100
+              hourly_limit: 10
+      responses:
+        '200':
+          description: SMTP user created successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AddSmtpResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  summary: Successful response
+                  value:
+                    status: success
+                    message: SMTP User Created
+                    smtp_user_name: smtp12345
+                    smtp_password: asfsf4w343
+                error:
+                  summary: Authentication error
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /settings/editSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: Edit an existing SMTP user
+      description: Updates the sending limits or status of an SMTP sub-user.
+      operationId: editSmtpUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditSmtpRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              total_limit: 80
+              hourly_limit: 15
+              status: Disable
+      responses:
+        '200':
+          description: SMTP user updated successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: SMTP User Updated
+                error:
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /settings/resetSmtpPassword:
+    post:
+      tags:
+      - SMTP Users
+      summary: Reset SMTP user password
+      description: Generates a new password for the specified SMTP sub-user.
+      operationId: resetSmtpPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetSmtpPasswordRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+      responses:
+        '200':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ResetSmtpPasswordResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: password reseted
+                    smtp_user_name: smtp12345
+                    smtp_password: 2fg345gy6r7
+  /settings/listSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: List all SMTP users
+      description: Returns a list of all SMTP sub-users associated with the account.
+      operationId: listSmtpUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of SMTP users
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListSmtpResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /settings/addSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Add a sending domain
+      description: Registers a new sending domain to the account.
+      operationId: addSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Sending domain added
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Sending Domain Added
+  /settings/checkSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Verify DKIM and SPF records
+      description: Checks whether DKIM and SPF DNS records are correctly configured for the domain.
+      operationId: checkSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Domain check result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/CheckSendingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    domain: abc.com
+                    dkim:
+                      valid: 'Yes'
+                    spf:
+                      valid: 'No'
+                    valid_signing: 'No'
+  /settings/verifySendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Verify sending domain via email
+      description: Sends a verification instruction email to `mailbox@domain`.
+      operationId: verifySendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifySendingDomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+              mailbox: john
+      responses:
+        '200':
+          description: Verification email sent
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Verification instruction has been sent to john@abc.com
+  /settings/listSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: List sending domains
+      description: Returns all sending domains registered to the account with their DNS validation status.
+      operationId: listSendingDomains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of sending domains
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListSendingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /settings/deleteSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Delete a sending domain
+      description: Removes the specified sending domain from the account.
+      operationId: deleteSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Sending domain deleted
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Sending Domain Deleted
+  /settings/addTrackingDomain:
+    post:
+      tags:
+      - Tracking Domains
+      summary: Add a tracking domain
+      description: Registers a custom tracking domain for open and click tracking.
+      operationId: addTrackingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: track.abc.com
+      responses:
+        '200':
+          description: Tracking domain added
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Tracking Domain Added
+  /settings/checkTrackingDomain:
+    post:
+      tags:
+      - Tracking Domains
+      summary: Check tracking domain CNAME
+      description: Validates whether the CNAME record for the tracking domain is correctly configured.
+      operationId: checkTrackingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: track.abc.com
+      responses:
+        '200':
+          description: Tracking domain check result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/CheckTrackingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    domain: abc.com
+                    valid_tracking: 'Yes'
+                    cname:
+                      valid: 'Yes'
+  /settings/listTrackingDomain:
+    post:
+      tags:
+      - Tracking Domains
+      summary: List tracking domains
+      description: Returns all tracking domains registered to the account.
+      operationId: listTrackingDomains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of tracking domains
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListTrackingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /settings/deleteTrackingDomain:
+    post:
+      tags:
+      - Tracking Domains
+      summary: Delete a tracking domain
+      description: Removes the specified tracking domain from the account.
+      operationId: deleteTrackingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: track.abc.com
+      responses:
+        '200':
+          description: Tracking domain deleted
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Tracking Domain Deleted
+  /settings/addWebhook:
+    post:
+      tags:
+      - Webhooks
+      summary: Add a webhook
+      description: |
+        Registers a new webhook URL to receive email event notifications.
+
+        **Supported events:** `send`, `open`, `click`, `soft_bounce`, `hard_bounce`, `spam`
+
+        **Important:** The webhook URL must respond with `God bless you, SendClean` to pass the validation check.
+
+        SendClean signs webhook POST requests with an HMAC-SHA1 signature in the `X-SendCleanTES-SIGNATURE`
+        header for optional verification. See the Webhook Authentication section for details.
+      operationId: addWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddWebhookRequest'
+            example:
+              owner_id: example id
+              token: example token
+              url: https://example.com/webhook
+              event: send,open,click,soft_bounce,hard_bounce,spam
+              description: My event webhook
+              store_log: Enable
+      responses:
+        '200':
+          description: Webhook added
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Webhook Added
+  /settings/editWebhook:
+    post:
+      tags:
+      - Webhooks
+      summary: Edit a webhook
+      description: Updates the configuration of an existing webhook.
+      operationId: editWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditWebhookRequest'
+            example:
+              owner_id: example id
+              token: example token
+              webhook_id: '424353445757557577457'
+              url: https://example.com/webhook-v2
+              event: open,click
+      responses:
+        '200':
+          description: Webhook updated
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Webhook Edited
+  /settings/keyResetWebhook:
+    post:
+      tags:
+      - Webhooks
+      summary: Reset webhook authentication key
+      description: |
+        Generates a new authentication/signing key for the specified webhook.
+
+        **Note:** SendClean immediately begins using the new key. To avoid dropping webhook batches,
+        return a non-200 status for any batches that fail signature verification, and update your
+        application with the new key before retrying.
+      operationId: keyResetWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookIdRequest'
+            example:
+              owner_id: example id
+              token: example token
+              webhook_id: '424353445757557577457'
+      responses:
+        '200':
+          description: Webhook key reset
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/KeyResetWebhookResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Webhook key reseted
+                    webhook_id: '424353445757557577457'
+                    key: 2fg345gy6r7
+  /settings/listWebhook:
+    post:
+      tags:
+      - Webhooks
+      summary: List all webhooks
+      description: Returns all webhooks registered to the account.
+      operationId: listWebhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of webhooks
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListWebhookResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /settings/deleteWebhook:
+    post:
+      tags:
+      - Webhooks
+      summary: Delete a webhook
+      description: Permanently removes a webhook from the account.
+      operationId: deleteWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookIdRequest'
+            example:
+              owner_id: example id
+              token: example token
+              webhook_id: '424353445757557577457'
+      responses:
+        '200':
+          description: Webhook deleted
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Webhook Deleted
+  /settings/getWebhookInfo:
+    post:
+      tags:
+      - Webhooks
+      summary: Get webhook details
+      description: Returns detailed information about a specific webhook, including delivery stats.
+      operationId: getWebhookInfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookIdRequest'
+            example:
+              owner_id: example id
+              token: example token
+              webhook_id: '424353445757557577457'
+      responses:
+        '200':
+          description: Webhook info
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/WebhookInfoResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /messages/sendMail:
+    post:
+      tags:
+      - Messages
+      summary: Send a transactional email
+      description: |
+        Sends a new transactional email via the specified SMTP sub-user.
+
+        Either `html` or `text` content is required in the message body (both may be provided).
+
+        Use the `headers` object to control tracking, signing, and routing behaviour.
+        Use `X-Unique-Id` in headers to tag messages for later retrieval via `/messages/getMessageInfo`.
+      operationId: sendMail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMailRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              message:
+                html: <h1>Hello!</h1><p>Your order is confirmed.</p>
+                text: Hello! Your order is confirmed.
+                subject: Order Confirmation
+                from_email: noreply@yourdomain.com
+                from_name: Your Company
+                to:
+                - email: customer@example.com
+                  name: Customer Name
+                  type: to
+                headers:
+                  Reply-To: support@yourdomain.com
+                  X-Unique-Id: order-12345
+                attachments:
+                - type: application/pdf
+                  name: invoice.pdf
+                  content: ZXhhbXBsZSBmaWxl
+      responses:
+        '200':
+          description: Message queued for delivery
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: message have been Queued ...
+                error:
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /messages/sendTemplate:
+    post:
+      tags:
+      - Messages
+      summary: Send email using a saved template
+      description: |
+        Sends a transactional email using a pre-created template.
+        Use `dynamic_value` to replace template placeholders (case-sensitive field names).
+      operationId: sendTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTemplateRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              message:
+                template_id: Template_Id_123
+                subject: Welcome to our service
+                from_email: noreply@yourdomain.com
+                from_name: Your Company
+                to:
+                - email: customer@example.com
+                  name: Customer Name
+                  type: to
+                dynamic_value:
+                  NAME: John
+                  Email: customer@example.com
+                headers:
+                  Reply-To: support@yourdomain.com
+                  X-Unique-Id: welcome-john-001
+      responses:
+        '200':
+          description: Template message queued
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: 250 Message Queued...
+  /messages/sendTemplateHTTPGet:
+    get:
+      tags:
+      - Messages
+      summary: Send template email via HTTP GET
+      description: |
+        Sends a transactional email using a template via HTTP GET. Designed for simple integrations
+        such as IVR webhooks where POST with JSON body is not practical.
+
+        **All parameter values must be URL-encoded.**
+
+        Example:
+        ```
+        GET https://api.sendclean.net/v1.0/messages/sendTemplateHTTPGet?owner_id=YOUR_ID&token=YOUR_TOKEN
+            &smtp_user_name=smtp12345&template_id=TMPL_ID&subject=Hello
+            &from_email=info%40example.com&to=customer%40example.com
+            &dynamic_value%5BNAME%5D=John&dynamic_value%5BEmail%5D=john%40example.com
+        ```
+      operationId: sendTemplateHTTPGet
+      parameters:
+      - name: owner_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid SendClean User ID
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid API token
+      - name: smtp_user_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid SMTP user name
+        example: smtp12345
+      - name: template_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Previously created template ID
+      - name: subject
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded email subject
+      - name: from_email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded sender email address
+      - name: to
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded recipient email address
+      - name: dynamic_value[NAME]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: URL-encoded dynamic value for NAME placeholder
+      - name: dynamic_value[Email]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: URL-encoded dynamic value for Email placeholder
+      responses:
+        '200':
+          description: Template message queued
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: 250 Message Queued...
+  /messages/getMessageInfo:
+    post:
+      tags:
+      - Messages
+      summary: Get message delivery and engagement info
+      description: |
+        Retrieves delivery status, open data, and click data for messages matching a given `X-Unique-Id`.
+        Supports pagination via `skip_page`.
+      operationId: getMessageInfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageInfoRequest'
+            example:
+              owner_id: example id
+              token: example token
+              x_unique_id: order-12345
+              skip_page: 0
+      responses:
+        '200':
+          description: Message info records
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/MessageInfoResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /accounts/userDetails:
+    post:
+      tags:
+      - Accounts
+      summary: Get account/user details
+      description: Returns profile and account information for the authenticated user.
+      operationId: getUserDetails
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountDetailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
