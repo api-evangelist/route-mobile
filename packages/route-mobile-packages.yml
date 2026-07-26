@@ -1,0 +1,78 @@
+generated: '2026-07-25'
+method: searched
+source: npm registry, PyPI, pkg.go.dev, RubyGems, Packagist, github.com/routemobile
+description: >-
+  Route Mobile publishes NO first-party client libraries. Searched npm (queries: rmlconnect,
+  route-mobile, routemobile, sendclean), PyPI (routemobile, route-mobile, rmlconnect,
+  sendclean — all 404), and the routemobile GitHub organization, whose seven public
+  repositories contain OpenAPI definitions, Redoc HTML pages, Postman collections and sample
+  data files, but no SDK source in any language. The developer portal's code samples are
+  ReadMe-generated snippets (curl, Python, Node, Java, PHP) rather than a packaged SDK.
+official_sdks: false
+packages: []
+community_packages:
+- language: javascript
+  registry: npm
+  name: routesms
+  url: https://www.npmjs.com/package/routesms
+  install: npm install routesms
+  official: false
+  maintainer: segsalerty
+  repository: https://github.com/segsalerty2013/routesms
+  note: Third-party wrapper for the Route Mobile SMS gateway; not maintained by Route Mobile.
+- language: javascript
+  registry: npm
+  name: routemobilesms
+  url: https://www.npmjs.com/package/routemobilesms
+  install: npm install routemobilesms
+  official: false
+  maintainer: razakalpha
+  note: >-
+    Third-party Node wrapper for the Route Mobile Bulk HTTP API (send SMS, check balance);
+    requires an official Route Mobile account.
+- language: php
+  registry: packagist
+  name: johnturingan/route-mobile-laravel-notifications
+  url: https://packagist.org/packages/johnturingan/route-mobile-laravel-notifications
+  install: composer require johnturingan/route-mobile-laravel-notifications
+  official: false
+  note: Third-party Laravel notification channel for Route Mobile SMS.
+- language: javascript
+  registry: npm
+  name: sendclean
+  url: https://www.npmjs.com/package/sendclean
+  install: npm install sendclean
+  official: false
+  maintainer: gaurishh
+  note: Third-party typed wrapper for the SendClean API; not maintained by Route Mobile.
+first_party_repositories:
+- name: WhatsApp-Business-API
+  url: https://github.com/routemobile/WhatsApp-Business-API
+  contains: [openapi.yaml, Redoc HTML, Postman collections, sample bulk/catalog files]
+- name: RCS-Business-Messaging-API
+  url: https://github.com/routemobile/RCS-Business-Messaging-API
+  contains: [openapi.yaml, Redoc HTML, Postman collections]
+- name: Viber-Business-Messages-API
+  url: https://github.com/routemobile/Viber-Business-Messages-API
+  contains: [openapi.yaml, Redoc HTML, Postman collections, sample campaign files]
+- name: Route-Mailer-API
+  url: https://github.com/routemobile/Route-Mailer-API
+  contains: [openapi.yaml, Redoc HTML, Postman collections]
+- name: Enterprise-Voice-2.0-APIs
+  url: https://github.com/routemobile/Enterprise-Voice-2.0-APIs
+  contains: [Postman collection only — no OpenAPI]
+- name: Verified-SMS-API
+  url: https://github.com/routemobile/Verified-SMS-API
+  contains: [README only]
+- name: Programmable-SMS-API
+  url: https://github.com/routemobile/Programmable-SMS-API
+  contains: [empty repository]
+registries_probed:
+- {registry: npm, result: no first-party package}
+- {registry: pypi, result: 404 for routemobile, route-mobile, rmlconnect, sendclean}
+- {registry: maven-central, result: no routemobile/rmlconnect group or artifact}
+- {registry: nuget, result: 0 hits for routemobile}
+- {registry: pkg.go.dev, result: no first-party module found}
+- {registry: rubygems, result: no Route Mobile gem in search results}
+- {registry: packagist, result: one third-party Laravel channel only}
+- {registry: crates.io, result: 0 hits for routemobile}

@@ -1,0 +1,109 @@
+generated: '2026-07-25'
+method: searched
+source: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp-client-callback-api
+spec_type: none
+description: >-
+  Route Mobile publishes NO AsyncAPI document and no event-catalog artifact — searched the
+  developer portal (the 300-entry llms.txt index), the routemobile GitHub organization, and
+  /asyncapi.yaml and /asyncapi.json on api.rmlconnect.net and apis.rmlconnect.net (404), on
+  api.sendclean.net (HTTP 200 but a catch-all `{"status":"error","message":"Page not found"}`
+  JSON body) and on developer.rmlconnect.net (HTTP 200 but the ReadMe single-page-app HTML
+  shell) — no AsyncAPI document exists at any of them.
+  It does, however, operate a real webhook/callback surface on every product: inbound messages,
+  delivery and read receipts, template lifecycle events and email engagement events are pushed
+  to a client-registered HTTPS endpoint. This file is the harvested webhook catalog that stands
+  in for the missing AsyncAPI.
+asyncapi_published: false
+webhooks_published: true
+docs:
+- https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp-client-callback-api
+- https://developer.rmlconnect.net/route-mobile-project/docs/callback-structure
+- https://developer.rmlconnect.net/route-mobile-project/reference/viberclientcallback
+- https://developer.rmlconnect.net/route-mobile-project/docs/webhook-calls
+- https://developer.rmlconnect.net/route-mobile-project/docs/direct-send-message-callbacks-1
+channels:
+- product: WhatsApp Business
+  channel: client callback
+  registration: >-
+    Callback URL configured in the webhook settings of the Route Mobile panel; documented
+    delivery endpoint is POST /callbacks on https://apis.rmlconnect.net.
+  operation: openapi/route-mobile-whatsapp-business.yml#whatsappClientCallback
+  transport: HTTPS POST (JSON)
+  auth: none documented (client may require its own bearer token)
+  events:
+  - group: Incoming messages
+    types: [Incoming Text, Incoming Image, Incoming Audio, Incoming Video, Incoming Document,
+      Incoming Location, Incoming Interactive List, Incoming Template Quick Reply,
+      Incoming Session Quick Reply]
+  - group: Commerce
+    types: [Session Message Business for Single Product, Add Single Product to Cart,
+      Add Multi Product to Cart]
+  - group: Status reports
+    types: [Sent/Delivery Report, Read Report, Failed Delivery Report]
+  - group: Template status logs
+    types: [Template Approved, Template Paused, Template Disabled, Template Deleted]
+  error_codes: errors/route-mobile-error-codes.yml
+- product: RCS Business Messaging
+  channel: callback
+  registration: Client callback URL registered with Route Mobile per bot/agent.
+  operation: openapi/route-mobile-rcs.yml#post-callback
+  transport: HTTPS POST (JSON)
+  auth: >-
+    Route Mobile presents a valid access token in the Authorization header when the client
+    endpoint requires authentication.
+  events:
+  - group: Incoming messages
+    types: [text_message, media_message (image/video/document), location_message]
+  - group: User responses
+    types: [Suggested Actions (URL and dialer), Suggested Replies]
+  - group: Status updates
+    types: [sent, delivered, read, failed]
+  payload_fields: [bot_name, event_type, request_id, session_id, timestamp, user_contact,
+    username, media_name, media_size, media_type, media_uri]
+- product: Viber Business Messages
+  channel: client callback
+  registration: Callback URL registered in the Viber webhook configuration.
+  operation: openapi/route-mobile-viber.yml#viberClientCallback
+  transport: HTTPS POST (JSON)
+  auth: none documented
+  events:
+  - group: Delivery reports (service_type dlr)
+    types: [Sent, delivered, seen, expired]
+  - group: Inbound (service_type two_way/session)
+    types: [Incoming Text, Incoming Image/Video]
+  payload_fields: [phone_number, time, message.text, message.media, message.file_name,
+    message.tracking_data, message_status, message_time, matching_template_id, service_type,
+    session_id, request_id]
+- product: SendClean Email
+  channel: email event webhook
+  registration: >-
+    Registered through the API — addWebhook / editWebhook / listWebhook / getWebhookInfo /
+    deleteWebhook, with keyResetWebhook for signing-key rotation.
+  operations:
+  - openapi/route-mobile-sendclean-email.yml#addWebhook
+  - openapi/route-mobile-sendclean-email.yml#editWebhook
+  - openapi/route-mobile-sendclean-email.yml#listWebhooks
+  - openapi/route-mobile-sendclean-email.yml#getWebhookInfo
+  - openapi/route-mobile-sendclean-email.yml#deleteWebhook
+  - openapi/route-mobile-sendclean-email.yml#keyResetWebhook
+  transport: HTTPS POST (JSON)
+  events: [send, open, click, soft_bounce, hard_bounce, spam]
+  validation:
+    handshake: >-
+      The registered webhook URL must respond with the exact string "God bless you, SendClean"
+      to pass Route Mobile's validation check.
+    signature:
+      algorithm: HMAC-SHA1
+      header: X-SendCleanTES-SIGNATURE
+      rotation: >-
+        keyResetWebhook issues a new signing key which SendClean begins using immediately;
+        return a non-200 for batches that fail verification so they are retried after the
+        client has picked up the new key.
+  options: [store_log (Enable|Disable), description]
+gaps:
+- No AsyncAPI/CloudEvents document for any channel.
+- No signature verification on the WhatsApp, RCS or Viber callbacks — only SendClean signs.
+- No published retry/backoff schedule or event-ordering guarantee for the messaging callbacks.
+related:
+  conventions: conventions/route-mobile-conventions.yml
+  errors: errors/route-mobile-error-codes.yml

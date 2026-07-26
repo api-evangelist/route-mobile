@@ -1,0 +1,101 @@
+generated: '2026-07-25'
+method: searched
+source: openapi/route-mobile-rcs.yml, openapi/route-mobile-sms.yml, openapi/route-mobile-viber.yml,
+  openapi/route-mobile-whatsapp-business.yml, openapi/route-mobile-sendclean-email.yml
+docs:
+- https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp-login
+- https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+- https://developer.rmlconnect.net/route-mobile-project/docs/email
+description: >-
+  Route Mobile's authentication is legacy CPaaS rather than telco-standard, and it is not
+  uniform: four different credential models across five products. There is no OAuth 2.0, no
+  OpenID Connect, no discovery document (/.well-known/openid-configuration and
+  /.well-known/oauth-authorization-server 404 on every host), and no scopes — so no scopes/
+  artifact is emitted for this provider. Two of the models (SMS query-parameter credentials,
+  SendClean body-carried token) are not expressible as OpenAPI securitySchemes and are
+  therefore absent from the specs; they were harvested from the documentation and from the
+  operation parameters.
+summary:
+  types: [apiKey, http, query-credentials, body-credentials]
+  api_key_in: [header, query, body]
+  oauth2_flows: []
+  oauth2: false
+  openid_connect: false
+  mtls: false
+  scopes: false
+  uniform_across_products: false
+schemes:
+- name: jwt
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: >-
+    JWT minted by POST /auth/v1/login/ on apis.rmlconnect.net and carried in the Authorization
+    header. Declared as an apiKey-in-header scheme in the RCS and Viber definitions.
+  sources:
+  - openapi/route-mobile-rcs.yml
+  - openapi/route-mobile-viber.yml
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    JSON Web Token obtained from the WhatsApp Login API (POST /auth/v1/login/). Include the
+    token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by
+    default.
+  sources:
+  - openapi/route-mobile-whatsapp-business.yml
+- name: AuthorizationToken
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: >-
+    Static authorization token issued by Route Mobile, used only by the MoEngage and WebEngage
+    integration endpoints on the SMS API.
+  sources:
+  - openapi/route-mobile-sms.yml
+- name: sms-query-credentials
+  type: query-credentials
+  in: query
+  parameters: [username, password]
+  description: >-
+    The core SMS API authenticates with the account username and password passed as URL query
+    parameters on every GET request over HTTPS. Not expressible as an OpenAPI securityScheme;
+    documented on the SMS reference pages and present as required parameters on every
+    operation. A separate GET /bulksms/generatetoken mints a short-lived token consumed by
+    GET /bulksms/bulksubmit.
+  sources:
+  - openapi/route-mobile-sms.yml
+  - https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+- name: sendclean-body-credentials
+  type: body-credentials
+  in: body
+  parameters: [owner_id, token]
+  description: >-
+    SendClean carries `owner_id` and `token` inside the JSON request body of every POST (and
+    as URL-encoded query parameters on the single HTTP GET operation). No Authorization header
+    is used. Declared in the spec as the reusable AuthFields schema rather than as a
+    securityScheme.
+  sources:
+  - openapi/route-mobile-sendclean-email.yml
+token_lifecycle:
+  whatsapp: JWT expires after one hour by default; re-login on 401.
+  rcs_viber: JWT from POST /auth/v1/login/; expiry not documented.
+  sms: >-
+    Username/password are long-lived account credentials; the optional generatetoken token is
+    short-lived and single-purpose.
+  sendclean: Long-lived account token; no documented rotation endpoint.
+transport_security:
+  https_required: true
+  legacy_plaintext: >-
+    The SMS definition still lists http://api.rmlconnect.net as an "SGN Non-secured (HTTP) —
+    legacy only" server. Sending account credentials as query parameters over that host would
+    expose them in cleartext; use the HTTPS servers (port 443 or 8443) only.
+gaps:
+- No OAuth 2.0 / OpenID Connect anywhere, hence no scopes and no consent surface.
+- Credentials in URLs (SMS) leak into proxy, gateway and browser-history logs.
+- No mutual TLS, no signed requests, and no key-rotation endpoint outside SendClean's webhook key.
+related:
+  conventions: conventions/route-mobile-conventions.yml
+  domain_security: security/route-mobile-domain-security.yml
+  conformance: conformance/route-mobile-conformance.yml

@@ -1,0 +1,2871 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/route-mobile-rcs.yml, openapi/route-mobile-sendclean-email.yml, openapi/route-mobile-sms.yml,
+  openapi/route-mobile-viber.yml, openapi/route-mobile-whatsapp-business.yml
+notes: 'Entity graph derived from components.schemas and $ref links in the five published Route Mobile
+  OpenAPI definitions. Route Mobile is message-centric rather than resource-centric: most products expose
+  submit/report operations over messages, templates, campaigns and callbacks rather than addressable REST
+  resources, so few schemas carry id-reference fields.'
+summary:
+  entities: 305
+  relationships: 53
+entities:
+- entity: inline_response_201_2
+  source: openapi/route-mobile-rcs.yml
+  fields: 2
+  field_names:
+  - JWTAUTH
+  - user_data
+- entity: inline_response_201_2_user_data
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - username
+  - first_name
+  - last_name
+  - email
+  - phone_number
+  - password_reset
+  - is_active
+  - is_staff
+  - ip
+  - child_user
+  - parent_username
+- entity: rcs_bulk_dnd_set_body
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - bot_name
+  - file_url
+  - dnd_mode
+- entity: rcs_bulkcamp_calendarsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - suggestions
+- entity: rcs_bulkcamp_dialsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - url
+  - suggestions
+  - fallback_text
+- entity: rcs_bulkcamp_locsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - text
+  - suggestions
+  - fallback_text
+- entity: rcs_bulkcamp_media_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - url
+  - suggestions
+  - fallback_text
+- entity: rcs_bulkcamp_richcardcarsl_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - cards
+  - fallback_text
+- entity: rcs_bulkcamp_richcrdstd_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - url
+  - card
+  - fallback_text
+- entity: rcs_bulkcamp_text_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - ttl
+  - expire_time
+  - bot_name
+  - text
+  - suggestions
+  - fallback_text
+- entity: rcs_bulkcamp_textsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - text
+  - suggestions
+  - fallback_text
+- entity: rcs_bulkcamp_urlsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - country_code
+  - file_url
+  - campaign_name
+  - scheduled_time
+  - bot_name
+  - url
+  - suggestions
+  - fallback_text
+- entity: rcs_callback_fallback_whatsapp
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - bot_name
+  - event_type
+  - message_id
+  - message_status
+  - timestamp
+  - user_contact
+  - extra
+  - username
+- entity: rcs_callback_incoming_document
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - bot_name
+  - event_type
+  - media_name
+  - media_size
+  - media_type
+  - media_uri
+  - request_id
+  - session_id
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_incoming_image
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - bot_name
+  - event_type
+  - media_name
+  - media_size
+  - media_type
+  - media_uri
+  - request_id
+  - session_id
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_incoming_location
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - request_id
+  - user_contact
+  - timestamp
+  - bot_name
+  - username
+  - session_id
+  - event_type
+  - latitude
+  - longitude
+- entity: rcs_callback_incoming_suggaction
+  source: openapi/route-mobile-rcs.yml
+  fields: 10
+  field_names:
+  - bot_name
+  - event_type
+  - request_id
+  - response_postback
+  - response_text
+  - session_id
+  - suggestion_type
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_incoming_suggestion_reply
+  source: openapi/route-mobile-rcs.yml
+  fields: 10
+  field_names:
+  - bot_name
+  - event_type
+  - request_id
+  - response_postback
+  - response_text
+  - session_id
+  - suggestion_type
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_incoming_text
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - bot_name
+  - event_type
+  - request_id
+  - session_id
+  - text_message
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_incoming_video
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - bot_name
+  - event_type
+  - media_name
+  - media_size
+  - media_type
+  - media_uri
+  - request_id
+  - session_id
+  - timestamp
+  - user_contact
+  - username
+- entity: rcs_callback_status_failed
+  source: openapi/route-mobile-rcs.yml
+  fields: 11
+  field_names:
+  - bot_name
+  - event_type
+  - message_id
+  - message_status
+  - failure_reason
+  - timestamp
+  - user_contact
+  - extra
+  - username
+  - campaign_name
+  - campaign_id
+- entity: rcs_callback_status_read_delivered
+  source: openapi/route-mobile-rcs.yml
+  fields: 10
+  field_names:
+  - bot_name
+  - event_type
+  - message_id
+  - message_status
+  - timestamp
+  - user_contact
+  - extra
+  - username
+  - campaign_name
+  - campaign_id
+- entity: rcs_create_optin
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - bot_name
+  - mobile_number
+  - channel
+- entity: rcs_create_template_carousel
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - name
+  - type
+  - height
+  - width
+  - carouselList
+  - templateDetails
+- entity: rcs_create_template_richcard
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - name
+  - type
+  - orientation
+  - height
+  - standAlone
+  - templateDetails
+- entity: rcs_create_template_text
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - name
+  - type
+  - textMessageContent
+  - suggestions
+  - templateDetails
+- entity: rcs_create_template_text_with_pdf
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - name
+  - type
+  - textMessageContent
+  - suggestions
+  - templateDetails
+- entity: rcs_management_add_tester
+  source: openapi/route-mobile-rcs.yml
+  fields: 2
+  field_names:
+  - bot_name
+  - phone_number
+- entity: rcs_notification_calendarsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - suggestions
+- entity: rcs_notification_carslwithids_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 4
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - cards
+- entity: rcs_notification_common_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - url
+  - extra
+  - suggestions
+  - card
+  - cards
+- entity: rcs_notification_dialsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_locationsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_media_imagemp4_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 10
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - thumbnail_url
+  - id
+  - thumbnail_id
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_mediaid_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 4
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - id
+- entity: rcs_notification_richcrdcarousel_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - extra
+  - cards
+  - fallback_text
+- entity: rcs_notification_richcrdstdalone_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - extra
+  - card
+  - fallback_text
+- entity: rcs_notification_text_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - text
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_textsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_urlsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - suggestions
+  - fallback_text
+- entity: rcs_notification_videothumbnailid_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - card
+  - suggestions
+- entity: rcs_notification_videothumbnailurl_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - card
+  - suggestions
+- entity: rcs_payments_india_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_payments_media_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_payments_richcrdcarousel_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_payments_richcrdstdle_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_payments_text_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_payments_urlsugg_template
+  source: openapi/route-mobile-rcs.yml
+  fields: 3
+  field_names:
+  - payment
+  - channels
+  - rcs
+- entity: rcs_session_calendarsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - suggestions
+- entity: rcs_session_carslwithids_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 4
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - cards
+- entity: rcs_session_common_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - url
+  - extra
+  - suggestions
+  - card
+  - cards
+- entity: rcs_session_dialsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_locationsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_mediaid_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - id
+  - thumbnail_id
+- entity: rcs_session_mediaimagemp4_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 10
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - thumbnail_url
+  - id
+  - thumbnail_id
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_richcrdcarousel_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - extra
+  - cards
+  - fallback_text
+- entity: rcs_session_richcrdstdalone_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - extra
+  - card
+  - fallback_text
+- entity: rcs_session_text_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - text
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_textsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - text
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_urlsugg_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 7
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - url
+  - extra
+  - suggestions
+  - fallback_text
+- entity: rcs_session_videothumbnailid_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - card
+  - suggestions
+- entity: rcs_session_videothumbnailurl_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - card
+  - suggestions
+- entity: rcs_template_fallback_api_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+- entity: rcs_template_richcrdcarousel_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+- entity: rcs_template_richcrdstdalone_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+- entity: rcs_template_sms_fallback_api_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+  - sms
+- entity: rcs_template_text_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 8
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+- entity: rcs_template_whatsapp_fallback_api_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 9
+  field_names:
+  - type
+  - phone_no
+  - bot_name
+  - ttl
+  - expire_time
+  - extra
+  - template
+  - fallback_text
+  - whatsapp
+- entity: rcs_update_template_carousel
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - name
+  - type
+  - height
+  - width
+  - carouselList
+  - templateDetails
+- entity: rcs_update_template_richcard
+  source: openapi/route-mobile-rcs.yml
+  fields: 6
+  field_names:
+  - name
+  - type
+  - orientation
+  - height
+  - standAlone
+  - templateDetails
+- entity: rcs_update_template_text
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - name
+  - type
+  - textMessageContent
+  - suggestions
+  - templateDetails
+- entity: rcs_update_template_text_with_pdf
+  source: openapi/route-mobile-rcs.yml
+  fields: 5
+  field_names:
+  - name
+  - type
+  - textMessageContent
+  - suggestions
+  - templateDetails
+- entity: rcs_upload_file_text_msg
+  source: openapi/route-mobile-rcs.yml
+  fields: 2
+  field_names:
+  - bot_name
+  - file
+- entity: v1_login_body
+  source: openapi/route-mobile-rcs.yml
+  fields: 2
+  field_names:
+  - password
+  - username
+- entity: AccountDetailRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: AccountDetailResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - user_details
+- entity: AddSmtpRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: AddSmtpResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 4
+  field_names:
+  - status
+  - message
+  - smtp_user_name
+  - smtp_password
+- entity: AddWebhookRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: Attachment
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - type
+  - name
+  - content
+- entity: AuthFields
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - owner_id
+  - token
+- entity: CheckSendingDomainResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 5
+  field_names:
+  - status
+  - domain
+  - dkim
+  - spf
+  - valid_signing
+- entity: CheckTrackingDomainResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 4
+  field_names:
+  - status
+  - domain
+  - valid_tracking
+  - cname
+- entity: ClickData
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - ip
+  - ua
+  - time
+- entity: DomainRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: EditSmtpRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: EditWebhookRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: EmbeddedImage
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - type
+  - name
+  - content
+- entity: ErrorResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 4
+  field_names:
+  - status
+  - code
+  - name
+  - message
+- entity: KeyResetWebhookResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 4
+  field_names:
+  - status
+  - message
+  - webhook_id
+  - key
+- entity: ListSendingDomainResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - sending_domain_list
+- entity: ListSmtpRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: ListSmtpResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - smtp_list
+- entity: ListTrackingDomainResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - tracking_domain_list
+- entity: ListWebhookResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - webhook_list
+- entity: MessageHeaders
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 9
+  field_names:
+  - Reply-To
+  - X-Unique-Id
+  - X-STes-TrackOpen
+  - X-STes-TrackClick
+  - X-STes-Autotext
+  - X-STes-AutoHtml
+  - X-STes-TrackingDomain
+  - X-STes-SigningDomain
+  - X-STes-ReturnPathDomain
+- entity: MessageInfoEntry
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 12
+  field_names:
+  - subject
+  - sender
+  - email
+  - sendFrom
+  - mailSize
+  - attchSize
+  - status
+  - time
+  - open
+  - openData
+  - click
+  - clickData
+- entity: MessageInfoRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: MessageInfoResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - message_data
+- entity: OpenData
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - ip
+  - ua
+  - time
+- entity: Recipient
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - email
+  - name
+  - type
+- entity: ResetSmtpPasswordRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: ResetSmtpPasswordResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 4
+  field_names:
+  - status
+  - message
+  - smtp_user_name
+  - smtp_password
+- entity: SendMailMessage
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 9
+  field_names:
+  - html
+  - text
+  - subject
+  - from_email
+  - from_name
+  - to
+  - headers
+  - attachments
+  - images
+- entity: SendMailRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: SendMailResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - message
+- entity: SendTemplateRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: SendingDomainListEntry
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 5
+  field_names:
+  - domain
+  - create_date
+  - dkim
+  - spf
+  - verify_domain
+- entity: SmtpUser
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 5
+  field_names:
+  - smtp_user_name
+  - password
+  - status
+  - total_limit
+  - hourly_limit
+- entity: SuccessResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - message
+- entity: TemplateMessage
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 9
+  field_names:
+  - template_id
+  - subject
+  - from_email
+  - from_name
+  - to
+  - headers
+  - dynamic_value
+  - attachments
+  - images
+- entity: TrackingDomainListEntry
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 3
+  field_names:
+  - domain
+  - create_date
+  - cname
+- entity: VerifySendingDomainRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: WebhookIdRequest
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 0
+  field_names: []
+- entity: WebhookInfoResponse
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 2
+  field_names:
+  - status
+  - webhook_data
+- entity: WebhookListEntry
+  source: openapi/route-mobile-sendclean-email.yml
+  fields: 7
+  field_names:
+  - webhook_id
+  - url
+  - event
+  - key
+  - store_log
+  - description
+  - create_date
+- entity: BulkSmsRequest
+  source: openapi/route-mobile-sms.yml
+  fields: 1
+  field_names:
+  - request
+- entity: Metadata
+  source: openapi/route-mobile-sms.yml
+  fields: 3
+  field_names:
+  - campaignType
+  - timestamp
+  - messageId
+- entity: MoengageResponse
+  source: openapi/route-mobile-sms.yml
+  fields: 4
+  field_names:
+  - success
+  - messageid
+  - mobileno
+  - error
+- entity: SmsData
+  source: openapi/route-mobile-sms.yml
+  fields: 3
+  field_names:
+  - toNumber
+  - fromNumber
+  - body
+- entity: SmsItem
+  source: openapi/route-mobile-sms.yml
+  fields: 7
+  field_names:
+  - username
+  - password
+  - source
+  - destination
+  - type
+  - dlr
+  - message
+- entity: WebengageRequest
+  source: openapi/route-mobile-sms.yml
+  fields: 3
+  field_names:
+  - version
+  - smsData
+  - metadata
+- entity: WebengageResponse
+  source: openapi/route-mobile-sms.yml
+  fields: 1
+  field_names:
+  - status
+- entity: inline_response_201_2
+  source: openapi/route-mobile-viber.yml
+  fields: 2
+  field_names:
+  - JWTAUTH
+  - user_data
+- entity: inline_response_201_2_user_data
+  source: openapi/route-mobile-viber.yml
+  fields: 11
+  field_names:
+  - username
+  - first_name
+  - last_name
+  - email
+  - phone_number
+  - password_reset
+  - is_active
+  - is_staff
+  - ip
+  - child_user
+  - parent_username
+- entity: v1_login_body
+  source: openapi/route-mobile-viber.yml
+  fields: 2
+  field_names:
+  - password
+  - username
+- entity: vbs_400_campaign_short_name
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_incorrect_message_method
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_incorrect_message_type
+  source: openapi/route-mobile-viber.yml
+  fields: 3
+  field_names:
+  - status
+  - message
+  - details
+- entity: vbs_400_invalid_button_link
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_button_text
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_image_url
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_phone_number
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_thumbnail_url
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_invalid_time_duration
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_unsupported_file_format
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_400_unsupported_video_file
+  source: openapi/route-mobile-viber.yml
+  fields: 1
+  field_names:
+  - error
+- entity: vbs_bulk_fallback_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_file_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_image_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_text_button_image_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_text_button_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - schedule_datetime
+  - timezone
+  - payload
+- entity: vbs_bulk_text_template_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_textimage_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_video_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_bulk_video_text_action_button_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - schedule_datetime
+  - timezone
+  - payload
+- entity: vbs_bulk_video_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - schedule_datetime
+  - timezone
+  - payload
+- entity: vbs_callback_delivery_report
+  source: openapi/route-mobile-viber.yml
+  fields: 5
+  field_names:
+  - message_status
+  - message_time
+  - phone_number
+  - service_type
+  - request_id
+- entity: vbs_callback_incoming_text
+  source: openapi/route-mobile-viber.yml
+  fields: 5
+  field_names:
+  - phone_number
+  - time
+  - message
+  - service_type
+  - request_id
+- entity: vbs_callback_incoming_videoimage
+  source: openapi/route-mobile-viber.yml
+  fields: 5
+  field_names:
+  - phone_number
+  - time
+  - message
+  - service_type
+  - request_id
+- entity: vbs_campaign_fallback_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_campaign_file_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_image_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_text_button
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_text_button_image
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_text_template_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_campaign_textimage_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - payload
+- entity: vbs_campaign_video_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_campaign_video_text_action_button_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - file_code
+  - campaign_name
+  - personalised
+  - schedule_datetime
+  - timezone
+  - payload
+- entity: vbs_campaign_video_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - campaign_id
+  - campaign_action
+  - campaign_name
+  - ttl
+  - file_mimetype
+  - filename
+  - payload
+- entity: vbs_report_create
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - start_date
+  - end_date
+  - filters
+  - projections
+- entity: vbs_single_fallback_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 8
+  field_names:
+  - phone
+  - message_type
+  - method
+  - text
+  - tracking_data
+  - fallback_channel
+  - fallback_whatsapp
+  - fallback_sms
+- entity: vbs_single_file_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - phone
+  - message_type
+  - method
+  - ttl
+  - file_url
+  - file_name
+- entity: vbs_single_image_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 5
+  field_names:
+  - phone
+  - img
+  - ttl
+  - message_type
+  - method
+- entity: vbs_single_otp_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - phone
+  - message_type
+  - method
+  - template
+- entity: vbs_single_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - phone
+  - text
+  - message_type
+  - method
+- entity: vbs_single_text_template_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 5
+  field_names:
+  - phone
+  - message_type
+  - method
+  - text
+  - tracking_data
+- entity: vbs_single_textbutton_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - phone
+  - text
+  - button_text
+  - button_link
+  - message_type
+  - method
+- entity: vbs_single_textbuttonimg_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 8
+  field_names:
+  - phone
+  - text
+  - button_text
+  - button_link
+  - img
+  - ttl
+  - message_type
+  - method
+- entity: vbs_single_textimage_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - phone
+  - message_type
+  - method
+  - img
+  - text
+  - tracking_data
+- entity: vbs_single_video_button_text_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - phone
+  - message_type
+  - method
+  - video
+  - text
+  - thumbnail_url
+  - button_text
+- entity: vbs_single_video_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - phone
+  - message_type
+  - method
+  - ttl
+  - video
+  - thumbnail_url
+- entity: vbs_single_video_text_action_button_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 7
+  field_names:
+  - phone
+  - message_type
+  - method
+  - video
+  - text
+  - thumbnail_url
+  - button
+- entity: vbs_single_videotext_msg
+  source: openapi/route-mobile-viber.yml
+  fields: 6
+  field_names:
+  - phone
+  - video
+  - text
+  - ttl
+  - message_type
+  - method
+- entity: vbs_template_create
+  source: openapi/route-mobile-viber.yml
+  fields: 4
+  field_names:
+  - template_name
+  - template_syntax
+  - message_type
+  - operator_template_id
+- entity: BulkUploadRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - campaign_type
+  - file
+  - file_mimetype
+  - filename
+  - message
+- entity: BulkUploadResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 11
+  field_names:
+  - message
+  - campaign_id
+  - file_type
+  - file_size
+  - total_records
+  - valid_records
+  - duplicate records
+  - campaign_type
+  - message_preview
+  - asynchronous
+  - country_code
+- entity: CallbackBusinessSingleProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contact_no
+  - data
+  - time
+  - source
+- entity: CallbackFailedDeliveryReport
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - statuses
+- entity: CallbackIncomingAudio
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingDocument
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - apiKey
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingImage
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - apiKey
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingInteractiveList
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contacts
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingLocation
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contacts
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingQuickReply
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - contacts
+  - messages
+- entity: CallbackIncomingText
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - messages
+  - contacts
+  - brand_msisdn
+  - request_id
+- entity: CallbackIncomingVideo
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CallbackMultiProductCart
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contact_no
+  - data
+  - time
+  - source
+- entity: CallbackReadReceipt
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - display_no
+  - statuses
+  - brand_msisdn
+- entity: CallbackSentDeliveryReport
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - statuses
+  - brand_msisdn
+- entity: CallbackSingleProductCart
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contact_no
+  - data
+  - time
+  - source
+- entity: CallbackTemplateQuickReply
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contacts
+  - messages
+  - brand_msisdn
+  - request_id
+- entity: CampaignAcceptedResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - status
+  - message
+- entity: CampaignAuthError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - status
+  - message
+  - reason
+- entity: CampaignBadRequestError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - status
+  - message
+  - reason
+- entity: CampaignDetail
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 15
+  field_names:
+  - campaign_id
+  - campaign_name
+  - campaign_status
+  - campaign_type
+  - delivered
+  - failed
+  - message_payload
+  - message_type
+  - process_end_timestamp
+  - process_start_timestamp
+  - read
+  - scheduled_time
+  - sent
+  - submit
+  - user_name
+- entity: CampaignDetailsResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - result
+- entity: CampaignMessagePayload
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - country_code
+  - media
+  - phone
+- entity: CampaignMessagePayloadMedia
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - lang_code
+  - template_name
+  - type
+- entity: CampaignPayload
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - type
+- entity: CampaignReportFilters
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - campaign_id
+  - campaign_name
+  - end_date
+  - start_date
+- entity: CatalogAuthError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: CatalogUnauthorizedError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - response
+- entity: CatalogUploadRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - action
+  - file
+  - file_name
+- entity: CreateCampaignReportRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - csv_max_lines
+  - filters
+  - projections
+- entity: CreateProductFeedRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - file_url
+  - name
+  - schedule
+- entity: CreateReportRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - csv_max_lines
+  - filters
+  - projections
+- entity: CreateTemplateAuthAutofill
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateAuthCopyCode
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateCallToAction
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateCarousel
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateCatalog
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateCopyCode
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateFlow
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateLimitedTimeOffer
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateMedia
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateMultiProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplatePaymentOrder
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateQuickReply
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: CreateTemplateRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - components
+  - language
+  - template_category
+  - template_name
+  - template_type
+- entity: CreateTemplateText
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: DeleteProductFeedRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - product_feed_id
+- entity: DeleteProductFeedRequestAlt
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - product_feed_id
+- entity: FetchProductFeedResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 9
+  field_names:
+  - file_url
+  - product_feed_id
+  - name
+  - id
+  - price
+  - description
+  - retailer_id
+  - next_url
+  - prev_url
+- entity: FileMimetypeError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: IncorrectCampaignIdError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: IncorrectPayloadTypeError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: InvalidEndDateError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - status
+  - errors
+- entity: InvalidStartDateError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - status
+  - errors
+- entity: JwtExpiredError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - reason
+  - status
+- entity: LoginRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - password
+  - username
+- entity: LoginResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - JWTAUTH
+  - user_data
+- entity: LoginUserData
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 11
+  field_names:
+  - username
+  - first_name
+  - last_name
+  - email
+  - phone_number
+  - password_reset
+  - is_active
+  - is_staff
+  - ip
+  - child_user
+  - parent_username
+- entity: MessageAcceptedResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - request_id
+- entity: MessageAuthError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: MessageBadRequestError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: MessageNotFoundError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - message
+- entity: MessagePreview
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: MessagePreviewMedia
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - type
+  - template_name
+  - lang_code
+  - header
+  - body
+- entity: MessagePreviewMediaBody
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - text
+- entity: MessagePreviewMediaHeader
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - image
+- entity: MessagePreviewMediaImage
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - link
+- entity: NotFoundError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - message
+- entity: OptinStoreResponse
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - status
+  - message
+  - details
+- entity: OptinValidationError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - error
+- entity: OptinValidationErrorDetail
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - msisdn
+- entity: PauseCampaignRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - campaign_action
+  - campaign_id
+- entity: ProfilePhotoRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - file
+- entity: ReportFilters
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - end_date
+  - start_date
+- entity: ResumeCampaignRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - campaign_action
+  - campaign_id
+- entity: SendSessionAudio
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - media
+  - extra
+- entity: SendSessionDocument
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - media
+  - extra
+- entity: SendSessionFlow
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - type
+  - header
+  - footer
+  - body
+  - flow
+- entity: SendSessionImage
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - media
+  - extra
+- entity: SendSessionInteractiveList
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendSessionLocation
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - media
+  - extra
+- entity: SendSessionMultiProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - catalog
+- entity: SendSessionOrderStatus
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - payment
+  - extra
+- entity: SendSessionPaymentLink
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - image
+  - payment
+  - extra
+- entity: SendSessionPaymentPayU
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - image
+  - payment
+  - extra
+- entity: SendSessionPaymentRazorpay
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - image
+  - payment
+  - extra
+- entity: SendSessionPaymentUPI
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - image
+  - payment
+  - extra
+- entity: SendSessionPaymentWithCatalog
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - image
+  - payment
+  - extra
+- entity: SendSessionPaymentWithoutCatalog
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 6
+  field_names:
+  - phone
+  - enable_acculync
+  - body
+  - footer
+  - payment
+  - extra
+- entity: SendSessionQuickReplyMedia
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendSessionQuickReplyText
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendSessionSingleProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - catalog
+- entity: SendSessionText
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - text
+  - enable_acculync
+  - extra
+- entity: SendSessionTextPreviewUrl
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - phone
+  - text
+  - preview_url
+  - enable_acculync
+  - extra
+- entity: SendSessionTextReplyTo
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - phone
+  - text
+  - reply_to
+  - enable_acculync
+  - extra
+- entity: SendSessionVideo
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - media
+  - extra
+- entity: SendTemplateAuthAutofill
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - phone
+  - media
+- entity: SendTemplateAuthCopyCode
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - phone
+  - media
+- entity: SendTemplateCarousel
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateCatalogThumbnail
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateCouponCode
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateFlow
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateLimitedTimeOffer
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateMediaDocument
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendTemplateMediaImage
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendTemplateMediaVideo
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendTemplateMultiProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplatePayment
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateQuickReply
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - enable_acculync
+  - extra
+  - media
+- entity: SendTemplateText
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: SendTemplateTextWithHeader
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - phone
+  - extra
+  - enable_acculync
+  - media
+- entity: StartCampaignRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 7
+  field_names:
+  - campaign_action
+  - campaign_id
+  - campaign_name
+  - file_mimetype
+  - filename
+  - payload
+  - scheduled_time
+- entity: TemplateButtonElement
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - contact_no
+  - label
+  - type
+  - website
+- entity: TemplateComponentBody
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - text
+- entity: TemplateComponentButtons
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - elements
+  - type
+- entity: TemplateComponentFooter
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 1
+  field_names:
+  - text
+- entity: TemplateComponentHeader
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - example
+  - type
+- entity: TemplateComponents
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 4
+  field_names:
+  - body
+  - buttons
+  - footer
+  - header
+- entity: UnknownCampaignTypeError
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - message
+  - status
+  - reason
+- entity: UpdateProductFeedRequest
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 3
+  field_names:
+  - file_url
+  - product_feed_id
+  - schedule
+- entity: UpdateTemplateAuthAutofill
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: UpdateTemplateCarousel
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: UpdateTemplateCatalog
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: UpdateTemplateCopyCode
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: UpdateTemplateExample
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 2
+  field_names:
+  - template_name
+  - components
+- entity: UpdateTemplateLimitedTimeOffer
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+- entity: UpdateTemplateMultiProduct
+  source: openapi/route-mobile-whatsapp-business.yml
+  fields: 5
+  field_names:
+  - template_name
+  - language
+  - template_type
+  - template_category
+  - components
+relationships:
+- from: inline_response_201_2
+  to: inline_response_201_2_user_data
+  kind: has_one
+  via: user_data
+  source: openapi/route-mobile-rcs.yml
+- from: AccountDetailRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: AddSmtpRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: AddWebhookRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: DomainRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: EditSmtpRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: EditWebhookRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ListSendingDomainResponse
+  to: SendingDomainListEntry
+  kind: has_many
+  via: sending_domain_list
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ListSmtpRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ListSmtpResponse
+  to: SmtpUser
+  kind: has_many
+  via: smtp_list
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ListTrackingDomainResponse
+  to: TrackingDomainListEntry
+  kind: has_many
+  via: tracking_domain_list
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ListWebhookResponse
+  to: WebhookListEntry
+  kind: has_many
+  via: webhook_list
+  source: openapi/route-mobile-sendclean-email.yml
+- from: MessageInfoEntry
+  to: ClickData
+  kind: has_one
+  via: clickData
+  source: openapi/route-mobile-sendclean-email.yml
+- from: MessageInfoEntry
+  to: OpenData
+  kind: has_one
+  via: openData
+  source: openapi/route-mobile-sendclean-email.yml
+- from: MessageInfoRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: MessageInfoResponse
+  to: MessageInfoEntry
+  kind: has_many
+  via: message_data
+  source: openapi/route-mobile-sendclean-email.yml
+- from: ResetSmtpPasswordRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailMessage
+  to: Attachment
+  kind: has_many
+  via: attachments
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailMessage
+  to: EmbeddedImage
+  kind: has_many
+  via: images
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailMessage
+  to: MessageHeaders
+  kind: has_one
+  via: headers
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailMessage
+  to: Recipient
+  kind: has_many
+  via: to
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendMailRequest
+  to: SendMailMessage
+  kind: has_one
+  via: message
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendTemplateRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: SendTemplateRequest
+  to: TemplateMessage
+  kind: has_one
+  via: message
+  source: openapi/route-mobile-sendclean-email.yml
+- from: TemplateMessage
+  to: Attachment
+  kind: has_many
+  via: attachments
+  source: openapi/route-mobile-sendclean-email.yml
+- from: TemplateMessage
+  to: EmbeddedImage
+  kind: has_many
+  via: images
+  source: openapi/route-mobile-sendclean-email.yml
+- from: TemplateMessage
+  to: MessageHeaders
+  kind: has_one
+  via: headers
+  source: openapi/route-mobile-sendclean-email.yml
+- from: TemplateMessage
+  to: Recipient
+  kind: has_many
+  via: to
+  source: openapi/route-mobile-sendclean-email.yml
+- from: VerifySendingDomainRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: WebhookIdRequest
+  to: AuthFields
+  kind: has_one
+  via: $ref
+  source: openapi/route-mobile-sendclean-email.yml
+- from: BulkSmsRequest
+  to: SmsItem
+  kind: has_many
+  via: request
+  source: openapi/route-mobile-sms.yml
+- from: WebengageRequest
+  to: Metadata
+  kind: has_one
+  via: metadata
+  source: openapi/route-mobile-sms.yml
+- from: WebengageRequest
+  to: SmsData
+  kind: has_one
+  via: smsData
+  source: openapi/route-mobile-sms.yml
+- from: BulkUploadResponse
+  to: MessagePreview
+  kind: has_one
+  via: message_preview
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CampaignDetail
+  to: CampaignMessagePayload
+  kind: has_one
+  via: message_payload
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CampaignDetailsResponse
+  to: CampaignDetail
+  kind: has_many
+  via: result
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CampaignMessagePayload
+  to: CampaignMessagePayloadMedia
+  kind: has_one
+  via: media
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CreateCampaignReportRequest
+  to: CampaignReportFilters
+  kind: has_one
+  via: filters
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CreateReportRequest
+  to: ReportFilters
+  kind: has_one
+  via: filters
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: CreateTemplateRequest
+  to: TemplateComponents
+  kind: has_one
+  via: components
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: LoginResponse
+  to: LoginUserData
+  kind: has_one
+  via: user_data
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: MessagePreview
+  to: MessagePreviewMedia
+  kind: has_one
+  via: media
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: MessagePreviewMedia
+  to: MessagePreviewMediaBody
+  kind: has_many
+  via: body
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: MessagePreviewMedia
+  to: MessagePreviewMediaHeader
+  kind: has_many
+  via: header
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: MessagePreviewMediaHeader
+  to: MessagePreviewMediaImage
+  kind: has_one
+  via: image
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: OptinValidationError
+  to: OptinValidationErrorDetail
+  kind: has_one
+  via: error
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: StartCampaignRequest
+  to: CampaignPayload
+  kind: has_one
+  via: payload
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: TemplateComponentButtons
+  to: TemplateButtonElement
+  kind: has_many
+  via: elements
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: TemplateComponents
+  to: TemplateComponentBody
+  kind: has_one
+  via: body
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: TemplateComponents
+  to: TemplateComponentButtons
+  kind: has_one
+  via: buttons
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: TemplateComponents
+  to: TemplateComponentFooter
+  kind: has_one
+  via: footer
+  source: openapi/route-mobile-whatsapp-business.yml
+- from: TemplateComponents
+  to: TemplateComponentHeader
+  kind: has_one
+  via: header
+  source: openapi/route-mobile-whatsapp-business.yml

@@ -1,0 +1,81 @@
+generated: '2026-07-25'
+method: searched
+source: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+description: >-
+  Route Mobile operates NO separate sandbox environment: there is no test-mode host, no
+  test-vs-live key prefix, and no magic test destination numbers of the kind comms peers
+  publish. Testing happens against production credentials, with two real mechanisms — the
+  interactive request console embedded in the ReadMe reference documentation, and RCS tester
+  enrolment, which allowlists a handset so an unlaunched RCS agent can be exercised end to end.
+sandbox_environment:
+  separate_host: false
+  test_mode: false
+  test_key_prefix: null
+  magic_test_values: []
+  detail: >-
+    All five products are exercised against the production hosts (api.rmlconnect.net,
+    apis.rmlconnect.net, api.sendclean.net) with live account credentials; sends consume real
+    account credit.
+console:
+  type: interactive request console
+  url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  detail: >-
+    The ReadMe-hosted API reference ships a Try It / Playground panel on every operation page,
+    with prefilled request examples and generated code samples in curl, Python, Node, Java and
+    PHP (declared as x-readme.samples-languages in the OpenAPI definitions). Anonymous readers
+    can inspect and edit requests; executing one requires live credentials.
+  anonymous_read: true
+  requires_credentials_to_execute: true
+test_mechanisms:
+- name: RCS tester enrolment
+  product: RCS Business Messaging
+  operations:
+  - openapi/route-mobile-rcs.yml#ManagementRCS
+  - openapi/route-mobile-rcs.yml#managementRCS
+  endpoints:
+  - POST https://apis.rmlconnect.net/rcs/management/v1/add_tester
+  - GET https://apis.rmlconnect.net/rcs/management/v1/get_testers
+  docs: https://developer.rmlconnect.net/route-mobile-project/docs/make-a-tester
+  detail: >-
+    Registers a phone number as a tester for an RCS bot so the agent can be validated before
+    launch. Route Mobile documents the India case explicitly: a brand can register an Indian
+    number as a tester to sanity-check a bot destined for the US or Germany when a local number
+    is unavailable.
+- name: RCS capability check
+  product: RCS Business Messaging
+  operations:
+  - openapi/route-mobile-rcs.yml#checkBulkCapability
+  - openapi/route-mobile-rcs.yml#getCapabilityDetails
+  detail: >-
+    Verifies that a handset can actually receive RCS before a campaign runs — the pre-flight
+    check that stands in for a test send.
+- name: SendClean sending-domain verification
+  product: SendClean Email
+  operations:
+  - openapi/route-mobile-sendclean-email.yml#checkSendingDomain
+  - openapi/route-mobile-sendclean-email.yml#verifySendingDomain
+  - openapi/route-mobile-sendclean-email.yml#checkTrackingDomain
+  detail: >-
+    DKIM/SPF and tracking-CNAME verification calls that validate configuration without sending
+    production mail.
+- name: SendClean webhook handshake
+  product: SendClean Email
+  detail: >-
+    A registered webhook URL must return the literal string "God bless you, SendClean" to pass
+    validation — the platform's built-in endpoint self-test.
+  operation: openapi/route-mobile-sendclean-email.yml#addWebhook
+- name: Postman collections
+  product: all
+  detail: >-
+    First-party Postman collections for SMS, WhatsApp, RCS, Viber, email and Enterprise Voice
+    are published in the routemobile GitHub organization and in the public Postman workspace;
+    they are the practical way to drive a first call.
+  url: https://www.postman.com/routemobile/route-mobile-s-public-workspace
+credit_semantics:
+  detail: >-
+    Because there is no test mode, credit exhaustion is a live failure mode: SMS platform code
+    1025 (insufficient credit) aborts a batch mid-flight, and the balance can be checked with
+    openapi/route-mobile-sms.yml#checkCredits before a run.
+related:
+  conventions: conventions/route-mobile-conventions.yml
+  errors: errors/route-mobile-error-codes.yml

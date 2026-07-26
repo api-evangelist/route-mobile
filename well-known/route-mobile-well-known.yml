@@ -1,0 +1,54 @@
+generated: '2026-07-25'
+method: searched
+description: >-
+  Route Mobile publishes NO /.well-known/ discovery documents. Every candidate path was probed
+  on all three API hosts, the ReadMe docs host and the corporate site. Two hosts answer 200 for
+  any path — api.sendclean.net returns a catch-all JSON error body
+  ({"status":"error","code":-1,"type":"InvalidRequest","message":"Page not found"}) and
+  developer.rmlconnect.net returns the ReadMe single-page-app HTML shell — so those 200s are
+  soft-404s, not documents. Nothing was saved; no WellKnown or SecurityTxt pointer is emitted.
+documents: []
+probes:
+- host: https://api.rmlconnect.net
+  results:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://apis.rmlconnect.net
+  results:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://api.sendclean.net
+  note: catch-all returns HTTP 200 with a JSON "Page not found" error body for every path
+  results:
+  - {path: /.well-known/security.txt, status: 200, real_document: false}
+  - {path: /.well-known/openid-configuration, status: 200, real_document: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, real_document: false}
+  - {path: /.well-known/api-catalog, status: 200, real_document: false}
+  - {path: /.well-known/ai-plugin.json, status: 200, real_document: false}
+- host: https://developer.rmlconnect.net
+  note: ReadMe SPA returns HTTP 200 with the docs HTML shell for unknown paths
+  results:
+  - {path: /.well-known/security.txt, status: 200, real_document: false}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 200, real_document: false}
+- host: https://routemobile.com
+  results:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+agent_discovery:
+  llms_txt: https://developer.rmlconnect.net/llms.txt
+  note: >-
+    The one machine-readable discovery surface Route Mobile does publish is a ReadMe-generated
+    llms.txt indexing roughly 300 documentation and reference pages, harvested verbatim to
+    llms/route-mobile-llms.txt.

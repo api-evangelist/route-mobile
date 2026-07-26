@@ -1,0 +1,138 @@
+generated: '2026-07-25'
+method: searched
+source: https://developer.rmlconnect.net/route-mobile-project/docs/
+derived_from:
+- openapi/route-mobile-sms.yml
+- openapi/route-mobile-whatsapp-business.yml
+- openapi/route-mobile-rcs.yml
+- openapi/route-mobile-viber.yml
+- openapi/route-mobile-sendclean-email.yml
+description: >-
+  Cross-cutting request/response semantics for the Route Mobile platform. Route Mobile is a
+  five-product estate assembled from separate engineering lineages (legacy SGN SMS, the Meta
+  WhatsApp stack, RCS, Viber, and the acquired SendClean email platform), and the conventions
+  are NOT uniform across them: authentication, transport shape, error envelope and even the
+  HTTP verb style differ per product. Agents and SDK authors must treat each product as its
+  own contract rather than assuming a shared platform convention.
+authentication:
+  uniform: false
+  by_product:
+  - api: Route Mobile SMS API
+    style: query-parameter credentials
+    detail: >-
+      `username` and `password` are passed as URL query parameters on every GET request over
+      HTTPS. A separate `/bulksms/generatetoken` operation mints a short-lived token used by
+      `/bulksms/bulksubmit`. The MoEngage and WebEngage integration endpoints instead use a
+      static `Authorization` header token issued by Route Mobile.
+  - api: Route Mobile WhatsApp Business API
+    style: bearer JWT
+    detail: >-
+      `POST /auth/v1/login/` returns a JWT presented as `Authorization: Bearer <token>`.
+      Tokens expire after one hour by default.
+  - api: Route Mobile RCS / Viber
+    style: JWT in Authorization header
+    detail: >-
+      `POST /auth/v1/login/` on apis.rmlconnect.net returns a JWT carried in the
+      `Authorization` header (declared in the specs as an apiKey-in-header scheme).
+  - api: SendClean Email API
+    style: credentials in request body
+    detail: >-
+      Every operation is an HTTP POST carrying `owner_id` and `token` inside the JSON body —
+      no Authorization header at all. The single HTTP GET operation
+      (`/messages/sendTemplateHTTPGet`) carries the same pair as URL-encoded query parameters.
+  profile: authentication/route-mobile-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No idempotency key, request-deduplication window, or replay-safe retry token is documented
+    on any Route Mobile product. The SMS documentation explicitly instructs clients NOT to
+    retry on any code except 1709, and for the 1715 (response timeout) case says "do not
+    re-submit the same message" — a duplicate-send hazard that an idempotency key would remove.
+    Recorded as a genuine gap; no Idempotency pointer is emitted for this provider.
+pagination:
+  uniform: false
+  styles:
+  - api: SendClean Email API
+    style: offset
+    params: [skip_page]
+    detail: '`skip_page` is a record-skip offset on `/messages/getMessageInfo`.'
+  - api: RCS Template API
+    style: page-number
+    params: [page_no, limit]
+    detail: Template listing is paged with `page_no` plus `limit`.
+  - api: Viber / WhatsApp reports
+    style: date-range windows
+    params: [from_date, to_date]
+    detail: >-
+      Reporting operations page by date range rather than cursor; large reports are generated
+      asynchronously (create report -> poll fetch -> download).
+  cursors: false
+field_expansion:
+  supported: false
+  detail: No expand/fields/sparse-fieldset parameter is documented on any product.
+metadata:
+  supported: partial
+  detail: >-
+    SendClean supports a caller-supplied `X-Unique-Id` header on send operations, which is the
+    key later used to retrieve delivery/engagement data from `/messages/getMessageInfo`.
+    The messaging products echo a platform-generated `message_id` / `request_id` instead.
+request_tracing:
+  headers: [X-Unique-Id]
+  correlation_fields: [message_id, request_id, session_id, submit_id]
+  detail: >-
+    RCS and Viber callbacks carry `request_id` and `session_id`; SMS returns a `message_id`
+    per destination in the pipe-delimited response; SendClean lets the caller set the
+    correlation id via `X-Unique-Id`.
+versioning:
+  scheme: uri-path
+  detail: >-
+    Versions are embedded in the path per product and per service, not platform-wide —
+    `/auth/v1/login/`, `/wba/v1/messages`, `/wba/v2/upload`, `/rcs/v1/message`,
+    `/rcs/file_server/v2/uploadfile`, `/vbs/api/v2/send`, `/vbs/api/v3/send_bulk`, and the
+    SendClean base path `https://api.sendclean.net/v1.0`. Several products run two path
+    versions concurrently. No version header, no date-pinned version train.
+  spec_versions:
+    sms: 1.0.0
+    whatsapp-business: 1.8.0
+    rcs: 2.1.0
+    viber: 1.5.0
+    sendclean-email: 1.0.0
+error_envelope:
+  uniform: false
+  detail: >-
+    Three shapes coexist: pipe-delimited plain text with a numeric prefix (SMS), a
+    `{status, message}` JSON object (WhatsApp/RCS/Viber), and a `{status, code, name, message}`
+    JSON object always returned with HTTP 200 (SendClean). No RFC 9457 problem+json anywhere.
+  catalog: errors/route-mobile-error-codes.yml
+rate_limit_signaling:
+  status_code: 429
+  headers: []
+  detail: >-
+    HTTP 429 is declared on the RCS, Viber and WhatsApp operations, and SendClean documents
+    per-minute/hour/day request quotas, but no RateLimit/X-RateLimit/Retry-After response
+    headers are documented on any product — clients learn their limit only by hitting it.
+  artifact: rate-limits/route-mobile-rate-limits.yml
+webhooks:
+  supported: true
+  artifact: asyncapi/route-mobile-webhooks.yml
+  signature:
+    algorithm: HMAC-SHA1
+    header: X-SendCleanTES-SIGNATURE
+    scope: SendClean email webhooks only
+    detail: >-
+      SendClean signs webhook POSTs and exposes a key-rotation operation
+      (`keyResetWebhook`); the messaging-product callbacks (WhatsApp, RCS, Viber) document no
+      signature scheme — verification relies on the secrecy of the callback URL and on an
+      optional bearer token the client requires on its own endpoint.
+media_upload:
+  detail: >-
+    Each messaging product has its own upload path returning a media/file id that is then
+    referenced by the send operation — `/wba/v2/upload` and `/wba/media/v1/get-media-id`
+    (WhatsApp), `/rcs/file_server/v2/uploadfile` (RCS), `/vbs/api/v2/upload` (Viber).
+related:
+  authentication: authentication/route-mobile-authentication.yml
+  errors: errors/route-mobile-error-codes.yml
+  problem_types: errors/route-mobile-problem-types.yml
+  lifecycle: lifecycle/route-mobile-lifecycle.yml
+  rate_limits: rate-limits/route-mobile-rate-limits.yml

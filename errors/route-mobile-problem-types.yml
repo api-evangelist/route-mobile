@@ -1,0 +1,188 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/route-mobile-rcs.yml, openapi/route-mobile-sendclean-email.yml, openapi/route-mobile-sms.yml,
+  openapi/route-mobile-viber.yml, openapi/route-mobile-whatsapp-business.yml
+format: provider-specific
+notes: Route Mobile does not use RFC 9457 application/problem+json. Errors are returned as product-specific
+  JSON envelopes (status/message, or status/code/name/message for SendClean) and, for the SMS API, as
+  a pipe-delimited plain-text string prefixed with a numeric platform code. See errors/route-mobile-error-codes.yml
+  for the numeric code registry harvested from the documentation.
+summary:
+  problem_responses: 36
+  by_status:
+    '400': 12
+    '401': 8
+    '403': 3
+    '404': 6
+    '422': 1
+    '429': 2
+    '500': 4
+problems:
+- status: 400
+  title: Bad Request
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#textTemplate
+- status: 400
+  title: Invalid parameters.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#generateOtp
+- status: 400
+  title: Invalid date/time or parameter format.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#scheduleSms
+- status: 400
+  title: Bad request / parameter error.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendAcculyncSms
+- status: 400
+  title: Invalid JSON or parameter error.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendJsonBulkSms
+- status: 400
+  title: Bad request / parameter mismatch.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendPersonalisedSms
+- status: 400
+  title: Bad request / missing parameters.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendSmsSecured
+- status: 400
+  title: Bad request / encoding or parameter error.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendUnicodeAcculyncSms
+- status: 400
+  title: Invalid payload.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#submitWebengageSms
+- status: 400
+  title: Invalid OTP or missing parameters.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#verifyOtp
+- status: 400
+  title: Bad Request
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#singleVideoText
+- status: 400
+  title: Bad Request
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#sendBulkCampaign
+- status: 401
+  title: Unauthorized
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#bulkCampaignUploadRCS
+- status: 401
+  title: Authentication Failure
+  media_types:
+  - application/json
+  - application/xml
+  source_operation: openapi/route-mobile-rcs.yml#textTemplate
+- status: 401
+  title: Authentication failure.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendSmsSecured
+- status: 401
+  title: Invalid Authorization header.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#submitMoengageSms
+- status: 401
+  title: Invalid or expired token.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#submitSmsWithToken
+- status: 401
+  title: Authentication Failure
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#singleVideoText
+- status: 401
+  title: Unauthorized
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fileUpload
+- status: 401
+  title: Authentication Failure
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#sendBulkCampaign
+- status: 403
+  title: Forbidden
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#loginApi2
+- status: 403
+  title: Forbidden
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#loginApi2
+- status: 403
+  title: Forbidden
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#loginApi
+- status: 404
+  title: Not Found
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#bulkCampaignUploadRCS
+- status: 404
+  title: Page Not Found
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#textTemplate
+- status: 404
+  title: Report not found
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#downloadReport
+- status: 404
+  title: Page Not Found
+  media_types:
+  - application/xml
+  source_operation: openapi/route-mobile-viber.yml#singleVideoText
+- status: 404
+  title: Page Not Found
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fileUpload
+- status: 404
+  title: Not Found
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#optindownload
+- status: 422
+  title: Unprocessable Entity (WebDAV)
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fileUpload
+- status: 429
+  title: Too Many Requests
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#loginApi2
+- status: 429
+  title: Too Many Requests
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#viberClientCallback
+- status: 500
+  title: Internal Server Error
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-rcs.yml#loginApi2
+- status: 500
+  title: Internal server error. Please contact support if this persists.
+  media_types: []
+  source_operation: openapi/route-mobile-sms.yml#sendSmsSecured
+- status: 500
+  title: Internal Server Error
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-viber.yml#loginApi2
+- status: 500
+  title: Internal Server Error
+  media_types:
+  - application/json
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fileUpload

@@ -1,0 +1,126 @@
+generated: '2026-07-25'
+method: searched
+source: https://routemobile.com/company-profile/
+derived_from:
+- openapi/route-mobile-sms.yml
+- openapi/route-mobile-whatsapp-business.yml
+- openapi/route-mobile-rcs.yml
+- openapi/route-mobile-viber.yml
+- openapi/route-mobile-sendclean-email.yml
+description: >-
+  Which industry and cross-cutting standards the Route Mobile platform actually conforms to,
+  asserted from its published documentation and the five OpenAPI definitions. The headline
+  finding for a telecom/CPaaS provider is negative: nothing in Route Mobile's public developer
+  surface implements or references CAMARA, GSMA Open Gateway, or any network API (Number
+  Verification, SIM Swap, Device Location, Quality on Demand, CIBA). Its network-API story
+  lives at the parent level in Proximus Global's Konera announcement, not in a callable
+  Route Mobile endpoint.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    Five OpenAPI 3.0 definitions published (3.0.0 for RCS/Viber/WhatsApp, 3.0.3 for SMS and
+    SendClean) and downloadable from the ReadMe portal and the routemobile GitHub org.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in any spec; no OAuth authorization or token endpoint documented.
+- id: openid-connect
+  conforms: false
+  evidence: >-
+    No /.well-known/openid-configuration on api.rmlconnect.net, apis.rmlconnect.net,
+    api.sendclean.net or routemobile.com (all 404 or catch-all).
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: >-
+    WhatsApp Business declares http/bearer with bearerFormat JWT; RCS and Viber carry the same
+    JWT in the Authorization header (declared as apiKey-in-header).
+- id: rfc7519-jwt
+  conforms: true
+  evidence: JWTs minted by the per-product POST /auth/v1/login/ endpoints; one-hour default expiry.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere. Errors are plain-text pipe-delimited (SMS) or
+    product-specific JSON envelopes; SendClean returns errors with HTTP 200.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on routemobile.com and every API host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support and no deprecation policy documented.
+- id: idempotency-key
+  conforms: false
+  evidence: >-
+    No idempotency key on any operation; the SMS docs instead instruct clients not to retry
+    (see conventions/route-mobile-conventions.yml).
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document published, though four products operate real webhook/callback channels
+    (asyncapi/route-mobile-webhooks.yml).
+- id: webhook-signature
+  conforms: partial
+  evidence: >-
+    SendClean signs webhooks with HMAC-SHA1 in X-SendCleanTES-SIGNATURE and supports key
+    rotation; the WhatsApp, RCS and Viber callbacks document no signature scheme.
+- id: camara
+  conforms: false
+  evidence: >-
+    No CAMARA API, endpoint, or reference in the developer portal, the 300-entry llms.txt index,
+    or the five OpenAPI definitions.
+- id: gsma-open-gateway
+  conforms: false
+  evidence: >-
+    Route Mobile is not published as a GSMA Open Gateway operator or channel partner; the only
+    related claim is the parent Proximus Global "Konera" aggregation platform, announced as
+    "aligned with GSMA's CAMARA standardization initiative" — a press release with no
+    documentation or callable endpoint.
+- id: tmforum-open-api
+  conforms: false
+  evidence: No TM Forum Open API conformance certification found for Route Mobile.
+- id: 3gpp-nef-scef
+  conforms: false
+  evidence: No network exposure function surface published; Route Mobile sits on the aggregator side.
+- id: whatsapp-business-platform
+  conforms: true
+  evidence: >-
+    Route Mobile is a verified Meta Business Solution Provider; the WhatsApp API mirrors Meta
+    Graph API template/session semantics and surfaces Meta messaging tiers and error codes.
+- id: rcs-business-messaging
+  conforms: true
+  evidence: >-
+    RCS agent/bot model with verified sender, rich cards, carousels, suggested replies,
+    capability check and Google RCS media URIs in the callback payloads.
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Published GDPR Compliance Statement and Data Protection Policy
+    (https://routemobile.com/wp-content/uploads/2019/04/GDPR-Compliance-Statement.pdf,
+    https://routemobile.com/wp-content/uploads/2023/06/Data-Protection-Policy.pdf).
+- id: iso-27001
+  conforms: true
+  evidence: >-
+    "Route Mobile's infrastructure is ISO 27001 certified, ensuring the highest standards of
+    information security management." — https://routemobile.com/company-profile/
+- id: soc2
+  conforms: false
+  evidence: No SOC 2 report or attestation published or referenced.
+- id: pci-dss
+  conforms: false
+  evidence: >-
+    Not claimed, despite an RCS payment/bill-send operation (POST /payments/v1/send_bill) —
+    the payment instrument itself is handled downstream.
+- id: hipaa
+  conforms: false
+  evidence: Not claimed.
+certifications:
+- name: ISO 27001
+  scope: infrastructure / information security management
+  source: https://routemobile.com/company-profile/
+compliance_documents:
+- title: GDPR Compliance Statement
+  url: https://routemobile.com/wp-content/uploads/2019/04/GDPR-Compliance-Statement.pdf
+- title: Data Protection Policy
+  url: https://routemobile.com/wp-content/uploads/2023/06/Data-Protection-Policy.pdf
+- title: Corporate Policies
+  url: https://routemobile.com/corporate-policies/

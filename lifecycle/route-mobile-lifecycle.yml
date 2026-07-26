@@ -1,0 +1,63 @@
+generated: '2026-07-25'
+method: searched
+source: https://developer.rmlconnect.net/route-mobile-project/
+description: >-
+  Versioning, deprecation, support and status posture for the Route Mobile developer platform.
+  Route Mobile versions in the URI path per product and per service, publishes no deprecation
+  policy, no Sunset/Deprecation header support, no public status page, and no public SLA
+  document — support and uptime commitments are handled through the commercial account
+  relationship rather than the developer surface.
+versioning:
+  scheme: uri-path
+  platform_wide_version: false
+  detail: >-
+    Each product and often each service carries its own path version, and several run
+    concurrently: /auth/v1/login/, /wba/v1/messages and /wba/v2/upload (WhatsApp),
+    /rcs/v1/message and /rcs/file_server/v2/uploadfile (RCS), /vbs/api/v2/send and
+    /vbs/api/v3/send_bulk (Viber), and the SendClean base path https://api.sendclean.net/v1.0.
+  spec_versions:
+    route-mobile-sms: 1.0.0
+    route-mobile-whatsapp-business: 1.8.0
+    route-mobile-rcs: 2.1.0
+    route-mobile-viber: 1.5.0
+    sendclean-email: 1.0.0
+  docs: https://developer.rmlconnect.net/route-mobile-project/docs/api-documentation
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No deprecation or end-of-life policy is published, and no operation in any of the five
+    OpenAPI definitions is marked `deprecated: true`. The SMS API does mark its plain-HTTP
+    server (http://api.rmlconnect.net) as "SGN Non-secured (HTTP) — legacy only", which is the
+    closest thing to a documented legacy path.
+deprecated_operations: []
+changelog:
+  url: https://developer.rmlconnect.net/route-mobile-project/changelog
+  published: false
+  detail: >-
+    The ReadMe portal exposes a Changelog route, but it renders "No Changelogs" — no dated
+    entries have been published, so no changelog artifact is recorded for this provider.
+status_page:
+  url: null
+  published: false
+  probes:
+  - {url: 'https://status.rmlconnect.net/', result: no DNS / no response}
+  - {url: 'https://status.routemobile.com/', result: no DNS / no response}
+  detail: No public status page or uptime dashboard was found on any Route Mobile domain.
+sla:
+  url: null
+  published: false
+  detail: >-
+    No public SLA or uptime target document. Route Mobile markets carrier-grade delivery and
+    19 data centres/SMSCs (https://routemobile.com/company-profile/) but publishes no numeric
+    availability commitment to developers.
+support:
+  email: support@routemobile.com
+  contact: https://routemobile.com/contact-us/
+  docs: https://developer.rmlconnect.net/
+  detail: Support contact is declared in the OpenAPI `info.contact` block of the SMS definition.
+related:
+  conventions: conventions/route-mobile-conventions.yml
+  conformance: conformance/route-mobile-conformance.yml

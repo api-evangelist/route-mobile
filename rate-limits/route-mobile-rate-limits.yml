@@ -1,0 +1,91 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Route Mobile
+providerId: route-mobile
+generated: '2026-07-25'
+created: '2026-07-25'
+modified: '2026-07-25'
+method: searched
+tags:
+- Rate Limiting
+- CPaaS
+- Messaging
+- Email
+description: >-
+  Route Mobile publishes explicit numeric API rate limits for the SendClean email product only.
+  The messaging products (SMS, WhatsApp Business, RCS, Viber) declare HTTP 429 responses in
+  their OpenAPI definitions and reference WhatsApp/Meta messaging tiers, but publish no numeric
+  request-per-second ceiling and no RateLimit response headers. Throughput on the messaging
+  side is governed commercially, per account, and by the downstream operator and Meta tiers.
+sources:
+- https://developer.rmlconnect.net/route-mobile-project/docs/rate-limits-and-quotas
+- https://developer.rmlconnect.net/route-mobile-project/docs/http-response-codes-1
+- openapi/route-mobile-sendclean-email.yml
+- openapi/route-mobile-viber.yml
+headers:
+  requestId: X-Unique-Id
+  rateLimitRemaining: null
+  retryAfter: null
+responseCodes:
+  throttled: 429
+limits:
+- name: SendClean API requests (per minute)
+  api: SendClean Email API
+  scope: smtp_user
+  metric: requests_per_minute
+  limit: 60
+  timeFrame: minute
+  note: Default; varies by account plan and configuration.
+- name: SendClean API requests (per hour)
+  api: SendClean Email API
+  scope: smtp_user
+  metric: requests_per_hour
+  limit: 3600
+  timeFrame: hour
+  note: Default; varies by account plan and configuration.
+- name: SendClean API requests (per day)
+  api: SendClean Email API
+  scope: smtp_user
+  metric: requests_per_day
+  limit: 50000
+  timeFrame: day
+  note: Default; varies by account plan and configuration.
+- name: SendClean hourly email volume
+  api: SendClean Email API
+  scope: smtp_user
+  metric: emails_per_hour
+  limit: null
+  timeFrame: hour
+  note: >-
+    Configured per SMTP user (`hourly_limit`) and readable from the account/SMTP user
+    operations; no platform default is published.
+- name: SendClean daily email volume
+  api: SendClean Email API
+  scope: smtp_user
+  metric: emails_per_day
+  limit: null
+  timeFrame: day
+  note: Configured per SMTP user; no platform default is published.
+- name: SendClean total credit limit
+  api: SendClean Email API
+  scope: smtp_user
+  metric: total_credits
+  limit: null
+  timeFrame: account
+  note: '`total_limit` on the SMTP user record.'
+undocumented:
+- api: Route Mobile SMS API
+  note: >-
+    No numeric limit published. Throughput is governed by account credit (error 1025) and
+    operator-level throttling; the API returns platform code 1715 (response timeout) under load.
+- api: Route Mobile WhatsApp Business API
+  note: >-
+    No Route Mobile numeric limit published. Meta messaging tiers (TIER_1K and above) surface
+    on the account-details response, and Meta rate-limit codes (80007, 130429, 131048, 131056)
+    arrive on the callback channel.
+- api: Route Mobile RCS / Viber
+  note: HTTP 429 declared on nearly every operation; no numeric limit or headers published.
+related:
+  conventions: conventions/route-mobile-conventions.yml
+  errors: errors/route-mobile-error-codes.yml

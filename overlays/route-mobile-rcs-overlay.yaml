@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Route Mobile RCS Business Messaging API
+  version: 1.0.0
+extends: openapi/route-mobile-rcs.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: route-mobile
+    x-apievangelist-generated: '2026-07-25'
+    x-apievangelist-artifacts:
+      authentication: authentication/route-mobile-authentication.yml
+      conventions: conventions/route-mobile-conventions.yml
+      errors: errors/route-mobile-error-codes.yml
+      problem_types: errors/route-mobile-problem-types.yml
+      lifecycle: lifecycle/route-mobile-lifecycle.yml
+      webhooks: asyncapi/route-mobile-webhooks.yml
+      rate_limits: rate-limits/route-mobile-rate-limits.yml
+      skills: skills/_index.yml
+    x-apievangelist-operation-count: 21
+- target: $.info
+  update:
+    x-apievangelist-note: Enhancements captured by the API Evangelist enrichment pipeline; the harvested
+      specification in openapi/ is never mutated.

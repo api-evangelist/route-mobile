@@ -1,0 +1,561 @@
+generated: '2026-07-25'
+method: derived
+status: candidate
+source: openapi/route-mobile-rcs.yml, openapi/route-mobile-sendclean-email.yml, openapi/route-mobile-sms.yml,
+  openapi/route-mobile-viber.yml, openapi/route-mobile-whatsapp-business.yml
+notes: No official Route Mobile MCP server was found (docs, GitHub org routemobile, npm, the public MCP
+  registries). This is a CANDIDATE tool surface derived one-to-one from the 108 operations in the five
+  published OpenAPI definitions; each tool inherits its input schema from the referenced operation parameters/requestBody.
+server:
+  name: route-mobile
+  transport: http
+  url: null
+summary:
+  tools: 108
+  products:
+  - email
+  - rcs
+  - sms
+  - viber
+  - whatsapp
+tools:
+- name: rcs_login_api2
+  description: Login API
+  source_operation: openapi/route-mobile-rcs.yml#loginApi2
+  method: POST
+  path: /auth/v1/login/
+- name: rcs_text_template
+  description: RCS Messages API
+  source_operation: openapi/route-mobile-rcs.yml#textTemplate
+  method: POST
+  path: /rcs/v1/message
+- name: rcs_bulk_campaign_upload_r_c_s
+  description: Bulk Upload Campaign
+  source_operation: openapi/route-mobile-rcs.yml#bulkCampaignUploadRCS
+  method: POST
+  path: /rcs/v1/bulk_message
+- name: rcs_send_bill_to_user_rcs
+  description: Payment API
+  source_operation: openapi/route-mobile-rcs.yml#sendBillToUserRcs
+  method: POST
+  path: /payments/v1/send_bill
+- name: rcs_typing_indicator
+  description: Typing Indicator
+  source_operation: openapi/route-mobile-rcs.yml#typingIndicator
+  method: POST
+  path: /rcs/v1/typing_event
+- name: rcs_file_upload_r_c_s
+  description: File Upload API
+  source_operation: openapi/route-mobile-rcs.yml#fileUploadRCS
+  method: POST
+  path: /rcs/file_server/v2/uploadfile
+- name: rcs_management_r_c_s
+  description: Make a Tester
+  source_operation: openapi/route-mobile-rcs.yml#ManagementRCS
+  method: POST
+  path: /rcs/management/v1/add_tester
+- name: rcs_management_r_c_s_2
+  description: List all Testers
+  source_operation: openapi/route-mobile-rcs.yml#managementRCS
+  method: GET
+  path: /rcs/management/v1/get_testers
+- name: rcs_optin_r_c_s
+  description: Create Optin API
+  source_operation: openapi/route-mobile-rcs.yml#optinRCS
+  method: POST
+  path: /rcs/optins/v1/create_optin
+- name: rcs_marking_messages_as_read
+  description: Marking messages as Read
+  source_operation: openapi/route-mobile-rcs.yml#markingMessagesAsRead
+  method: POST
+  path: /rcs/v1/mark_read
+- name: rcs_revoke_with_sms_fallback
+  description: Revoke with SMS fallback
+  source_operation: openapi/route-mobile-rcs.yml#revokeWithSmsFallback
+  method: DELETE
+  path: /rcs/v2/revoke_message
+- name: rcs_post_callback
+  description: Callback
+  source_operation: openapi/route-mobile-rcs.yml#post-callback
+  method: POST
+  path: /callback
+- name: rcs_create_template_r_c_s
+  description: Create Template APi
+  source_operation: openapi/route-mobile-rcs.yml#createTemplateRCS
+  method: POST
+  path: /rcs-template-apis/api/v1/template/template
+- name: rcs_update_template_r_c_s
+  description: Update Template APi
+  source_operation: openapi/route-mobile-rcs.yml#updateTemplateRCS
+  method: PUT
+  path: /rcs-template-apis/api/v1/template/template
+- name: rcs_get_template_r_c_s
+  description: Get Template API
+  source_operation: openapi/route-mobile-rcs.yml#getTemplateRCS
+  method: GET
+  path: /rcs-template-apis/api/v1/template/template
+- name: rcs_delete_template_r_c_s
+  description: Delete Template API
+  source_operation: openapi/route-mobile-rcs.yml#deleteTemplateRCS
+  method: DELETE
+  path: /rcs-template-apis/api/v1/template/template
+- name: rcs_get_template_status_r_c_s
+  description: Get Template  Status APi
+  source_operation: openapi/route-mobile-rcs.yml#getTemplateStatusRCS
+  method: GET
+  path: /rcs-template-apis/api/v1/template//template
+- name: rcs_get_single_template_r_c_s
+  description: Get Single Template APi
+  source_operation: openapi/route-mobile-rcs.yml#getSingleTemplateRCS
+  method: GET
+  path: /rcs-template-apis/api/v1//template//template
+- name: rcs_get_capability_details
+  description: Bulk Capability Check
+  source_operation: openapi/route-mobile-rcs.yml#getCapabilityDetails
+  method: GET
+  path: /v1/capabilityCheck/getCapabilityDetails
+- name: rcs_check_bulk_capability
+  description: Check Bulk Capability
+  source_operation: openapi/route-mobile-rcs.yml#checkBulkCapability
+  method: POST
+  path: /v1/capabilityCheck/checkBulkCapability
+- name: rcs_bulk_dnd_set
+  description: Bulk Whitelist / Blacklist Numbers
+  source_operation: openapi/route-mobile-rcs.yml#bulkDndSet
+  method: POST
+  path: /rcs/dnd/v1/bulk_dnd_set
+- name: email_add_smtp_user
+  description: Add a new SMTP user
+  source_operation: openapi/route-mobile-sendclean-email.yml#addSmtpUser
+  method: POST
+  path: /settings/addSmtp
+- name: email_edit_smtp_user
+  description: Edit an existing SMTP user
+  source_operation: openapi/route-mobile-sendclean-email.yml#editSmtpUser
+  method: POST
+  path: /settings/editSmtp
+- name: email_reset_smtp_password
+  description: Reset SMTP user password
+  source_operation: openapi/route-mobile-sendclean-email.yml#resetSmtpPassword
+  method: POST
+  path: /settings/resetSmtpPassword
+- name: email_list_smtp_users
+  description: List all SMTP users
+  source_operation: openapi/route-mobile-sendclean-email.yml#listSmtpUsers
+  method: POST
+  path: /settings/listSmtp
+- name: email_add_sending_domain
+  description: Add a sending domain
+  source_operation: openapi/route-mobile-sendclean-email.yml#addSendingDomain
+  method: POST
+  path: /settings/addSendingDomain
+- name: email_check_sending_domain
+  description: Verify DKIM and SPF records
+  source_operation: openapi/route-mobile-sendclean-email.yml#checkSendingDomain
+  method: POST
+  path: /settings/checkSendingDomain
+- name: email_verify_sending_domain
+  description: Verify sending domain via email
+  source_operation: openapi/route-mobile-sendclean-email.yml#verifySendingDomain
+  method: POST
+  path: /settings/verifySendingDomain
+- name: email_list_sending_domains
+  description: List sending domains
+  source_operation: openapi/route-mobile-sendclean-email.yml#listSendingDomains
+  method: POST
+  path: /settings/listSendingDomain
+- name: email_delete_sending_domain
+  description: Delete a sending domain
+  source_operation: openapi/route-mobile-sendclean-email.yml#deleteSendingDomain
+  method: POST
+  path: /settings/deleteSendingDomain
+- name: email_add_tracking_domain
+  description: Add a tracking domain
+  source_operation: openapi/route-mobile-sendclean-email.yml#addTrackingDomain
+  method: POST
+  path: /settings/addTrackingDomain
+- name: email_check_tracking_domain
+  description: Check tracking domain CNAME
+  source_operation: openapi/route-mobile-sendclean-email.yml#checkTrackingDomain
+  method: POST
+  path: /settings/checkTrackingDomain
+- name: email_list_tracking_domains
+  description: List tracking domains
+  source_operation: openapi/route-mobile-sendclean-email.yml#listTrackingDomains
+  method: POST
+  path: /settings/listTrackingDomain
+- name: email_delete_tracking_domain
+  description: Delete a tracking domain
+  source_operation: openapi/route-mobile-sendclean-email.yml#deleteTrackingDomain
+  method: POST
+  path: /settings/deleteTrackingDomain
+- name: email_add_webhook
+  description: Add a webhook
+  source_operation: openapi/route-mobile-sendclean-email.yml#addWebhook
+  method: POST
+  path: /settings/addWebhook
+- name: email_edit_webhook
+  description: Edit a webhook
+  source_operation: openapi/route-mobile-sendclean-email.yml#editWebhook
+  method: POST
+  path: /settings/editWebhook
+- name: email_key_reset_webhook
+  description: Reset webhook authentication key
+  source_operation: openapi/route-mobile-sendclean-email.yml#keyResetWebhook
+  method: POST
+  path: /settings/keyResetWebhook
+- name: email_list_webhooks
+  description: List all webhooks
+  source_operation: openapi/route-mobile-sendclean-email.yml#listWebhooks
+  method: POST
+  path: /settings/listWebhook
+- name: email_delete_webhook
+  description: Delete a webhook
+  source_operation: openapi/route-mobile-sendclean-email.yml#deleteWebhook
+  method: POST
+  path: /settings/deleteWebhook
+- name: email_get_webhook_info
+  description: Get webhook details
+  source_operation: openapi/route-mobile-sendclean-email.yml#getWebhookInfo
+  method: POST
+  path: /settings/getWebhookInfo
+- name: email_send_mail
+  description: Send a transactional email
+  source_operation: openapi/route-mobile-sendclean-email.yml#sendMail
+  method: POST
+  path: /messages/sendMail
+- name: email_send_template
+  description: Send email using a saved template
+  source_operation: openapi/route-mobile-sendclean-email.yml#sendTemplate
+  method: POST
+  path: /messages/sendTemplate
+- name: email_send_template_h_t_t_p_get
+  description: Send template email via HTTP GET
+  source_operation: openapi/route-mobile-sendclean-email.yml#sendTemplateHTTPGet
+  method: GET
+  path: /messages/sendTemplateHTTPGet
+- name: email_get_message_info
+  description: Get message delivery and engagement info
+  source_operation: openapi/route-mobile-sendclean-email.yml#getMessageInfo
+  method: POST
+  path: /messages/getMessageInfo
+- name: email_get_user_details
+  description: Get account/user details
+  source_operation: openapi/route-mobile-sendclean-email.yml#getUserDetails
+  method: POST
+  path: /accounts/userDetails
+- name: sms_send_sms_secured
+  description: Send SMS (Secured)
+  source_operation: openapi/route-mobile-sms.yml#sendSmsSecured
+  method: GET
+  path: /bulksms/bulksms
+- name: sms_check_credits
+  description: Check Account Credit Balance
+  source_operation: openapi/route-mobile-sms.yml#checkCredits
+  method: GET
+  path: /CreditCheck/checkcredits
+- name: sms_generate_otp
+  description: Generate and Send OTP
+  source_operation: openapi/route-mobile-sms.yml#generateOtp
+  method: GET
+  path: /OtpApi/otpgenerate
+- name: sms_verify_otp
+  description: Verify OTP
+  source_operation: openapi/route-mobile-sms.yml#verifyOtp
+  method: GET
+  path: /OtpApi/checkotp
+- name: sms_schedule_sms
+  description: Schedule SMS
+  source_operation: openapi/route-mobile-sms.yml#scheduleSms
+  method: GET
+  path: /bulksms/schedulemsg
+- name: sms_send_personalised_sms
+  description: Send Personalised SMS
+  source_operation: openapi/route-mobile-sms.yml#sendPersonalisedSms
+  method: GET
+  path: /bulksms/sbulksms
+- name: sms_send_unicode_acculync_sms
+  description: Send Unicode / Acculync SMS
+  source_operation: openapi/route-mobile-sms.yml#sendUnicodeAcculyncSms
+  method: GET
+  path: /bulksms/personalizedbulksms
+- name: sms_send_acculync_sms
+  description: Send Personalised SMS with Acculync Tracking
+  source_operation: openapi/route-mobile-sms.yml#sendAcculyncSms
+  method: GET
+  path: /bulksms/personalizedcustsms
+- name: sms_generate_token
+  description: Generate Authentication Token
+  source_operation: openapi/route-mobile-sms.yml#generateToken
+  method: GET
+  path: /bulksms/generatetoken
+- name: sms_submit_sms_with_token
+  description: Submit SMS with Token
+  source_operation: openapi/route-mobile-sms.yml#submitSmsWithToken
+  method: GET
+  path: /bulksms/bulksubmit
+- name: sms_send_json_bulk_sms
+  description: JSON Bulk SMS
+  source_operation: openapi/route-mobile-sms.yml#sendJsonBulkSms
+  method: POST
+  path: /bulksms/jsonbulksms
+- name: sms_submit_moengage_sms
+  description: Moengage Integration
+  source_operation: openapi/route-mobile-sms.yml#submitMoengageSms
+  method: POST
+  path: /bulksms/custommsgsubmit
+- name: sms_submit_webengage_sms
+  description: Webengage Integration
+  source_operation: openapi/route-mobile-sms.yml#submitWebengageSms
+  method: POST
+  path: /bulksms2346/sendjsonsms
+- name: sms_download_coverage_map
+  description: Download Coverage Map
+  source_operation: openapi/route-mobile-sms.yml#downloadCoverageMap
+  method: GET
+  path: /routeDetailMail.php
+- name: viber_viber_client_callback
+  description: Viber Client Callback
+  source_operation: openapi/route-mobile-viber.yml#viberClientCallback
+  method: POST
+  path: /callback
+- name: viber_login_api2
+  description: Login API
+  source_operation: openapi/route-mobile-viber.yml#loginApi2
+  method: POST
+  path: /auth/v1/login/
+- name: viber_single_video_text
+  description: Viber Send Single Messages APIs
+  source_operation: openapi/route-mobile-viber.yml#singleVideoText
+  method: POST
+  path: /vbs/api/v2/send
+- name: viber_campaign_video_text
+  description: Viber Send Campaign Messages APIs
+  source_operation: openapi/route-mobile-viber.yml#campaignVideoText
+  method: POST
+  path: /vbs/api/v2/manage-campaign
+- name: viber_campaign_file_upload
+  description: Campaign File Upload
+  source_operation: openapi/route-mobile-viber.yml#campaignFileUpload
+  method: POST
+  path: /vbs/api/v2/upload
+- name: viber_send_bulk_messages
+  description: Viber Send Bulk Messages API
+  source_operation: openapi/route-mobile-viber.yml#sendBulkMessages
+  method: POST
+  path: /vbs/api/v3/send_bulk
+- name: viber_get_summary_cards
+  description: Summary Cards
+  source_operation: openapi/route-mobile-viber.yml#getSummaryCards
+  method: GET
+  path: /viber-reports/api/v2/summary-cards
+- name: viber_get_graph_report
+  description: Graph Report
+  source_operation: openapi/route-mobile-viber.yml#getGraphReport
+  method: GET
+  path: /viber-reports/api/v2/graph
+- name: viber_get_media_cards
+  description: Media Cards
+  source_operation: openapi/route-mobile-viber.yml#getMediaCards
+  method: GET
+  path: /viber-reports/api/v2/media-cards
+- name: viber_get_campaign_report
+  description: Campaign Report
+  source_operation: openapi/route-mobile-viber.yml#getCampaignReport
+  method: GET
+  path: /viber-reports/api/v2/camps
+- name: viber_get_daily_tabular_report
+  description: Daily Tabular Report
+  source_operation: openapi/route-mobile-viber.yml#getDailyTabularReport
+  method: GET
+  path: /viber-reports/api/v2/tabular
+- name: viber_list_viber_templates
+  description: List Viber Templates
+  source_operation: openapi/route-mobile-viber.yml#listViberTemplates
+  method: GET
+  path: /viber-reports/api/v2/viber_templates
+- name: viber_add_viber_template
+  description: Add Viber Template
+  source_operation: openapi/route-mobile-viber.yml#addViberTemplate
+  method: POST
+  path: /viber-reports/api/v2/viber_templates
+- name: viber_fetch_reports
+  description: Fetch Reports
+  source_operation: openapi/route-mobile-viber.yml#fetchReports
+  method: GET
+  path: /viber-report-creator/v1/fetch_reports
+- name: viber_create_report
+  description: Create Report
+  source_operation: openapi/route-mobile-viber.yml#createReport
+  method: POST
+  path: /viber-report-creator/v1/create_report
+- name: viber_download_report
+  description: Download Report
+  source_operation: openapi/route-mobile-viber.yml#downloadReport
+  method: GET
+  path: /viber-report-creator/v1/download/{file_name}
+- name: whatsapp_file_upload
+  description: File Upload
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fileUpload
+  method: POST
+  path: /wba/v2/upload
+- name: whatsapp_send_bulk_campaign
+  description: Send Bulk Campaign
+  source_operation: openapi/route-mobile-whatsapp-business.yml#sendBulkCampaign
+  method: POST
+  path: /wba/v2/manage_campaign
+- name: whatsapp_upload_file
+  description: Upload File
+  source_operation: openapi/route-mobile-whatsapp-business.yml#uploadFile
+  method: POST
+  path: /wba/catalog/manager/v1/upload
+- name: whatsapp_create_product_feed
+  description: Create Product Feed
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createProductFeed
+  method: POST
+  path: /wba/catalog/manager/v1/create_product_feed
+- name: whatsapp_update_product_feed
+  description: Update Product Feed
+  source_operation: openapi/route-mobile-whatsapp-business.yml#updateProductFeed
+  method: POST
+  path: /wba/catalog/manager/v1/update_product_feed
+- name: whatsapp_delete_product_feed
+  description: Delete product Feed
+  source_operation: openapi/route-mobile-whatsapp-business.yml#deleteProductFeed
+  method: POST
+  path: /wba/catalog/manager/v1/delete_product_feed
+- name: whatsapp_fetch_product_feed_details
+  description: Fetch Product Feed Details
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchProductFeedDetails
+  method: GET
+  path: /wba/catalog/manager/v1/fetch_product_feed
+- name: whatsapp_fetch_all_product_feed
+  description: Fetch All Product Feed
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchAllProductFeed
+  method: GET
+  path: /wba/catalog/manager/v1/fetch_product_details
+- name: whatsapp_fetch_catalog_details
+  description: Fetch Catalog Details
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchCatalogDetails
+  method: GET
+  path: /wba/catalog/manager/v1/fetch_catalog_details
+- name: whatsapp_fetch_schedule_product_feed_details
+  description: Fetch Schedule Product Feed Details
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchScheduleProductFeedDetails
+  method: GET
+  path: /wba/catalog/manager/v1/schedule_product_feed_details
+- name: whatsapp_fetch_errors
+  description: Fetch Errors
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchErrors
+  method: GET
+  path: /wba/catalog/manager/v1/fetch_errors
+- name: whatsapp_create_report
+  description: Create Report
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createReport
+  method: POST
+  path: /whatsapp/report/v1/create_report/myaccounts_panel
+- name: whatsapp_create_campaign_specific_report
+  description: Create Campaign Specific Report
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createCampaignSpecificReport
+  method: POST
+  path: /whatsapp/report/v1/create_campaign_specific_report/myaccounts_panel
+- name: whatsapp_fetch_report_url
+  description: Fetch Report URL
+  source_operation: openapi/route-mobile-whatsapp-business.yml#fetchReportUrl
+  method: GET
+  path: /whatsapp/report/v1/fetch_campaign_specific_report/{report_id}
+- name: whatsapp_view_campaign_summary
+  description: View Campaign Summary
+  source_operation: openapi/route-mobile-whatsapp-business.yml#viewCampaignSummary
+  method: GET
+  path: /whatsapp/report/v1/fetch_campaign_details
+- name: whatsapp_view_report_summary
+  description: View Report Summary
+  source_operation: openapi/route-mobile-whatsapp-business.yml#viewReportSummary
+  method: GET
+  path: /whatsapp/report/v1/fetch_reports
+- name: whatsapp_create_optin
+  description: Create Optin
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createOptin
+  method: POST
+  path: /wbo/v2/optin/store
+- name: whatsapp_create_optin_out
+  description: Create Optin and Optout
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createOptinOut
+  method: POST
+  path: /wbo/v2/optinout/store
+- name: whatsapp_check_optin
+  description: Check Optin
+  source_operation: openapi/route-mobile-whatsapp-business.yml#checkOptin
+  method: GET
+  path: /wbo/v2/optin/check
+- name: whatsapp_whatsapp_client_callback
+  description: WhatsApp Client Callback
+  source_operation: openapi/route-mobile-whatsapp-business.yml#whatsappClientCallback
+  method: POST
+  path: /callbacks
+- name: whatsapp_view_template_message
+  description: View Template Message
+  source_operation: openapi/route-mobile-whatsapp-business.yml#viewTemplateMessage
+  method: GET
+  path: /wba/templates
+- name: whatsapp_create_template
+  description: Create Template
+  source_operation: openapi/route-mobile-whatsapp-business.yml#createTemplate
+  method: POST
+  path: /wba/template/create
+- name: whatsapp_send_session_message_api
+  description: Send Template and Session Messages API
+  source_operation: openapi/route-mobile-whatsapp-business.yml#sendSessionMessageApi
+  method: POST
+  path: /wba/v1/messages
+- name: whatsapp_login_api
+  description: Login API
+  source_operation: openapi/route-mobile-whatsapp-business.yml#loginApi
+  method: POST
+  path: /auth/v1/login/
+- name: whatsapp_optindownload
+  description: Optin Create Report
+  source_operation: openapi/route-mobile-whatsapp-business.yml#optindownload
+  method: GET
+  path: /whatsapp/report/v1/optin-download
+- name: whatsapp_download_optin
+  description: Download Optin Report
+  source_operation: openapi/route-mobile-whatsapp-business.yml#downloadOptin
+  method: GET
+  path: /whatsapp/report/v1/summary/download_optin_report
+- name: whatsapp_media_idapis
+  description: Get Template Media ID
+  source_operation: openapi/route-mobile-whatsapp-business.yml#media-idapis
+  method: POST
+  path: /wba/templates/media-id
+- name: whatsapp_media_idapi
+  description: Generate Media ID API
+  source_operation: openapi/route-mobile-whatsapp-business.yml#media-idapi
+  method: POST
+  path: /wba/media/v1/get-media-id
+- name: whatsapp_get_account_details
+  description: WBP Account Details
+  source_operation: openapi/route-mobile-whatsapp-business.yml#getAccountDetails
+  method: GET
+  path: /wba/management/v1/wbp-account-details
+- name: whatsapp_upload_profile_photo
+  description: Profile Photo API
+  source_operation: openapi/route-mobile-whatsapp-business.yml#uploadProfilePhoto
+  method: POST
+  path: /wba/management/v1/settings/profile/photo
+- name: whatsapp_edit_template
+  description: Edit Template
+  source_operation: openapi/route-mobile-whatsapp-business.yml#editTemplate
+  method: PATCH
+  path: /wba/template/update
+- name: whatsapp_delete_template
+  description: Delete Template
+  source_operation: openapi/route-mobile-whatsapp-business.yml#deleteTemplate
+  method: DELETE
+  path: /wba/template/
+- name: whatsapp_get_template_wise_count
+  description: Template Wise Count
+  source_operation: openapi/route-mobile-whatsapp-business.yml#getTemplateWiseCount
+  method: GET
+  path: /whatsapp/report/v1/template-count

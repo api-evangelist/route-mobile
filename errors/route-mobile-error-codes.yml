@@ -1,0 +1,153 @@
+generated: '2026-07-25'
+method: searched
+source: https://developer.rmlconnect.net/route-mobile-project/docs/http-response-codes-1
+docs:
+- https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+- https://developer.rmlconnect.net/route-mobile-project/docs/http-response-codes-1
+- https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp-client-callback-api
+- https://developer.rmlconnect.net/route-mobile-project/reference/whatsappclientcallback
+description: >-
+  Route Mobile publishes numeric platform error codes rather than RFC 9457 problem details.
+  Three distinct registries are in play: the 17xx SMS submission codes returned as a
+  pipe-delimited plain-text string, the WhatsApp callback error codes (a mix of Route Mobile
+  and Meta Graph API codes) delivered on the client callback channel, and the HTTP status
+  semantics shared by the JWT-authenticated WhatsApp, RCS and Viber APIs. SendClean email
+  returns its own JSON envelope with a name/code pair.
+envelopes:
+- api: Route Mobile SMS API
+  shape: plain-text
+  format: '<Error_Code>|<destination>|<message_id>'
+  note: >-
+    Bulk submissions return one comma-separated tuple per destination. If any error other than
+    an invalid destination occurs the batch aborts immediately; if credits are exhausted
+    mid-batch, processing stops and `1025|<last_destination>` is appended.
+  source: openapi/route-mobile-sms.yml
+- api: Route Mobile WhatsApp / RCS / Viber
+  shape: json
+  fields: [status, message]
+  note: HTTP status carries the class; the JSON body carries the human-readable reason.
+  source: openapi/route-mobile-whatsapp-business.yml
+- api: SendClean Email API
+  shape: json
+  fields: [status, code, name, message]
+  name_enum: [ValidationError, GeneralError, AuthenticationError]
+  note: >-
+    status is "error"; every response is HTTP 200 with the error carried in the body, so clients
+    must branch on the `status` field rather than the HTTP status code.
+  source: openapi/route-mobile-sendclean-email.yml
+error_codes:
+- registry: sms-submission
+  api: Route Mobile SMS API
+  transport: plain text response prefix
+  codes:
+  - code: '1701'
+    meaning: Success — 1701|<CELL_NO>|<MESSAGE_ID>
+    action: none
+  - code: '1702'
+    meaning: Invalid URL / missing or blank parameter
+    action: fix the request; do not retry
+  - code: '1703'
+    meaning: Invalid username or password
+    action: fix credentials; do not retry
+  - code: '1704'
+    meaning: Invalid value in the `type` field
+    action: fix the request; do not retry
+  - code: '1705'
+    meaning: Invalid message
+    action: fix the request; do not retry
+  - code: '1706'
+    meaning: Invalid destination
+    action: correct the destination; batch continues for other destinations
+  - code: '1707'
+    meaning: Invalid source (Sender ID)
+    action: register/correct the Sender ID; do not retry
+  - code: '1708'
+    meaning: Invalid value in the `dlr` field
+    action: fix the request; do not retry
+  - code: '1709'
+    meaning: User validation failed
+    action: the only code Route Mobile documents as retryable
+  - code: '1710'
+    meaning: Internal error
+    action: do not retry; contact support
+  - code: '1025'
+    meaning: Insufficient credit
+    action: top up account credit; batch aborts at this point
+  - code: '1715'
+    meaning: Response timeout
+    action: do NOT re-submit the same message — message state is indeterminate
+  retry_policy: >-
+    Route Mobile documents "Do NOT retry for any error code except 1709", and for 1715
+    specifically instructs clients not to re-submit the same message. There is no idempotency
+    key, so a blind retry on 1715 risks a duplicate send.
+- registry: http-response-codes
+  api: WhatsApp Business / RCS / Viber
+  transport: HTTP status
+  codes:
+  - code: '201'
+    meaning: Created — message accepted and queued
+  - code: '202'
+    meaning: Accepted for asynchronous processing
+  - code: '400'
+    meaning: >-
+      Validation failure — missing required field, TTL out of range, text > 1024 chars,
+      button title > 20 chars, more than 3 buttons, header/footer > 60 chars
+  - code: '401'
+    meaning: Invalid or expired JWT token
+    action: re-authenticate against the product login endpoint
+  - code: '403'
+    meaning: Account restricted due to Direct Send abuse strikes
+    action: check webhook callbacks for the strike detail
+  - code: '422'
+    meaning: Structurally valid JSON but semantically incorrect (unsupported media type, invalid phone format)
+  - code: '429'
+    meaning: Rate limit exceeded
+    action: back off and retry
+  - code: '500'
+    meaning: Platform error
+    action: retry with exponential backoff
+- registry: whatsapp-callback
+  api: WhatsApp Business API (client callback channel)
+  transport: callback payload
+  note: >-
+    Delivered on the callback channel rather than the API response. The published table blends
+    Route Mobile codes (400-1026), template codes (2000-2013), and Meta Graph API codes
+    (0, 3, 4, 10, 190, 80007, 13xxxx). Captured here in summary — the full table is published
+    at the source URL and reproduced in llms/route-mobile-llms.txt.
+  codes:
+  - code: '403'
+    meaning: Error code for blacklisting — the given number is blacklisted
+  - code: '410'
+    meaning: Message expired and cannot be delivered
+  - code: '429'
+    meaning: Rate limit hit
+  - code: '470'
+    meaning: Re-engagement message (outside the 24-hour session window)
+  - code: '471'
+    meaning: Spam rate limit reached
+  - code: '1001'
+    meaning: Message too long
+  - code: '1008'
+    meaning: Required parameter is missing
+  - code: '1026'
+    meaning: Receiver incapable of receiving the message
+  - code: '2000'
+    meaning: Template parameter count mismatch
+  - code: '2001'
+    meaning: Template missing
+  - code: '131026'
+    meaning: Message undeliverable
+  - code: '131047'
+    meaning: Re-engagement message required (Meta)
+  - code: '131048'
+    meaning: Spam rate limit hit (Meta)
+  - code: '131056'
+    meaning: Business/consumer account pair rate limit hit (Meta)
+  - code: '133005'
+    meaning: Two-step verification PIN mismatch
+  - code: '190'
+    meaning: Access token has expired (Meta)
+related:
+  problem_types: errors/route-mobile-problem-types.yml
+  conventions: conventions/route-mobile-conventions.yml
+  rate_limits: rate-limits/route-mobile-rate-limits.yml

@@ -175,8 +175,10 @@ apis:
     narrative guides on the developer portal (send message and template management calls)
     and published as a first-party Postman collection in the routemobile GitHub
     organization. No OpenAPI definition is published for voice, unlike the messaging and
-    email products.
+    email products; the production host (rmlvoice.rmlconnect.net) and the Click2Call and
+    CreateOBDCampaign operations are taken from that first-party Postman collection.
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis
+  baseURL: https://rmlvoice.rmlconnect.net
   tags:
   - Voice
   - Cloud Telephony
@@ -188,6 +190,66 @@ apis:
   - type: PostmanCollection
     url: https://github.com/routemobile/Enterprise-Voice-2.0-APIs
 common:
+- type: AgenticAccess
+  url: agentic-access/route-mobile-agentic-access.yml
+- type: DomainSecurity
+  url: security/route-mobile-domain-security.yml
+- type: Authentication
+  url: authentication/route-mobile-authentication.yml
+- type: Conventions
+  url: conventions/route-mobile-conventions.yml
+- type: RateLimits
+  url: rate-limits/route-mobile-rate-limits.yml
+- type: ErrorCatalog
+  name: Route Mobile platform error code registry
+  url: errors/route-mobile-error-codes.yml
+- type: ErrorCatalog
+  name: Derived OpenAPI error responses
+  url: errors/route-mobile-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/route-mobile-lifecycle.yml
+- type: Conformance
+  url: conformance/route-mobile-conformance.yml
+- type: Compliance
+  url: https://routemobile.com/company-profile/
+- type: Webhooks
+  url: asyncapi/route-mobile-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/route-mobile-mcp.yml
+- type: Sandbox
+  url: sandbox/route-mobile-sandbox.yml
+- type: DataModel
+  url: data-model/route-mobile-data-model.yml
+- type: Packages
+  url: packages/route-mobile-packages.yml
+- type: LLMsTxt
+  name: Harvested llms.txt
+  url: llms/route-mobile-llms.txt
+- type: Overlay
+  name: SMS API enhancements
+  url: overlays/route-mobile-sms-overlay.yaml
+- type: Overlay
+  name: WhatsApp Business API enhancements
+  url: overlays/route-mobile-whatsapp-business-overlay.yaml
+- type: Overlay
+  name: RCS Business Messaging API enhancements
+  url: overlays/route-mobile-rcs-overlay.yaml
+- type: Overlay
+  name: Viber Business Messages API enhancements
+  url: overlays/route-mobile-viber-overlay.yaml
+- type: Overlay
+  name: SendClean Email API enhancements
+  url: overlays/route-mobile-sendclean-email-overlay.yaml
+- type: GettingStarted
+  url: https://developer.rmlconnect.net/route-mobile-project/docs/getting-started-on-route-mobile-panel
+- type: Support
+  url: https://routemobile.com/contact-us/
+- type: TermsOfService
+  url: https://routemobile.com/terms-condition/
+- type: PrivacyPolicy
+  url: https://routemobile.com/privacy-policy/
 - type: Website
   url: https://routemobile.com/
 - type: Documentation

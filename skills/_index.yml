@@ -1,0 +1,40 @@
+generated: '2026-07-25'
+method: generated
+source: >-
+  Grounded in the five published Route Mobile OpenAPI definitions in openapi/ plus the
+  conventions, errors, rate-limits, webhooks and sandbox artifacts in this repo. No
+  provider-published Agent Skills or AGENTS.md were found on developer.rmlconnect.net or in
+  the routemobile GitHub organization.
+description: >-
+  Packaged operating instructions an agent can follow to use each Route Mobile product
+  correctly. Every step cites an operationId that exists verbatim in the referenced spec.
+  The recurring hazard across all five: Route Mobile has no idempotency key and no test mode,
+  so a retry is a real duplicate send against live credit.
+skills:
+- file: route-mobile-send-sms-and-verify-otp.md
+  name: Send SMS and run an OTP verification with Route Mobile
+  api: openapi/route-mobile-sms.yml
+  operations: [checkCredits, sendSmsSecured, generateOtp, verifyOtp, scheduleSms]
+- file: route-mobile-whatsapp-template-messaging.md
+  name: Send a WhatsApp template or session message with Route Mobile
+  api: openapi/route-mobile-whatsapp-business.yml
+  operations: [loginApi, checkOptin, createOptin, viewTemplateMessage, createTemplate,
+    sendSessionMessageApi, whatsappClientCallback]
+- file: route-mobile-rcs-rich-messaging.md
+  name: Launch an RCS rich message campaign with Route Mobile
+  api: openapi/route-mobile-rcs.yml
+  operations: [loginApi2, checkBulkCapability, getCapabilityDetails, ManagementRCS,
+    managementRCS, fileUploadRCS, createTemplateRCS, textTemplate, bulkCampaignUploadRCS,
+    post-callback]
+- file: route-mobile-viber-campaign-and-reporting.md
+  name: Run a Viber Business Messages campaign and pull reports with Route Mobile
+  api: openapi/route-mobile-viber.yml
+  operations: [loginApi2, campaignFileUpload, singleVideoText, campaignVideoText,
+    sendBulkMessages, listViberTemplates, addViberTemplate, getSummaryCards, getCampaignReport,
+    createReport, fetchReports, downloadReport, viberClientCallback]
+- file: route-mobile-sendclean-transactional-email.md
+  name: Send transactional email and wire event webhooks with SendClean
+  api: openapi/route-mobile-sendclean-email.yml
+  operations: [addSmtpUser, addSendingDomain, checkSendingDomain, verifySendingDomain,
+    addTrackingDomain, sendMail, sendTemplate, getMessageInfo, addWebhook, keyResetWebhook,
+    getUserDetails]
