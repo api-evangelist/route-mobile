@@ -1,0 +1,563 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Route Mobile Viber OpenAPI Specification",
+    "version": "1.5.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Viber Client Callback API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Viber Client Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/callback",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Viber Client Callback APIs allow you to receive real-time notifications for events that occur on your Viber Business Messaging account. These callbacks are triggered by events that occur on the Viber server, and are delivered to a URL that you specify in your webhook configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Viber Login",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/auth/v1/login/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.\n\n**By default, the JSON Web Token (JWT) validity periods are set to one hour.**"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Viber Business Messaging API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Viber Send Single Messages APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Viber Business Send Messages APIs allow businesses to send a variety of message types to their users on the Viber platform. These APIs enable businesses to engage with their customers, deliver personalized content, and provide interactive experiences through Viber's messaging platform.\n\nHere are the supported Viber Business Send Single Message types:\n\n- **Single Text:** Send a plain text message to a recipient.\n- **Single Text Button:** Send a text message with an action button.\n- **Single Text "
+        },
+        {
+          "info": {
+            "name": "Viber Send Campaign Messages APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Viber Business Send Campaign Messages APIs allow businesses to send bulk campaign messages to multiple users on the Viber platform. A campaign uses a `file_code` returned from the Campaign File Upload API to address recipients.\n\nHere are the supported Viber Business Send Campaign Message types:\n\n- **Campaign Text:** Send a plain text message to multiple recipients.\n- **Campaign Text Button:** Send a text message with an action button to multiple recipients.\n- **Campaign Text Button Image:** Send"
+        },
+        {
+          "info": {
+            "name": "Campaign File Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "File",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "File_mimetype",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Campaign File Upload API allows businesses to securely upload their contact list or campaign content files to Viber's platform for use in bulk campaigns.\n\nFiles must be uploaded as binary data using `multipart/form-data`. The following file formats are supported:\n- **CSV** (`.csv`) — Comma-separated contact list\n- **Excel** (`.xlsx`, `.xls`) — Spreadsheet contact list\n- **Plain Text** (`.txt`) — Tab or newline-delimited contact list\n- **ZIP** (`.zip`) — Archive containing a single CSV file\n\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Viber Bulk Messaging API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Viber Send Bulk Messages API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/vbs/api/v3/send_bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Viber Send Bulk Messages API allows businesses to send campaign messages to multiple recipients at once. The recipients are defined by a `file_code` returned from the Campaign File Upload API.\n\nSupported bulk message types include text, image, text+image, text button, text button image, file, video, video+text, video+text+action button, and text template. Fallback delivery to SMS or WhatsApp is supported on any message type by including `fallback_channel` and the corresponding `fallback_sms`"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Viber Reports API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Summary Cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/summary-cards",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-01-01",
+                "type": "query",
+                "description": "Start date for the report period (YYYY-MM-DD)."
+              },
+              {
+                "name": "end_date",
+                "value": "2025-12-31",
+                "type": "query",
+                "description": "End date for the report period (YYYY-MM-DD)."
+              },
+              {
+                "name": "message_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by message type. Use `all` to include all types."
+              },
+              {
+                "name": "service_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by service type (e.g. `one_way`, `two_way`, `session`, `all`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns high-level summary metrics for a given date range, including total messages sent, delivered, seen, and failed. Used to populate dashboard summary card widgets."
+        },
+        {
+          "info": {
+            "name": "Graph Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/graph",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-01-01",
+                "type": "query",
+                "description": "Start date for the graph data (YYYY-MM-DD)."
+              },
+              {
+                "name": "end_date",
+                "value": "2025-12-31",
+                "type": "query",
+                "description": "End date for the graph data (YYYY-MM-DD)."
+              },
+              {
+                "name": "message_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by message type."
+              },
+              {
+                "name": "service_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by service type."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns time-series data points for message delivery metrics over a specified date range. Used to populate trend graphs on the reporting dashboard."
+        },
+        {
+          "info": {
+            "name": "Media Cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/media-cards",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-01-01",
+                "type": "query",
+                "description": "Start date for the report period (YYYY-MM-DD)."
+              },
+              {
+                "name": "end_date",
+                "value": "2025-12-31",
+                "type": "query",
+                "description": "End date for the report period (YYYY-MM-DD)."
+              },
+              {
+                "name": "message_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by a specific message type, or `all`."
+              },
+              {
+                "name": "service_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by service type."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a breakdown of message delivery metrics grouped by media/message type (text, image, video, file, etc.) for a given date range. Used to populate media-type breakdown cards on the reporting dashboard."
+        },
+        {
+          "info": {
+            "name": "Campaign Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/camps",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-01-01",
+                "type": "query",
+                "description": "Start date for the campaign report (YYYY-MM-DD)."
+              },
+              {
+                "name": "end_date",
+                "value": "2025-12-31",
+                "type": "query",
+                "description": "End date for the campaign report (YYYY-MM-DD)."
+              },
+              {
+                "name": "message_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by message type."
+              },
+              {
+                "name": "service_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by service type."
+              },
+              {
+                "name": "page_number",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of campaigns and their delivery metrics for a given date range. Used to view per-campaign performance on the reporting dashboard."
+        },
+        {
+          "info": {
+            "name": "Daily Tabular Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/tabular",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-02-01",
+                "type": "query",
+                "description": "Start date for the tabular report (YYYY-MM-DD)."
+              },
+              {
+                "name": "end_date",
+                "value": "2026-02-01",
+                "type": "query",
+                "description": "End date for the tabular report (YYYY-MM-DD)."
+              },
+              {
+                "name": "timezone",
+                "value": "Asia/Calcutta",
+                "type": "query",
+                "description": "Timezone for interpreting date filters (e.g. `Asia/Kolkata`)."
+              },
+              {
+                "name": "message_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by message type."
+              },
+              {
+                "name": "service_type",
+                "value": "all",
+                "type": "query",
+                "description": "Filter by service type."
+              },
+              {
+                "name": "page_number",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "phone_no",
+                "value": "919769187972",
+                "type": "query",
+                "description": "Filter results to a specific phone number."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated, per-message tabular report for a given date range. Each record contains the phone number, message type, delivery status, and timestamps. Supports filtering by timezone, message type, service type, and optionally by a specific phone number."
+        },
+        {
+          "info": {
+            "name": "List Viber Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/viber_templates",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "0aac888f-2ee2-4112-9659-1755a951966a",
+                "type": "query",
+                "description": "Filter by a specific template UUID."
+              },
+              {
+                "name": "page_number",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "page_size",
+                "value": "10",
+                "type": "query",
+                "description": "Number of templates per page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of approved Viber message templates associated with the account. Supports filtering by a specific template ID."
+        },
+        {
+          "info": {
+            "name": "Add Viber Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/viber-reports/api/v2/viber_templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Viber message template for the account. Templates must be submitted with a unique name, message syntax (with `{{parameter}}` placeholders), the message type, and the operator-assigned template ID. Templates require approval before they can be used in messages."
+        },
+        {
+          "info": {
+            "name": "Fetch Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-report-creator/v1/fetch_reports",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2025-01-23 00:00:00",
+                "type": "query",
+                "description": "Start date and time for the report range (YYYY-MM-DD HH:MM:SS)."
+              },
+              {
+                "name": "end_date",
+                "value": "2026-01-23 00:00:00",
+                "type": "query",
+                "description": "End date and time for the report range (YYYY-MM-DD HH:MM:SS)."
+              },
+              {
+                "name": "page_number",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of generated report records for a given date range. Each record includes the report status, file path, and metadata. Use the `file_path` value from a completed report to call the Download Report endpoint."
+        },
+        {
+          "info": {
+            "name": "Create Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/viber-report-creator/v1/create_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Triggers the generation of a new downloadable report for a given date range. The report is created asynchronously — use the Fetch Reports endpoint to check status, then the Download Report endpoint once the status is `completed`."
+        },
+        {
+          "info": {
+            "name": "Download Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/viber-report-creator/v1/download/:file_name",
+            "params": [
+              {
+                "name": "file_name",
+                "value": "6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip",
+                "type": "path",
+                "description": "The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Downloads a generated report file by its file name. The file name is obtained from the `file_path` field in the Fetch Reports response. The report is returned as a ZIP archive containing a CSV file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,5396 @@
+{
+  "item": [
+    {
+      "id": "7fbba625-199b-4216-b0bc-af71b7fcda4a",
+      "name": "Viber Login",
+      "description": {
+        "content": "Authenticate and obtain a JWT token to access the Viber Business Messaging APIs. Tokens are valid for one hour by default.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "48dc8c58-a2dd-48f3-be26-4e12fc071151",
+          "name": "Login API",
+          "request": {
+            "name": "Login API",
+            "description": {
+              "content": "Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.\n\n**By default, the JSON Web Token (JWT) validity periods are set to one hour.**",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "v1",
+                "login",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc7328e7-785d-4772-8206-d4dbbb23ecf9",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "v1",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"password\": \"password\",\n  \"username\": \"username\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"JWTAUTH\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTY4Mzg4OTI0MSwiZW1haWwiOiJwcm9kdxxxxxxxxxxAcm91dGVtb2JpbGUuY29tIiwib3JpZ19pYXQiOjE2ODM4ODU2NDEsImN1c3RvbWVyX2lkIjoiOWlyNURnN2J2c0NBIn0.gu2LO-bDVPqa35v_MnyO1KKeZzhxxxxxxxxxxxxxxxx\",\n  \"user_data\": {\n    \"username\": \"demo\",\n    \"first_name\": \"user\",\n    \"last_name\": \"name\",\n    \"email\": \"user_name@orgdomain.com\",\n    \"phone_number\": \"{phone}\",\n    \"password_reset\": false,\n    \"is_active\": true,\n    \"is_staff\": false,\n    \"ip\": \"1stepauxx\",\n    \"child_user\": false,\n    \"parent_username\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8885a3e9-af4c-4e7c-8137-526d2244deea",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "v1",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"password\": \"password\",\n  \"username\": \"username\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"invalid credentials or the account has been deactivated\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24d28677-f36e-4b88-afad-a8afb249b307",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "v1",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"password\": \"password\",\n  \"username\": \"username\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0a8dca8-83aa-488d-80cb-722a6f67ce23",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "v1",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"password\": \"password\",\n  \"username\": \"username\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"<exception>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a59dee96-e6d7-4d5f-beff-e9e637f74381",
+      "name": "Viber Client Callback API",
+      "description": {
+        "content": "Receive real-time webhook notifications for incoming messages and delivery reports from the Viber platform. Configure your callback URL in the webhook settings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1be9844f-10bd-433a-b44a-4e74a1194936",
+          "name": "Viber Client Callback",
+          "request": {
+            "name": "Viber Client Callback",
+            "description": {
+              "content": "Viber Client Callback APIs allow you to receive real-time notifications for events that occur on your Viber Business Messaging account. These callbacks are triggered by events that occur on the Viber server, and are delivered to a URL that you specify in your webhook configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "callback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"<string>\",\n  \"time\": \"<date-time>\",\n  \"message\": {\n    \"text\": \"<string>\",\n    \"tracking_data\": \"<string>\"\n  },\n  \"service_type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "119ef7af-5d71-4e01-8ea2-849d57214db5",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"{phone}\",\n  \"time\": 2121212121,\n  \"message\": {\n    \"text\": \"a message to the sender\",\n    \"tracking_data\": \"tracking_id:100xxx5\"\n  },\n  \"service_type\": \"two_way/session\",\n  \"request_id\": \"70d9758e-70ef-11eb-b813-a81e84xxxxxx\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48aeaf29-32ff-43c0-a079-d462ffb5b0b9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"{phone}\",\n  \"time\": 2121212121,\n  \"message\": {\n    \"text\": \"a message to the sender\",\n    \"tracking_data\": \"tracking_id:100xxx5\"\n  },\n  \"service_type\": \"two_way/session\",\n  \"request_id\": \"70d9758e-70ef-11eb-b813-a81e84xxxxxx\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a31bb7b3-ae21-48de-82a8-4ccf18415e25",
+      "name": "Viber Business Messaging API",
+      "description": {
+        "content": "Send single messages to individual Viber users including text, images, videos, files, OTP verification, and interactive buttons. Also manage campaign file uploads and legacy campaign send operations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b126d283-8e08-433e-9294-315d263ea340",
+          "name": "Viber Send Single Messages APIs",
+          "request": {
+            "name": "Viber Send Single Messages APIs",
+            "description": {
+              "content": "Viber Business Send Messages APIs allow businesses to send a variety of message types to their users on the Viber platform. These APIs enable businesses to engage with their customers, deliver personalized content, and provide interactive experiences through Viber's messaging platform.\n\nHere are the supported Viber Business Send Single Message types:\n\n- **Single Text:** Send a plain text message to a recipient.\n- **Single Text Button:** Send a text message with an action button.\n- **Single Text Button Image:** Send a message combining text, a button, and an image.\n- **Single Text Image:** Send a message combining text and an image.\n- **Single Image:** Send a standalone image message.\n- **Single File:** Send a file/document attachment.\n- **Single Video:** Send a video message.\n- **Single Video Text:** Send a video with accompanying text.\n- **Single Video Button Text:** Send a video with text and an action button.\n- **Single Video Text Action Button:** Send a video with text and a structured action button object.\n- **OTP / Verification Message:** Send a one-time password or verification code using a pre-approved template.\n- **Text Template:** Send a branded text message using an approved template ID.\n- **Text Message with Fallback:** Send a Viber message with an automatic fallback to WhatsApp or SMS if the recipient is unreachable on Viber.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vbs",
+                "api",
+                "v2",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"<string>\",\n  \"text\": \"<string>\",\n  \"button_text\": \"<string>\",\n  \"button_link\": \"<string>\",\n  \"img\": \"<string>\",\n  \"ttl\": \"<string>\",\n  \"message_type\": \"<string>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5de2fa36-d262-4bbd-8aad-1235248e6f0c",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Api execution is successful\",\n  \"request_id\": \"727591b0-e592-11ed-91d7-0242ac13xxxx\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abf371cf-7f4e-4fbb-89e4-bb2e6d56ddaa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    \"phone - Please provide valid phone no.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26ebbdd8-8a93-478d-b62f-76a0a0244bd6",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6732717b-a411-4d2b-9cd4-b61d99be0a71",
+              "name": "Page Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\"> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "24d502f2-1c1a-40fe-9e17-8708bdf26098",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04e15389-d005-4c8c-89f1-d0c08759766e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"{mobile with country code}\",\n  \"text\": \"{text}\",\n  \"button_text\": \"{button text}\",\n  \"button_link\": \"{button link with https://}\",\n  \"img\": \"{image link with https:// with extension}\",\n  \"ttl\": \"{time in seconds}\",\n  \"message_type\": \"template\",\n  \"method\": \"one_way/two_way\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5611f2a4-2eb4-495d-a064-c7a438e4d8e4",
+          "name": "Viber Send Campaign Messages APIs",
+          "request": {
+            "name": "Viber Send Campaign Messages APIs",
+            "description": {
+              "content": "Viber Business Send Campaign Messages APIs allow businesses to send bulk campaign messages to multiple users on the Viber platform. A campaign uses a `file_code` returned from the Campaign File Upload API to address recipients.\n\nHere are the supported Viber Business Send Campaign Message types:\n\n- **Campaign Text:** Send a plain text message to multiple recipients.\n- **Campaign Text Button:** Send a text message with an action button to multiple recipients.\n- **Campaign Text Button Image:** Send a message with text, a button, and an image to multiple recipients.\n- **Campaign Text Image:** Send a message combining text and an image.\n- **Campaign Image:** Send a standalone image to multiple recipients.\n- **Campaign File:** Send a file/document attachment to multiple recipients.\n- **Campaign Video:** Send a video message to multiple recipients.\n- **Campaign Video Text:** Send a video with accompanying text to multiple recipients.\n- **Campaign Video Text Action Button:** Send a video with text and a structured action button to multiple recipients.\n- **Campaign Text Template:** Send a branded text message using an approved template to multiple recipients.\n- **Campaign with Fallback:** Send a Viber campaign with an automatic fallback to WhatsApp or SMS if recipients are unreachable on Viber.\n\nOptionally include `schedule_datetime` and `timezone` to schedule the campaign for a future send time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vbs",
+                "api",
+                "v2",
+                "manage-campaign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaign_id\": \"<string>\",\n  \"campaign_action\": \"<string>\",\n  \"campaign_name\": \"<string>\",\n  \"ttl\": \"<string>\",\n  \"file_mimetype\": \"<string>\",\n  \"filename\": \"<string>\",\n  \"payload\": {\n    \"text\": \"<string>\",\n    \"button_text\": \"<string>\",\n    \"button_link\": \"<string>\",\n    \"img\": \"<string>\",\n    \"message_type\": \"<string>\",\n    \"method\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b931d847-b626-4a73-ac7b-6ceb5260e94a",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"campaign with id ce078410-e593-11ed-9242-0242ac11xxxx is now processing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d5c73ed-f32b-426f-8297-8bc3f393804a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    \"campaign_name - Shorter than minimum length 3.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe7a242d-89a5-4706-a8f6-a4eb93d243d6",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca444edb-9aa2-4ab2-89fe-7eb28a242fb7",
+              "name": "Page Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\"> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "2ff446fa-6c29-4255-9f0d-89a92b4ca3d2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72b80621-2ca0-4bf4-a892-05d0539cbc18",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "manage-campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaign_id\": \"{campaign id generated post file upload}\",\n  \"campaign_action\": \"start\",\n  \"campaign_name\": \"{campaign name}\",\n  \"ttl\": \"{time in seconds}\",\n  \"file_mimetype\": \"text/plain\",\n  \"filename\": \"{filename with extension}\",\n  \"payload\": {\n    \"text\": \"{Message}\",\n    \"button_text\": \"{button name}\",\n    \"button_link\": \"{button url with https://}\",\n    \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n    \"message_type\": \"template\",\n    \"method\": \"one_way/two_way\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3dadcdd0-3602-4b47-859d-7063fd605d1a",
+          "name": "Campaign File Upload",
+          "request": {
+            "name": "Campaign File Upload",
+            "description": {
+              "content": "The Campaign File Upload API allows businesses to securely upload their contact list or campaign content files to Viber's platform for use in bulk campaigns.\n\nFiles must be uploaded as binary data using `multipart/form-data`. The following file formats are supported:\n- **CSV** (`.csv`) — Comma-separated contact list\n- **Excel** (`.xlsx`, `.xls`) — Spreadsheet contact list\n- **Plain Text** (`.txt`) — Tab or newline-delimited contact list\n- **ZIP** (`.zip`) — Archive containing a single CSV file\n\nOnce uploaded, the API returns a `campaign_id` which is required when sending campaign messages via the Send Campaign Messages API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vbs",
+                "api",
+                "v2",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "File",
+                  "type": "file",
+                  "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed",
+                  "description": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file."
+                },
+                {
+                  "key": "File_mimetype",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f88b2e7c-75a8-43cd-9f51-f6b27f81ad30",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file.",
+                        "type": "text/plain"
+                      },
+                      "key": "File",
+                      "type": "file",
+                      "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)",
+                        "type": "text/plain"
+                      },
+                      "key": "File_mimetype",
+                      "value": "text/csv",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"File uploaded successfully\",\n  \"campaign_id\": \"f8bc9ddc-f3e7-11ed-9242-0242acxxxxxx\",\n  \"file_type\": \"application/vnd.ms-excel\",\n  \"file_size\": \"5.5KB\",\n  \"total_records\": 2,\n  \"duplicate_records\": 0,\n  \"valid_records\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b583b7b-b52d-4aef-a41e-b5f8513613f4",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file.",
+                        "type": "text/plain"
+                      },
+                      "key": "File",
+                      "type": "file",
+                      "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)",
+                        "type": "text/plain"
+                      },
+                      "key": "File_mimetype",
+                      "value": "text/csv",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"unable to process campaign request\",\n  \"reason\": \"jwt token expired\",\n  \"status\": \"failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "465a2ea5-0465-4eb1-84f8-9128742362b5",
+              "name": "Page Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file.",
+                        "type": "text/plain"
+                      },
+                      "key": "File",
+                      "type": "file",
+                      "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)",
+                        "type": "text/plain"
+                      },
+                      "key": "File_mimetype",
+                      "value": "text/csv",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\"> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "0169ab06-6440-44de-b989-afc5cdb5efbe",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file.",
+                        "type": "text/plain"
+                      },
+                      "key": "File",
+                      "type": "file",
+                      "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)",
+                        "type": "text/plain"
+                      },
+                      "key": "File_mimetype",
+                      "value": "text/csv",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca5d69e8-5ac0-459f-af89-ced93d75ad13",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v2",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The binary file to upload. Supported formats: CSV (.csv), Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive (.zip) containing a CSV file.",
+                        "type": "text/plain"
+                      },
+                      "key": "File",
+                      "type": "file",
+                      "contentType": "text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/zip, application/x-zip-compressed"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The MIME type of the uploaded file. Must match the actual file format being sent. (This can only be one of text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip-compressed)",
+                        "type": "text/plain"
+                      },
+                      "key": "File_mimetype",
+                      "value": "text/csv",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "84fdaefe-a083-4a07-b5c5-e53a73a52e22",
+      "name": "Viber Bulk Messaging API",
+      "description": {
+        "content": "Send bulk campaign messages to multiple Viber recipients at once using a file_code from the Campaign File Upload API. Supports all message types including fallback delivery to SMS or WhatsApp, and scheduled campaign dispatch.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "095d6f23-165b-4ad9-abf7-771572a6dc52",
+          "name": "Viber Send Bulk Messages API",
+          "request": {
+            "name": "Viber Send Bulk Messages API",
+            "description": {
+              "content": "The Viber Send Bulk Messages API allows businesses to send campaign messages to multiple recipients at once. The recipients are defined by a `file_code` returned from the Campaign File Upload API.\n\nSupported bulk message types include text, image, text+image, text button, text button image, file, video, video+text, video+text+action button, and text template. Fallback delivery to SMS or WhatsApp is supported on any message type by including `fallback_channel` and the corresponding `fallback_sms` or `fallback_whatsapp` block inside the payload.\n\nCampaigns can be scheduled by providing `schedule_datetime` (format: `YYYY-MM-DD HH:MM:SS`) and `timezone` (e.g. `Asia/Kolkata`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vbs",
+                "api",
+                "v3",
+                "send_bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"file_code\": \"<string>\",\n  \"campaign_name\": \"<string>\",\n  \"personalised\": \"<boolean>\",\n  \"schedule_datetime\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"payload\": {\n    \"message_type\": \"<string>\",\n    \"method\": \"<string>\",\n    \"text\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b61bff3-855a-4578-a93f-b71d78122f4c",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v3",
+                    "send_bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file_code\": \"{file code from upload}\",\n  \"campaign_name\": \"{campaign name}\",\n  \"personalised\": false,\n  \"payload\": {\n    \"message_type\": \"text\",\n    \"method\": \"transaction\",\n    \"text\": \"{message text}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"campaign with id ce078410-e593-11ed-9242-0242ac11xxxx is now processing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e353244-dabe-4e13-8fb2-10ee50f07e66",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v3",
+                    "send_bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file_code\": \"{file code from upload}\",\n  \"campaign_name\": \"{campaign name}\",\n  \"personalised\": false,\n  \"payload\": {\n    \"message_type\": \"text\",\n    \"method\": \"transaction\",\n    \"text\": \"{message text}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    \"file_code - Invalid or expired file code.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37390eb2-0da3-4979-a3ea-6ca179f8a29d",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v3",
+                    "send_bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file_code\": \"{file code from upload}\",\n  \"campaign_name\": \"{campaign name}\",\n  \"personalised\": false,\n  \"payload\": {\n    \"message_type\": \"text\",\n    \"method\": \"transaction\",\n    \"text\": \"{message text}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bec9c041-b2d0-4916-ad55-e075e2a39a7b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v3",
+                    "send_bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file_code\": \"{file code from upload}\",\n  \"campaign_name\": \"{campaign name}\",\n  \"personalised\": false,\n  \"payload\": {\n    \"message_type\": \"text\",\n    \"method\": \"transaction\",\n    \"text\": \"{message text}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Too many requests. Please retry after the indicated time.\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "add963c9-2b6a-4b52-a65f-183a25e2f82f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vbs",
+                    "api",
+                    "v3",
+                    "send_bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file_code\": \"{file code from upload}\",\n  \"campaign_name\": \"{campaign name}\",\n  \"personalised\": false,\n  \"payload\": {\n    \"message_type\": \"text\",\n    \"method\": \"transaction\",\n    \"text\": \"{message text}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "fbd67557-00c0-4ed4-8eba-c69b1c64656c",
+      "name": "Viber Reports API",
+      "description": {
+        "content": "Access delivery reports, campaign performance metrics, summary dashboards, and message-level tabular data. Create and download detailed CSV reports. Manage approved Viber message templates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d9d5b2c5-bc16-4ff3-8c4b-ca859498e0b1",
+          "name": "Summary Cards",
+          "request": {
+            "name": "Summary Cards",
+            "description": {
+              "content": "Returns high-level summary metrics for a given date range, including total messages sent, delivered, seen, and failed. Used to populate dashboard summary card widgets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "summary-cards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Start date for the report period (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) End date for the report period (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_type",
+                  "value": "all",
+                  "description": "Filter by message type. Use `all` to include all types."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_type",
+                  "value": "all",
+                  "description": "Filter by service type (e.g. `one_way`, `two_way`, `session`, `all`)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df32c9ef-53f5-43ea-913a-2001e9ff3e3e",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "summary-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_sent\": 15000,\n  \"total_delivered\": 13200,\n  \"total_seen\": 9800,\n  \"total_failed\": 1800\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1af094c-11f9-41ca-9ffb-7263cb63a268",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "summary-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd749a24-6791-4466-b4b4-1e1bd9f97f61",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "summary-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b8b4494-6142-4f2c-a229-00ea8d150087",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "summary-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e48c0f3b-5b0a-4909-b1da-81c1354fc45f",
+          "name": "Graph Report",
+          "request": {
+            "name": "Graph Report",
+            "description": {
+              "content": "Returns time-series data points for message delivery metrics over a specified date range. Used to populate trend graphs on the reporting dashboard.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "graph"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Start date for the graph data (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) End date for the graph data (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_type",
+                  "value": "all",
+                  "description": "Filter by message type."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_type",
+                  "value": "all",
+                  "description": "Filter by service type."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e1c7b5fc-ac16-4008-8025-99f9f68af8a7",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"date\": \"2025-01-01\",\n      \"sent\": 500,\n      \"delivered\": 460,\n      \"seen\": 310\n    },\n    {\n      \"date\": \"2025-01-02\",\n      \"sent\": 620,\n      \"delivered\": 580,\n      \"seen\": 400\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ffc002c-42fe-4594-8b4a-1ae51d52f3a9",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4daf4318-098d-4413-8a2d-bc3949d58d99",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1824801d-cce2-4d43-b7a6-6b6080512712",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbb3abf5-363f-45b7-b8b7-c0ef21ebf88b",
+          "name": "Media Cards",
+          "request": {
+            "name": "Media Cards",
+            "description": {
+              "content": "Returns a breakdown of message delivery metrics grouped by media/message type (text, image, video, file, etc.) for a given date range. Used to populate media-type breakdown cards on the reporting dashboard.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "media-cards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Start date for the report period (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) End date for the report period (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_type",
+                  "value": "all",
+                  "description": "Filter by a specific message type, or `all`."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_type",
+                  "value": "all",
+                  "description": "Filter by service type."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d0beb0d7-23da-48bd-bf19-563143a01a33",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "media-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"media_breakdown\": [\n    {\n      \"message_type\": \"text\",\n      \"sent\": 8000,\n      \"delivered\": 7200\n    },\n    {\n      \"message_type\": \"image\",\n      \"sent\": 4000,\n      \"delivered\": 3600\n    },\n    {\n      \"message_type\": \"video\",\n      \"sent\": 3000,\n      \"delivered\": 2400\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e23ddbd-899e-4810-a9db-5bc492964a1b",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "media-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb87b0b1-9783-4a3e-823b-e69def997832",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "media-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe7025c7-c4d7-49f5-b489-ea9fd1de9eca",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "media-cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4e2eadc-909f-4169-ad28-67efadfd2c34",
+          "name": "Campaign Report",
+          "request": {
+            "name": "Campaign Report",
+            "description": {
+              "content": "Returns a paginated list of campaigns and their delivery metrics for a given date range. Used to view per-campaign performance on the reporting dashboard.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "camps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Start date for the campaign report (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) End date for the campaign report (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_type",
+                  "value": "all",
+                  "description": "Filter by message type."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_type",
+                  "value": "all",
+                  "description": "Filter by service type."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_number",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3080761-079a-45ef-befc-ddf1ca04e79d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "camps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"campaigns\": [\n    {\n      \"campaign_name\": \"Summer Promo\",\n      \"total_sent\": 5000,\n      \"total_delivered\": 4600,\n      \"total_seen\": 3100,\n      \"total_failed\": 400,\n      \"created_at\": \"2025-06-01T10:00:00Z\"\n    }\n  ],\n  \"total\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1908c356-17c4-4be3-84a9-d5b2e015306e",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "camps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "069929e5-dd5e-4204-949a-1a0de96bb10b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "camps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0fa7b92-8065-4233-b4c2-83237fa0d5f0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "camps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "985b4eb7-a65b-4c59-823b-cea702432a4c",
+          "name": "Daily Tabular Report",
+          "request": {
+            "name": "Daily Tabular Report",
+            "description": {
+              "content": "Returns a paginated, per-message tabular report for a given date range. Each record contains the phone number, message type, delivery status, and timestamps. Supports filtering by timezone, message type, service type, and optionally by a specific phone number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "tabular"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Start date for the tabular report (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) End date for the tabular report (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "Asia/Calcutta",
+                  "description": "Timezone for interpreting date filters (e.g. `Asia/Kolkata`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_type",
+                  "value": "all",
+                  "description": "Filter by message type."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_type",
+                  "value": "all",
+                  "description": "Filter by service type."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_number",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "phone_no",
+                  "value": "<string>",
+                  "description": "Filter results to a specific phone number."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ca9cd0b0-07e2-4153-a4eb-83afa7e3f197",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "tabular"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-02-01"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "Asia/Calcutta"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "phone_no",
+                      "value": "919769187972"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"records\": [\n    {\n      \"phone_number\": \"919769187972\",\n      \"message_type\": \"text\",\n      \"service_type\": \"one_way\",\n      \"status\": \"delivered\",\n      \"sent_at\": \"2025-06-01T08:30:00Z\",\n      \"request_id\": \"727591b0-e592-11ed-91d7-0242ac13xxxx\"\n    }\n  ],\n  \"total\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49d4a4d7-33fd-4b31-86da-6c4062a59a9b",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "tabular"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-02-01"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "Asia/Calcutta"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "phone_no",
+                      "value": "919769187972"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0952834-5a00-42dd-bd05-dca31f85b286",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "tabular"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-02-01"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "Asia/Calcutta"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "phone_no",
+                      "value": "919769187972"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0ab76b5-7791-4ec0-991f-4ac413ef3e84",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "tabular"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-02-01"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "Asia/Calcutta"
+                    },
+                    {
+                      "key": "message_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "service_type",
+                      "value": "all"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "phone_no",
+                      "value": "919769187972"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f076fb84-1299-4db9-93c7-cb3574d2e212",
+          "name": "List Viber Templates",
+          "request": {
+            "name": "List Viber Templates",
+            "description": {
+              "content": "Returns a paginated list of approved Viber message templates associated with the account. Supports filtering by a specific template ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "viber_templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "template_id",
+                  "value": "<string>",
+                  "description": "Filter by a specific template UUID."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_number",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of templates per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6b56475b-92ea-45b9-9fab-2c5a6f4ed13b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "0aac888f-2ee2-4112-9659-1755a951966a"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"templates\": [\n    {\n      \"template_id\": \"0aac888f-2ee2-4112-9659-1755a951966a\",\n      \"template_name\": \"Basic OTP\",\n      \"template_syntax\": \"Your code is {{pin}}. Please don't share it with anyone.\",\n      \"message_type\": \"viber_otp\",\n      \"operator_template_id\": \"8437\",\n      \"status\": \"approved\"\n    }\n  ],\n  \"total\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dbd9bec-58a2-428f-8771-3044e13fd8bf",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "0aac888f-2ee2-4112-9659-1755a951966a"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f7a9756-b49c-43d3-866d-9aa6e30f5c3d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "0aac888f-2ee2-4112-9659-1755a951966a"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5be2d14-a98f-4f94-887a-ab3fd5ba91e6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "0aac888f-2ee2-4112-9659-1755a951966a"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ced92e5a-c785-402d-9902-5b355da87fad",
+          "name": "Add Viber Template",
+          "request": {
+            "name": "Add Viber Template",
+            "description": {
+              "content": "Creates a new Viber message template for the account. Templates must be submitted with a unique name, message syntax (with `{{parameter}}` placeholders), the message type, and the operator-assigned template ID. Templates require approval before they can be used in messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-reports",
+                "api",
+                "v2",
+                "viber_templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template_name\": \"<string>\",\n  \"template_syntax\": \"<string>\",\n  \"message_type\": \"<string>\",\n  \"operator_template_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b2b051f-2258-4042-95b6-9a215fa701a5",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_name\": \"Basic OTP\",\n  \"template_syntax\": \"Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.\",\n  \"message_type\": \"viber_otp\",\n  \"operator_template_id\": \"8437\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"template_id\": \"0aac888f-2ee2-4112-9659-1755a951966a\",\n  \"status\": \"pending_approval\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7385ae4-15d0-462f-9244-7db653f35e7f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_name\": \"Basic OTP\",\n  \"template_syntax\": \"Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.\",\n  \"message_type\": \"viber_otp\",\n  \"operator_template_id\": \"8437\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"A template with this name already exists.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7055cf5a-b7d4-4674-a66e-068a8ef5aa1c",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_name\": \"Basic OTP\",\n  \"template_syntax\": \"Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.\",\n  \"message_type\": \"viber_otp\",\n  \"operator_template_id\": \"8437\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "458bd12e-c146-4150-8567-36fd7661fd03",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_name\": \"Basic OTP\",\n  \"template_syntax\": \"Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.\",\n  \"message_type\": \"viber_otp\",\n  \"operator_template_id\": \"8437\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f070ec-81c8-40ea-b17c-ae60c5e66e4b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-reports",
+                    "api",
+                    "v2",
+                    "viber_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_name\": \"Basic OTP\",\n  \"template_syntax\": \"Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.\",\n  \"message_type\": \"viber_otp\",\n  \"operator_template_id\": \"8437\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "995e7824-4d56-4ba3-8da0-a9d112867f3d",
+          "name": "Fetch Reports",
+          "request": {
+            "name": "Fetch Reports",
+            "description": {
+              "content": "Returns a paginated list of generated report records for a given date range. Each record includes the report status, file path, and metadata. Use the `file_path` value from a completed report to call the Download Report endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-report-creator",
+                "v1",
+                "fetch_reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<string>",
+                  "description": "(Required) Start date and time for the report range (YYYY-MM-DD HH:MM:SS)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<string>",
+                  "description": "(Required) End date and time for the report range (YYYY-MM-DD HH:MM:SS)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_number",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c355e477-3340-44bf-a200-981d9b7cf54f",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "fetch_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-23 00:00:00"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-01-23 00:00:00"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": [\n    {\n      \"id\": 42,\n      \"campaign_name\": \"Summer Promo\",\n      \"file_path\": \"reports/6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip\",\n      \"is_support\": false,\n      \"msisdn\": \"\",\n      \"status\": \"completed\",\n      \"timestamp\": \"2025-06-01T10:30:00Z\",\n      \"username\": \"demo\",\n      \"payload\": {\n        \"csv_max_lines\": 10000,\n        \"filters\": {\n          \"start_date\": \"2025-01-23 00:00:00\",\n          \"end_date\": \"2026-01-23 00:00:00\"\n        },\n        \"projections\": [\n          \"phone_number\",\n          \"status\",\n          \"sent_at\"\n        ]\n      }\n    }\n  ],\n  \"total\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c19a6f7b-9a4f-4e74-9787-82b1f4608f60",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "fetch_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-23 00:00:00"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-01-23 00:00:00"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04de776f-8605-4f15-9e37-b03637c4fd29",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "fetch_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-23 00:00:00"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-01-23 00:00:00"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "447dd265-be75-4e65-8786-b787b800f206",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "fetch_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2025-01-23 00:00:00"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2026-01-23 00:00:00"
+                    },
+                    {
+                      "key": "page_number",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6097d2f2-f4d7-4338-96da-740770afe2de",
+          "name": "Create Report",
+          "request": {
+            "name": "Create Report",
+            "description": {
+              "content": "Triggers the generation of a new downloadable report for a given date range. The report is created asynchronously — use the Fetch Reports endpoint to check status, then the Download Report endpoint once the status is `completed`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-report-creator",
+                "v1",
+                "create_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_date\": \"<string>\",\n  \"end_date\": \"<string>\",\n  \"filters\": {\n    \"message_type\": \"<string>\",\n    \"service_type\": \"<string>\"\n  },\n  \"projections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "50c5f8c9-a4fc-4710-9d7c-49d747cd4727",
+              "name": "Report creation initiated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "create_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-23 00:00:00\",\n  \"end_date\": \"2026-01-23 00:00:00\",\n  \"filters\": {\n    \"message_type\": \"all\",\n    \"service_type\": \"all\"\n  },\n  \"projections\": [\n    \"phone_number\",\n    \"message_type\",\n    \"status\",\n    \"sent_at\",\n    \"request_id\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"report_id\": 42,\n  \"status\": \"pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c82c781-26cc-4db1-9d99-20ab5fcb639e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "create_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-23 00:00:00\",\n  \"end_date\": \"2026-01-23 00:00:00\",\n  \"filters\": {\n    \"message_type\": \"all\",\n    \"service_type\": \"all\"\n  },\n  \"projections\": [\n    \"phone_number\",\n    \"message_type\",\n    \"status\",\n    \"sent_at\",\n    \"request_id\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"start_date and end_date are required.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc534d94-7bd2-4272-89f6-e996df851bfe",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "create_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-23 00:00:00\",\n  \"end_date\": \"2026-01-23 00:00:00\",\n  \"filters\": {\n    \"message_type\": \"all\",\n    \"service_type\": \"all\"\n  },\n  \"projections\": [\n    \"phone_number\",\n    \"message_type\",\n    \"status\",\n    \"sent_at\",\n    \"request_id\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "549c30e8-ae0e-46b2-b200-637335d4d0dd",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "create_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-23 00:00:00\",\n  \"end_date\": \"2026-01-23 00:00:00\",\n  \"filters\": {\n    \"message_type\": \"all\",\n    \"service_type\": \"all\"\n  },\n  \"projections\": [\n    \"phone_number\",\n    \"message_type\",\n    \"status\",\n    \"sent_at\",\n    \"request_id\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50185d29-c958-4c20-81c0-0736d5c441c4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "create_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-23 00:00:00\",\n  \"end_date\": \"2026-01-23 00:00:00\",\n  \"filters\": {\n    \"message_type\": \"all\",\n    \"service_type\": \"all\"\n  },\n  \"projections\": [\n    \"phone_number\",\n    \"message_type\",\n    \"status\",\n    \"sent_at\",\n    \"request_id\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c01e80a-a20d-496b-9e2d-a4ec705e033c",
+          "name": "Download Report",
+          "request": {
+            "name": "Download Report",
+            "description": {
+              "content": "Downloads a generated report file by its file name. The file name is obtained from the `file_path` field in the Fetch Reports response. The report is returned as a ZIP archive containing a CSV file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "viber-report-creator",
+                "v1",
+                "download",
+                ":file_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_name",
+                  "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5049c869-1e79-4a70-bd17-84e3f9cf43c7",
+              "name": "Report file download",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "download",
+                    ":file_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_name",
+                      "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4b2e3c9e-50b6-4191-ad42-ea181436e8fe",
+              "name": "Authentication Failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "download",
+                    ":file_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_name",
+                      "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11b2afc9-648f-4c9a-a934-1f23479e66ee",
+              "name": "Report not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "download",
+                    ":file_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_name",
+                      "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Report file not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb4bfd03-1f1f-49d7-ab38-242e65ee5e70",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "download",
+                    ":file_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_name",
+                      "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"retry_after\": 60\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0227b4d-ea7b-409d-a6b0-ad6d9de4ad91",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "viber-report-creator",
+                    "v1",
+                    "download",
+                    ":file_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_name",
+                      "description": "(Required) The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unknown error occured while processing request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.rmlconnect.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "89fb40d3-f6fd-4535-bfc0-de242f97e518",
+    "name": "Route Mobile Viber OpenAPI Specification",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!\n\nContact Support:\n Name: Route Mobile Development\n Email: support@routemobile.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2390 @@
+{
+  "item": [
+    {
+      "id": "89faf5be-df0c-4c54-9fed-546a4a5decbe",
+      "name": "SMTP Users",
+      "description": {
+        "content": "Manage SMTP sub-users (create, edit, reset password, list)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c32352c-37cd-44d5-9e48-b49dd054614d",
+          "name": "Add a new SMTP user",
+          "request": {
+            "name": "Add a new SMTP user",
+            "description": {
+              "content": "Creates a new SMTP sub-user with defined sending limits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "addSmtp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hourly_limit\": \"<integer>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"total_limit\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a3aaff14-ae2b-4119-8d56-b7eca4d7c12b",
+              "name": "SMTP user created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "addSmtp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"total_limit\": 100,\n  \"hourly_limit\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"SMTP User Created\",\n  \"smtp_user_name\": \"smtp12345\",\n  \"smtp_password\": \"asfsf4w343\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24278405-5515-430a-8667-1c1862990ef7",
+          "name": "Edit an existing SMTP user",
+          "request": {
+            "name": "Edit an existing SMTP user",
+            "description": {
+              "content": "Updates the sending limits or status of an SMTP sub-user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "editSmtp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"smtp_user_name\": \"<string>\",\n  \"token\": \"<string>\",\n  \"total_limit\": \"<integer>\",\n  \"hourly_limit\": \"<integer>\",\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d257b61a-3f29-427b-a708-eeca887a1633",
+              "name": "SMTP user updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "editSmtp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"smtp_user_name\": \"smtp12345\",\n  \"total_limit\": 80,\n  \"hourly_limit\": 15,\n  \"status\": \"Disable\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"SMTP User Updated\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fc6f170-22bc-44f4-89ec-0810ad2f1708",
+          "name": "Reset SMTP user password",
+          "request": {
+            "name": "Reset SMTP user password",
+            "description": {
+              "content": "Generates a new password for the specified SMTP sub-user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "resetSmtpPassword"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"smtp_user_name\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1fb7b35a-a051-414a-a222-904271de1687",
+              "name": "Password reset successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "resetSmtpPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"smtp_user_name\": \"smtp12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"password reseted\",\n  \"smtp_user_name\": \"smtp12345\",\n  \"smtp_password\": \"2fg345gy6r7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79820a04-d861-4f5b-be6c-529fc404c001",
+          "name": "List all SMTP users",
+          "request": {
+            "name": "List all SMTP users",
+            "description": {
+              "content": "Returns a list of all SMTP sub-users associated with the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "listSmtp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "acd008cf-c2c4-45a8-8af9-71c19d8d5c0e",
+              "name": "List of SMTP users",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "listSmtp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"smtp_list\": [\n    {\n      \"smtp_user_name\": \"smtps456546\",\n      \"password\": \"cgvddgrsd\",\n      \"status\": \"Enable\",\n      \"total_limit\": 200,\n      \"hourly_limit\": 20\n    },\n    {\n      \"smtp_user_name\": \"smtps456546\",\n      \"password\": \"cgvddgrsd\",\n      \"status\": \"Enable\",\n      \"total_limit\": 200,\n      \"hourly_limit\": 20\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "494ef827-ac6d-4779-999d-09624bed68e3",
+      "name": "Sending Domains",
+      "description": {
+        "content": "Add, verify, list, and delete sending domains",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "71766c59-9384-43b3-8c6d-31fb63049035",
+          "name": "Add a sending domain",
+          "request": {
+            "name": "Add a sending domain",
+            "description": {
+              "content": "Registers a new sending domain to the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "addSendingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e2c0d087-5f2c-4744-a9e0-55dc5f67c245",
+              "name": "Sending domain added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "addSendingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Sending Domain Added\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b78dfa0-e334-4a78-a50c-a60567440597",
+          "name": "Verify DKIM and SPF records",
+          "request": {
+            "name": "Verify DKIM and SPF records",
+            "description": {
+              "content": "Checks whether DKIM and SPF DNS records are correctly configured for the domain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "checkSendingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b03ad5c-42b3-4f2a-9903-45e568162c44",
+              "name": "Domain check result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "checkSendingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"domain\": \"abc.com\",\n  \"dkim\": {\n    \"valid\": \"Yes\"\n  },\n  \"spf\": {\n    \"valid\": \"No\"\n  },\n  \"valid_signing\": \"No\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc60e127-93a3-4f95-a54e-44df15be26b7",
+          "name": "Verify sending domain via email",
+          "request": {
+            "name": "Verify sending domain via email",
+            "description": {
+              "content": "Sends a verification instruction email to `mailbox@domain`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "verifySendingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"mailbox\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d6477001-70f1-4b9f-bb18-662fe971c8c0",
+              "name": "Verification email sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "verifySendingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"abc.com\",\n  \"mailbox\": \"john\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Verification instruction has been sent to john@abc.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb5a110e-35a5-462a-a8e4-2b89161efc0a",
+          "name": "List sending domains",
+          "request": {
+            "name": "List sending domains",
+            "description": {
+              "content": "Returns all sending domains registered to the account with their DNS validation status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "listSendingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1caf1157-dd39-4428-9d57-ddad209baa3e",
+              "name": "List of sending domains",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "listSendingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"sending_domain_list\": [\n    {\n      \"domain\": \"abc.com\",\n      \"create_date\": 67457775764,\n      \"dkim\": {\n        \"valid\": \"Yes\"\n      },\n      \"spf\": {\n        \"valid\": \"No\"\n      },\n      \"verify_domain\": {\n        \"valid\": \"No\"\n      }\n    },\n    {\n      \"domain\": \"abc.com\",\n      \"create_date\": 67457775764,\n      \"dkim\": {\n        \"valid\": \"No\"\n      },\n      \"spf\": {\n        \"valid\": \"No\"\n      },\n      \"verify_domain\": {\n        \"valid\": \"Yes\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "483e7577-0d0f-4036-b9dc-a9d1777dc34a",
+          "name": "Delete a sending domain",
+          "request": {
+            "name": "Delete a sending domain",
+            "description": {
+              "content": "Removes the specified sending domain from the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "deleteSendingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9795493a-0750-4fa5-8a73-70062887ef2f",
+              "name": "Sending domain deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "deleteSendingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Sending Domain Deleted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "94f29ee2-66cf-4799-b558-89cba18dfae5",
+      "name": "Tracking Domains",
+      "description": {
+        "content": "Add, check, list, and delete tracking domains",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51fa5f7a-4757-46cd-b812-86dc8b228e59",
+          "name": "Add a tracking domain",
+          "request": {
+            "name": "Add a tracking domain",
+            "description": {
+              "content": "Registers a custom tracking domain for open and click tracking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "addTrackingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98eafdda-985d-409b-99ef-b355bc557298",
+              "name": "Tracking domain added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "addTrackingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"track.abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Tracking Domain Added\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea9472a4-26d6-4c57-9d09-dcfa04b7fe1c",
+          "name": "Check tracking domain CNAME",
+          "request": {
+            "name": "Check tracking domain CNAME",
+            "description": {
+              "content": "Validates whether the CNAME record for the tracking domain is correctly configured.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "checkTrackingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8f1441c4-5a70-4168-b66f-de2a78e62d8b",
+              "name": "Tracking domain check result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "checkTrackingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"track.abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"domain\": \"abc.com\",\n  \"valid_tracking\": \"Yes\",\n  \"cname\": {\n    \"valid\": \"Yes\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79036b8d-1093-4a45-a161-90dc1c31572a",
+          "name": "List tracking domains",
+          "request": {
+            "name": "List tracking domains",
+            "description": {
+              "content": "Returns all tracking domains registered to the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "listTrackingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b53c552-e763-46db-823a-7d4aa8d043c4",
+              "name": "List of tracking domains",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "listTrackingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"tracking_domain_list\": [\n    {\n      \"domain\": \"abc.com\",\n      \"create_date\": 67457775764,\n      \"cname\": {\n        \"valid\": \"No\"\n      }\n    },\n    {\n      \"domain\": \"abc.com\",\n      \"create_date\": 67457775764,\n      \"cname\": {\n        \"valid\": \"Yes\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "841ba1c6-1829-40fc-8e51-d1e3c1f0e356",
+          "name": "Delete a tracking domain",
+          "request": {
+            "name": "Delete a tracking domain",
+            "description": {
+              "content": "Removes the specified tracking domain from the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "deleteTrackingDomain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b8998f9-2bac-4094-9e57-c6da65aa798b",
+              "name": "Tracking domain deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "deleteTrackingDomain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"domain\": \"track.abc.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Tracking Domain Deleted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "c78d4590-0636-4e25-889a-b466949d31d5",
+      "name": "Webhooks",
+      "description": {
+        "content": "Configure event webhooks for email delivery events",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85d754a2-36b1-463f-a3ef-5c03fa8c795f",
+          "name": "Add a webhook",
+          "request": {
+            "name": "Add a webhook",
+            "description": {
+              "content": "Registers a new webhook URL to receive email event notifications.\n\n**Supported events:** `send`, `open`, `click`, `soft_bounce`, `hard_bounce`, `spam`\n\n**Important:** The webhook URL must respond with `God bless you, SendClean` to pass the validation check.\n\nSendClean signs webhook POST requests with an HMAC-SHA1 signature in the `X-SendCleanTES-SIGNATURE`\nheader for optional verification. See the Webhook Authentication section for details.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "addWebhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"url\": \"<string>\",\n  \"event\": \"<string>\",\n  \"description\": \"<string>\",\n  \"store_log\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "278c14c9-2c06-438a-83a1-fa20411e0fa2",
+              "name": "Webhook added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "addWebhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"url\": \"https://example.com/webhook\",\n  \"event\": \"send,open,click,soft_bounce,hard_bounce,spam\",\n  \"description\": \"My event webhook\",\n  \"store_log\": \"Enable\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Webhook Added\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc013c34-2ac6-486a-b091-f555ea143bcc",
+          "name": "Edit a webhook",
+          "request": {
+            "name": "Edit a webhook",
+            "description": {
+              "content": "Updates the configuration of an existing webhook.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "editWebhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"url\": \"<string>\",\n  \"webhook_id\": \"<string>\",\n  \"event\": \"<string>\",\n  \"description\": \"<string>\",\n  \"store_log\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88e38343-6682-44fa-9cf8-1051a3cd9f6a",
+              "name": "Webhook updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "editWebhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"webhook_id\": \"424353445757557577457\",\n  \"url\": \"https://example.com/webhook-v2\",\n  \"event\": \"open,click\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Webhook Edited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8527140-247c-40bb-a2d1-0075b3c96b07",
+          "name": "Reset webhook authentication key",
+          "request": {
+            "name": "Reset webhook authentication key",
+            "description": {
+              "content": "Generates a new authentication/signing key for the specified webhook.\n\n**Note:** SendClean immediately begins using the new key. To avoid dropping webhook batches,\nreturn a non-200 status for any batches that fail signature verification, and update your\napplication with the new key before retrying.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "keyResetWebhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"webhook_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b5386d46-505b-42d7-b968-0489b4c26f53",
+              "name": "Webhook key reset",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "keyResetWebhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"webhook_id\": \"424353445757557577457\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Webhook key reseted\",\n  \"webhook_id\": \"424353445757557577457\",\n  \"key\": \"2fg345gy6r7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7767c1a-b891-4618-8fd3-d4cfdfaa1443",
+          "name": "List all webhooks",
+          "request": {
+            "name": "List all webhooks",
+            "description": {
+              "content": "Returns all webhooks registered to the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "listWebhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91abbde0-9925-47ac-ace3-41b0b3a176fb",
+              "name": "List of webhooks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "listWebhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"webhook_list\": [\n    {\n      \"webhook_id\": \"424353445757557577457\",\n      \"url\": \"http://abc.com/wh1.php\",\n      \"event\": \"open,click\",\n      \"key\": \"cgvddgrsd\",\n      \"store_log\": \"Disable\",\n      \"description\": \"this webhook for only open and click\",\n      \"create_date\": 754453534\n    },\n    {\n      \"webhook_id\": \"424353445757557577457\",\n      \"url\": \"http://abc.com/wh1.php\",\n      \"event\": \"open,click\",\n      \"key\": \"cgvddgrsd\",\n      \"store_log\": \"Enable\",\n      \"description\": \"this webhook for only open and click\",\n      \"create_date\": 754453534\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff33cf63-4a7d-4748-991c-35f747a18435",
+          "name": "Delete a webhook",
+          "request": {
+            "name": "Delete a webhook",
+            "description": {
+              "content": "Permanently removes a webhook from the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "deleteWebhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"webhook_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb82648a-6612-4d48-8429-f684dd7bb4aa",
+              "name": "Webhook deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "deleteWebhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"webhook_id\": \"424353445757557577457\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Webhook Deleted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2b2eea3-6667-41e1-9eeb-24c7b34e3afd",
+          "name": "Get webhook details",
+          "request": {
+            "name": "Get webhook details",
+            "description": {
+              "content": "Returns detailed information about a specific webhook, including delivery stats.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "getWebhookInfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"webhook_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2eef2c9d-da48-470a-a201-34c549e7b9be",
+              "name": "Webhook info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "getWebhookInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"webhook_id\": \"424353445757557577457\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"webhook_data\": {\n    \"webhook_id\": \"405602261459333060372\",\n    \"url\": \"http://xyz.com/webhook3.php\",\n    \"event\": \"open\",\n    \"description\": \"webhook for open events\",\n    \"store_log\": \"Enable\",\n    \"key\": \"aVLnPysvkKUU95AFrb47Zr\",\n    \"create_date\": 1459333060,\n    \"last_success\": 1459366666,\n    \"total_event\": 23\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "52552fb8-d5fd-4f27-a560-6a881ddb0791",
+      "name": "Messages",
+      "description": {
+        "content": "Send transactional emails and retrieve message info",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82f4012d-6cf0-421e-82b8-241215f75982",
+          "name": "Send a transactional email",
+          "request": {
+            "name": "Send a transactional email",
+            "description": {
+              "content": "Sends a new transactional email via the specified SMTP sub-user.\n\nEither `html` or `text` content is required in the message body (both may be provided).\n\nUse the `headers` object to control tracking, signing, and routing behaviour.\nUse `X-Unique-Id` in headers to tag messages for later retrieval via `/messages/getMessageInfo`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                "sendMail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": {\n    \"html\": \"<string>\",\n    \"text\": \"<string>\",\n    \"subject\": \"<string>\",\n    \"from_email\": \"<email>\",\n    \"from_name\": \"<string>\",\n    \"to\": [\n      {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"type\": \"to\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"type\": \"to\"\n      }\n    ],\n    \"headers\": {\n      \"Reply-To\": \"<email>\",\n      \"X-Unique-Id\": \"<string>\",\n      \"X-STes-TrackOpen\": \"<string>\",\n      \"X-STes-TrackClick\": \"<string>\",\n      \"X-STes-Autotext\": \"<string>\",\n      \"X-STes-AutoHtml\": \"<string>\",\n      \"X-STes-TrackingDomain\": \"<string>\",\n      \"X-STes-SigningDomain\": \"<string>\",\n      \"X-STes-ReturnPathDomain\": \"<string>\"\n    },\n    \"attachments\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      }\n    ],\n    \"images\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      }\n    ]\n  },\n  \"owner_id\": \"<string>\",\n  \"smtp_user_name\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4ca51fb-7ba8-4894-8f5c-7ea41e1ba1b3",
+              "name": "Message queued for delivery",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "sendMail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"smtp_user_name\": \"smtp12345\",\n  \"message\": {\n    \"html\": \"<h1>Hello!</h1><p>Your order is confirmed.</p>\",\n    \"text\": \"Hello! Your order is confirmed.\",\n    \"subject\": \"Order Confirmation\",\n    \"from_email\": \"noreply@yourdomain.com\",\n    \"from_name\": \"Your Company\",\n    \"to\": [\n      {\n        \"email\": \"customer@example.com\",\n        \"name\": \"Customer Name\",\n        \"type\": \"to\"\n      }\n    ],\n    \"headers\": {\n      \"Reply-To\": \"support@yourdomain.com\",\n      \"X-Unique-Id\": \"order-12345\"\n    },\n    \"attachments\": [\n      {\n        \"type\": \"application/pdf\",\n        \"name\": \"invoice.pdf\",\n        \"content\": \"ZXhhbXBsZSBmaWxl\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"message have been Queued ...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "437530fd-bcb0-48df-97aa-2d29b84c161e",
+          "name": "Send email using a saved template",
+          "request": {
+            "name": "Send email using a saved template",
+            "description": {
+              "content": "Sends a transactional email using a pre-created template.\nUse `dynamic_value` to replace template placeholders (case-sensitive field names).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                "sendTemplate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": {\n    \"template_id\": \"<string>\",\n    \"subject\": \"<string>\",\n    \"from_email\": \"<email>\",\n    \"from_name\": \"<string>\",\n    \"to\": [\n      {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"type\": \"to\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"type\": \"to\"\n      }\n    ],\n    \"headers\": {\n      \"Reply-To\": \"<email>\",\n      \"X-Unique-Id\": \"<string>\",\n      \"X-STes-TrackOpen\": \"<string>\",\n      \"X-STes-TrackClick\": \"<string>\",\n      \"X-STes-Autotext\": \"<string>\",\n      \"X-STes-AutoHtml\": \"<string>\",\n      \"X-STes-TrackingDomain\": \"<string>\",\n      \"X-STes-SigningDomain\": \"<string>\",\n      \"X-STes-ReturnPathDomain\": \"<string>\"\n    },\n    \"dynamic_value\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"attachments\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      }\n    ],\n    \"images\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"content\": \"<byte>\"\n      }\n    ]\n  },\n  \"owner_id\": \"<string>\",\n  \"smtp_user_name\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a6b08ccf-13d8-4836-bf17-5924879d0cd4",
+              "name": "Template message queued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "sendTemplate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"smtp_user_name\": \"smtp12345\",\n  \"message\": {\n    \"template_id\": \"Template_Id_123\",\n    \"subject\": \"Welcome to our service\",\n    \"from_email\": \"noreply@yourdomain.com\",\n    \"from_name\": \"Your Company\",\n    \"to\": [\n      {\n        \"email\": \"customer@example.com\",\n        \"name\": \"Customer Name\",\n        \"type\": \"to\"\n      }\n    ],\n    \"dynamic_value\": {\n      \"NAME\": \"John\",\n      \"Email\": \"customer@example.com\"\n    },\n    \"headers\": {\n      \"Reply-To\": \"support@yourdomain.com\",\n      \"X-Unique-Id\": \"welcome-john-001\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"250 Message Queued...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5998b312-f72f-449b-a94a-0b0931bb2b7a",
+          "name": "Send template email via HTTP GET",
+          "request": {
+            "name": "Send template email via HTTP GET",
+            "description": {
+              "content": "Sends a transactional email using a template via HTTP GET. Designed for simple integrations\nsuch as IVR webhooks where POST with JSON body is not practical.\n\n**All parameter values must be URL-encoded.**\n\nExample:\n```\nGET https://api.sendclean.net/v1.0/messages/sendTemplateHTTPGet?owner_id=YOUR_ID&token=YOUR_TOKEN\n    &smtp_user_name=smtp12345&template_id=TMPL_ID&subject=Hello\n    &from_email=info%40example.com&to=customer%40example.com\n    &dynamic_value%5BNAME%5D=John&dynamic_value%5BEmail%5D=john%40example.com\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                "sendTemplateHTTPGet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "owner_id",
+                  "value": "<string>",
+                  "description": "(Required) A valid SendClean User ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) A valid API token"
+                },
+                {
+                  "disabled": false,
+                  "key": "smtp_user_name",
+                  "value": "<string>",
+                  "description": "(Required) A valid SMTP user name"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_id",
+                  "value": "<string>",
+                  "description": "(Required) Previously created template ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "(Required) URL-encoded email subject"
+                },
+                {
+                  "disabled": false,
+                  "key": "from_email",
+                  "value": "<string>",
+                  "description": "(Required) URL-encoded sender email address"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "(Required) URL-encoded recipient email address"
+                },
+                {
+                  "disabled": false,
+                  "key": "dynamic_value[NAME]",
+                  "value": "<string>",
+                  "description": "URL-encoded dynamic value for NAME placeholder"
+                },
+                {
+                  "disabled": false,
+                  "key": "dynamic_value[Email]",
+                  "value": "<string>",
+                  "description": "URL-encoded dynamic value for Email placeholder"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48f3b321-eaf8-4db2-8958-250549897454",
+              "name": "Template message queued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "sendTemplateHTTPGet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smtp_user_name",
+                      "value": "smtp12345"
+                    },
+                    {
+                      "key": "template_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dynamic_value[NAME]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dynamic_value[Email]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"250 Message Queued...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20150339-863f-4248-ae1f-668e197ab241",
+          "name": "Get message delivery and engagement info",
+          "request": {
+            "name": "Get message delivery and engagement info",
+            "description": {
+              "content": "Retrieves delivery status, open data, and click data for messages matching a given `X-Unique-Id`.\nSupports pagination via `skip_page`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                "getMessageInfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\",\n  \"x_unique_id\": \"<string>\",\n  \"skip_page\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7d0afdc8-ca15-47a2-95c6-1a6ce9ca645c",
+              "name": "Message info records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "getMessageInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\",\n  \"x_unique_id\": \"order-12345\",\n  \"skip_page\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message_data\": [\n    {\n      \"subject\": \"this is subject ..\",\n      \"sender\": \"xyz@sendclean.com\",\n      \"email\": \"abc@sendclean.com\",\n      \"sendFrom\": \"0.0.0.0\",\n      \"mailSize\": 1919,\n      \"attchSize\": 0,\n      \"status\": \"delivered\",\n      \"time\": 1458034022169,\n      \"open\": 1,\n      \"openData\": {\n        \"ip\": [\n          \"0.0.0.0\",\n          \"0.0.0.0\"\n        ],\n        \"ua\": [\n          \"string\",\n          \"string\"\n        ],\n        \"time\": [\n          2355,\n          3403\n        ]\n      },\n      \"click\": 1,\n      \"clickData\": {\n        \"ip\": [\n          \"0.0.0.0\"\n        ],\n        \"ua\": [\n          \"string\",\n          \"string\"\n        ],\n        \"time\": [\n          5333,\n          5970\n        ]\n      }\n    },\n    {\n      \"subject\": \"this is subject ..\",\n      \"sender\": \"xyz@sendclean.com\",\n      \"email\": \"abc@sendclean.com\",\n      \"sendFrom\": \"0.0.0.0\",\n      \"mailSize\": 1919,\n      \"attchSize\": 0,\n      \"status\": \"delivered\",\n      \"time\": 1458034022169,\n      \"open\": 1,\n      \"openData\": {\n        \"ip\": [\n          \"0.0.0.0\",\n          \"0.0.0.0\"\n        ],\n        \"ua\": [\n          \"string\",\n          \"string\"\n        ],\n        \"time\": [\n          9778,\n          7670\n        ]\n      },\n      \"click\": 1,\n      \"clickData\": {\n        \"ip\": [\n          \"0.0.0.0\"\n        ],\n        \"ua\": [\n          \"string\",\n          \"string\"\n        ],\n        \"time\": [\n          4151,\n          1263\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "c9752407-46da-4baf-8f4d-ca20d077d1b5",
+      "name": "Accounts",
+      "description": {
+        "content": "Retrieve account/user details",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "52eccd96-b2c6-4a52-a40a-d100ddfb4a8c",
+          "name": "Get account/user details",
+          "request": {
+            "name": "Get account/user details",
+            "description": {
+              "content": "Returns profile and account information for the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                "userDetails"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4df05970-1b07-4af9-a5d8-55f82aaf0a32",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "userDetails"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"example id\",\n  \"token\": \"example token\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"user_details\": {\n    \"key_0\": 899.3605630197732,\n    \"key_1\": 3955.0680118783475\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sendclean.net/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "532f388d-91be-4a2b-9ad9-c4323b85b698",
+    "name": "SendClean Email API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,\nsending/tracking domains, webhooks, and account information.\n\n## Base URL\nAll API calls are relative to:\n```\nhttps://api.sendclean.net/v1.0\n```\n\n## Authentication\nEvery request requires `owner_id` and `token` fields in the request body (JSON POST).\n\n## Request Format\n- All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).\n- Request bodies must be `Content-Type: application/json`.\n- Any non-200 HTTP response code indicates an error.\n\n## Response Format\nAll responses return JSON with a `status` field of either `\"success\"` or `\"error\"`.\n\n## Error Types\n| Type | Description |\n|------|-------------|\n| `ValidationError` | Invalid or missing required parameters |\n| `GeneralError` | Unexpected server-side error |\n| `AuthenticationError` | `owner_id` and `token` did not match |\n\n\nContact Support:\n Email: support@sendclean.com",
+      "type": "text/plain"
+    }
+  }
+}

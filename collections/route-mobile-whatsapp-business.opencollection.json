@@ -1,0 +1,861 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Route Mobile WhatsApp Business API",
+    "version": "1.8.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bulk Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "File Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/v2/upload",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The details of the source for uploading the file for a bulk campaign."
+              },
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "The parameter that enables or disables the debug mode.   Set the default value of \"debug=True\" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The File Upload API sends multiple messages to users in a single upload."
+        },
+        {
+          "info": {
+            "name": "Send Bulk Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/v2/manage_campaign",
+            "params": [
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "The parameter that enables or disables the debug mode.   Set the default value of \"debug=True\" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The details of the source for uploading the file for a bulk campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Send Bulk Campaign API sends messages in bulk to multiple users, manages large-scale campaigns, and reduces the workload for marketers or business owners."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Catalog Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload the product feed file."
+        },
+        {
+          "info": {
+            "name": "Create Product Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/create_product_feed",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a feed of products for a WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Update Product Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/update_product_feed",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an existing feed of products for a WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Delete product Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/delete_product_feed",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an existing feed of products for a WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Fetch Product Feed Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/fetch_product_feed",
+            "params": [
+              {
+                "name": "product_feed_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique ID of the product feed for which details should be fetched."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "The fields that should be included in the response. The value should be a comma-separated list of field names, such as \"retailer_id, name, price, id\"."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of products to return in the response. The value should be an integer."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch product feed details, which is used to retrieve details about a specific product feed. The product feed includes a comma-separated list of field names:\n- retailer_id: The ID of the retailer associated with the product.\n- name: The name of the product.\n- price: The price of the product.\n- availability: The availability status of the product.\n- id: The ID of the product.\n- description: The description of the product.\n- color: The color of the product.\n- size: The size of the product.\n- condi"
+        },
+        {
+          "info": {
+            "name": "Fetch All Product Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/fetch_product_details",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a list of all product feeds associated with a WhatsApp Business account. To use this endpoint, specify the necessary authorization token credentials."
+        },
+        {
+          "info": {
+            "name": "Fetch Catalog Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/fetch_catalog_details",
+            "params": [
+              {
+                "name": "catalog_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the catalog the product belongs to."
+              },
+              {
+                "name": "fetch_details",
+                "value": "",
+                "type": "query",
+                "description": "Option to fetch the product catalog details."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "The fields that should be included in the response. The value should be a comma-separated list of field names, such as \"name, product_count\"."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch details about a specific product catalog associated with a WhatsApp Business account. The fields information includes a comma-separated list:\n- name: The name of the product catalog.\n- product_count: The total number of products in the product catalog.\n- schedule: The schedule for updating the product catalog.\n- latest_upload: The date and time of the most recent upload to the product catalog.\n- retailer_id: The ID of the retailer associated with the product catalog.\n- price: The price of "
+        },
+        {
+          "info": {
+            "name": "Fetch Schedule Product Feed Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/schedule_product_feed_details",
+            "params": [
+              {
+                "name": "product_feed_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique ID of the product feed fetches from your system and then schedules the product feed."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch scheduled product feeds associated with a WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Fetch Errors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/catalog/manager/v1/fetch_errors",
+            "params": [
+              {
+                "name": "upload_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique ID for the product feed upload session that you want to retrieve the errors for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Fetch Errors API calls all error outputs for the particular upload session ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/create_report/myaccounts_panel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create reports for your WhatsApp Business account. Use the projections while creating a new report.\n\nThe available projection fields are:\n\n- country_code: The country code of the phone number.\n- msisdn: The phone number of the customer.\n- message_type: The type of the message, such as text, image, video, and document.\n- message_payload: The content of the message.\n- request_id: The request ID of the message.\n- conversation_id: The conversation ID of the message.\n- message_id: The message ID of t"
+        },
+        {
+          "info": {
+            "name": "Create Campaign Specific Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/create_campaign_specific_report/myaccounts_panel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a campaign-specific report for WhatsApp Business account. The projections field contains a comma-separated list of field names:\n- country_code: The country code of the recipient's phone number.\n- msisdn: The recipient's phone number.\n- message_type: The type of the message, such as text, image, and video.\n- message_payload: The content of the message.\n- request_id: The unique ID assigned to the message by the WhatsApp Business API.\n- conversation_id: The ID of the conversation thread.\n- m"
+        },
+        {
+          "info": {
+            "name": "Fetch Report URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/fetch_campaign_specific_report/:report_id",
+            "params": [
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the report."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch campaign data from the provided URL by entering the report_id parameter details."
+        },
+        {
+          "info": {
+            "name": "View Campaign Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/fetch_campaign_details",
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the results to be fetched. Default is \"1\"."
+              },
+              {
+                "name": "download",
+                "value": "",
+                "type": "query",
+                "description": "A boolean flag indicating whether to download the report or not. Default value is 'false'."
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The start date in \"YYYY-MM-DD\" order followed by the time in the \"HH:MM:SS\" format, that specifies the beginning of the date range for which to fetch campaign summary report."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The end date in \"YYYY-MM-DD\" order followed by the time in the \"HH:MM:SS\" format, that specifies the end of the date range for which to fetch campaign summary report."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "View the campaign summary for the WhatsApp Business account. Ensure that you provide an authentication token in the request headers for the successful API call."
+        },
+        {
+          "info": {
+            "name": "View Report Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/fetch_reports",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "The start date in \"YYYY-MM-DD\" order followed by the time in the \"HH:MM:SS\" format, that specifies the beginning of the date range for which to fetch reports."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "The end date in \"YYYY-MM-DD\" order followed by the time in the \"HH:MM:SS\" format, that specifies the end of the date range for which to fetch reports."
+              },
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated results to return. The default value is 1."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page. The default value is 5."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "View report summary for the WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Optin Create Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/optin-download",
+            "params": [
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "The starting date of the user opt-ins for receiving messages."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the user opt-ins for receiving messages."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Optin Create Report endpoint is used to report user opt-ins for receiving messages from a business."
+        },
+        {
+          "info": {
+            "name": "Download Optin Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/summary/download_optin_report",
+            "params": [
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "The starting date of the user opt-ins for receiving messages."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the user opt-ins for receiving messages."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Download Optin Report endpoint is used to download the user opt-ins report for receiving messages from a business."
+        },
+        {
+          "info": {
+            "name": "Template Wise Count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/whatsapp/report/v1/template-count",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "The start date for the template count in \"YYYY-MM-DD\" format."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "The end date for the template count in \"YYYY-MM-DD\" format."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Template Wise Count endpoint is used to count approved templates associated with a WhatsApp Business account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Opt-in Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Optin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wbo/v2/optin/store",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create optin for the WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Create Optin and Optout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wbo/v2/optinout/store",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create optin/optout for the WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Check Optin",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wbo/v2/optin/check",
+            "params": [
+              {
+                "name": "msisdn",
+                "value": "",
+                "type": "query",
+                "description": "The phone number with '+' and country code for the user opting in."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check optin if a particular phone number has opted-in to receive messages from the WhatsApp Business account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WhatsApp Client Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/callbacks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Client Callback APIs allow you to receive real-time notifications (callbacks) for events that occur on your WhatsApp Business account. These callbacks are triggered by events that occur on the WhatsApp server, and are delivered to a URL that you specify in your webhook configuration.\n\nFor more information, see the [Route Mobile WhatsApp OpenAPI Specifications](https://routemobile.github.io/WhatsApp-Business-API/WBS.html).\n\n## Callback Error Codes\n| **Code** | **Text** | **Description** |\n| --- |"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "View Template Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/templates",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "View template messages added to the WhatsApp Business account."
+        },
+        {
+          "info": {
+            "name": "Create Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/template/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a template for your message. Learn more about [different WhatsApp templates](https://routemobile.github.io/WhatsApp-Business-API/WBS.html#tag/WhatsApp-Messaging-Template-API/operation/createTemplate)."
+        },
+        {
+          "info": {
+            "name": "Send Template and Session Messages API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/v1/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Send Template and Session Messages API can be used to send either template or session messages to customers. Learn more about [WhatsApp template and session message APIs](https://routemobile.github.io/WhatsApp-Business-API/WBS.html#tag/WhatsApp-Messaging-Template-API/operation/sendSessionMessageApi)."
+        },
+        {
+          "info": {
+            "name": "Get Template Media ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/templates/media-id",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Generate Media ID endpoint is used to generate a unique ID for the media file."
+        },
+        {
+          "info": {
+            "name": "Generate Media ID API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/media/v1/get-media-id",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Generate Media ID endpoint is used to generate a unique ID for the media file. It supports both file uploads and media file URLs."
+        },
+        {
+          "info": {
+            "name": "Edit Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apis.rmlconnect.net/wba/template/update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Edit Template API allows you to edit a WhatsApp Business template by providing a new template name and updated components."
+        },
+        {
+          "info": {
+            "name": "Delete Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.rmlconnect.net/wba/template/",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the WhatsApp business template."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Delete Template API allows you to delete a WhatsApp Business template by providing a template name."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/auth/v1/login/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.\n\n**By default, the JSON Web Token (JWT) validity periods are set to one hour.**"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WBP Account Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/wba/management/v1/wbp-account-details",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The WBP Account Details endpoint fetches the account details for the WhatsApp business profile by entering the authorization token key."
+        },
+        {
+          "info": {
+            "name": "Profile Photo API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/wba/management/v1/settings/profile/photo",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The details of the source for uploading the file for a bulk campaign."
+              },
+              {
+                "name": "debug",
+                "value": "",
+                "type": "query",
+                "description": "The parameter that enables or disables the debug mode.   Set the default value of \"debug=True\" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The Profile Photo API endpoint uploads the profile photo for account and updates  the account details for the WhatsApp business profile by entering the authorization token key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,3972 @@
+{
+  "item": [
+    {
+      "id": "12db32cb-109a-4c26-be37-16254edf407e",
+      "name": "Message Sending",
+      "description": {
+        "content": "APIs for submitting SMS messages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b7b73105-83be-4362-98af-0ffb75e370df",
+          "name": "Send SMS (Secured)",
+          "request": {
+            "name": "Send SMS (Secured)",
+            "description": {
+              "content": "Submits a single SMS or a batch of SMS messages for delivery over HTTPS.\nAvailable on both port 443 and port 8443.\n\n**Long messages:** Messages exceeding standard length are automatically split\nand reassembled on the recipient device. Billing is per segment:\n- Plain text: 153 characters per segment\n- Unicode: 268 characters per segment\n\n**Bulk response format (multiple destinations):**\n```\n<Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...\n```\n\n**Mid-batch abort scenarios:**\n- If any error other than an invalid destination occurs, the batch is aborted immediately.\n- If credits are exhausted mid-batch, processing stops and `1025|<last_destination>` is appended.\n\n> **Retry Policy:** Do NOT retry for any error code except `1709`.\n> For `1715`, do not re-submit the same message.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "bulksms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "(Required) Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (message must be UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push (use the `url` parameter for the link)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (message must be UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "dlr",
+                  "value": "1",
+                  "description": "(Required) Delivery report flag. 1 = enable, 0 = disable."
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN(s). May include or omit the `+` prefix (URL-encode `+` as `%2B`).\nFor multiple destinations, separate with commas (URL-encode commas as `%2C`).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n\nTo prefix a `+` sign, include it URL-encoded as `%2B`. Additional restrictions\nmay be enforced by the SMSC.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message content, URL-encoded (UTF-8).\nFor Unicode messages (`type=2` or `type=6`), encode content in UTF-16BE hex format.\nFor WAP Push (`type=4`), this is the display text of the push message.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "WAP Push link URL. **Required when `type=4`**, ignored for all other message types.\nMust be URL-encoded (UTF-8).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53cf7f2d-85a4-4742-a2cf-682bc0cb4870",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<CELL_NO>\\|<MESSAGE_ID>`. Use the Message ID to map delivery reports. |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Demo Message"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://www.routemobile.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999|MID123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "596527ca-9b71-40c6-89d9-34840c8a3908",
+              "name": "Bad request / missing parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Demo Message"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://www.routemobile.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0f2274b3-c8c3-4188-8fb8-b6a2795e6779",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Demo Message"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://www.routemobile.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c8f648d-329f-4760-b91f-a41d3b2b423e",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Demo Message"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://www.routemobile.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dec10f4-79b1-433f-9984-72b7c4bb96b2",
+          "name": "Schedule SMS",
+          "request": {
+            "name": "Schedule SMS",
+            "description": {
+              "content": "Schedule an SMS for delivery at a future date and time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "schedulemsg"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message text content (URL-encoded)."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "(Required) Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "dlr",
+                  "value": "1",
+                  "description": "(Required) Delivery report flag. 1 = enable, 0 = disable."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN in international format (without +)."
+                },
+                {
+                  "disabled": false,
+                  "key": "scheduledate",
+                  "value": "<string>",
+                  "description": "(Required) Scheduled delivery date in MM/DD/YYYY format."
+                },
+                {
+                  "disabled": false,
+                  "key": "scheduletime",
+                  "value": "<string>",
+                  "description": "(Required) Scheduled delivery time in HH:MM am/pm format (URL-encoded, e.g. `07:45%20pm`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "gmt",
+                  "value": "<string>",
+                  "description": "(Required) GMT offset for the scheduled time (URL-encoded, e.g. `GMT%20%2B5:30`)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63e054ca-8e4f-4b8c-a222-1befadcfbac1",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| Scheduled\\|`<scheduleId>` | Message successfully scheduled |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "schedulemsg"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Test scheduled message"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "scheduledate",
+                      "value": "08/01/2025"
+                    },
+                    {
+                      "key": "scheduletime",
+                      "value": "07:45 pm"
+                    },
+                    {
+                      "key": "gmt",
+                      "value": "GMT +5:30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Scheduled|SCH123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b6ed546e-8eb2-45b6-ba5b-fadabab3c1f0",
+              "name": "Invalid date/time or parameter format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "schedulemsg"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Test scheduled message"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "scheduledate",
+                      "value": "08/01/2025"
+                    },
+                    {
+                      "key": "scheduletime",
+                      "value": "07:45 pm"
+                    },
+                    {
+                      "key": "gmt",
+                      "value": "GMT +5:30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6e14ec5-a77d-4395-ba1c-cffa143fe1a0",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "schedulemsg"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Test scheduled message"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "scheduledate",
+                      "value": "08/01/2025"
+                    },
+                    {
+                      "key": "scheduletime",
+                      "value": "07:45 pm"
+                    },
+                    {
+                      "key": "gmt",
+                      "value": "GMT +5:30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b0c85ac-677c-4f6d-bce8-b6dcc0c6b0e4",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "schedulemsg"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "Test scheduled message"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "scheduledate",
+                      "value": "08/01/2025"
+                    },
+                    {
+                      "key": "scheduletime",
+                      "value": "07:45 pm"
+                    },
+                    {
+                      "key": "gmt",
+                      "value": "GMT +5:30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d378feee-40a1-427b-a037-efe8318c5866",
+          "name": "Send Personalised SMS",
+          "request": {
+            "name": "Send Personalised SMS",
+            "description": {
+              "content": "Send different message content to multiple destination numbers in a single API call.\n\n**Bulk response format:**\n```\n<Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...\n```\n\n**Mid-batch abort:** If credits are exhausted mid-batch, processing stops and\n`1025|<last_destination>` is appended to the response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "sbulksms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message content. Use the platform-defined delimiter to map distinct content to each destination in the list."
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of destination MSISDNs in international format (without +)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dlr",
+                  "value": "1",
+                  "description": "(Required) Delivery report flag. 1 = enable, 0 = disable."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "(Required) Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b15b1da-dddd-4211-b473-4b2280eea10c",
+              "name": "Platform response returned as plain text. One result entry per destination.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<CELL_NO>\\|<MESSAGE_ID>` |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "sbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999,919888888888"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999|MID123456,1701|919888888888|MID123457",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4187cad3-b24c-455d-9927-545a339e55bd",
+              "name": "Bad request / parameter mismatch.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "sbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999,919888888888"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f4023fc6-b5f7-4e4d-8080-610d8ff7e329",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "sbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999,919888888888"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9f4f118-ab7c-4f03-8b2a-fb1107631ed6",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "sbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999,919888888888"
+                    },
+                    {
+                      "key": "dlr",
+                      "value": "1"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ff24d90-9d35-493a-9218-07b6339dc251",
+          "name": "Send Unicode / Acculync SMS",
+          "request": {
+            "name": "Send Unicode / Acculync SMS",
+            "description": {
+              "content": "Single endpoint for sending Unicode or English SMS messages with optional\nAcculync link tracking and URL shortening.\n\n**Plain Unicode/English SMS** — Pass only the core parameters\n(`username`, `password`, `source`, `destination`, `message`).\nContent is auto-detected and routed as Unicode or plain English accordingly.\n\n**Acculync Tracking SMS** — Additionally pass the Acculync parameters\n(`tagname`, `toshorten`, `tobeshorten`, `isCL`) to enable link shortening\nand click tracking.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "personalizedbulksms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN(s) in international format (without +). Comma-separated for multiple."
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message content. Unicode or English. URL-encoded. May contain placeholders for the shortened URL when using Acculync."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tagname",
+                  "value": "<string>",
+                  "description": "Acculync: Tag name for tracking / template identification."
+                },
+                {
+                  "disabled": false,
+                  "key": "toshorten",
+                  "value": "<string>",
+                  "description": "Acculync: Flag indicating whether the URL should be shortened."
+                },
+                {
+                  "disabled": false,
+                  "key": "tobeshorten",
+                  "value": "<string>",
+                  "description": "Acculync: The original long URL to be shortened."
+                },
+                {
+                  "disabled": false,
+                  "key": "isCL",
+                  "value": "1",
+                  "description": "Acculync: Click-tracking flag. 1 = enable click logging."
+                },
+                {
+                  "disabled": false,
+                  "key": "udf1",
+                  "value": "<string>",
+                  "description": "Acculync: User-defined field 1 for personalisation or tracking."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f37327b-614b-4d92-91c9-c1d6085130ea",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<CELL_NO>\\|<MESSAGE_ID>` |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999|MID123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8194ad79-df69-4a87-8a1b-076980433847",
+              "name": "Bad request / encoding or parameter error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e48977f8-e53d-49b7-a363-bb26466b800e",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b54cd61-6fd0-4d61-abb3-0d87284efd26",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee5a0a5e-364d-44a2-ac90-db0d2a768ca7",
+          "name": "Send Personalised SMS with Acculync Tracking",
+          "request": {
+            "name": "Send Personalised SMS with Acculync Tracking",
+            "description": {
+              "content": "Customer-personalised SMS submission with Acculync link shortening and click tracking over the secured 8443 endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "personalizedcustsms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN(s) in international format (without +). Comma-separated for multiple."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "(Required) Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message content (URL-encoded)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tagname",
+                  "value": "<string>",
+                  "description": "(Required) Tag name for tracking / template identification."
+                },
+                {
+                  "disabled": false,
+                  "key": "toshorten",
+                  "value": "<string>",
+                  "description": "(Required) Flag indicating whether the URL should be shortened."
+                },
+                {
+                  "disabled": false,
+                  "key": "udf1",
+                  "value": "<string>",
+                  "description": "User-defined field 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "isCL",
+                  "value": "1",
+                  "description": "(Required) Click-tracking flag. 1 = enable click logging."
+                },
+                {
+                  "disabled": false,
+                  "key": "tobeshorten",
+                  "value": "<string>",
+                  "description": "(Required) The original long URL to be shortened."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7139e03f-8ea8-4d7c-9373-c5a9c09dabdc",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<CELL_NO>\\|<MESSAGE_ID>` |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedcustsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999|MID123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6b34f3f7-20b6-4b3c-aa59-8a2fa7585de8",
+              "name": "Bad request / parameter error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedcustsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24bb8621-c698-47aa-a958-6319d600131d",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedcustsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4c2139d-47d5-4284-9ef6-7022b0cde8fd",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "personalizedcustsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toshorten",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "udf1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isCL",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tobeshorten",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba8cf3f5-af64-4f6c-938b-a0172f20cb8b",
+          "name": "Submit SMS with Token",
+          "request": {
+            "name": "Submit SMS with Token",
+            "description": {
+              "content": "Submit an SMS using a pre-generated authentication token instead of\npassing credentials with every request. Obtain the token from the\nToken Generation API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "bulksubmit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Authentication token obtained from the Token Generation API."
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "(Required) Message text content (URL-encoded)."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "0",
+                  "description": "(Required) Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN in international format (without +)."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b98a92b8-cd13-47a5-b9fd-852838268574",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<CELL_NO>\\|<MESSAGE_ID>` |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1709 | User validation failed / invalid or expired token |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999|MID123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4c33e2f-2977-4100-b2fa-c6bcc4ed1473",
+              "name": "Invalid or expired token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f4dba82-2b50-4813-95d3-29a3fc303a8c",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "bulksubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "0"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cb24c33-ef49-48a0-bbd4-45aafa3ec1d0",
+          "name": "JSON Bulk SMS",
+          "request": {
+            "name": "JSON Bulk SMS",
+            "description": {
+              "content": "Submit one or more SMS messages using a JSON request body. Suitable for\nbulk integrations where multiple submissions can be batched in a single call.\n\n**Bulk response format:**\nEach item in the response array corresponds to a message in the request.\n\n**Mid-batch abort:** If credits are exhausted mid-batch, processing stops\nand the remaining messages will not be submitted.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "jsonbulksms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request\": [\n    {\n      \"username\": \"<string>\",\n      \"password\": \"<password>\",\n      \"source\": \"<string>\",\n      \"destination\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dlr\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"password\": \"<password>\",\n      \"source\": \"<string>\",\n      \"destination\": \"<string>\",\n      \"type\": \"<string>\",\n      \"dlr\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52b6f0fe-de2a-46e5-b049-449936eed85f",
+              "name": "Submission response. The `status` field in each array item contains the platform response code.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — use `messageid` to map delivery reports |\n| 1702 | Invalid URL / one or more parameters missing or blank |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message content |\n| 1706 | Invalid destination number |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "jsonbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": [\n    {\n      \"username\": \"your_username\",\n      \"password\": \"your_password\",\n      \"source\": \"TESTSM\",\n      \"destination\": \"919999999999\",\n      \"type\": \"0\",\n      \"dlr\": \"1\",\n      \"message\": \"Test JSON message\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": [\n    {\n      \"messageid\": \"MID123456\",\n      \"mobileno\": \"919999999999\",\n      \"status\": \"1701\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da3536d1-a0a8-4c54-994f-f7f4da4f82ba",
+              "name": "Invalid JSON or parameter error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "jsonbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": [\n    {\n      \"username\": \"your_username\",\n      \"password\": \"your_password\",\n      \"source\": \"TESTSM\",\n      \"destination\": \"919999999999\",\n      \"type\": \"0\",\n      \"dlr\": \"1\",\n      \"message\": \"Test JSON message\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b95a08f0-d53c-4d1c-9852-a0a382b6ff93",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "jsonbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": [\n    {\n      \"username\": \"your_username\",\n      \"password\": \"your_password\",\n      \"source\": \"TESTSM\",\n      \"destination\": \"919999999999\",\n      \"type\": \"0\",\n      \"dlr\": \"1\",\n      \"message\": \"Test JSON message\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1e7d256-5df0-447a-9d81-0973284139bb",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "jsonbulksms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": [\n    {\n      \"username\": \"your_username\",\n      \"password\": \"your_password\",\n      \"source\": \"TESTSM\",\n      \"destination\": \"919999999999\",\n      \"type\": \"0\",\n      \"dlr\": \"1\",\n      \"message\": \"Test JSON message\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "092aef52-3896-46ae-b65f-1c241295f1b4",
+      "name": "Account",
+      "description": {
+        "content": "APIs for account management, credit queries, and authentication tokens.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1cf9490-f09c-41b3-baee-8230ce6fa98c",
+          "name": "Check Account Credit Balance",
+          "request": {
+            "name": "Check Account Credit Balance",
+            "description": {
+              "content": "Returns the current credit balance for the account.\nAvailable over both HTTPS (recommended) and HTTP (legacy).\nUse `https://api.rmlconnect.net` or `https://api.rmlconnect.net:8443` for secured access,\nor `http://api.rmlconnect.net` for non-secured access.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "CreditCheck",
+                "checkcredits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e23b1831-774d-44cd-9bdc-819df3118b9d",
+              "name": "Current credit balance returned as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "CreditCheck",
+                    "checkcredits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Credits: 50000",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2ef5a5e-906b-4a1d-a10f-11227932716d",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "CreditCheck",
+                    "checkcredits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "746c7ed5-3f3e-4966-89e1-edb52c0bbf03",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "CreditCheck",
+                    "checkcredits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86ca2de7-caae-41cc-8719-d3f731421113",
+          "name": "Generate Authentication Token",
+          "request": {
+            "name": "Generate Authentication Token",
+            "description": {
+              "content": "Generates an authentication token using account credentials. Use the returned\ntoken with the Message Submission with Token API to avoid passing credentials\non every request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "generatetoken"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "748970d2-4e57-415b-aeb4-284c1a08c625",
+              "name": "Authentication token returned as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "generatetoken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Token: 9f8e7d6c5b4a3210",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "38c736de-f174-4b46-8507-0cf4c233b78c",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "generatetoken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "44a9fa7b-7867-4017-ad72-3402af6a59bc",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "generatetoken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ea1c6d2-041c-422e-96c6-39edcf8d3729",
+          "name": "Download Coverage Map",
+          "request": {
+            "name": "Download Coverage Map",
+            "description": {
+              "content": "Direct download of the route detail / coverage map associated with the account. Returns an Excel file. Uses the client portal base URL (`https://client.rmlconnect.net`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routeDetailMail.php"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b100ba34-b9da-438b-8f50-70941b365f65",
+              "name": "Coverage map file (Excel) returned for download.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routeDetailMail.php"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5718a932-c254-44c1-ad2d-3a0463f995bb",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routeDetailMail.php"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0645da6-7603-4266-b99a-fbed847f18a3",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routeDetailMail.php"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "938a69fa-dd2d-4779-bccc-28d3b2c7f475",
+      "name": "OTP",
+      "description": {
+        "content": "APIs for OTP generation and verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4b4b9433-1d07-44e3-83e6-2507c427a0c5",
+          "name": "Generate and Send OTP",
+          "request": {
+            "name": "Generate and Send OTP",
+            "description": {
+              "content": "Generates a One-Time Password and delivers it to the specified MSISDN.\nThe OTP length and expiry time can be configured per request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "OtpApi",
+                "otpgenerate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "msisdn",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN in international format (without +)."
+                },
+                {
+                  "disabled": false,
+                  "key": "msg",
+                  "value": "<string>",
+                  "description": "(Required) Message template. Must include the `%m` escape character which will be\nreplaced by the generated OTP. Message must be URL-encoded.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID assigned to the user.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "otplen",
+                  "value": "5",
+                  "description": "(Required) Length of the OTP to be generated."
+                },
+                {
+                  "disabled": false,
+                  "key": "exptime",
+                  "value": "<integer>",
+                  "description": "(Required) OTP validity time in seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "tagname",
+                  "value": "<string>",
+                  "description": "Identifier name for the given batch. Optional."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d877521b-ac9a-4107-a1a0-1d5c309d2ee7",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — response format: `1701\\|<MSISDN>:<MESSAGE_ID>` |\n| 1702 | One of the parameters is missing or OTP is not numeric |\n| 1703 | Authentication failed |\n| 1705 | Message template does not contain `%m` placeholder |\n| 1706 | Invalid destination |\n| 1707 | Invalid source (Sender ID) |\n| 1710 | Internal error |\n| 1715 | Response timeout |\n| 1025 | Insufficient user credit |\n| 1032 | DND destination |\n| 1033 | Source template mismatch |\n| 1035 | User opt out |\n| 1042 | Explicit DND reject |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "otpgenerate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "msg",
+                      "value": "Your OTP is %m. Valid for 60 seconds."
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "otplen",
+                      "value": "5"
+                    },
+                    {
+                      "key": "exptime",
+                      "value": "60"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1701|919999999999:MID123456",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ec64a8f-b28c-4ac8-8b2b-edc80fdb031f",
+              "name": "Invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "otpgenerate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "msg",
+                      "value": "Your OTP is %m. Valid for 60 seconds."
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "otplen",
+                      "value": "5"
+                    },
+                    {
+                      "key": "exptime",
+                      "value": "60"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "09fde90c-a1df-4359-9a35-90a0dc6da9a1",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "otpgenerate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "msg",
+                      "value": "Your OTP is %m. Valid for 60 seconds."
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "otplen",
+                      "value": "5"
+                    },
+                    {
+                      "key": "exptime",
+                      "value": "60"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91e2bc73-617f-44d5-9da0-a949ebf0c683",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "otpgenerate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "msg",
+                      "value": "Your OTP is %m. Valid for 60 seconds."
+                    },
+                    {
+                      "key": "source",
+                      "value": "TESTSM"
+                    },
+                    {
+                      "key": "otplen",
+                      "value": "5"
+                    },
+                    {
+                      "key": "exptime",
+                      "value": "60"
+                    },
+                    {
+                      "key": "tagname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b9d4e24-19bc-4083-b17d-6c020679bc93",
+          "name": "Verify OTP",
+          "request": {
+            "name": "Verify OTP",
+            "description": {
+              "content": "Verifies an OTP submitted by an end user against the OTP previously\ngenerated via the OTP Generation API.\n\n> **Note:** This API uses a different set of response codes from the OTP Generation API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "OtpApi",
+                "checkotp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) Account username."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password."
+                },
+                {
+                  "disabled": false,
+                  "key": "msisdn",
+                  "value": "<string>",
+                  "description": "(Required) Mobile number to which the OTP was sent."
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>",
+                  "description": "(Required) The OTP entered by the user which needs to be verified."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "85006301-6ab6-4fe1-8754-8b9688a82414",
+              "name": "Platform response returned as plain text.\n\n| Code | Meaning |\n|------|---------|\n| 101 | OTP validated successfully |\n| 102 | OTP has expired |\n| 103 | Entry for OTP not found |\n| 104 | MSISDN not found |\n| 1702 | One of the parameters is missing or OTP is not numeric |\n| 1703 | Authentication failed |\n| 1706 | Given destination is invalid |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "checkotp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "otp",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "101",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76d9ba21-47b7-4358-8da9-e0fdf82b3eb8",
+              "name": "Invalid OTP or missing parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "checkotp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "otp",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1bad02cc-3a73-4634-a2b4-56c3e5a3da11",
+              "name": "Authentication failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "checkotp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "otp",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a6977d0-9acd-4d5b-bcdb-2869702d0300",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OtpApi",
+                    "checkotp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "msisdn",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "otp",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "fed35ef3-460b-4413-a601-51114baedd82",
+      "name": "Integrations",
+      "description": {
+        "content": "APIs for third-party platform integrations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "213720fe-4880-4fc1-8be9-b823df0b1ad6",
+          "name": "Moengage Integration",
+          "request": {
+            "name": "Moengage Integration",
+            "description": {
+              "content": "Endpoint for integrating the SGN SMS platform with the Moengage customer\nengagement platform. Authentication is via a static `Authorization` header\ntoken provided by Route Mobile.\n\n> **Note:** This endpoint uses HTTP POST but accepts parameters as query strings\n> rather than a JSON body. This is by design for Moengage platform compatibility —\n> ensure your integration passes parameters in the URL query string, not the request body.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms",
+                "custommsgsubmit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "(Required) Destination MSISDN in international format (without +)."
+                },
+                {
+                  "disabled": false,
+                  "key": "reply_to",
+                  "value": "<string>",
+                  "description": "(Required) Sender ID / source address.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "messageBody",
+                  "value": "<string>",
+                  "description": "(Required) SMS content to be delivered (URL-encoded)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3595e8be-2d6f-4cfe-a23a-8ea319ace8f6",
+              "name": "Submission accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "custommsgsubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "recipient",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "reply_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "messageBody",
+                      "value": "Moesms_message"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": \"true\",\n  \"messageid\": \"e71516a1-2f68-4b12-aa62-62365d7b930a\",\n  \"mobileno\": \"919999999999\",\n  \"error\": \"1701\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0d6add8-0b37-4e62-82bd-7079b1c22e4a",
+              "name": "Invalid Authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "custommsgsubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "recipient",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "reply_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "messageBody",
+                      "value": "Moesms_message"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ced83a87-3729-4e84-9442-c00baf64b2f6",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms",
+                    "custommsgsubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "recipient",
+                      "value": "919999999999"
+                    },
+                    {
+                      "key": "reply_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "messageBody",
+                      "value": "Moesms_message"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f08532c-e943-4c40-8ff3-ab1bb2afa876",
+          "name": "Webengage Integration",
+          "request": {
+            "name": "Webengage Integration",
+            "description": {
+              "content": "Endpoint for integrating the SGN SMS platform with the Webengage customer\nengagement platform. Authentication is via a static `Authorization` header\ntoken provided by Route Mobile.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulksms2346",
+                "sendjsonsms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"<string>\",\n  \"smsData\": {\n    \"toNumber\": \"<string>\",\n    \"fromNumber\": \"<string>\",\n    \"body\": \"<string>\"\n  },\n  \"metadata\": {\n    \"campaignType\": \"<string>\",\n    \"timestamp\": \"<string>\",\n    \"messageId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "24df59fb-ba4c-4402-8920-2404c291feee",
+              "name": "Submission accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms2346",
+                    "sendjsonsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"1.0\",\n  \"smsData\": {\n    \"toNumber\": \"919999999999\",\n    \"fromNumber\": \"TESTSM\",\n    \"body\": \"test message\"\n  },\n  \"metadata\": {\n    \"campaignType\": \"PROMOTIONAL\",\n    \"timestamp\": \"2024-03-19T19:33:13+0000\",\n    \"messageId\": \"abcde-1234-5678-90ab-cdef12345678\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"sms_accepted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38665cee-0869-402d-b6a9-311d96c9ef04",
+              "name": "Invalid payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms2346",
+                    "sendjsonsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"1.0\",\n  \"smsData\": {\n    \"toNumber\": \"919999999999\",\n    \"fromNumber\": \"TESTSM\",\n    \"body\": \"test message\"\n  },\n  \"metadata\": {\n    \"campaignType\": \"PROMOTIONAL\",\n    \"timestamp\": \"2024-03-19T19:33:13+0000\",\n    \"messageId\": \"abcde-1234-5678-90ab-cdef12345678\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4956350a-d69e-44e2-b6c5-fe201d85aaeb",
+              "name": "Invalid Authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms2346",
+                    "sendjsonsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"1.0\",\n  \"smsData\": {\n    \"toNumber\": \"919999999999\",\n    \"fromNumber\": \"TESTSM\",\n    \"body\": \"test message\"\n  },\n  \"metadata\": {\n    \"campaignType\": \"PROMOTIONAL\",\n    \"timestamp\": \"2024-03-19T19:33:13+0000\",\n    \"messageId\": \"abcde-1234-5678-90ab-cdef12345678\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e584f2ab-c1e0-42f0-8c70-da26083ce45b",
+              "name": "Internal server error. Please contact support if this persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulksms2346",
+                    "sendjsonsms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"1.0\",\n  \"smsData\": {\n    \"toNumber\": \"919999999999\",\n    \"fromNumber\": \"TESTSM\",\n    \"body\": \"test message\"\n  },\n  \"metadata\": {\n    \"campaignType\": \"PROMOTIONAL\",\n    \"timestamp\": \"2024-03-19T19:33:13+0000\",\n    \"messageId\": \"abcde-1234-5678-90ab-cdef12345678\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.rmlconnect.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8d7adb8c-b478-450f-a57e-c5234c3b9891",
+    "name": "Route Mobile SMS APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Complete API reference for Route Mobile's SMS platform. Covers message submission,\nOTP, account management, and third-party platform integrations.\n\n## Authentication\n\nMost APIs authenticate via `username` and `password` query parameters.\nThird-party integration APIs (Moengage, Webengage) use a static `Authorization`\nheader token provided by Route Mobile.\n\n## Base URLs\n\n| URL | Description |\n|-----|-------------|\n| `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |\n| `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |\n| `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |\n| `https://client.rmlconnect.net` | Client portal — coverage map only |\n\n## Platform Response Codes\n\nSMS submission APIs return a plain text response with a platform status code prefix.\n\n| Code | Meaning |\n|------|---------|\n| 1701 | Success — `1701\\|<CELL_NO>\\|<MESSAGE_ID>` |\n| 1702 | Invalid URL / missing or blank parameter |\n| 1703 | Invalid username or password |\n| 1704 | Invalid value in `type` field |\n| 1705 | Invalid message |\n| 1706 | Invalid destination |\n| 1707 | Invalid source (Sender ID) |\n| 1708 | Invalid value in `dlr` field |\n| 1709 | User validation failed |\n| 1710 | Internal error |\n| 1025 | Insufficient credit |\n| 1715 | Response timeout |\n\n> **Retry Policy:** Do NOT retry for any error code except `1709`.\n> For `1715` specifically, do not re-submit the same message.\n\n\nContact Support:\n Name: Route Mobile Support\n Email: support@routemobile.com",
+      "type": "text/plain"
+    }
+  }
+}

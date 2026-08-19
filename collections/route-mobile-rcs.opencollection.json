@@ -1,0 +1,544 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Route Mobile Rich Communication Services (RCS) API Documentation",
+    "version": "2.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Login",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/auth/v1/login/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.\n\n**By default, the JSON Web Token (JWT) validity periods are set to one hour.**"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RCS Messages API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "RCS Messages API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/v1/message",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Rich Communication Services (RCS) Business Messaging API is a communication protocol that allows businesses to send different types of messages beyond traditional text messages. \n\nThe RCS Business Messaging API allows businesses to send different types of messages that include:\n\n- **Notification API:** Standard messages that send plain text or media content. \n- **Session API:** Standard text messages that send plain text content as part of a campaign. \n- **India Template API:** Create intera"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bulk Upload Campaign API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk Upload Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/v1/bulk_message",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Bulk Upload Campaign APIs send messages to many recipients simultaneously using a batch upload process. It allows businesses to efficiently send personalized and interactive messages to their customers at scale. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payment API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Payment API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/payments/v1/send_bill",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Payment Template API allows businesses to integrate payment functionality into their RCS messages. With this API, businesses can create payment templates that enable users to make secure payments directly within the RCS messaging experience.\n\nThe API will use the provided phone number to send the payment template message to the recipient via RCS. The template will include the specified variables and their corresponding values, allowing you to customize the payment details for each recipient."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RCS Messages Request API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Typing Indicator",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/v1/typing_event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Typing Indicator API indicates to the recipient that the bot or sender is typing a response. "
+        },
+        {
+          "info": {
+            "name": "Marking messages as Read",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/v1/mark_read",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The API will mark the messages as read for the recipient, indicating they have been viewed or acknowledged. This API is useful for tracking the delivery and engagement of messages sent through RCS business messaging."
+        },
+        {
+          "info": {
+            "name": "Revoke with SMS fallback",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.rmlconnect.net/rcs/v2/revoke_message",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The API will handle the revocation of the specified message for the recipient. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "File Server API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "File Upload API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/file_server/v2/uploadfile",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "File Upload API is used to upload files for a given called bot name which is usually supported for a file server. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Management API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Make a Tester",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/management/v1/add_tester",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add Tester is a Management API used to add a bot for testing purpose for all RCS Components "
+        },
+        {
+          "info": {
+            "name": "List all Testers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/rcs/management/v1/get_testers",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all Testers is a Management API used to retrieve  all bot number for testing purpose for all RCS Components "
+        },
+        {
+          "info": {
+            "name": "Bulk Whitelist / Blacklist Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/dnd/v1/bulk_dnd_set",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Bulk DND Set API allows you to whitelist or blacklist a batch of phone numbers for a specific RCS bot. Provide the URL of a previously uploaded CSV file (from the File Upload API) containing the phone numbers, and set `dnd_mode` to control whether those numbers are blacklisted (`true`) or whitelisted (`false`)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RCS Optin API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Optin API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs/optins/v1/create_optin",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create Optin API is used to create optin for a given called bot name which is usually supported along with channel. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Callback API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/callback",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use the Callback API to receive real-time RCS notifications of incoming messages and other events. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RCS Template API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Template API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1/template/template",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Get Template API is used to retrieve TEMPLATE specified when category,name,bot_name, user_name, template_id, page_no and limit are mentioned to locate the template for testing purpose for all RCS Components "
+        },
+        {
+          "info": {
+            "name": "Create Template APi",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1/template/template",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Create Template APIs allows businesses to create existing templates created by using RML Panel which can be used  efficiently send personalized and interactive messages to their customers at scale."
+        },
+        {
+          "info": {
+            "name": "Update Template APi",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1/template/template",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Update Template APIs  allows businesses to update existing templates created by using RML Panel which can be used  efficiently send personalized and interactive messages to their customers at scale. "
+        },
+        {
+          "info": {
+            "name": "Delete Template API",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1/template/template",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Delete Template API is used to delete TEMPLATE specified when name and bot_name are mentioned to locate the template for testing purpose for all RCS Components "
+        },
+        {
+          "info": {
+            "name": "Get Template  Status APi",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1/template//template",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Get Template Status API allows businesses to get existing templates created by using RML Panel using parameters templateName and bot_name  which can be used  efficiently send personalized and interactive messages to their customers at scale."
+        },
+        {
+          "info": {
+            "name": "Get Single Template APi",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/rcs-template-apis/api/v1//template//template",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "RCS Get Single Template API allows businesses to get one of existing templates created by using RML Panel using parameters name and bot_name  which can be used  efficiently send personalized and interactive messages to their customers at scale."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Capability Check API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk Capability Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.rmlconnect.net/v1/capabilityCheck/getCapabilityDetails",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The start date for filtering capability check results (YYYY-MM-DD)."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The end date for filtering capability check results (YYYY-MM-DD)."
+              },
+              {
+                "name": "pageNo",
+                "value": "",
+                "type": "query",
+                "description": "The page number for paginated results (starts at 1)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return per page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Bulk Capability Check API retrieves RCS capability details for phone numbers that were submitted for capability checking. Use the date range and optional status filter to paginate through results."
+        },
+        {
+          "info": {
+            "name": "Check Bulk Capability",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.rmlconnect.net/v1/capabilityCheck/checkBulkCapability",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "botName",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upload a CSV file containing phone numbers to trigger a bulk RCS capability check. The file should contain one phone number per row. After submission, use the Fetch Bulk Capability Details API to retrieve the results once processing is complete."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,678 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Route Mobile SMS APIs",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Message Sending",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send SMS (Secured)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/bulksms",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (message must be UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push (use the `url` parameter for the link)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (message must be UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              },
+              {
+                "name": "dlr",
+                "value": "",
+                "type": "query",
+                "description": "Delivery report flag. 1 = enable, 0 = disable."
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN(s). May include or omit the `+` prefix (URL-encode `+` as `%2B`).\nFor multiple destinations, separate with commas (URL-encode commas as `%2C`).\n"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n\nTo prefix a `+` sign, include it URL-encoded as `%2B`. Additional restrictions\nmay be enforced by the SMSC.\n"
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message content, URL-encoded (UTF-8).\nFor Unicode messages (`type=2` or `type=6`), encode content in UTF-16BE hex format.\nFor WAP Push (`type=4`), this is the display text of the push message.\n"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "WAP Push link URL. **Required when `type=4`**, ignored for all other message types.\nMust be URL-encoded (UTF-8).\n"
+              }
+            ]
+          },
+          "docs": "Submits a single SMS or a batch of SMS messages for delivery over HTTPS.\nAvailable on both port 443 and port 8443.\n\n**Long messages:** Messages exceeding standard length are automatically split\nand reassembled on the recipient device. Billing is per segment:\n- Plain text: 153 characters per segment\n- Unicode: 268 characters per segment\n\n**Bulk response format (multiple destinations):**\n```\n<Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...\n```\n\n**Mid-batch abort "
+        },
+        {
+          "info": {
+            "name": "Schedule SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/schedulemsg",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message text content (URL-encoded)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              },
+              {
+                "name": "dlr",
+                "value": "",
+                "type": "query",
+                "description": "Delivery report flag. 1 = enable, 0 = disable."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN in international format (without +)."
+              },
+              {
+                "name": "scheduledate",
+                "value": "",
+                "type": "query",
+                "description": "Scheduled delivery date in MM/DD/YYYY format."
+              },
+              {
+                "name": "scheduletime",
+                "value": "",
+                "type": "query",
+                "description": "Scheduled delivery time in HH:MM am/pm format (URL-encoded, e.g. `07:45%20pm`)."
+              },
+              {
+                "name": "gmt",
+                "value": "",
+                "type": "query",
+                "description": "GMT offset for the scheduled time (URL-encoded, e.g. `GMT%20%2B5:30`)."
+              }
+            ]
+          },
+          "docs": "Schedule an SMS for delivery at a future date and time."
+        },
+        {
+          "info": {
+            "name": "Send Personalised SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/sbulksms",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message content. Use the platform-defined delimiter to map distinct content to each destination in the list."
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of destination MSISDNs in international format (without +)."
+              },
+              {
+                "name": "dlr",
+                "value": "",
+                "type": "query",
+                "description": "Delivery report flag. 1 = enable, 0 = disable."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              }
+            ]
+          },
+          "docs": "Send different message content to multiple destination numbers in a single API call.\n\n**Bulk response format:**\n```\n<Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...\n```\n\n**Mid-batch abort:** If credits are exhausted mid-batch, processing stops and\n`1025|<last_destination>` is appended to the response.\n"
+        },
+        {
+          "info": {
+            "name": "Send Unicode / Acculync SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/personalizedbulksms",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN(s) in international format (without +). Comma-separated for multiple."
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message content. Unicode or English. URL-encoded. May contain placeholders for the shortened URL when using Acculync."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              },
+              {
+                "name": "tagname",
+                "value": "",
+                "type": "query",
+                "description": "Acculync: Tag name for tracking / template identification."
+              },
+              {
+                "name": "toshorten",
+                "value": "",
+                "type": "query",
+                "description": "Acculync: Flag indicating whether the URL should be shortened."
+              },
+              {
+                "name": "tobeshorten",
+                "value": "",
+                "type": "query",
+                "description": "Acculync: The original long URL to be shortened."
+              },
+              {
+                "name": "isCL",
+                "value": "",
+                "type": "query",
+                "description": "Acculync: Click-tracking flag. 1 = enable click logging."
+              },
+              {
+                "name": "udf1",
+                "value": "",
+                "type": "query",
+                "description": "Acculync: User-defined field 1 for personalisation or tracking."
+              }
+            ]
+          },
+          "docs": "Single endpoint for sending Unicode or English SMS messages with optional\nAcculync link tracking and URL shortening.\n\n**Plain Unicode/English SMS** — Pass only the core parameters\n(`username`, `password`, `source`, `destination`, `message`).\nContent is auto-detected and routed as Unicode or plain English accordingly.\n\n**Acculync Tracking SMS** — Additionally pass the Acculync parameters\n(`tagname`, `toshorten`, `tobeshorten`, `isCL`) to enable link shortening\nand click tracking.\n"
+        },
+        {
+          "info": {
+            "name": "Send Personalised SMS with Acculync Tracking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/personalizedcustsms",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN(s) in international format (without +). Comma-separated for multiple."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message content (URL-encoded)."
+              },
+              {
+                "name": "tagname",
+                "value": "",
+                "type": "query",
+                "description": "Tag name for tracking / template identification."
+              },
+              {
+                "name": "toshorten",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating whether the URL should be shortened."
+              },
+              {
+                "name": "udf1",
+                "value": "",
+                "type": "query",
+                "description": "User-defined field 1."
+              },
+              {
+                "name": "isCL",
+                "value": "",
+                "type": "query",
+                "description": "Click-tracking flag. 1 = enable click logging."
+              },
+              {
+                "name": "tobeshorten",
+                "value": "",
+                "type": "query",
+                "description": "The original long URL to be shortened."
+              }
+            ]
+          },
+          "docs": "Customer-personalised SMS submission with Acculync link shortening and click tracking over the secured 8443 endpoint."
+        },
+        {
+          "info": {
+            "name": "Submit SMS with Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/bulksubmit",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authentication token obtained from the Token Generation API."
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Message text content (URL-encoded)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Message encoding type.\n- `0` — Plain Text (GSM 3.38)\n- `1` — Flash Message (GSM 3.38)\n- `2` — Unicode (UTF-16BE hex encoded)\n- `3` — Reserved\n- `4` — WAP Push\n- `5` — Plain Text (ISO-8859-1)\n- `6` — Unicode Flash (UTF-16BE hex encoded)\n- `7` — Flash Message (ISO-8859-1)\n"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN in international format (without +)."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID displayed to the recipient.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              }
+            ]
+          },
+          "docs": "Submit an SMS using a pre-generated authentication token instead of\npassing credentials with every request. Obtain the token from the\nToken Generation API.\n"
+        },
+        {
+          "info": {
+            "name": "JSON Bulk SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.rmlconnect.net/bulksms/jsonbulksms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit one or more SMS messages using a JSON request body. Suitable for\nbulk integrations where multiple submissions can be batched in a single call.\n\n**Bulk response format:**\nEach item in the response array corresponds to a message in the request.\n\n**Mid-batch abort:** If credits are exhausted mid-batch, processing stops\nand the remaining messages will not be submitted.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Account Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/CreditCheck/checkcredits",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              }
+            ]
+          },
+          "docs": "Returns the current credit balance for the account.\nAvailable over both HTTPS (recommended) and HTTP (legacy).\nUse `https://api.rmlconnect.net` or `https://api.rmlconnect.net:8443` for secured access,\nor `http://api.rmlconnect.net` for non-secured access.\n"
+        },
+        {
+          "info": {
+            "name": "Generate Authentication Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/bulksms/generatetoken",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              }
+            ]
+          },
+          "docs": "Generates an authentication token using account credentials. Use the returned\ntoken with the Message Submission with Token API to avoid passing credentials\non every request.\n"
+        },
+        {
+          "info": {
+            "name": "Download Coverage Map",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/routeDetailMail.php",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              }
+            ]
+          },
+          "docs": "Direct download of the route detail / coverage map associated with the account. Returns an Excel file. Uses the client portal base URL (`https://client.rmlconnect.net`)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate and Send OTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/OtpApi/otpgenerate",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "msisdn",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN in international format (without +)."
+              },
+              {
+                "name": "msg",
+                "value": "",
+                "type": "query",
+                "description": "Message template. Must include the `%m` escape character which will be\nreplaced by the generated OTP. Message must be URL-encoded.\n"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID assigned to the user.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "otplen",
+                "value": "",
+                "type": "query",
+                "description": "Length of the OTP to be generated."
+              },
+              {
+                "name": "exptime",
+                "value": "",
+                "type": "query",
+                "description": "OTP validity time in seconds."
+              },
+              {
+                "name": "tagname",
+                "value": "",
+                "type": "query",
+                "description": "Identifier name for the given batch. Optional."
+              }
+            ]
+          },
+          "docs": "Generates a One-Time Password and delivers it to the specified MSISDN.\nThe OTP length and expiry time can be configured per request.\n"
+        },
+        {
+          "info": {
+            "name": "Verify OTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rmlconnect.net/OtpApi/checkotp",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Account username."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "Account password."
+              },
+              {
+                "name": "msisdn",
+                "value": "",
+                "type": "query",
+                "description": "Mobile number to which the OTP was sent."
+              },
+              {
+                "name": "otp",
+                "value": "",
+                "type": "query",
+                "description": "The OTP entered by the user which needs to be verified."
+              }
+            ]
+          },
+          "docs": "Verifies an OTP submitted by an end user against the OTP previously\ngenerated via the OTP Generation API.\n\n> **Note:** This API uses a different set of response codes from the OTP Generation API.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Moengage Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.rmlconnect.net/bulksms/custommsgsubmit",
+            "params": [
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "Destination MSISDN in international format (without +)."
+              },
+              {
+                "name": "reply_to",
+                "value": "",
+                "type": "query",
+                "description": "Sender ID / source address.\n- Max **18 characters** if numeric only\n- Max **11 characters** if alphanumeric\n"
+              },
+              {
+                "name": "messageBody",
+                "value": "",
+                "type": "query",
+                "description": "SMS content to be delivered (URL-encoded)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Endpoint for integrating the SGN SMS platform with the Moengage customer\nengagement platform. Authentication is via a static `Authorization` header\ntoken provided by Route Mobile.\n\n> **Note:** This endpoint uses HTTP POST but accepts parameters as query strings\n> rather than a JSON body. This is by design for Moengage platform compatibility —\n> ensure your integration passes parameters in the URL query string, not the request body.\n"
+        },
+        {
+          "info": {
+            "name": "Webengage Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.rmlconnect.net/bulksms2346/sendjsonsms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Endpoint for integrating the SGN SMS platform with the Webengage customer\nengagement platform. Authentication is via a static `Authorization` header\ntoken provided by Route Mobile.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

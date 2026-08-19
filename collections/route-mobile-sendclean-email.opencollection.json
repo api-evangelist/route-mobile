@@ -1,0 +1,470 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SendClean Email API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMTP Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a new SMTP user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/addSmtp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new SMTP sub-user with defined sending limits."
+        },
+        {
+          "info": {
+            "name": "Edit an existing SMTP user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/editSmtp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the sending limits or status of an SMTP sub-user."
+        },
+        {
+          "info": {
+            "name": "Reset SMTP user password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/resetSmtpPassword",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new password for the specified SMTP sub-user."
+        },
+        {
+          "info": {
+            "name": "List all SMTP users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/listSmtp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a list of all SMTP sub-users associated with the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sending Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a sending domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/addSendingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new sending domain to the account."
+        },
+        {
+          "info": {
+            "name": "Verify DKIM and SPF records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/checkSendingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Checks whether DKIM and SPF DNS records are correctly configured for the domain."
+        },
+        {
+          "info": {
+            "name": "Verify sending domain via email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/verifySendingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a verification instruction email to `mailbox@domain`."
+        },
+        {
+          "info": {
+            "name": "List sending domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/listSendingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns all sending domains registered to the account with their DNS validation status."
+        },
+        {
+          "info": {
+            "name": "Delete a sending domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/deleteSendingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes the specified sending domain from the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tracking Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a tracking domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/addTrackingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a custom tracking domain for open and click tracking."
+        },
+        {
+          "info": {
+            "name": "Check tracking domain CNAME",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/checkTrackingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates whether the CNAME record for the tracking domain is correctly configured."
+        },
+        {
+          "info": {
+            "name": "List tracking domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/listTrackingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns all tracking domains registered to the account."
+        },
+        {
+          "info": {
+            "name": "Delete a tracking domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/deleteTrackingDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes the specified tracking domain from the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/addWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new webhook URL to receive email event notifications.\n\n**Supported events:** `send`, `open`, `click`, `soft_bounce`, `hard_bounce`, `spam`\n\n**Important:** The webhook URL must respond with `God bless you, SendClean` to pass the validation check.\n\nSendClean signs webhook POST requests with an HMAC-SHA1 signature in the `X-SendCleanTES-SIGNATURE`\nheader for optional verification. See the Webhook Authentication section for details.\n"
+        },
+        {
+          "info": {
+            "name": "Edit a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/editWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of an existing webhook."
+        },
+        {
+          "info": {
+            "name": "Reset webhook authentication key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/keyResetWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new authentication/signing key for the specified webhook.\n\n**Note:** SendClean immediately begins using the new key. To avoid dropping webhook batches,\nreturn a non-200 status for any batches that fail signature verification, and update your\napplication with the new key before retrying.\n"
+        },
+        {
+          "info": {
+            "name": "List all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/listWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns all webhooks registered to the account."
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/deleteWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently removes a webhook from the account."
+        },
+        {
+          "info": {
+            "name": "Get webhook details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/settings/getWebhookInfo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns detailed information about a specific webhook, including delivery stats."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/messages/sendMail",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a new transactional email via the specified SMTP sub-user.\n\nEither `html` or `text` content is required in the message body (both may be provided).\n\nUse the `headers` object to control tracking, signing, and routing behaviour.\nUse `X-Unique-Id` in headers to tag messages for later retrieval via `/messages/getMessageInfo`.\n"
+        },
+        {
+          "info": {
+            "name": "Send email using a saved template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/messages/sendTemplate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional email using a pre-created template.\nUse `dynamic_value` to replace template placeholders (case-sensitive field names).\n"
+        },
+        {
+          "info": {
+            "name": "Send template email via HTTP GET",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sendclean.net/v1.0/messages/sendTemplateHTTPGet",
+            "params": [
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "A valid SendClean User ID"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "A valid API token"
+              },
+              {
+                "name": "smtp_user_name",
+                "value": "smtp12345",
+                "type": "query",
+                "description": "A valid SMTP user name"
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "query",
+                "description": "Previously created template ID"
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded email subject"
+              },
+              {
+                "name": "from_email",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded sender email address"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded recipient email address"
+              },
+              {
+                "name": "dynamic_value[NAME]",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded dynamic value for NAME placeholder"
+              },
+              {
+                "name": "dynamic_value[Email]",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded dynamic value for Email placeholder"
+              }
+            ]
+          },
+          "docs": "Sends a transactional email using a template via HTTP GET. Designed for simple integrations\nsuch as IVR webhooks where POST with JSON body is not practical.\n\n**All parameter values must be URL-encoded.**\n\nExample:\n```\nGET https://api.sendclean.net/v1.0/messages/sendTemplateHTTPGet?owner_id=YOUR_ID&token=YOUR_TOKEN\n    &smtp_user_name=smtp12345&template_id=TMPL_ID&subject=Hello\n    &from_email=info%40example.com&to=customer%40example.com\n    &dynamic_value%5BNAME%5D=John&dynamic_value%5BEmail%5D="
+        },
+        {
+          "info": {
+            "name": "Get message delivery and engagement info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/messages/getMessageInfo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves delivery status, open data, and click data for messages matching a given `X-Unique-Id`.\nSupports pagination via `skip_page`.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account/user details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sendclean.net/v1.0/accounts/userDetails",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns profile and account information for the authenticated user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

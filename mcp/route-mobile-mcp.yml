@@ -559,3 +559,9 @@ tools:
   source_operation: openapi/route-mobile-whatsapp-business.yml#getTemplateWiseCount
   method: GET
   path: /whatsapp/report/v1/template-count
+deployment:
+  mode: none
+  verified: derived
+  tools: 108
+  checked: '2026-08-12'
+  source: catalog MCP census
