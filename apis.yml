@@ -157,6 +157,10 @@ apis:
   tags:
   - Email
   - Transactional Email
+  - Webhook
+  tags_raw:
+  - Email
+  - Transactional Email
   - Webhooks
   properties:
   - type: OpenAPI
