@@ -46,141 +46,14 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
 apis:
-- aid: route-mobile:route-mobile-sms-api
-  name: Route Mobile SMS API
-  description: Route Mobile's core A2P SMS platform — single, bulk, scheduled and personalised
-    SMS submission over HTTPS, credit checks, account details, OTP generation and
-    verification, DND/whitelist management, coverage map download, and pre-built submission
-    endpoints for the MoEngage and WebEngage marketing platforms. 14 documented operations
-    across the Message Sending, Account, OTP and Integrations tags. Authentication is via
-    username and password query parameters, with a static Authorization header token used
-    for the third-party integration endpoints.
-  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
-  baseURL: https://api.rmlconnect.net
-  tags:
-  - SMS
-  - A2P Messaging
-  - OTP
-  properties:
-  - type: OpenAPI
-    url: openapi/route-mobile-sms.yml
-  - type: Documentation
-    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
-  - type: APIReference
-    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
-  - type: Documentation
-    url: https://routemobile.com/api/
-- aid: route-mobile:route-mobile-whatsapp-business-api
-  name: Route Mobile WhatsApp Business API
-  description: Route Mobile is a Meta Business Solution Provider for the WhatsApp Business
-    Platform. The API covers JWT login, account management, template and session messaging,
-    bulk campaign upload and management, catalog and product-feed management for commerce,
-    media ID generation, opt-in management, reporting, and client callback registration —
-    33 documented operations across Authentication, Account Management, Messaging, Bulk
-    Campaigns, Catalog Management, Reports, Opt-in Management and Webhooks.
-  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
-  baseURL: https://apis.rmlconnect.net
-  tags:
-  - WhatsApp Business
-  - Messaging
-  - Commerce
-  properties:
-  - type: OpenAPI
-    url: openapi/route-mobile-whatsapp-business.yml
-  - type: Documentation
-    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
-  - type: APIReference
-    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
-  - type: SourceCode
-    url: https://github.com/routemobile/WhatsApp-Business-API
-  - type: Documentation
-    url: https://routemobile.github.io/WhatsApp-Business-API/
-- aid: route-mobile:route-mobile-rcs-api
-  name: Route Mobile RCS Business Messaging API
-  description: Rich Communication Services business messaging — verified sender messaging with
-    rich cards, carousels and suggested replies, single and bulk message submission, an RCS
-    payment/bill-send endpoint, typing events, a file server for media upload, tester and
-    agent management, capability checks against handsets, opt-in management and inbound
-    callbacks. 18 documented paths and 21 operations, authenticated with a JWT obtained from
-    the login endpoint.
-  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
-  baseURL: https://apis.rmlconnect.net
-  tags:
-  - RCS
-  - Messaging
-  - Rich Messaging
-  properties:
-  - type: OpenAPI
-    url: openapi/route-mobile-rcs.yml
-  - type: Documentation
-    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
-  - type: APIReference
-    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
-  - type: SourceCode
-    url: https://github.com/routemobile/RCS-Business-Messaging-API
-  - type: Documentation
-    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
-- aid: route-mobile:route-mobile-viber-api
-  name: Route Mobile Viber Business Messages API
-  description: Viber Business Messages — login, single and bulk message submission (text,
-    image, video, file and template messages), campaign management, media upload, summary and
-    graph reporting, report generation and download, and a client callback channel for
-    delivery receipts and inbound events. 15 documented paths and 16 operations across the
-    Viber Login, Client Callback, Business Messaging, Bulk Messaging and Reports tags,
-    authenticated with a JWT in the Authorization header.
-  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/viber
-  baseURL: https://apis.rmlconnect.net
-  tags:
-  - Viber
-  - Messaging
-  properties:
-  - type: OpenAPI
-    url: openapi/route-mobile-viber.yml
-  - type: Documentation
-    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
-  - type: APIReference
-    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
-  - type: SourceCode
-    url: https://github.com/routemobile/Viber-Business-Messages-API
-  - type: Documentation
-    url: https://routemobile.github.io/Viber-Business-Messages-API/
-- aid: route-mobile:sendclean-email-api
-  name: SendClean Email API
-  description: SendClean is Route Mobile's transactional and bulk email product, exposed as a
-    JSON-over-HTTP-POST REST API. 24 documented operations covering SMTP user creation and
-    password reset, sending-domain and tracking-domain registration and verification, webhook
-    registration and key rotation, message send (including template send over HTTP GET),
-    message info lookup, error retrieval and account details. Every request carries owner_id
-    and token in the request body rather than a header.
-  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/email
-  baseURL: https://api.sendclean.net/v1.0
-  tags:
-  - Email
-  - Transactional Email
-  - Webhook
-  tags_raw:
-  - Email
-  - Transactional Email
-  - Webhooks
-  properties:
-  - type: OpenAPI
-    url: openapi/route-mobile-sendclean-email.yml
-  - type: Documentation
-    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
-  - type: APIReference
-    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
-  - type: SourceCode
-    url: https://github.com/routemobile/Route-Mailer-API
-  - type: Documentation
-    url: https://routemobile.github.io/Route-Mailer-API/
 - aid: route-mobile:route-mobile-enterprise-voice-api
   name: Route Mobile Enterprise Voice 2.0 API
-  description: Route Mobile's enterprise voice and cloud telephony surface, documented as
-    narrative guides on the developer portal (send message and template management calls)
-    and published as a first-party Postman collection in the routemobile GitHub
-    organization. No OpenAPI definition is published for voice, unlike the messaging and
-    email products; the production host (rmlvoice.rmlconnect.net) and the Click2Call and
-    CreateOBDCampaign operations are taken from that first-party Postman collection.
+  description: >-
+    Route Mobile's enterprise voice and cloud telephony surface, documented as narrative guides on the
+    developer portal (send message and template management calls) and published as a first-party Postman
+    collection in the routemobile GitHub organization. No OpenAPI definition is published for voice, unlike
+    the messaging and email products; the production host (rmlvoice.rmlconnect.net) and the Click2Call
+    and CreateOBDCampaign operations are taken from that first-party Postman collection.
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis
   baseURL: https://rmlvoice.rmlconnect.net
   tags:
@@ -193,6 +66,1611 @@ apis:
     url: https://developer.rmlconnect.net/route-mobile-project/docs/send-message-voice-apis
   - type: PostmanCollection
     url: https://github.com/routemobile/Enterprise-Voice-2.0-APIs
+- aid: route-mobile:route-mobile-account-api
+  name: Route Mobile Account API
+  description: APIs for account management, credit queries, and authentication tokens.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-account-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-account-management-api
+  name: Route Mobile Account Management API
+  description: Manage your WhatsApp Business profile settings, account details, and profile photo.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Account Management
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-account-management-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-accounts-api
+  name: Route Mobile Accounts API
+  description: Retrieve account/user details
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-authentication-api
+  name: Route Mobile Authentication API
+  description: >-
+    Authenticate with the Route Mobile WhatsApp Business API to obtain a JWT token for subsequent API
+    calls.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-bulk-campaigns-api
+  name: Route Mobile Bulk Campaigns API
+  description: >-
+    Upload files, create, start, pause, and resume bulk messaging campaigns to reach large audiences.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Bulk Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-bulk-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-bulk-upload-campaign-api-api
+  name: Route Mobile Bulk Upload Campaign API
+  description: Upload campaign files and manage bulk RCS messaging campaigns at scale.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Bulk Upload Campaign API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-bulk-upload-campaign-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-callback-api-api
+  name: Route Mobile Callback API
+  description: Webhook receiver endpoints for real-time RCS message delivery and event notifications.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Callback API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-callback-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-capability-check-api-api
+  name: Route Mobile Capability Check API
+  description: Check and retrieve RCS capability details for phone numbers in bulk.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Capability Check API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-capability-check-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-catalog-management-api
+  name: Route Mobile Catalog Management API
+  description: >-
+    Create, update, delete, and fetch product feeds and catalog details for WhatsApp Commerce.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Catalog Management
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-catalog-management-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-file-server-api-api
+  name: Route Mobile File Server API
+  description: Upload media files (images, videos, PDFs) to the RCS file server for use in messages.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - File Server API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-file-server-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-integrations-api
+  name: Route Mobile Integrations API
+  description: APIs for third-party platform integrations.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-login-api
+  name: Route Mobile Login API
+  description: Authenticate users and obtain JWT tokens for RCS API access.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Login
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-login-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-management-api-api
+  name: Route Mobile Management API
+  description: APIs for managing RCS bot testers, templates, and account configuration.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Management API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-management-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-message-sending-api
+  name: Route Mobile Message Sending API
+  description: APIs for submitting SMS messages.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Message Sending
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-message-sending-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-messages-api
+  name: Route Mobile Messages API
+  description: Send transactional emails and retrieve message info
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-messages-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-messaging-api
+  name: Route Mobile Messaging API
+  description: >-
+    Send template messages (marketing, utility, authentication) and session messages (text, media, interactive,
+    payments, flows) to individual recipients.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-messaging-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-opt-in-management-api
+  name: Route Mobile Opt-in Management API
+  description: Store and verify user opt-in and opt-out consent for WhatsApp messaging compliance.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Opt-in Management
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-opt-in-management-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-otp-api
+  name: Route Mobile OTP API
+  description: APIs for OTP generation and verification.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - OTP
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-otp-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-payment-api-api
+  name: Route Mobile Payment API
+  description: Send RCS payment request messages to customers.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Payment API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-payment-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-rcs-messages-api-api
+  name: Route Mobile RCS Messages API
+  description: >-
+    Send RCS notification, session, and India template messages including text, media, rich cards, carousels,
+    and interactive suggestions.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - RCS Messages API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-rcs-messages-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-rcs-messages-request-api-api
+  name: Route Mobile RCS Messages Request API
+  description: APIs for managing RCS message requests and retrieving request status.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - RCS Messages Request API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-rcs-messages-request-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-rcs-optin-api-api
+  name: Route Mobile RCS Optin API
+  description: The RCS Optin API API from Route Mobile — 1 operation(s) for rcs optin api.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - RCS Optin API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-rcs-optin-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-rcs-template-api-api
+  name: Route Mobile RCS Template API
+  description: The RCS Template API API from Route Mobile — 3 operation(s) for rcs template api.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - RCS Template API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-rcs-template-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-reports-api
+  name: Route Mobile Reports API
+  description: >-
+    Generate, download, and query messaging reports including delivery stats, campaign metrics, opt-in
+    data, and template usage counts.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-reports-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-sending-domains-api
+  name: Route Mobile Sending Domains API
+  description: Add, verify, list, and delete sending domains
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Sending Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-sending-domains-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-smtp-users-api
+  name: Route Mobile SMTP Users API
+  description: Manage SMTP sub-users (create, edit, reset password, list)
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - SMTP Users
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-smtp-users-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-tracking-domains-api
+  name: Route Mobile Tracking Domains API
+  description: Add, check, list, and delete tracking domains
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Tracking Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-tracking-domains-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-viber-bulk-messaging-api-api
+  name: Route Mobile Viber Bulk Messaging API
+  description: >-
+    Send bulk campaign messages to multiple Viber recipients at once using a file_code from the Campaign
+    File Upload API. Supports all message types including fallback delivery to SMS or WhatsApp, and scheduled
+    campaign dispatch.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Viber Bulk Messaging API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber-bulk-messaging-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-viber-business-messaging-api-api
+  name: Route Mobile Viber Business Messaging API
+  description: >-
+    Send single messages to individual Viber users including text, images, videos, files, OTP verification,
+    and interactive buttons. Also manage campaign file uploads and legacy campaign send operations.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Viber Business Messaging API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber-business-messaging-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-viber-client-callback-api-api
+  name: Route Mobile Viber Client Callback API
+  description: >-
+    Receive real-time webhook notifications for incoming messages and delivery reports from the Viber
+    platform. Configure your callback URL in the webhook settings.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Viber Client Callback API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber-client-callback-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-viber-login-api
+  name: Route Mobile Viber Login API
+  description: >-
+    Authenticate and obtain a JWT token to access the Viber Business Messaging APIs. Tokens are valid
+    for one hour by default.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Viber Login
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber-login-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-viber-reports-api-api
+  name: Route Mobile Viber Reports API
+  description: >-
+    Access delivery reports, campaign performance metrics, summary dashboards, and message-level tabular
+    data. Create and download detailed CSV reports. Manage approved Viber message templates.
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Viber Reports API
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-viber-reports-api-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
+- aid: route-mobile:route-mobile-webhooks-api
+  name: Route Mobile Webhooks API
+  description: Configure event webhooks for email delivery events
+  humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  baseURL: https://api.rmlconnect.net
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/route-mobile-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/sms
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured
+  - type: Documentation
+    url: https://routemobile.com/api/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendsessionmessageapi
+  - type: SourceCode
+    url: https://github.com/routemobile/WhatsApp-Business-API
+  - type: Documentation
+    url: https://routemobile.github.io/WhatsApp-Business-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/rcs
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/createtemplatercs
+  - type: SourceCode
+    url: https://github.com/routemobile/RCS-Business-Messaging-API
+  - type: Documentation
+    url: https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/viber
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/addvibertemplate
+  - type: SourceCode
+    url: https://github.com/routemobile/Viber-Business-Messages-API
+  - type: Documentation
+    url: https://routemobile.github.io/Viber-Business-Messages-API/
+  - type: Documentation
+    url: https://developer.rmlconnect.net/route-mobile-project/docs/email
+  - type: APIReference
+    url: https://developer.rmlconnect.net/route-mobile-project/reference/sendmail
+  - type: SourceCode
+    url: https://github.com/routemobile/Route-Mailer-API
+  - type: Documentation
+    url: https://routemobile.github.io/Route-Mailer-API/
 common:
 - type: AgenticAccess
   url: agentic-access/route-mobile-agentic-access.yml
