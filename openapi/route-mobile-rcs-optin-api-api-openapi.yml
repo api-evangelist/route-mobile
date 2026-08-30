@@ -1,0 +1,206 @@
+openapi: 3.2.0
+info:
+  version: 2.1.0
+  title: Route Mobile Rich Communication Services (RCS) API Documentation RCS Optin API
+  description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
+
+
+    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-and-conditions/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2021/07/RM-Logo.png
+    altText: Route Mobile Logo
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- jwt: []
+tags:
+- name: RCS Optin API
+paths:
+  /rcs/optins/v1/create_optin:
+    post:
+      tags:
+      - RCS Optin API
+      summary: Create Optin API
+      description: 'Create Optin API is used to create optin for a given called bot name which is usually supported along with channel. '
+      operationId: optinRCS
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rcs_create_optin'
+            examples:
+              Create Optin:
+                value:
+                  mobile_number: '+917045345285'
+                  bot_name: Routemobile
+                  channel: third_party
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  file_id:
+                    type: string
+                    description: The unique ID of the campaign.
+              examples:
+                Example 1:
+                  value:
+                    file_id:
+                      file id with alphanumerical values: null
+                    message: File uploaded successfully
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: object
+                    description: 'The error for not processing the request.
+
+
+                      '
+                    properties:
+                      text:
+                        type: array
+                        description: The error description.
+                        items:
+                          type: string
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors:
+                      text:
+                      - string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    status: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    status: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: string
+                    description: 'The error for not processing the request.
+
+
+                      '
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors: string
+      security:
+      - jwt: []
+components:
+  schemas:
+    rcs_create_optin:
+      type: object
+      title: Create Optin  API
+      properties:
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        mobile_number:
+          type: string
+          description: "The mobile number of the bot. \n"
+        channel:
+          type: string
+          description: "The channel of the bot. \n"
+      required:
+      - bot_name
+      - mobile_number
+      - channel
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header

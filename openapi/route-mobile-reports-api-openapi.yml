@@ -1,0 +1,1351 @@
+openapi: 3.2.0
+info:
+  version: 1.8.0
+  title: Route Mobile WhatsApp Business Reports API
+  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
+
+
+    ## Getting Started
+
+
+    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
+
+    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
+
+    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
+
+
+    ## Key Concepts
+
+
+    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
+
+    - **Session Messages** — Free-form messages within a 24-hour customer service window.
+
+    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
+
+    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
+
+
+    ## Authentication
+
+
+    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
+
+
+    ```
+
+    Authorization: <your-jwt-token>
+
+    ```
+
+
+    ## Rate Limits
+
+
+    API rate limits are governed by your account tier. Contact your account manager for details.
+
+
+    ## Support
+
+
+    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  contact:
+    name: Route Mobile Developer Support
+    url: https://developers.routemobile.com/
+    email: product-desk@routemobile.com
+  termsOfService: https://www.routemobile.com/terms-of-service/
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-of-service/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2023/04/route-mobile-logo.svg
+    altText: Route Mobile
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- BearerAuth: []
+tags:
+- name: Reports
+  description: Generate, download, and query messaging reports including delivery stats, campaign metrics, opt-in data, and template usage counts.
+paths:
+  /whatsapp/report/v1/create_report/myaccounts_panel:
+    post:
+      tags:
+      - Reports
+      summary: Create Report
+      description: 'Create reports for your WhatsApp Business account. Use the projections while creating a new report.
+
+
+        The available projection fields are:
+
+
+        - country_code: The country code of the phone number.
+
+        - msisdn: The phone number of the customer.
+
+        - message_type: The type of the message, such as text, image, video, and document.
+
+        - message_payload: The content of the message.
+
+        - request_id: The request ID of the message.
+
+        - conversation_id: The conversation ID of the message.
+
+        - message_id: The message ID of the message.
+
+        - submit_timestamp: The timestamp when the message was submitted.
+
+        - sent_timestamp: The timestamp when the message was sent.
+
+        - delivery_timestamp: The timestamp when the message was delivered.
+
+        - read_timestamp: The timestamp when the message was read.
+
+        - failed_timestamp: The timestamp when the message failed to be delivered.
+
+        - deleted_timestamp: The timestamp when the message was deleted.
+
+        - extra: Any additional metadata associated with the message.
+
+        - pricing_model: The pricing model for the message.'
+      operationId: createReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportRequest'
+            examples:
+              Example 1:
+                value:
+                  csv_max_lines: 10000
+                  filters:
+                    end_date: '{end-date}'
+                    start_date: '{start-date}'
+                  projections:
+                  - country_code
+                  - msisdn
+                  - message_type
+                  - message_payload
+                  - request_id
+                  - conversation_id
+                  - message_id
+                  - submit_timestamp
+                  - sent_timestamp
+                  - delivery_timestamp
+                  - read_timestamp
+                  - failed_timestamp
+                  - deleted_timestamp
+                  - extra
+                  - pricing_model
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the report.
+                  id:
+                    type: integer
+                    description: The unique identifier that represents the report.
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    id: 86
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidStartDateError'
+                - $ref: '#/components/schemas/InvalidEndDateError'
+              examples:
+                Invalid start date:
+                  value:
+                    status: failed
+                    errors:
+                      filters:
+                        start_date:
+                        - Missing data for required field.
+                Invalid end date:
+                  value:
+                    status: failed
+                    errors:
+                      filters:
+                        end_date:
+                        - Missing data for required field.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                Example 1:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the report.
+                  errors:
+                    type: string
+                    description: The error for not generating the report.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    errors: Contact administration for more info
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/create_campaign_specific_report/myaccounts_panel:
+    post:
+      tags:
+      - Reports
+      summary: Create Campaign Specific Report
+      description: 'Create a campaign-specific report for WhatsApp Business account. The projections field contains a comma-separated list of field names:
+
+        - country_code: The country code of the recipient''s phone number.
+
+        - msisdn: The recipient''s phone number.
+
+        - message_type: The type of the message, such as text, image, and video.
+
+        - message_payload: The content of the message.
+
+        - request_id: The unique ID assigned to the message by the WhatsApp Business API.
+
+        - conversation_id: The ID of the conversation thread.
+
+        - message_id: The ID of the message.
+
+        - submit_timestamp: The timestamp of when the message was submitted to the API.
+
+        - sent_timestamp: The timestamp of when the message was sent to the recipient.
+
+        - delivery_timestamp: The timestamp of when the message was delivered to the recipient.
+
+        - read_timestamp: The timestamp of when the message was marked as read by the recipient.
+
+        - failed_timestamp: The timestamp of when the message failed to be delivered.
+
+        - deleted_timestamp: The timestamp of when the message was deleted.
+
+        - extra: Additional information about the message.
+
+        - pricing_model: The pricing model used for the message.
+
+        - scheduled_time: The scheduled time of the message, if it was a scheduled message.'
+      operationId: createCampaignSpecificReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignReportRequest'
+            examples:
+              Example 1:
+                value:
+                  csv_max_lines: 100000
+                  filters:
+                    campaign_id: '{campaign-id}'
+                    campaign_name: '{campaign-name}'
+                    end_date: '{end-date}'
+                    start_date: '{start-date}'
+                  projections:
+                  - country_code
+                  - msisdn
+                  - message_type
+                  - message_payload
+                  - request_id
+                  - conversation_id
+                  - message_id
+                  - submit_timestamp
+                  - sent_timestamp
+                  - delivery_timestamp
+                  - read_timestamp
+                  - failed_timestamp
+                  - deleted_timestamp
+                  - extra
+                  - pricing_model
+                  - scheduled_time
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for the campaign specific report.
+                  id:
+                    type: integer
+                    description: The unique identifier that represents the campaign specific report.
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    id: 186
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for the campaign specific report.
+                  errors:
+                    type: object
+                    description: The object that represents the error messages.
+                    properties:
+                      filters:
+                        type: object
+                        description: The filter to generate the report.
+                        properties:
+                          start_date:
+                            type: array
+                            description: The start date of the report.
+                            items:
+                              type: string
+              examples:
+                Validation Error:
+                  value:
+                    status: failed
+                    errors:
+                      filters:
+                        start_date:
+                        - Missing data for required field.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                Example 1:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for the campaign specific report.
+                  errors:
+                    type: string
+                    description: The error for not generating the report.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    errors: Contact administration for more info
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/fetch_campaign_specific_report/{report_id}:
+    get:
+      tags:
+      - Reports
+      summary: Fetch Report URL
+      description: Fetch campaign data from the provided URL by entering the report_id parameter details.
+      operationId: fetchReportUrl
+      parameters:
+      - name: report_id
+        in: path
+        description: Unique ID of the report.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Example 1:
+                  value:
+                    message: report is not yet generated
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_url:
+                    type: string
+                    description: The URL of the report.
+              examples:
+                Example 1:
+                  value:
+                    report_url: url
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status of the report.
+                  reason:
+                    type: string
+                    description: The status for not generating the report.
+              examples:
+                Incorrect authorization token:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request or not generating the report.
+              examples:
+                Example 1:
+                  value:
+                    message: Exception in Fetch Campaign Report
+                    reason: reason
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/fetch_campaign_details:
+    get:
+      tags:
+      - Reports
+      summary: View Campaign Summary
+      description: View the campaign summary for the WhatsApp Business account. Ensure that you provide an authentication token in the request headers for the successful API call.
+      operationId: viewCampaignSummary
+      parameters:
+      - name: page_number
+        in: query
+        description: The page number of the results to be fetched. Default is "1".
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: download
+        in: query
+        description: A boolean flag indicating whether to download the report or not. Default value is 'false'.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          example: 'true'
+      - name: start-date
+        in: query
+        description: The start date in "YYYY-MM-DD" order followed by the time in the "HH:MM:SS" format, that specifies the beginning of the date range for which to fetch campaign summary report.
+        required: true
+        schema:
+          type: string
+      - name: end-date
+        in: query
+        description: The end date in "YYYY-MM-DD" order followed by the time in the "HH:MM:SS" format, that specifies the end of the date range for which to fetch campaign summary report.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignDetailsResponse'
+              examples:
+                Example 1:
+                  value:
+                    result:
+                    - campaign_id: 276f63e2-cb36-11ed-af9d-0242ac13xxxx
+                      campaign_name: rmluxxx1-3
+                      campaign_status: done
+                      campaign_type: generalized
+                      delivered: 2
+                      failed: 1
+                      message_payload:
+                        country_code: '+91'
+                        media:
+                          lang_code: en
+                          template_name: testing_16_03
+                          type: media_template
+                        phone: '{phone}'
+                      message_type: media_template
+                      process_end_timestamp: '2023-03-25 17:55:02.815756'
+                      process_start_timestamp: '2023-03-25 17:55:00.051162'
+                      read: 1
+                      scheduled_time: string
+                      sent: 3
+                      submit: 3
+                      user_name: RMLxxx11
+                    - campaign_id: 1fd39188-cb2e-11ed-9866-0242acxxxxx5
+                      campaign_name: testuxxx1-2
+                      campaign_status: done
+                      campaign_type: generalized
+                      delivered: 2
+                      failed: 1
+                      message_payload:
+                        country_code: '+91'
+                        media:
+                          lang_code: en
+                          template_name: testing_16_03
+                          type: media_template
+                        phone: '{phone}'
+                      message_type: media_template
+                      process_end_timestamp: '2023-03-25 16:58:45.853958'
+                      process_start_timestamp: '2023-03-25 16:58:43.181214'
+                      read: 1
+                      scheduled_time: string
+                      sent: 3
+                      submit: 3
+                      user_name: RMLUxxxx
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status of the view campaign summary.
+                  reason:
+                    type: string
+                    description: The reason for not generating the generating the view campaign summary.
+              examples:
+                Incorrect authorization token:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request or not generating the report.
+              examples:
+                Example 1:
+                  value:
+                    message: Exception in Fetch Campaign Manager
+                    reason: '''Request'' object has no attribute ''username'''
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/fetch_reports:
+    get:
+      tags:
+      - Reports
+      summary: View Report Summary
+      description: View report summary for the WhatsApp Business account.
+      operationId: viewReportSummary
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date in "YYYY-MM-DD" order followed by the time in the "HH:MM:SS" format, that specifies the beginning of the date range for which to fetch reports.
+        required: true
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The end date in "YYYY-MM-DD" order followed by the time in the "HH:MM:SS" format, that specifies the end of the date range for which to fetch reports.
+        required: true
+        schema:
+          type: string
+      - name: page_number
+        in: query
+        description: The page number of the paginated results to return. The default value is 1.
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: The number of results to return per page. The default value is 5.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    description: An array of objects representing the result or response of the operation.
+                    items:
+                      type: object
+                      properties:
+                        file_path:
+                          type: string
+                          description: The file path or name associated with the result.
+                        id:
+                          type: integer
+                          description: The identifier associated with the result.
+                        msisdn:
+                          type:
+                          - string
+                          - 'null'
+                          description: The mobile phone number associated with the result.
+                        payload:
+                          type: object
+                          description: Additional payload information related to the result.
+                          properties:
+                            csv_max_lines:
+                              type: integer
+                              description: The maximum number of lines allowed in the CSV file.
+                            filters:
+                              type: object
+                              description: The filters applied to the result.
+                              properties:
+                                end_date:
+                                  type: string
+                                  description: The end date for the filter.
+                                start_date:
+                                  type: string
+                                  description: The start date for the filter.
+                            projections:
+                              type: array
+                              description: The projected fields from the result.
+                              items:
+                                type: string
+                            request_source:
+                              type: string
+                              description: The source or origin of the request.
+                        status:
+                          type: string
+                          description: The status of the result.
+                        timestamp:
+                          type: string
+                          description: The timestamp of the result.
+                        username:
+                          type: string
+                          description: The username associated with the result.
+              examples:
+                Example 1:
+                  value:
+                    result:
+                    - file_path: fa15c156-8dba-11ed-bc2b-0242acxxxxx5.zip
+                      id: 107xxx
+                      msisdn: string
+                      payload:
+                        csv_max_lines: 100000
+                        filters:
+                          end_date: '2023-01-06'
+                          start_date: '2023-01-06'
+                        projections:
+                        - country_code
+                        - msisdn
+                        - message_type
+                        - message_payload
+                        - request_id
+                        - conversation_id
+                        - message_id
+                        - submit_timestamp
+                        - sent_timestamp
+                        - delivery_timestamp
+                        - read_timestamp
+                        - failed_timestamp
+                        - deleted_timestamp
+                        - extra
+                        - pricing_model
+                        - pricing_category
+                        - expiration_timestamp
+                        request_source: support_panel
+                      status: deleted
+                      timestamp: Fri, 06 Jan 2023 12:09:31 GMT
+                      username: dxxxxhatsapp
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message.
+              examples:
+                Example 1:
+                  value:
+                    status: Unauthorized
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/optin-download:
+    get:
+      tags:
+      - Reports
+      summary: Optin Create Report
+      description: The Optin Create Report endpoint is used to report user opt-ins for receiving messages from a business.
+      operationId: optindownload
+      parameters:
+      - name: from_date
+        in: query
+        description: The starting date of the user opt-ins for receiving messages.
+        required: true
+        schema:
+          type: string
+          format: date
+          example: '2023-08-07'
+      - name: to_date
+        in: query
+        description: The end date of the user opt-ins for receiving messages.
+        required: true
+        schema:
+          type: string
+          format: date
+          example: '2023-08-07'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the optin create report.
+                  id:
+                    type: integer
+                    description: The unique identifier that represents the report.
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    id: 5748
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not generating the optin create report.
+                  status:
+                    type: string
+                    description: The status of the report.
+              examples:
+                Example 1:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Example 1:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not generating the option create report.
+                  status:
+                    type: string
+                    description: The status of the report.
+              examples:
+                Example 1:
+                  value:
+                    status: failure
+                    message: unable to process request
+                    reason: internal server error
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/summary/download_optin_report:
+    get:
+      tags:
+      - Reports
+      summary: Download Optin Report
+      description: The Download Optin Report endpoint is used to download the user opt-ins report for receiving messages from a business.
+      operationId: downloadOptin
+      parameters:
+      - name: from_date
+        in: query
+        description: The starting date of the user opt-ins for receiving messages.
+        required: true
+        schema:
+          type: string
+          example: '2023-08-07'
+      - name: to_date
+        in: query
+        description: The end date of the user opt-ins for receiving messages.
+        required: true
+        schema:
+          type: string
+          example: '2023-08-07'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  country_code:
+                    type: string
+                    description: The country code of the phone number.
+                  msisdn:
+                    type: string
+                    description: The phone number of the customer.
+                  timestamp:
+                    type: string
+                    description: The timestamp of the message.
+                  channel:
+                    type: string
+                    description: The channel through which the user opted in.
+                  status:
+                    type: string
+                    description: The status of the optin report download.
+                  extra:
+                    type: string
+                    description: Any additional information related to the optin process.
+              examples:
+                Example 1:
+                  value:
+                    country_code: '91'
+                    msisdn: '{phone}'
+                    timestamp: '2022 - 09 - 06 10: 47: 01.198255'
+                    channel: whatsapp-api
+                    status: optin
+                    extra: ''
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the download optin report request.
+                  status:
+                    type: string
+                    description: The status of the optin report download.
+              examples:
+                Example 1:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Example 1:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the optin report download.
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the download optin report request.
+              examples:
+                Example 1:
+                  value:
+                    status: failure
+                    message: unable to process request
+                    reason: internal server error
+      security:
+      - BearerAuth: []
+  /whatsapp/report/v1/template-count:
+    get:
+      tags:
+      - Reports
+      summary: Template Wise Count
+      description: The Template Wise Count endpoint is used to count approved templates associated with a WhatsApp Business account.
+      operationId: getTemplateWiseCount
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date for the template count in "YYYY-MM-DD" format.
+        required: true
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The end date for the template count in "YYYY-MM-DD" format.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        template_count:
+                          type: integer
+                          description: The template count number.
+                        template_name:
+                          type: string
+                          description: The template name.
+              examples:
+                Example 1:
+                  value:
+                    result:
+                    - template_count: 8
+                      template_name: bilan
+                    - template_count: 3
+                      template_name: bmntest12
+                    - template_count: 1
+                      template_name: delhi_metro_english_quick_n
+                    - template_count: 4
+                      template_name: demo202
+                    - template_count: 7
+                      template_name: xyzz888
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the template count request.
+                  status:
+                    type: string
+                    description: The status of the template count request.
+              examples:
+                Example 1:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Example 1:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+                  reason:
+                    type: string
+                    description: The reason for not processing the template count request.
+                  status:
+                    type: string
+                    description: The status of the template count request.
+              examples:
+                Example 1:
+                  value:
+                    status: failure
+                    message: unable to process request
+                    reason: internal server error
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    CampaignDetail:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        campaign_status:
+          type: string
+          description: The status of the campaign.
+        campaign_type:
+          type: string
+          description: The type of the campaign.
+        delivered:
+          type: integer
+          description: Number of delivered messages.
+        failed:
+          type: integer
+          description: Number of failed messages.
+        message_payload:
+          $ref: '#/components/schemas/CampaignMessagePayload'
+        message_type:
+          type: string
+          description: The type of the message.
+        process_end_timestamp:
+          type: string
+          description: The process end time.
+        process_start_timestamp:
+          type: string
+          description: The process start time.
+        read:
+          type: integer
+          description: Number of read messages.
+        scheduled_time:
+          type: string
+          description: The campaign scheduled time.
+        sent:
+          type: integer
+          description: Number of sent messages.
+        submit:
+          type: integer
+          description: Number of submitted messages.
+        user_name:
+          type: string
+          description: The name of the user.
+    CampaignReportFilters:
+      type: object
+      description: An object containing the filters to apply to the report.
+      properties:
+        campaign_id:
+          type: string
+          description: The ID of the campaign for which to generate the report.
+          example: '{campaign-id}'
+        campaign_name:
+          type: string
+          description: The name of the campaign for which to generate the report.
+          example: '{campaign-name}'
+        end_date:
+          type: string
+          description: The end date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{end-date}'
+        start_date:
+          type: string
+          description: The start date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{start-date}'
+      required:
+      - campaign_id
+      - campaign_name
+      - end_date
+      - start_date
+    CampaignMessagePayloadMedia:
+      type: object
+      properties:
+        lang_code:
+          type: string
+          description: Language code of language in which message text is written, such as "en" for English.
+        template_name:
+          type: string
+          description: The name of the message template.
+        type:
+          type: string
+          description: The template type.
+    CreateReportRequest:
+      type: object
+      properties:
+        csv_max_lines:
+          type: number
+          description: An integer representing the maximum number of lines to include in the CSV file.
+          example: 10000
+        filters:
+          $ref: '#/components/schemas/ReportFilters'
+        projections:
+          type: array
+          description: An array of fields that you want to include in the report.
+          items:
+            type: string
+            example: country_code
+          example:
+          - country_code
+          - msisdn
+          - message_type
+          - message_payload
+          - request_id
+          - conversation_id
+          - message_id
+          - submit_timestamp
+          - sent_timestamp
+          - delivery_timestamp
+          - read_timestamp
+          - failed_timestamp
+          - deleted_timestamp
+          - extra
+          - pricing_model
+      required:
+      - csv_max_lines
+      - filters
+      - projections
+    ReportFilters:
+      type: object
+      description: A JSON object that contains the start and end dates for the report. The format of the dates should be in YYYY-MM-DD format.
+      properties:
+        end_date:
+          type: string
+          description: The end date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{end-date}'
+        start_date:
+          type: string
+          description: The start date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{start-date}'
+      required:
+      - end_date
+      - start_date
+    InvalidStartDateError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the report.
+        errors:
+          type: object
+          description: The error message details.
+          properties:
+            filters:
+              type: object
+              description: A JSON object that contains the start date for the report.
+              properties:
+                start_date:
+                  type: array
+                  description: The start date for the report in the format of YYYY-MM-DD.
+                  items:
+                    type: string
+    CampaignMessagePayload:
+      type: object
+      properties:
+        country_code:
+          type: string
+          description: The country code.
+        media:
+          $ref: '#/components/schemas/CampaignMessagePayloadMedia'
+        phone:
+          type: string
+          description: The phone number in international format.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    InvalidEndDateError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the report.
+        errors:
+          type: object
+          description: The error message details.
+          properties:
+            filters:
+              type: object
+              description: A JSON object that contains the end date for the report.
+              properties:
+                end_date:
+                  type: array
+                  description: The end date for the report in the format of YYYY-MM-DD.
+                  items:
+                    type: string
+    CampaignDetailsResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignDetail'
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    CreateCampaignReportRequest:
+      type: object
+      properties:
+        csv_max_lines:
+          type: number
+          description: An integer representing the maximum number of lines to include in the CSV file.
+          example: 10000
+        filters:
+          $ref: '#/components/schemas/CampaignReportFilters'
+        projections:
+          type: array
+          description: An array of strings representing the fields to include in the report.
+          items:
+            type: string
+            example: '"country_code", "msisdn", "message_type", "message_payload", "request_id", "conversation_id", "message_id", "submit_timestamp", "sent_timestamp", "delivery_timestamp", "read_timestamp", "failed_timestamp", "deleted_timestamp", "extra", "pricing_model", "scheduled_time"'
+          example:
+          - country_code
+          - msisdn
+          - message_type
+          - message_payload
+          - request_id
+          - conversation_id
+          - message_id
+          - submit_timestamp
+          - sent_timestamp
+          - delivery_timestamp
+          - read_timestamp
+          - failed_timestamp
+          - deleted_timestamp
+          - extra
+          - pricing_model
+          - scheduled_time
+      required:
+      - csv_max_lines
+      - filters
+      - projections
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JSON Web Token obtained from the Login API. Include the token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by default.
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

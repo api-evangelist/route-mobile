@@ -1,0 +1,686 @@
+openapi: 3.2.0
+info:
+  version: 1.8.0
+  title: Route Mobile WhatsApp Business Bulk Campaigns API
+  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
+
+
+    ## Getting Started
+
+
+    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
+
+    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
+
+    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
+
+
+    ## Key Concepts
+
+
+    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
+
+    - **Session Messages** — Free-form messages within a 24-hour customer service window.
+
+    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
+
+    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
+
+
+    ## Authentication
+
+
+    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
+
+
+    ```
+
+    Authorization: <your-jwt-token>
+
+    ```
+
+
+    ## Rate Limits
+
+
+    API rate limits are governed by your account tier. Contact your account manager for details.
+
+
+    ## Support
+
+
+    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  contact:
+    name: Route Mobile Developer Support
+    url: https://developers.routemobile.com/
+    email: product-desk@routemobile.com
+  termsOfService: https://www.routemobile.com/terms-of-service/
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-of-service/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2023/04/route-mobile-logo.svg
+    altText: Route Mobile
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- BearerAuth: []
+tags:
+- name: Bulk Campaigns
+  description: Upload files, create, start, pause, and resume bulk messaging campaigns to reach large audiences.
+paths:
+  /wba/v2/upload:
+    post:
+      tags:
+      - Bulk Campaigns
+      summary: File Upload
+      description: The File Upload API sends multiple messages to users in a single upload.
+      operationId: fileUpload
+      parameters:
+      - name: source
+        in: query
+        description: The details of the source for uploading the file for a bulk campaign.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: UI
+      - name: debug
+        in: query
+        description: The parameter that enables or disables the debug mode.   Set the default value of "debug=True" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns.
+        style: form
+        explode: true
+        schema:
+          enum:
+          - 'True'
+          - 'False'
+          example: 'True'
+      requestBody:
+        description: Upload a CSV or text file containing recipient phone numbers and message content for a bulk campaign.
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkUploadRequest'
+            examples:
+              Example:
+                value:
+                  campaign_type: string
+                  file: string
+                  file_mimetype: string
+                  filename: string
+                  message: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkUploadResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: File uploaded successfully
+                    campaign_id: 670b3fd4-d442-11ed-a821-xxxxxxxxxxxx
+                    file_type: text/csv
+                    file_size: 19.0B
+                    total_records: 1
+                    valid_records: 1
+                    duplicate records: 0
+                    campaign_type: generalized
+                    message_preview:
+                      phone: '{phone}'
+                      enable_acculync: true
+                      extra: '{''asd'':''asd''}'
+                      media:
+                        type: media_template
+                        template_name: boarding_pass_update
+                        lang_code: en
+                        header:
+                        - image:
+                            link: https://media.istockphoto.com/vectors/airplane-ticket-boarding-pass-ticket-template-vector-id878xxxxxx
+                        body:
+                        - text: Here is your boarding pass
+                    asynchronous: false
+                    country_code: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                JWT Token Expired:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/UnknownCampaignTypeError'
+                - $ref: '#/components/schemas/FileMimetypeError'
+              examples:
+                Unknown campaign type:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      campaign_type:
+                      - 'Must be one of: generalized, personalized.'
+                File Mimetype error:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      file_mimetype:
+                      - 'Must be one of: text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.spreadsheetml.template, application/vnd.ms-excel.sheet.macroEnabled.12, application/vnd.ms-excel.template.macroEnabled.12, application/vnd.ms-excel.addin.macroEnabled.12, application/vnd.ms-excel.sheet.binary.macroEnabled.12.'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  message:
+                    type: string
+                    description: The message response.
+              examples:
+                Internal server error:
+                  value:
+                    status: failure
+                    message: unable to process request
+      security:
+      - BearerAuth: []
+  /wba/v2/manage_campaign:
+    post:
+      tags:
+      - Bulk Campaigns
+      summary: Send Bulk Campaign
+      description: The Send Bulk Campaign API sends messages in bulk to multiple users, manages large-scale campaigns, and reduces the workload for marketers or business owners.
+      operationId: sendBulkCampaign
+      parameters:
+      - name: debug
+        in: query
+        description: The parameter that enables or disables the debug mode.   Set the default value of "debug=True" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns.
+        style: form
+        explode: true
+        schema:
+          enum:
+          - 'True'
+          - 'False'
+          example: 'True'
+      - name: source
+        in: query
+        description: The details of the source for uploading the file for a bulk campaign.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: UI
+      requestBody:
+        description: Start, pause, or resume a bulk messaging campaign.
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/StartCampaignRequest'
+              - $ref: '#/components/schemas/ResumeCampaignRequest'
+              - $ref: '#/components/schemas/PauseCampaignRequest'
+            examples:
+              Start Campaign:
+                value:
+                  campaign_action: start
+                  campaign_id: '{campaign id}'
+                  campaign_name: '{campaign name}'
+                  file_mimetype: text/plain or text/csv
+                  filename: '{filename with extension}'
+                  payload:
+                    type: '{payload type}'
+                  scheduled_time: '{date and time in UTC e.g.2021-12-08 13:36:00}'
+              Pause Campaign:
+                value:
+                  campaign_action: pause
+                  campaign_id: '{campaign id}'
+              Resume Campaign:
+                value:
+                  campaign_action: resume
+                  campaign_id: '{campaign id}'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignAcceptedResponse'
+              examples:
+                Example:
+                  value:
+                    status: success
+                    message: campaign with id 670b3fd4-d442-11ed-a821-xxxxxxxxxxxx is now processing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignBadRequestError'
+              examples:
+                Filename Mismatch:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: file name mismatch between /upload and /campaign endpoints for 670b3fd4-d442-11ed-a821-xxxxxxxxxxxx
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignAuthError'
+              examples:
+                JWT Token Expired:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: jwt token expired
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/IncorrectPayloadTypeError'
+                - $ref: '#/components/schemas/IncorrectCampaignIdError'
+              examples:
+                Incorrect Payload Type:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      payload:
+                      - Unable to check payload type
+                Incorrect Campaign ID:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      campaign_id:
+                      - Not a Valid Campaign Id
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the bulk campaign.
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+              examples:
+                Example:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: <internal server error reason>
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    UnknownCampaignTypeError:
+      type: object
+      title: Unknown Campaign Type Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            campaign_type:
+              type: array
+              description: The type of the campaign.
+              items:
+                type: string
+    MessagePreviewMediaHeader:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+    IncorrectPayloadTypeError:
+      type: object
+      title: Incorrect Payload Type Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the bulk send campaign.
+        reason:
+          type: object
+          description: The reason for not processing the bulk send campaign request.
+          properties:
+            payload:
+              type: array
+              description: An object representing the message to be sent.
+              items:
+                type: string
+    CampaignBadRequestError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the message.
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the message.
+    PauseCampaignRequest:
+      type: object
+      properties:
+        campaign_action:
+          type: string
+          description: The action to be taken for the campaign. For sending a bulk campaign, the value should be set to "pause".
+          example: '"pause"'
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign. This ID is generated by WhatsApp when you execute the File Upload API.
+          example: 670b3fd4-xxxx-11ed-a821-xxxxxxxxxxxx
+      required:
+      - campaign_action
+      - campaign_id
+    BulkUploadRequest:
+      type: object
+      properties:
+        campaign_type:
+          type: string
+          description: The type of campaign being sent, which can be either generalized or personalized.
+          example: Generalized
+        file:
+          type: string
+          description: "The CSV or plain text file path on your local system or network that you want to upload as part of a bulk campaign. The file contains the list of phone numbers and messages. \n\nSee the sample files for more information on bulk upload files and their details:\n- [Bulk Upload File](https://github.com/routemobile/WhatsApp-Business-API/blob/master/Sample%20Bulk%20Upload%20File.txt)\n- [Bulk Upload Campaign File](https://github.com/routemobile/WhatsApp-Business-API/blob/master/Sample%20Bulk%20Upload%20Campaign%20File.xlsx)\n- [Campaign File](https://github.com/routemobile/WhatsApp-Business-API/blob/master/Sample%20Campaign%20File%20.csv)"
+          example: ABC.xlsx, ABC.csv, ABC.txt
+        file_mimetype:
+          type: string
+          description: The MIME type of the file containing the phone numbers of the recipients. The type of the file can be either "text/plain" or "text/csv".
+          example: '"text/plain or text/csv"'
+        filename:
+          type: string
+          description: The name of the file containing the phone numbers of the recipients, including the file extension.
+        message:
+          type: string
+          description: The message that you want to send to the users along with the file.
+      required:
+      - campaign_type
+      - file
+      - file_mimetype
+      - filename
+      - message
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    MessagePreviewMediaImage:
+      type: object
+      properties:
+        link:
+          type: string
+          description: The URL of the image file.
+    FileMimetypeError:
+      type: object
+      title: File Mimetype Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            file_mimetype:
+              type: array
+              description: The MIME type of the file containing the phone numbers of the recipients.
+              items:
+                type: string
+    IncorrectCampaignIdError:
+      type: object
+      title: Incorrect Campaign ID Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the bulk send campaign.
+        reason:
+          type: object
+          description: The reason for not processing the bulk send campaign request.
+          properties:
+            campaign_id:
+              type: array
+              description: The unique ID of the campaign.
+              items:
+                type: string
+    CampaignPayload:
+      type: object
+      description: An object representing the template type, such as media template.
+      properties:
+        type:
+          type: string
+          description: The type of the payload depends on the type of message being sent as part of a bulk campaign.
+          example: '"Text"'
+      required:
+      - type
+    StartCampaignRequest:
+      type: object
+      properties:
+        campaign_action:
+          type: string
+          description: The action to be taken for the campaign. For sending a bulk campaign, the value should be set to "start".
+          example: '"start"'
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign. This ID is generated by WhatsApp when you execute the File Upload API.
+          example: 670b3fd4-xxxx-11ed-a821-xxxxxxxxxxxx
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+          example: '{campaign name}'
+        file_mimetype:
+          type: string
+          description: The MIME type of the file containing the phone numbers of the recipients. The type of the file can be in different formats, such as "text/plain" or "text/csv".
+          example: '"text/plain or text/csv"'
+        filename:
+          type: string
+          description: The name of the file containing the phone numbers of the recipients, including the file extension.
+          example: '{filename with extension}'
+        payload:
+          $ref: '#/components/schemas/CampaignPayload'
+        scheduled_time:
+          type: string
+          description: The date and time at which the campaign should be scheduled to start, in UTC format. The format of the string should be "YYYY-MM-DD HH:mm:ss".
+          example: '"2021-12-08 13:36:00"'
+      required:
+      - campaign_action
+      - campaign_id
+      - campaign_name
+      - file_mimetype
+      - filename
+      - payload
+      - scheduled_time
+    CampaignAcceptedResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the message.
+        message:
+          type: string
+          description: The response message.
+    BulkUploadResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The outcome of the file upload process.
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign associated with the uploaded file.
+        file_type:
+          type: string
+          description: The type of the uploaded file.
+        file_size:
+          type: string
+          description: The size of the uploaded file.
+        total_records:
+          type: integer
+          description: The total number of records present in the uploaded file.
+        valid_records:
+          type: integer
+          description: The count of valid records within the uploaded file.
+        duplicate records:
+          type: integer
+          description: The count of duplicate records found in the uploaded file.
+        campaign_type:
+          type: string
+          description: The type of campaign being sent, which can be either generalized or personalized.
+        message_preview:
+          $ref: '#/components/schemas/MessagePreview'
+        asynchronous:
+          type: boolean
+          description: The parameter indicates whether the file upload process is synchronous or asynchronous.
+        country_code:
+          type: string
+          description: The country code.
+    MessagePreview:
+      type: object
+      description: A preview of the message or content associated with the campaign.
+      properties:
+        phone:
+          type: string
+          description: The mobile number of the recipient in full international format.
+        enable_acculync:
+          type: boolean
+          description: A boolean indicating whether or not to enable Acculync.
+        extra:
+          type: string
+          description: Additional information to include in the message.
+        media:
+          $ref: '#/components/schemas/MessagePreviewMedia'
+    ResumeCampaignRequest:
+      type: object
+      properties:
+        campaign_action:
+          type: string
+          description: The action to be taken for the campaign. For sending a bulk campaign, the value should be set to "resume".
+          example: '"resum"'
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign. This ID is generated by WhatsApp when you execute the File Upload API.
+          example: 670b3fd4-xxxx-11ed-a821-xxxxxxxxxxxx
+      required:
+      - campaign_action
+      - campaign_id
+    MessagePreviewMedia:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of message template.
+        template_name:
+          type: string
+          description: The name of the template to use.
+        lang_code:
+          type: string
+          description: Language code of language in which message text is written, such as "en" for English.
+        header:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaBody'
+    CampaignAuthError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the message.
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the message.
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JSON Web Token obtained from the Login API. Include the token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by default.
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

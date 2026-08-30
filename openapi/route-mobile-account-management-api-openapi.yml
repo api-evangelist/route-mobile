@@ -1,0 +1,708 @@
+openapi: 3.2.0
+info:
+  version: 1.8.0
+  title: Route Mobile WhatsApp Business Account Management API
+  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
+
+
+    ## Getting Started
+
+
+    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
+
+    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
+
+    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
+
+
+    ## Key Concepts
+
+
+    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
+
+    - **Session Messages** — Free-form messages within a 24-hour customer service window.
+
+    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
+
+    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
+
+
+    ## Authentication
+
+
+    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
+
+
+    ```
+
+    Authorization: <your-jwt-token>
+
+    ```
+
+
+    ## Rate Limits
+
+
+    API rate limits are governed by your account tier. Contact your account manager for details.
+
+
+    ## Support
+
+
+    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  contact:
+    name: Route Mobile Developer Support
+    url: https://developers.routemobile.com/
+    email: product-desk@routemobile.com
+  termsOfService: https://www.routemobile.com/terms-of-service/
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-of-service/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2023/04/route-mobile-logo.svg
+    altText: Route Mobile
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- BearerAuth: []
+tags:
+- name: Account Management
+  description: Manage your WhatsApp Business profile settings, account details, and profile photo.
+paths:
+  /wba/management/v1/wbp-account-details:
+    get:
+      tags:
+      - Account Management
+      summary: WBP Account Details
+      description: The WBP Account Details endpoint fetches the account details for the WhatsApp business profile by entering the authorization token key.
+      operationId: getAccountDetails
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  callback_url:
+                    type: string
+                    description: The URL where callback notifications are sent.
+                  send_status:
+                    type: string
+                    description: A boolean value indicates whether the sending status update is enabled.
+                  available_verticals:
+                    type: array
+                    description: A list of available verticals or business categories.
+                    items:
+                      type: string
+                  account_hosting:
+                    type: string
+                    description: The hosting type for the account.
+                  user_details:
+                    type: object
+                    description: Details about the user.
+                    properties:
+                      client_msisdn:
+                        type: string
+                        description: The user's mobile number.
+                      waba_id:
+                        type: string
+                        description: WhatsApp Business Account (WABA) identifier.
+                      catalog_id:
+                        type: string
+                        description: Identifier for the catalog associated with the user.
+                  business_details:
+                    type: object
+                    description: Details about the business.
+                    properties:
+                      business:
+                        type: object
+                        description: Business profile information.
+                        properties:
+                          profile:
+                            type: object
+                            description: Business profile details.
+                            properties:
+                              address:
+                                type: string
+                                description: The business address.
+                              description:
+                                type: string
+                                description: The business description.
+                              email:
+                                type: string
+                                description: The business email address.
+                              websites:
+                                type: array
+                                description: List of business websites.
+                                items:
+                                  type: string
+                              vertical:
+                                type: string
+                                description: Business vertical or category.
+                              about:
+                                type: string
+                                description: About the business.
+                              messaging_product:
+                                type: string
+                                description: Messaging product used.
+                  about_details:
+                    type: object
+                    description: About section details.
+                    properties:
+                      profile:
+                        type: object
+                        description: About section information.
+                        properties:
+                          about:
+                            type: object
+                            description: About text.
+                            properties:
+                              text:
+                                type: string
+                                description: The text content.
+                  health_check_details:
+                    type: object
+                    description: Health check information.
+                    properties:
+                      health_check:
+                        type: object
+                        description: Health check details.
+                        properties:
+                          username:
+                            type: string
+                            description: Username for health check.
+                          health:
+                            type: string
+                            description: Health status.
+                          request_url:
+                            type: string
+                            description: URL for health check request.
+                          response_body:
+                            type: object
+                            description: Health check response.
+                            properties:
+                              health:
+                                type: object
+                                description: Health status.
+                                properties:
+                                  gateway_status:
+                                    type: string
+                                    description: The gateway status.
+                                  meta:
+                                    type: object
+                                    description: Metadata information.
+                                    properties:
+                                      api_status:
+                                        type: string
+                                        description: API status.
+                                      version:
+                                        type: string
+                                        description: API version.
+                          response_status_code:
+                            type: integer
+                            description: HTTP status code of the response.
+                  meta:
+                    type: object
+                    description: Metadata information.
+                    properties:
+                      api_status:
+                        type: string
+                        description: API status.
+                      version:
+                        type: string
+                        description: API version.
+                  phone_number_updates:
+                    type: object
+                    description: Phone number update details.
+                    properties:
+                      waba_id:
+                        type: string
+                        description: WhatsApp Business Account (WABA) identifier.
+                      number_quality:
+                        type: string
+                        description: Quality of the phone number.
+                      messaging_limit:
+                        type: string
+                        description: Messaging limit for the number.
+                      number_status:
+                        type: string
+                        description: Status of the number.
+                        example: Connected
+                      rejection_reason:
+                        type:
+                        - string
+                        - 'null'
+                        description: Reason for number rejection.
+                      verified_name:
+                        type: string
+                        description: Verified name for the number.
+                  waba_updates:
+                    type: object
+                    description: WABA update details.
+                    properties:
+                      waba_status:
+                        type: string
+                        description: WABA status.
+                      waba_quality:
+                        type: string
+                        description: Quality of the WABA.
+                      waba_ban_date:
+                        description: Date of WABA ban.
+                      waba_ban_state:
+                        description: State of WABA ban.
+                      violation_type:
+                        description: Type of violation.
+                      restriction_type:
+                        description: Type of restriction.
+                      expiration:
+                        description: Expiration details.
+                      waba_id:
+                        type: string
+                        description: WABA identifier.
+                  business_capabilities_updates:
+                    type: object
+                    description: Business capabilities update details.
+                    properties:
+                      max_phone_numbers_per_business:
+                        type: string
+                        description: Maximum phone numbers allowed for the business.
+                      max_daily_conversation_per_phone:
+                        type: string
+                        description: Maximum daily conversations per phone.
+              examples:
+                Example 1:
+                  value:
+                    callback_url: http://<domain_name>/v2/optin-callback-rmlbot2
+                    send_status: 'True'
+                    available_verticals:
+                    - OTHER
+                    - AUTO
+                    - BEAUTY
+                    - APPAREL
+                    - EDU
+                    - ENTERTAIN
+                    - EVENT_PLAN
+                    - FINANCE
+                    - GROCERY
+                    - GOVT
+                    - HOTEL
+                    - HEALTH
+                    - NONPROFIT
+                    - PROF_SERVICES
+                    - RETAIL
+                    - TRAVEL
+                    - RESTAURANT
+                    account_hosting: cloud
+                    user_details:
+                      client_msisdn: '{phone}'
+                      waba_id: 206162977746xxxx
+                      catalog_id: 623056228363xxxx
+                    business_details:
+                      business:
+                        profile:
+                          address: Mumbai, Bengaluru
+                          description: Route Mobile, Route Lab
+                          email: username@domain.com
+                          websites:
+                          - http://www.routemobile.com/
+                          vertical: OTHER
+                          about: RML TEST Bot2
+                          messaging_product: whatsapp
+                    about_details:
+                      profile:
+                        about:
+                          text: RML TEST Bot2
+                    health_check_details:
+                      health_check:
+                        username: RMLBot2
+                        health: CONNECTED
+                        request_url: https://<domain_name>/v15.0/2061629777463969/phone_numbers
+                        response_body:
+                          health:
+                            gateway_status: CONNECTED
+                            meta:
+                              api_status: stable
+                              version: '15.0'
+                        response_status_code: 200
+                    meta:
+                      api_status: stable
+                      version: '15.0'
+                    phone_number_updates:
+                      waba_id: 206162977746xxxx
+                      number_quality: high
+                      messaging_limit: TIER_1K
+                      number_status: CONNECTED
+                      rejection_reason: string
+                      verified_name: RouteMobile (Testing)
+                    waba_updates:
+                      waba_status: CONNECTED
+                      waba_quality: high
+                      waba_ban_date: string
+                      waba_ban_state: string
+                      violation_type: string
+                      restriction_type: string
+                      expiration: string
+                      waba_id: 206162977746xxxx
+                    business_capabilities_updates:
+                      max_phone_numbers_per_business: '25'
+                      max_daily_conversation_per_phone: TIER_1K
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Example 1:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failure
+                    message: unable to process request
+                    reason: internal server error
+      security:
+      - BearerAuth: []
+  /wba/management/v1/settings/profile/photo:
+    post:
+      tags:
+      - Account Management
+      summary: Profile Photo API
+      description: The Profile Photo API endpoint uploads the profile photo for account and updates  the account details for the WhatsApp business profile by entering the authorization token key.
+      operationId: uploadProfilePhoto
+      parameters:
+      - name: source
+        in: query
+        description: The details of the source for uploading the file for a bulk campaign.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: UI
+      - name: debug
+        in: query
+        description: The parameter that enables or disables the debug mode.   Set the default value of "debug=True" to enable the debug mode. The system generates additional information and logs to help resolving troubleshoot and debug issues with the bulk campaigns.
+        style: form
+        explode: true
+        schema:
+          enum:
+          - 'True'
+          - 'False'
+          example: 'True'
+      requestBody:
+        description: Upload a profile photo for your WhatsApp Business account.
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfilePhotoRequest'
+            examples:
+              Example:
+                value:
+                  file: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkUploadResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: File uploaded successfully
+                    campaign_id: 670b3fd4-d442-11ed-a821-xxxxxxxxxxxx
+                    file_type: text/csv
+                    file_size: 19.0B
+                    total_records: 1
+                    valid_records: 1
+                    duplicate records: 0
+                    campaign_type: generalized
+                    message_preview:
+                      phone: '{phone}'
+                      enable_acculync: true
+                      extra: '{''asd'':''asd''}'
+                      media:
+                        type: media_template
+                        template_name: boarding_pass_update
+                        lang_code: en
+                        header:
+                        - image:
+                            link: https://media.istockphoto.com/vectors/airplane-ticket-boarding-pass-ticket-template-vector-id878xxxxxx
+                        body:
+                        - text: Here is your boarding pass
+                    asynchronous: false
+                    country_code: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                JWT Token Expired:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/UnknownCampaignTypeError'
+                - $ref: '#/components/schemas/FileMimetypeError'
+              examples:
+                Unknown campaign type:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      campaign_type:
+                      - 'Must be one of: generalized, personalized.'
+                File Mimetype error:
+                  value:
+                    message: please check API docs for more info
+                    status: failed
+                    reason:
+                      file_mimetype:
+                      - 'Must be one of: text/csv, text/plain, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.spreadsheetml.template, application/vnd.ms-excel.sheet.macroEnabled.12, application/vnd.ms-excel.template.macroEnabled.12, application/vnd.ms-excel.addin.macroEnabled.12, application/vnd.ms-excel.sheet.binary.macroEnabled.12.'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  message:
+                    type: string
+                    description: The message response.
+              examples:
+                Internal server error:
+                  value:
+                    status: failure
+                    message: unable to process request
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+    MessagePreview:
+      type: object
+      description: A preview of the message or content associated with the campaign.
+      properties:
+        phone:
+          type: string
+          description: The mobile number of the recipient in full international format.
+        enable_acculync:
+          type: boolean
+          description: A boolean indicating whether or not to enable Acculync.
+        extra:
+          type: string
+          description: Additional information to include in the message.
+        media:
+          $ref: '#/components/schemas/MessagePreviewMedia'
+    ProfilePhotoRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
+          example: ABC.jpeg, ABC.jpg, ABC.png
+      required:
+      - file
+    FileMimetypeError:
+      type: object
+      title: File Mimetype Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            file_mimetype:
+              type: array
+              description: The MIME type of the file containing the phone numbers of the recipients.
+              items:
+                type: string
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    UnknownCampaignTypeError:
+      type: object
+      title: Unknown Campaign Type Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            campaign_type:
+              type: array
+              description: The type of the campaign.
+              items:
+                type: string
+    MessagePreviewMedia:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of message template.
+        template_name:
+          type: string
+          description: The name of the template to use.
+        lang_code:
+          type: string
+          description: Language code of language in which message text is written, such as "en" for English.
+        header:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaBody'
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    MessagePreviewMediaImage:
+      type: object
+      properties:
+        link:
+          type: string
+          description: The URL of the image file.
+    BulkUploadResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The outcome of the file upload process.
+        campaign_id:
+          type: string
+          description: The unique identifier for the campaign associated with the uploaded file.
+        file_type:
+          type: string
+          description: The type of the uploaded file.
+        file_size:
+          type: string
+          description: The size of the uploaded file.
+        total_records:
+          type: integer
+          description: The total number of records present in the uploaded file.
+        valid_records:
+          type: integer
+          description: The count of valid records within the uploaded file.
+        duplicate records:
+          type: integer
+          description: The count of duplicate records found in the uploaded file.
+        campaign_type:
+          type: string
+          description: The type of campaign being sent, which can be either generalized or personalized.
+        message_preview:
+          $ref: '#/components/schemas/MessagePreview'
+        asynchronous:
+          type: boolean
+          description: The parameter indicates whether the file upload process is synchronous or asynchronous.
+        country_code:
+          type: string
+          description: The country code.
+    MessagePreviewMediaHeader:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JSON Web Token obtained from the Login API. Include the token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by default.
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

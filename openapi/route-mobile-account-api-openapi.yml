@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: Route Mobile SMS Account API
+  description: 'Complete API reference for Route Mobile''s SMS platform. Covers message submission,
+
+    OTP, account management, and third-party platform integrations.
+
+
+    ## Authentication
+
+
+    Most APIs authenticate via `username` and `password` query parameters.
+
+    Third-party integration APIs (Moengage, Webengage) use a static `Authorization`
+
+    header token provided by Route Mobile.
+
+
+    ## Base URLs
+
+
+    | URL | Description |
+
+    |-----|-------------|
+
+    | `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |
+
+    | `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |
+
+    | `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |
+
+    | `https://client.rmlconnect.net` | Client portal — coverage map only |
+
+
+    ## Platform Response Codes
+
+
+    SMS submission APIs return a plain text response with a platform status code prefix.
+
+
+    | Code | Meaning |
+
+    |------|---------|
+
+    | 1701 | Success — `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+    | 1702 | Invalid URL / missing or blank parameter |
+
+    | 1703 | Invalid username or password |
+
+    | 1704 | Invalid value in `type` field |
+
+    | 1705 | Invalid message |
+
+    | 1706 | Invalid destination |
+
+    | 1707 | Invalid source (Sender ID) |
+
+    | 1708 | Invalid value in `dlr` field |
+
+    | 1709 | User validation failed |
+
+    | 1710 | Internal error |
+
+    | 1025 | Insufficient credit |
+
+    | 1715 | Response timeout |
+
+
+    > **Retry Policy:** Do NOT retry for any error code except `1709`.
+
+    > For `1715` specifically, do not re-submit the same message.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Route Mobile Support
+    email: support@routemobile.com
+    url: https://developers.routemobile.com/
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://api.rmlconnect.net
+  description: SGN Secured (HTTPS - port 443) — recommended
+- url: https://api.rmlconnect.net:8443
+  description: SGN Secured (HTTPS - port 8443)
+- url: http://api.rmlconnect.net
+  description: SGN Non-secured (HTTP) — legacy only
+- url: https://client.rmlconnect.net
+  description: Client Portal — coverage map only
+tags:
+- name: Account
+  description: APIs for account management, credit queries, and authentication tokens.
+paths:
+  /CreditCheck/checkcredits:
+    get:
+      tags:
+      - Account
+      summary: Check Account Credit Balance
+      description: 'Returns the current credit balance for the account.
+
+        Available over both HTTPS (recommended) and HTTP (legacy).
+
+        Use `https://api.rmlconnect.net` or `https://api.rmlconnect.net:8443` for secured access,
+
+        or `http://api.rmlconnect.net` for non-secured access.
+
+        '
+      operationId: checkCredits
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      responses:
+        '200':
+          description: Current credit balance returned as plain text.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 'Credits: 50000'
+                AuthFailure:
+                  value: '1703'
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/generatetoken:
+    get:
+      tags:
+      - Account
+      summary: Generate Authentication Token
+      description: 'Generates an authentication token using account credentials. Use the returned
+
+        token with the Message Submission with Token API to avoid passing credentials
+
+        on every request.
+
+        '
+      operationId: generateToken
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      responses:
+        '200':
+          description: Authentication token returned as plain text.
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 'Token: 9f8e7d6c5b4a3210'
+                AuthFailure:
+                  value: '1703'
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /routeDetailMail.php:
+    get:
+      tags:
+      - Account
+      summary: Download Coverage Map
+      description: Direct download of the route detail / coverage map associated with the account. Returns an Excel file. Uses the client portal base URL (`https://client.rmlconnect.net`).
+      operationId: downloadCoverageMap
+      parameters:
+      - name: user
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      responses:
+        '200':
+          description: Coverage map file (Excel) returned for download.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+components:
+  securitySchemes:
+    AuthorizationToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Static authorization token provided by Route Mobile. Used for Moengage and Webengage integrations.

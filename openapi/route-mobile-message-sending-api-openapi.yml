@@ -1,0 +1,1259 @@
+openapi: 3.2.0
+info:
+  title: Route Mobile SMS Message Sending API
+  description: 'Complete API reference for Route Mobile''s SMS platform. Covers message submission,
+
+    OTP, account management, and third-party platform integrations.
+
+
+    ## Authentication
+
+
+    Most APIs authenticate via `username` and `password` query parameters.
+
+    Third-party integration APIs (Moengage, Webengage) use a static `Authorization`
+
+    header token provided by Route Mobile.
+
+
+    ## Base URLs
+
+
+    | URL | Description |
+
+    |-----|-------------|
+
+    | `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |
+
+    | `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |
+
+    | `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |
+
+    | `https://client.rmlconnect.net` | Client portal — coverage map only |
+
+
+    ## Platform Response Codes
+
+
+    SMS submission APIs return a plain text response with a platform status code prefix.
+
+
+    | Code | Meaning |
+
+    |------|---------|
+
+    | 1701 | Success — `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+    | 1702 | Invalid URL / missing or blank parameter |
+
+    | 1703 | Invalid username or password |
+
+    | 1704 | Invalid value in `type` field |
+
+    | 1705 | Invalid message |
+
+    | 1706 | Invalid destination |
+
+    | 1707 | Invalid source (Sender ID) |
+
+    | 1708 | Invalid value in `dlr` field |
+
+    | 1709 | User validation failed |
+
+    | 1710 | Internal error |
+
+    | 1025 | Insufficient credit |
+
+    | 1715 | Response timeout |
+
+
+    > **Retry Policy:** Do NOT retry for any error code except `1709`.
+
+    > For `1715` specifically, do not re-submit the same message.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Route Mobile Support
+    email: support@routemobile.com
+    url: https://developers.routemobile.com/
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://api.rmlconnect.net
+  description: SGN Secured (HTTPS - port 443) — recommended
+- url: https://api.rmlconnect.net:8443
+  description: SGN Secured (HTTPS - port 8443)
+- url: http://api.rmlconnect.net
+  description: SGN Non-secured (HTTP) — legacy only
+- url: https://client.rmlconnect.net
+  description: Client Portal — coverage map only
+tags:
+- name: Message Sending
+  description: APIs for submitting SMS messages.
+paths:
+  /bulksms/bulksms:
+    get:
+      tags:
+      - Message Sending
+      summary: Send SMS (Secured)
+      description: 'Submits a single SMS or a batch of SMS messages for delivery over HTTPS.
+
+        Available on both port 443 and port 8443.
+
+
+        **Long messages:** Messages exceeding standard length are automatically split
+
+        and reassembled on the recipient device. Billing is per segment:
+
+        - Plain text: 153 characters per segment
+
+        - Unicode: 268 characters per segment
+
+
+        **Bulk response format (multiple destinations):**
+
+        ```
+
+        <Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...
+
+        ```
+
+
+        **Mid-batch abort scenarios:**
+
+        - If any error other than an invalid destination occurs, the batch is aborted immediately.
+
+        - If credits are exhausted mid-batch, processing stops and `1025|<last_destination>` is appended.
+
+
+        > **Retry Policy:** Do NOT retry for any error code except `1709`.
+
+        > For `1715`, do not re-submit the same message.
+
+        '
+      operationId: sendSmsSecured
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: type
+        in: query
+        required: true
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (message must be UTF-16BE hex encoded)
+
+          - `3` — Reserved
+
+          - `4` — WAP Push (use the `url` parameter for the link)
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (message must be UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          default: 0
+      - name: dlr
+        in: query
+        required: true
+        description: Delivery report flag. 1 = enable, 0 = disable.
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 1
+      - name: destination
+        in: query
+        required: true
+        description: 'Destination MSISDN(s). May include or omit the `+` prefix (URL-encode `+` as `%2B`).
+
+          For multiple destinations, separate with commas (URL-encode commas as `%2C`).
+
+          '
+        schema:
+          type: string
+          example: '919999999999'
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+
+          To prefix a `+` sign, include it URL-encoded as `%2B`. Additional restrictions
+
+          may be enforced by the SMSC.
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+          example: TESTSM
+      - name: message
+        in: query
+        required: true
+        description: 'Message content, URL-encoded (UTF-8).
+
+          For Unicode messages (`type=2` or `type=6`), encode content in UTF-16BE hex format.
+
+          For WAP Push (`type=4`), this is the display text of the push message.
+
+          '
+        schema:
+          type: string
+          example: Demo Message
+      - name: url
+        in: query
+        required: false
+        description: 'WAP Push link URL. **Required when `type=4`**, ignored for all other message types.
+
+          Must be URL-encoded (UTF-8).
+
+          '
+        schema:
+          type: string
+          example: https://www.routemobile.com
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<CELL_NO>\|<MESSAGE_ID>`. Use the Message ID to map delivery reports. |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1708 | Invalid value in `dlr` field |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999|MID123456
+                InvalidParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+                InsufficientCredit:
+                  value: '1025'
+        '400':
+          description: Bad request / missing parameters.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/schedulemsg:
+    get:
+      tags:
+      - Message Sending
+      summary: Schedule SMS
+      description: Schedule an SMS for delivery at a future date and time.
+      operationId: scheduleSms
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: message
+        in: query
+        required: true
+        description: Message text content (URL-encoded).
+        schema:
+          type: string
+          example: Test scheduled message
+      - name: type
+        in: query
+        required: true
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (UTF-16BE hex encoded)
+
+          - `3` — Reserved
+
+          - `4` — WAP Push
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          default: 0
+      - name: dlr
+        in: query
+        required: true
+        description: Delivery report flag. 1 = enable, 0 = disable.
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 1
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+          example: TESTSM
+      - name: destination
+        in: query
+        required: true
+        description: Destination MSISDN in international format (without +).
+        schema:
+          type: string
+          example: '919999999999'
+      - name: scheduledate
+        in: query
+        required: true
+        description: Scheduled delivery date in MM/DD/YYYY format.
+        schema:
+          type: string
+          example: 08/01/2025
+      - name: scheduletime
+        in: query
+        required: true
+        description: Scheduled delivery time in HH:MM am/pm format (URL-encoded, e.g. `07:45%20pm`).
+        schema:
+          type: string
+          example: 07:45 pm
+      - name: gmt
+        in: query
+        required: true
+        description: GMT offset for the scheduled time (URL-encoded, e.g. `GMT%20%2B5:30`).
+        schema:
+          type: string
+          example: GMT +5:30
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | Scheduled\|`<scheduleId>` | Message successfully scheduled |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1708 | Invalid value in `dlr` field |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: Scheduled|SCH123456
+                InvalidParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+        '400':
+          description: Invalid date/time or parameter format.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/sbulksms:
+    get:
+      tags:
+      - Message Sending
+      summary: Send Personalised SMS
+      description: 'Send different message content to multiple destination numbers in a single API call.
+
+
+        **Bulk response format:**
+
+        ```
+
+        <Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...
+
+        ```
+
+
+        **Mid-batch abort:** If credits are exhausted mid-batch, processing stops and
+
+        `1025|<last_destination>` is appended to the response.
+
+        '
+      operationId: sendPersonalisedSms
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+          example: TESTSM
+      - name: message
+        in: query
+        required: true
+        description: Message content. Use the platform-defined delimiter to map distinct content to each destination in the list.
+        schema:
+          type: string
+      - name: destination
+        in: query
+        required: true
+        description: Comma-separated list of destination MSISDNs in international format (without +).
+        schema:
+          type: string
+          example: 919999999999,919888888888
+      - name: dlr
+        in: query
+        required: true
+        description: Delivery report flag. 1 = enable, 0 = disable.
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 1
+      - name: type
+        in: query
+        required: true
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (UTF-16BE hex encoded)
+
+          - `3` — Reserved
+
+          - `4` — WAP Push
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          default: 0
+      responses:
+        '200':
+          description: 'Platform response returned as plain text. One result entry per destination.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1708 | Invalid value in `dlr` field |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999|MID123456,1701|919888888888|MID123457
+                InvalidParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+        '400':
+          description: Bad request / parameter mismatch.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/personalizedbulksms:
+    get:
+      tags:
+      - Message Sending
+      summary: Send Unicode / Acculync SMS
+      description: 'Single endpoint for sending Unicode or English SMS messages with optional
+
+        Acculync link tracking and URL shortening.
+
+
+        **Plain Unicode/English SMS** — Pass only the core parameters
+
+        (`username`, `password`, `source`, `destination`, `message`).
+
+        Content is auto-detected and routed as Unicode or plain English accordingly.
+
+
+        **Acculync Tracking SMS** — Additionally pass the Acculync parameters
+
+        (`tagname`, `toshorten`, `tobeshorten`, `isCL`) to enable link shortening
+
+        and click tracking.
+
+        '
+      operationId: sendUnicodeAcculyncSms
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+      - name: destination
+        in: query
+        required: true
+        description: Destination MSISDN(s) in international format (without +). Comma-separated for multiple.
+        schema:
+          type: string
+          example: '919999999999'
+      - name: message
+        in: query
+        required: true
+        description: Message content. Unicode or English. URL-encoded. May contain placeholders for the shortened URL when using Acculync.
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: false
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (UTF-16BE hex encoded)
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 5
+          - 6
+          - 7
+          default: 0
+      - name: tagname
+        in: query
+        required: false
+        description: 'Acculync: Tag name for tracking / template identification.'
+        schema:
+          type: string
+      - name: toshorten
+        in: query
+        required: false
+        description: 'Acculync: Flag indicating whether the URL should be shortened.'
+        schema:
+          type: string
+      - name: tobeshorten
+        in: query
+        required: false
+        description: 'Acculync: The original long URL to be shortened.'
+        schema:
+          type: string
+      - name: isCL
+        in: query
+        required: false
+        description: 'Acculync: Click-tracking flag. 1 = enable click logging.'
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 1
+      - name: udf1
+        in: query
+        required: false
+        description: 'Acculync: User-defined field 1 for personalisation or tracking.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999|MID123456
+                InvalidParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+        '400':
+          description: Bad request / encoding or parameter error.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/personalizedcustsms:
+    get:
+      tags:
+      - Message Sending
+      summary: Send Personalised SMS with Acculync Tracking
+      description: Customer-personalised SMS submission with Acculync link shortening and click tracking over the secured 8443 endpoint.
+      operationId: sendAcculyncSms
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+      - name: destination
+        in: query
+        required: true
+        description: Destination MSISDN(s) in international format (without +). Comma-separated for multiple.
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: true
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (UTF-16BE hex encoded)
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 5
+          - 6
+          - 7
+          default: 0
+      - name: message
+        in: query
+        required: true
+        description: Message content (URL-encoded).
+        schema:
+          type: string
+      - name: tagname
+        in: query
+        required: true
+        description: Tag name for tracking / template identification.
+        schema:
+          type: string
+      - name: toshorten
+        in: query
+        required: true
+        description: Flag indicating whether the URL should be shortened.
+        schema:
+          type: string
+      - name: udf1
+        in: query
+        required: false
+        description: User-defined field 1.
+        schema:
+          type: string
+      - name: isCL
+        in: query
+        required: true
+        description: Click-tracking flag. 1 = enable click logging.
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 1
+      - name: tobeshorten
+        in: query
+        required: true
+        description: The original long URL to be shortened.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1708 | Invalid value in `dlr` field |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999|MID123456
+                InvalidParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+        '400':
+          description: Bad request / parameter error.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/bulksubmit:
+    get:
+      tags:
+      - Message Sending
+      summary: Submit SMS with Token
+      description: 'Submit an SMS using a pre-generated authentication token instead of
+
+        passing credentials with every request. Obtain the token from the
+
+        Token Generation API.
+
+        '
+      operationId: submitSmsWithToken
+      parameters:
+      - name: token
+        in: query
+        required: true
+        description: Authentication token obtained from the Token Generation API.
+        schema:
+          type: string
+      - name: message
+        in: query
+        required: true
+        description: Message text content (URL-encoded).
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: true
+        description: 'Message encoding type.
+
+          - `0` — Plain Text (GSM 3.38)
+
+          - `1` — Flash Message (GSM 3.38)
+
+          - `2` — Unicode (UTF-16BE hex encoded)
+
+          - `3` — Reserved
+
+          - `4` — WAP Push
+
+          - `5` — Plain Text (ISO-8859-1)
+
+          - `6` — Unicode Flash (UTF-16BE hex encoded)
+
+          - `7` — Flash Message (ISO-8859-1)
+
+          '
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          default: 0
+      - name: destination
+        in: query
+        required: true
+        description: Destination MSISDN in international format (without +).
+        schema:
+          type: string
+          example: '919999999999'
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID displayed to the recipient.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+          example: TESTSM
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1709 | User validation failed / invalid or expired token |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999|MID123456
+                InvalidParameter:
+                  value: '1702'
+                InvalidToken:
+                  value: '1709'
+                InsufficientCredit:
+                  value: '1025'
+        '401':
+          description: Invalid or expired token.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /bulksms/jsonbulksms:
+    post:
+      tags:
+      - Message Sending
+      summary: JSON Bulk SMS
+      description: 'Submit one or more SMS messages using a JSON request body. Suitable for
+
+        bulk integrations where multiple submissions can be batched in a single call.
+
+
+        **Bulk response format:**
+
+        Each item in the response array corresponds to a message in the request.
+
+
+        **Mid-batch abort:** If credits are exhausted mid-batch, processing stops
+
+        and the remaining messages will not be submitted.
+
+        '
+      operationId: sendJsonBulkSms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkSmsRequest'
+            example:
+              request:
+              - username: your_username
+                password: your_password
+                source: TESTSM
+                destination: '919999999999'
+                type: '0'
+                dlr: '1'
+                message: Test JSON message
+      responses:
+        '200':
+          description: 'Submission response. The `status` field in each array item contains the platform response code.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — use `messageid` to map delivery reports |
+
+            | 1702 | Invalid URL / one or more parameters missing or blank |
+
+            | 1703 | Invalid username or password |
+
+            | 1704 | Invalid value in `type` field |
+
+            | 1705 | Invalid message content |
+
+            | 1706 | Invalid destination number |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1708 | Invalid value in `dlr` field |
+
+            | 1709 | User validation failed |
+
+            | 1710 | Internal error |
+
+            | 1025 | Insufficient credit |
+
+            | 1715 | Response timeout |
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        messageid:
+                          type: string
+                          description: Unique message ID. Use this to map delivery reports.
+                        mobileno:
+                          type: string
+                          description: Destination MSISDN.
+                        status:
+                          type: string
+                          description: Platform response code. 1701 = success.
+              examples:
+                Success:
+                  value:
+                    response:
+                    - messageid: MID123456
+                      mobileno: '919999999999'
+                      status: '1701'
+                AuthFailure:
+                  value:
+                    response:
+                    - messageid: ''
+                      mobileno: '919999999999'
+                      status: '1703'
+        '400':
+          description: Invalid JSON or parameter error.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+components:
+  schemas:
+    SmsItem:
+      type: object
+      required:
+      - username
+      - password
+      - source
+      - destination
+      - type
+      - dlr
+      - message
+      properties:
+        username:
+          type: string
+          description: Account username.
+        password:
+          type: string
+          format: password
+          description: Account password.
+        source:
+          type: string
+          description: Sender ID. Max 18 chars if numeric, max 11 chars if alphanumeric.
+          maxLength: 18
+        destination:
+          type: string
+          description: Destination MSISDN in international format (without +).
+        type:
+          type: string
+          description: Message type. "0" = Plain (GSM 3.38), "1" = Flash, "2" = Unicode, "5" = Plain (ISO-8859-1), "6" = Unicode Flash, "7" = Flash (ISO-8859-1).
+          enum:
+          - '0'
+          - '1'
+          - '2'
+          - '5'
+          - '6'
+          - '7'
+        dlr:
+          type: string
+          description: Delivery report flag. "1" = enable, "0" = disable.
+          enum:
+          - '0'
+          - '1'
+        message:
+          type: string
+          description: Message text content.
+    BulkSmsRequest:
+      type: object
+      required:
+      - request
+      properties:
+        request:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsItem'
+  securitySchemes:
+    AuthorizationToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Static authorization token provided by Route Mobile. Used for Moengage and Webengage integrations.

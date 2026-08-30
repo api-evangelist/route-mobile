@@ -1,0 +1,335 @@
+openapi: 3.2.0
+info:
+  title: Route Mobile SMS OTP API
+  description: 'Complete API reference for Route Mobile''s SMS platform. Covers message submission,
+
+    OTP, account management, and third-party platform integrations.
+
+
+    ## Authentication
+
+
+    Most APIs authenticate via `username` and `password` query parameters.
+
+    Third-party integration APIs (Moengage, Webengage) use a static `Authorization`
+
+    header token provided by Route Mobile.
+
+
+    ## Base URLs
+
+
+    | URL | Description |
+
+    |-----|-------------|
+
+    | `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |
+
+    | `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |
+
+    | `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |
+
+    | `https://client.rmlconnect.net` | Client portal — coverage map only |
+
+
+    ## Platform Response Codes
+
+
+    SMS submission APIs return a plain text response with a platform status code prefix.
+
+
+    | Code | Meaning |
+
+    |------|---------|
+
+    | 1701 | Success — `1701\|<CELL_NO>\|<MESSAGE_ID>` |
+
+    | 1702 | Invalid URL / missing or blank parameter |
+
+    | 1703 | Invalid username or password |
+
+    | 1704 | Invalid value in `type` field |
+
+    | 1705 | Invalid message |
+
+    | 1706 | Invalid destination |
+
+    | 1707 | Invalid source (Sender ID) |
+
+    | 1708 | Invalid value in `dlr` field |
+
+    | 1709 | User validation failed |
+
+    | 1710 | Internal error |
+
+    | 1025 | Insufficient credit |
+
+    | 1715 | Response timeout |
+
+
+    > **Retry Policy:** Do NOT retry for any error code except `1709`.
+
+    > For `1715` specifically, do not re-submit the same message.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Route Mobile Support
+    email: support@routemobile.com
+    url: https://developers.routemobile.com/
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://api.rmlconnect.net
+  description: SGN Secured (HTTPS - port 443) — recommended
+- url: https://api.rmlconnect.net:8443
+  description: SGN Secured (HTTPS - port 8443)
+- url: http://api.rmlconnect.net
+  description: SGN Non-secured (HTTP) — legacy only
+- url: https://client.rmlconnect.net
+  description: Client Portal — coverage map only
+tags:
+- name: OTP
+  description: APIs for OTP generation and verification.
+paths:
+  /OtpApi/otpgenerate:
+    get:
+      tags:
+      - OTP
+      summary: Generate and Send OTP
+      description: 'Generates a One-Time Password and delivers it to the specified MSISDN.
+
+        The OTP length and expiry time can be configured per request.
+
+        '
+      operationId: generateOtp
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: msisdn
+        in: query
+        required: true
+        description: Destination MSISDN in international format (without +).
+        schema:
+          type: string
+          example: '919999999999'
+      - name: msg
+        in: query
+        required: true
+        description: 'Message template. Must include the `%m` escape character which will be
+
+          replaced by the generated OTP. Message must be URL-encoded.
+
+          '
+        schema:
+          type: string
+          example: Your OTP is %m. Valid for 60 seconds.
+      - name: source
+        in: query
+        required: true
+        description: 'Sender ID assigned to the user.
+
+          - Max **18 characters** if numeric only
+
+          - Max **11 characters** if alphanumeric
+
+          '
+        schema:
+          type: string
+          maxLength: 18
+          example: TESTSM
+      - name: otplen
+        in: query
+        required: true
+        description: Length of the OTP to be generated.
+        schema:
+          type: integer
+          minimum: 4
+          maximum: 8
+          default: 5
+      - name: exptime
+        in: query
+        required: true
+        description: OTP validity time in seconds.
+        schema:
+          type: integer
+          example: 60
+      - name: tagname
+        in: query
+        required: false
+        description: Identifier name for the given batch. Optional.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 1701 | Success — response format: `1701\|<MSISDN>:<MESSAGE_ID>` |
+
+            | 1702 | One of the parameters is missing or OTP is not numeric |
+
+            | 1703 | Authentication failed |
+
+            | 1705 | Message template does not contain `%m` placeholder |
+
+            | 1706 | Invalid destination |
+
+            | 1707 | Invalid source (Sender ID) |
+
+            | 1710 | Internal error |
+
+            | 1715 | Response timeout |
+
+            | 1025 | Insufficient user credit |
+
+            | 1032 | DND destination |
+
+            | 1033 | Source template mismatch |
+
+            | 1035 | User opt out |
+
+            | 1042 | Explicit DND reject |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: 1701|919999999999:MID123456
+                MissingParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+                MissingPlaceholder:
+                  value: '1705'
+                InsufficientCredit:
+                  value: '1025'
+                DndDestination:
+                  value: '1032'
+                UserOptOut:
+                  value: '1035'
+        '400':
+          description: Invalid parameters.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+  /OtpApi/checkotp:
+    get:
+      tags:
+      - OTP
+      summary: Verify OTP
+      description: 'Verifies an OTP submitted by an end user against the OTP previously
+
+        generated via the OTP Generation API.
+
+
+        > **Note:** This API uses a different set of response codes from the OTP Generation API.
+
+        '
+      operationId: verifyOtp
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: Account username.
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        description: Account password.
+        schema:
+          type: string
+          format: password
+      - name: msisdn
+        in: query
+        required: true
+        description: Mobile number to which the OTP was sent.
+        schema:
+          type: string
+          example: '919999999999'
+      - name: otp
+        in: query
+        required: true
+        description: The OTP entered by the user which needs to be verified.
+        schema:
+          type: string
+          example: '12345'
+      responses:
+        '200':
+          description: 'Platform response returned as plain text.
+
+
+            | Code | Meaning |
+
+            |------|---------|
+
+            | 101 | OTP validated successfully |
+
+            | 102 | OTP has expired |
+
+            | 103 | Entry for OTP not found |
+
+            | 104 | MSISDN not found |
+
+            | 1702 | One of the parameters is missing or OTP is not numeric |
+
+            | 1703 | Authentication failed |
+
+            | 1706 | Given destination is invalid |
+
+            '
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Success:
+                  value: '101'
+                OtpExpired:
+                  value: '102'
+                OtpNotFound:
+                  value: '103'
+                MsisdnNotFound:
+                  value: '104'
+                MissingParameter:
+                  value: '1702'
+                AuthFailure:
+                  value: '1703'
+        '400':
+          description: Invalid OTP or missing parameters.
+        '401':
+          description: Authentication failure.
+        '500':
+          description: Internal server error. Please contact support if this persists.
+components:
+  securitySchemes:
+    AuthorizationToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Static authorization token provided by Route Mobile. Used for Moengage and Webengage integrations.

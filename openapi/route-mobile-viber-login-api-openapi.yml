@@ -1,0 +1,196 @@
+openapi: 3.2.0
+info:
+  version: 1.5.0
+  title: Route Mobile Viber OpenAPI Specification Viber Login API
+  description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-conditions/
+  x-logo:
+    url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+    backgroundColor: '#FFFFFF'
+    altText: RouteMobile logo
+servers:
+- url: https://apis.rmlconnect.net
+- url: '{client callback}'
+security:
+- jwt: []
+tags:
+- name: Viber Login
+  description: Authenticate and obtain a JWT token to access the Viber Business Messaging APIs. Tokens are valid for one hour by default.
+paths:
+  /auth/v1/login/:
+    post:
+      tags:
+      - Viber Login
+      summary: Login API
+      description: 'Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.
+
+
+        **By default, the JSON Web Token (JWT) validity periods are set to one hour.**'
+      operationId: loginApi2
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1_login_body'
+            examples:
+              Example 1:
+                value:
+                  password: password
+                  username: username
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+              examples:
+                Authentication successful:
+                  value:
+                    JWTAUTH: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTY4Mzg4OTI0MSwiZW1haWwiOiJwcm9kdxxxxxxxxxxAcm91dGVtb2JpbGUuY29tIiwib3JpZ19pYXQiOjE2ODM4ODU2NDEsImN1c3RvbWVyX2lkIjoiOWlyNURnN2J2c0NBIn0.gu2LO-bDVPqa35v_MnyO1KKeZzhxxxxxxxxxxxxxxxx
+                    user_data:
+                      username: demo
+                      first_name: user
+                      last_name: name
+                      email: user_name@orgdomain.com
+                      phone_number: '{phone}'
+                      password_reset: false
+                      is_active: true
+                      is_staff: false
+                      ip: 1stepauxx
+                      child_user: false
+                      parent_username: ''
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                User is set inactive:
+                  value:
+                    status: invalid credentials or the account has been deactivated
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                Unhandled Exception:
+                  value:
+                    status: <exception>
+      security: []
+components:
+  schemas:
+    v1_login_body:
+      type: object
+      properties:
+        password:
+          type: string
+          description: The secret code that users provide to the application during the login process.
+          example: password
+        username:
+          type: string
+          description: Unique identifier that users provide to the application during the login process. Usernames can be any string of characters.
+          example: username
+      required:
+      - password
+      - username
+    inline_response_201_2:
+      type: object
+      properties:
+        JWTAUTH:
+          type: string
+          description: JSON Web Token Authentication
+        user_data:
+          $ref: '#/components/schemas/inline_response_201_2_user_data'
+    inline_response_201_2_user_data:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The name of the user.
+        first_name:
+          type: string
+          description: The first name of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        phone_number:
+          type: string
+          description: The user phone number in international format.
+        password_reset:
+          type: boolean
+          description: Indicates whether the password reset.
+        is_active:
+          type: boolean
+          description: Checks if the user is active.
+        is_staff:
+          type: boolean
+          description: Checks if the user is a staff.
+        ip:
+          type: string
+          description: The IP address of the user.
+        child_user:
+          type: boolean
+          description: Indicates if user is a child.
+        parent_username:
+          type: string
+          description: The user of child's parent.
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header
+x-logo:
+  url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+  backgroundColor: '#FFFFFF'
+  altText: RouteMobile logo

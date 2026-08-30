@@ -1,0 +1,239 @@
+openapi: 3.2.0
+info:
+  version: 1.5.0
+  title: Route Mobile Viber OpenAPI Specification Viber Client Callback API
+  description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-conditions/
+  x-logo:
+    url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+    backgroundColor: '#FFFFFF'
+    altText: RouteMobile logo
+servers:
+- url: https://apis.rmlconnect.net
+- url: '{client callback}'
+security:
+- jwt: []
+tags:
+- name: Viber Client Callback API
+  description: Receive real-time webhook notifications for incoming messages and delivery reports from the Viber platform. Configure your callback URL in the webhook settings.
+paths:
+  /callback:
+    post:
+      tags:
+      - Viber Client Callback API
+      summary: Viber Client Callback
+      description: Viber Client Callback APIs allow you to receive real-time notifications for events that occur on your Viber Business Messaging account. These callbacks are triggered by events that occur on the Viber server, and are delivered to a URL that you specify in your webhook configuration.
+      operationId: viberClientCallback
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/vbs_callback_incoming_text'
+              - $ref: '#/components/schemas/vbs_callback_incoming_videoimage'
+              - $ref: '#/components/schemas/vbs_callback_delivery_report'
+            examples:
+              Incoming Text:
+                value:
+                  phone_number: '{phone}'
+                  time: 2121212121
+                  message:
+                    text: a message to the sender
+                    tracking_data: tracking_id:100xxx5
+                  service_type: two_way/session
+                  request_id: 70d9758e-70ef-11eb-b813-a81e84xxxxxx
+              Incoming Image/video:
+                value:
+                  phone_number: '{phone number with country code}'
+                  time: 1622014595
+                  message:
+                    tracking_data: '{tracking id}'
+                    media: '{media url}'
+                    file_name: '{filename with extension}'
+                  service_type: two_way/session
+                  request_id: 1a761762-bdf5-11eb-aa2f-0242acxxxxxx
+              Delivery Report - Delivered:
+                value:
+                  message_status: delivered
+                  message_time: 1767762961213
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+              Delivery Report - Sent:
+                value:
+                  session_id: null
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+                  message_status: Sent
+                  message_time: 1767762958
+                  phone_number: '{phone number with country code}'
+                  matching_template_id: null
+                  service_type: dlr
+              Delivery Report - Seen:
+                value:
+                  message_status: seen
+                  message_time: 1767763013183
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+              Delivery Report - Expired:
+                value:
+                  message_status: expired
+                  message_time: 1767763626948
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: 818249f0-eb89-11f0-ba44-0242acxxxxxx
+      responses:
+        '200':
+          description: Success
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
+      security: []
+components:
+  schemas:
+    vbs_callback_incoming_text:
+      type: object
+      title: Incoming Text
+      properties:
+        phone_number:
+          type: string
+          description: 'The phone number of the user who sent the text message.
+
+            '
+        time:
+          type: integer
+          format: date-time
+          description: 'The timestamp when the message was sent.
+
+            '
+        message:
+          type: object
+          description: The message object.
+          properties:
+            text:
+              type: string
+              description: The text message sent by the user.
+            tracking_data:
+              type: string
+              description: The tracking data associated with the message.
+        service_type:
+          type: string
+          description: 'The type of service that the Viber Business Account supports.
+
+            '
+        request_id:
+          type: string
+          description: 'A unique identifier for the request.
+
+            '
+    vbs_callback_delivery_report:
+      type: object
+      title: Delivery Report
+      properties:
+        message_status:
+          type: string
+          description: 'The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.
+
+            '
+        message_time:
+          type: integer
+          format: date-time
+          description: 'The Unix timestamp when the message status was updated.
+
+            '
+        phone_number:
+          type: string
+          description: 'The phone number (with country code) of the recipient of the message.
+
+            '
+        service_type:
+          type: string
+          description: 'The type of Viber service being used. Possible values are one_way, two_way, or session.
+
+            '
+        request_id:
+          type: string
+          description: 'A unique identifier for the request.
+
+            '
+    vbs_callback_incoming_videoimage:
+      type: object
+      title: Incoming Image or Video
+      properties:
+        phone_number:
+          type: string
+          description: 'The phone number of the user who sent the text message.
+
+            '
+        time:
+          type: integer
+          format: date-time
+          description: 'The timestamp when the message was sent.
+
+            '
+        message:
+          type: object
+          description: The message object.
+          properties:
+            tracking_data:
+              type: string
+              description: The tracking data associated with the message.
+            media:
+              type: string
+              description: The URL of the image or video file.
+            file_name:
+              type: string
+              description: The name of the file, including the extension.
+        service_type:
+          type: string
+          description: 'The type of service that the Viber Business Account supports.
+
+            '
+        request_id:
+          type: string
+          description: 'A unique identifier for the request.
+
+            '
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header
+x-logo:
+  url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+  backgroundColor: '#FFFFFF'
+  altText: RouteMobile logo

@@ -1,0 +1,366 @@
+openapi: 3.2.0
+info:
+  title: SendClean Email SMTP Users API
+  description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
+
+    sending/tracking domains, webhooks, and account information.
+
+
+    ## Base URL
+
+    All API calls are relative to:
+
+    ```
+
+    https://api.sendclean.net/v1.0
+
+    ```
+
+
+    ## Authentication
+
+    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
+
+
+    ## Request Format
+
+    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
+
+    - Request bodies must be `Content-Type: application/json`.
+
+    - Any non-200 HTTP response code indicates an error.
+
+
+    ## Response Format
+
+    All responses return JSON with a `status` field of either `"success"` or `"error"`.
+
+
+    ## Error Types
+
+    | Type | Description |
+
+    |------|-------------|
+
+    | `ValidationError` | Invalid or missing required parameters |
+
+    | `GeneralError` | Unexpected server-side error |
+
+    | `AuthenticationError` | `owner_id` and `token` did not match |
+
+    '
+  version: 1.0.0
+  contact:
+    email: support@sendclean.com
+servers:
+- url: https://api.sendclean.net/v1.0
+  description: Production API server
+tags:
+- name: SMTP Users
+  description: Manage SMTP sub-users (create, edit, reset password, list)
+paths:
+  /settings/addSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: Add a new SMTP user
+      description: Creates a new SMTP sub-user with defined sending limits.
+      operationId: addSmtpUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSmtpRequest'
+            example:
+              owner_id: example id
+              token: example token
+              total_limit: 100
+              hourly_limit: 10
+      responses:
+        '200':
+          description: SMTP user created successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AddSmtpResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  summary: Successful response
+                  value:
+                    status: success
+                    message: SMTP User Created
+                    smtp_user_name: smtp12345
+                    smtp_password: asfsf4w343
+                error:
+                  summary: Authentication error
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /settings/editSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: Edit an existing SMTP user
+      description: Updates the sending limits or status of an SMTP sub-user.
+      operationId: editSmtpUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditSmtpRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              total_limit: 80
+              hourly_limit: 15
+              status: Disable
+      responses:
+        '200':
+          description: SMTP user updated successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: SMTP User Updated
+                error:
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /settings/resetSmtpPassword:
+    post:
+      tags:
+      - SMTP Users
+      summary: Reset SMTP user password
+      description: Generates a new password for the specified SMTP sub-user.
+      operationId: resetSmtpPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetSmtpPasswordRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+      responses:
+        '200':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ResetSmtpPasswordResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: password reseted
+                    smtp_user_name: smtp12345
+                    smtp_password: 2fg345gy6r7
+  /settings/listSmtp:
+    post:
+      tags:
+      - SMTP Users
+      summary: List all SMTP users
+      description: Returns a list of all SMTP sub-users associated with the account.
+      operationId: listSmtpUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of SMTP users
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListSmtpResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ResetSmtpPasswordResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: password reseted
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: 2fg345gy6r7
+    AddSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: SMTP User Created
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: asfsf4w343
+    AddSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - total_limit
+        - hourly_limit
+        properties:
+          total_limit:
+            type: integer
+            description: Total sending limit (positive integer)
+            example: 100
+          hourly_limit:
+            type: integer
+            description: Hourly sending limit (positive integer)
+            example: 10
+    ListSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        smtp_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpUser'
+    EditSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          total_limit:
+            type: integer
+            description: New total limit (positive integer)
+            example: 80
+          hourly_limit:
+            type: integer
+            description: New hourly limit (positive integer)
+            example: 15
+          status:
+            type: string
+            enum:
+            - Enable
+            - Disable
+            description: Enable or disable the SMTP user
+            example: Disable
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    SmtpUser:
+      type: object
+      properties:
+        smtp_user_name:
+          type: string
+          example: smtps456546
+        password:
+          type: string
+          example: cgvddgrsd
+        status:
+          type: string
+          enum:
+          - Enable
+          - Disable
+          example: Enable
+        total_limit:
+          type: integer
+          example: 200
+        hourly_limit:
+          type: integer
+          example: 20
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    ResetSmtpPasswordRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345

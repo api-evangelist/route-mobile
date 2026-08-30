@@ -1,0 +1,484 @@
+openapi: 3.2.0
+info:
+  version: 2.1.0
+  title: Route Mobile Rich Communication Services (RCS) API Documentation Management API
+  description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
+
+
+    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-and-conditions/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2021/07/RM-Logo.png
+    altText: Route Mobile Logo
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- jwt: []
+tags:
+- name: Management API
+  description: APIs for managing RCS bot testers, templates, and account configuration.
+paths:
+  /rcs/management/v1/add_tester:
+    post:
+      tags:
+      - Management API
+      summary: Make a Tester
+      description: 'Add Tester is a Management API used to add a bot for testing purpose for all RCS Components '
+      operationId: ManagementRCS
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rcs_management_add_tester'
+            examples:
+              Form Data:
+                value:
+                  phone_no: '{phone_number}'
+                  bot_name: '{RML agent name}'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The unique ID of the campaign.
+              examples:
+                Example 1:
+                  value:
+                    response: Submitted, Tester Invite Sent
+                    status: status
+            application/xml:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: object
+                    description: 'The error for not processing the request.
+
+
+                      '
+                    properties:
+                      text:
+                        type: array
+                        description: The error description.
+                        items:
+                          type: string
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors:
+                      text:
+                      - string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The response of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    response: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    status: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: string
+                    description: 'The error for not processing the request.
+
+
+                      '
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors: string
+      security:
+      - jwt: []
+  /rcs/management/v1/get_testers:
+    get:
+      tags:
+      - Management API
+      summary: List all Testers
+      description: 'List all Testers is a Management API used to retrieve  all bot number for testing purpose for all RCS Components '
+      operationId: managementRCS
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The unique ID of the campaign.
+              examples:
+                Example 1:
+                  value:
+                    response: Submitted, Tester Invite Sent
+                    status: status
+            application/xml:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: object
+                    description: 'The error for not processing the request.
+
+
+                      '
+                    properties:
+                      text:
+                        type: array
+                        description: The error description.
+                        items:
+                          type: string
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors:
+                      text:
+                      - string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The response of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    response: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+              examples:
+                Example 1:
+                  value:
+                    status: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: string
+                    description: 'The error for not processing the request.
+
+
+                      '
+              examples:
+                Example 1:
+                  value:
+                    status: string
+                    errors: string
+      security:
+      - jwt: []
+  /rcs/dnd/v1/bulk_dnd_set:
+    post:
+      tags:
+      - Management API
+      summary: Bulk Whitelist / Blacklist Numbers
+      description: The Bulk DND Set API allows you to whitelist or blacklist a batch of phone numbers for a specific RCS bot. Provide the URL of a previously uploaded CSV file (from the File Upload API) containing the phone numbers, and set `dnd_mode` to control whether those numbers are blacklisted (`true`) or whitelisted (`false`).
+      operationId: bulkDndSet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rcs_bulk_dnd_set_body'
+            examples:
+              Blacklist Numbers:
+                value:
+                  bot_name: '{RML agent name}'
+                  file_url: https://apis.rmlconnect.net/v1/download/Misc/{file-id}.csv
+                  dnd_mode: true
+              Whitelist Numbers:
+                value:
+                  bot_name: '{RML agent name}'
+                  file_url: https://apis.rmlconnect.net/v1/download/Misc/{file-id}.csv
+                  dnd_mode: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The result of the bulk DND operation.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Blacklist Applied:
+                  value:
+                    status: success
+                    message: Numbers blacklisted successfully.
+                Whitelist Applied:
+                  value:
+                    status: success
+                    message: Numbers whitelisted successfully.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Missing bot_name:
+                  value:
+                    status: failed
+                    message: bot_name is required.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                JWT Token Expired:
+                  value:
+                    status: failed
+                    message: jwt token expired
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+      security:
+      - jwt: []
+components:
+  schemas:
+    rcs_bulk_dnd_set_body:
+      type: object
+      title: Bulk DND Set (Whitelist / Blacklist)
+      properties:
+        bot_name:
+          type: string
+          description: 'The RCS agent (bot) name for which the DND operation applies.
+
+            '
+          example: '{RML agent name}'
+        file_url:
+          type: string
+          description: The URL of the uploaded CSV file containing the list of phone numbers to whitelist or blacklist. Obtain this URL from the File Upload API response.
+          example: https://apis.rmlconnect.net/v1/download/Misc/{file-id}.csv
+        dnd_mode:
+          type: boolean
+          description: Set to `true` to blacklist the numbers in the file (block them from receiving messages). Set to `false` to whitelist the numbers (allow them to receive messages).
+          example: false
+      required:
+      - bot_name
+      - file_url
+      - dnd_mode
+    rcs_management_add_tester:
+      type: object
+      title: Management Add Tester API
+      properties:
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        phone_number:
+          type: string
+          description: "The phone number of the bot. \n"
+      required:
+      - bot_name
+      - file
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header

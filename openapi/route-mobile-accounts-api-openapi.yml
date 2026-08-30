@@ -1,0 +1,134 @@
+openapi: 3.2.0
+info:
+  title: SendClean Email Accounts API
+  description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
+
+    sending/tracking domains, webhooks, and account information.
+
+
+    ## Base URL
+
+    All API calls are relative to:
+
+    ```
+
+    https://api.sendclean.net/v1.0
+
+    ```
+
+
+    ## Authentication
+
+    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
+
+
+    ## Request Format
+
+    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
+
+    - Request bodies must be `Content-Type: application/json`.
+
+    - Any non-200 HTTP response code indicates an error.
+
+
+    ## Response Format
+
+    All responses return JSON with a `status` field of either `"success"` or `"error"`.
+
+
+    ## Error Types
+
+    | Type | Description |
+
+    |------|-------------|
+
+    | `ValidationError` | Invalid or missing required parameters |
+
+    | `GeneralError` | Unexpected server-side error |
+
+    | `AuthenticationError` | `owner_id` and `token` did not match |
+
+    '
+  version: 1.0.0
+  contact:
+    email: support@sendclean.com
+servers:
+- url: https://api.sendclean.net/v1.0
+  description: Production API server
+tags:
+- name: Accounts
+  description: Retrieve account/user details
+paths:
+  /accounts/userDetails:
+    post:
+      tags:
+      - Accounts
+      summary: Get account/user details
+      description: Returns profile and account information for the authenticated user.
+      operationId: getUserDetails
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountDetailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    AccountDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        user_details:
+          type: object
+          description: Account and user detail fields (varies by plan)
+          additionalProperties: true
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token

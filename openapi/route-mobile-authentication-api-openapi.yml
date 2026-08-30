@@ -1,0 +1,212 @@
+openapi: 3.2.0
+info:
+  version: 1.8.0
+  title: Route Mobile WhatsApp Business Authentication API
+  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
+
+
+    ## Getting Started
+
+
+    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
+
+    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
+
+    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
+
+
+    ## Key Concepts
+
+
+    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
+
+    - **Session Messages** — Free-form messages within a 24-hour customer service window.
+
+    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
+
+    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
+
+
+    ## Authentication
+
+
+    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
+
+
+    ```
+
+    Authorization: <your-jwt-token>
+
+    ```
+
+
+    ## Rate Limits
+
+
+    API rate limits are governed by your account tier. Contact your account manager for details.
+
+
+    ## Support
+
+
+    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  contact:
+    name: Route Mobile Developer Support
+    url: https://developers.routemobile.com/
+    email: product-desk@routemobile.com
+  termsOfService: https://www.routemobile.com/terms-of-service/
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-of-service/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2023/04/route-mobile-logo.svg
+    altText: Route Mobile
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- BearerAuth: []
+tags:
+- name: Authentication
+  description: Authenticate with the Route Mobile WhatsApp Business API to obtain a JWT token for subsequent API calls.
+paths:
+  /auth/v1/login/:
+    post:
+      tags:
+      - Authentication
+      summary: Login API
+      description: 'Login APIs provide a secure and standardized way for end users to add user authentication to their applications. Only authorized users can access sensitive resources or perform specific actions within the application after entering the user authentication details.
+
+
+        **By default, the JSON Web Token (JWT) validity periods are set to one hour.**'
+      operationId: loginApi
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              Example 1:
+                value:
+                  password: password
+                  username: username
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                Authentication successful:
+                  value:
+                    JWTAUTH: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.eyJ1c2VyX2lkIjoiZGVtbyIsIxxxxxxxxxxxxxxxxxxxxxxxxxxxcCI6MTY4Mzg4OTI0MSwiZW1haWwiOiJwcm9kdWN0LWRlc2tAcm91dGVtb2JpbGUuY29tIiwib3JpZ19pYXQiOjE2ODM4ODU2NDEsImN1c3RvbWVyX2lkIjoiOWlyNURnN2J2c0NBIn0.gu2LO-bDVPqa35v_MnyO1KKxxxxxxxxxxxxxxxxxxTE
+                    user_data:
+                      username: demo
+                      first_name: First_Name
+                      last_name: Last_Name
+                      email: '{email}'
+                      phone_number: '{phone}'
+                      password_reset: false
+                      is_active: true
+                      is_staff: false
+                      ip: 1stepauth
+                      child_user: false
+                      parent_username: ''
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                User is set inactive:
+                  value:
+                    status: invalid credentials or the account has been deactivated
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                Unhandled Exception:
+                  value:
+                    status: <exception>
+components:
+  schemas:
+    LoginResponse:
+      type: object
+      properties:
+        JWTAUTH:
+          type: string
+          description: JSON Web Token Authentication
+        user_data:
+          $ref: '#/components/schemas/LoginUserData'
+    LoginUserData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The name of the user.
+        first_name:
+          type: string
+          description: The first name of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        phone_number:
+          type: string
+          description: The user phone number in international format.
+        password_reset:
+          type: boolean
+          description: Indicates whether the password reset.
+        is_active:
+          type: boolean
+          description: Checks if the user is active.
+        is_staff:
+          type: boolean
+          description: Checks if the user is a staff.
+        ip:
+          type: string
+          description: The IP address of the user.
+        child_user:
+          type: boolean
+          description: Indicates if user is a child.
+        parent_username:
+          type: string
+          description: The user of child's parent.
+    LoginRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: The secret code that users provide to the application during the login process.
+          example: password
+        username:
+          type: string
+          description: Unique identifier that users provide to the application during the login process. Usernames can be any string of characters.
+          example: username
+      required:
+      - password
+      - username
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JSON Web Token obtained from the Login API. Include the token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by default.
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

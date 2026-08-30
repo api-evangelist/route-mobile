@@ -1,0 +1,1400 @@
+openapi: 3.2.0
+info:
+  version: 1.5.0
+  title: Route Mobile Viber OpenAPI Specification Viber Reports API
+  description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-conditions/
+  x-logo:
+    url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+    backgroundColor: '#FFFFFF'
+    altText: RouteMobile logo
+servers:
+- url: https://apis.rmlconnect.net
+- url: '{client callback}'
+security:
+- jwt: []
+tags:
+- name: Viber Reports API
+  description: Access delivery reports, campaign performance metrics, summary dashboards, and message-level tabular data. Create and download detailed CSV reports. Manage approved Viber message templates.
+paths:
+  /viber-reports/api/v2/summary-cards:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Summary Cards
+      description: Returns high-level summary metrics for a given date range, including total messages sent, delivered, seen, and failed. Used to populate dashboard summary card widgets.
+      operationId: getSummaryCards
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for the report period (YYYY-MM-DD).
+        example: '2025-01-01'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for the report period (YYYY-MM-DD).
+        example: '2025-12-31'
+      - name: message_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by message type. Use `all` to include all types.
+        example: all
+      - name: service_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by service type (e.g. `one_way`, `two_way`, `session`, `all`).
+        example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_sent:
+                    type: integer
+                    description: Total messages sent.
+                  total_delivered:
+                    type: integer
+                    description: Total messages delivered.
+                  total_seen:
+                    type: integer
+                    description: Total messages seen/read.
+                  total_failed:
+                    type: integer
+                    description: Total messages that failed.
+              examples:
+                Summary cards:
+                  value:
+                    total_sent: 15000
+                    total_delivered: 13200
+                    total_seen: 9800
+                    total_failed: 1800
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-reports/api/v2/graph:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Graph Report
+      description: Returns time-series data points for message delivery metrics over a specified date range. Used to populate trend graphs on the reporting dashboard.
+      operationId: getGraphReport
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for the graph data (YYYY-MM-DD).
+        example: '2025-01-01'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for the graph data (YYYY-MM-DD).
+        example: '2025-12-31'
+      - name: message_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by message type.
+        example: all
+      - name: service_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by service type.
+        example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: Array of daily data points.
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                          description: The date of the data point.
+                        sent:
+                          type: integer
+                          description: Messages sent on this date.
+                        delivered:
+                          type: integer
+                          description: Messages delivered on this date.
+                        seen:
+                          type: integer
+                          description: Messages seen on this date.
+              examples:
+                Graph data:
+                  value:
+                    data:
+                    - date: '2025-01-01'
+                      sent: 500
+                      delivered: 460
+                      seen: 310
+                    - date: '2025-01-02'
+                      sent: 620
+                      delivered: 580
+                      seen: 400
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-reports/api/v2/media-cards:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Media Cards
+      description: Returns a breakdown of message delivery metrics grouped by media/message type (text, image, video, file, etc.) for a given date range. Used to populate media-type breakdown cards on the reporting dashboard.
+      operationId: getMediaCards
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for the report period (YYYY-MM-DD).
+        example: '2025-01-01'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for the report period (YYYY-MM-DD).
+        example: '2025-12-31'
+      - name: message_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by a specific message type, or `all`.
+        example: all
+      - name: service_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by service type.
+        example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  media_breakdown:
+                    type: array
+                    description: Metrics broken down by message type.
+                    items:
+                      type: object
+                      properties:
+                        message_type:
+                          type: string
+                          description: The message type (e.g. text, image, video).
+                        sent:
+                          type: integer
+                          description: Total messages sent of this type.
+                        delivered:
+                          type: integer
+                          description: Total delivered of this type.
+              examples:
+                Media cards:
+                  value:
+                    media_breakdown:
+                    - message_type: text
+                      sent: 8000
+                      delivered: 7200
+                    - message_type: image
+                      sent: 4000
+                      delivered: 3600
+                    - message_type: video
+                      sent: 3000
+                      delivered: 2400
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-reports/api/v2/camps:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Campaign Report
+      description: Returns a paginated list of campaigns and their delivery metrics for a given date range. Used to view per-campaign performance on the reporting dashboard.
+      operationId: getCampaignReport
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for the campaign report (YYYY-MM-DD).
+        example: '2025-01-01'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for the campaign report (YYYY-MM-DD).
+        example: '2025-12-31'
+      - name: message_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by message type.
+        example: all
+      - name: service_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by service type.
+        example: all
+      - name: page_number
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination.
+        example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaigns:
+                    type: array
+                    description: List of campaign records.
+                    items:
+                      type: object
+                      properties:
+                        campaign_name:
+                          type: string
+                          description: The name of the campaign.
+                        total_sent:
+                          type: integer
+                          description: Total messages sent in this campaign.
+                        total_delivered:
+                          type: integer
+                          description: Total messages delivered.
+                        total_seen:
+                          type: integer
+                          description: Total messages seen/read.
+                        total_failed:
+                          type: integer
+                          description: Total messages that failed.
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the campaign was created.
+                  total:
+                    type: integer
+                    description: Total number of campaigns matching the filter.
+              examples:
+                Campaign report:
+                  value:
+                    campaigns:
+                    - campaign_name: Summer Promo
+                      total_sent: 5000
+                      total_delivered: 4600
+                      total_seen: 3100
+                      total_failed: 400
+                      created_at: '2025-06-01T10:00:00Z'
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-reports/api/v2/tabular:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Daily Tabular Report
+      description: Returns a paginated, per-message tabular report for a given date range. Each record contains the phone number, message type, delivery status, and timestamps. Supports filtering by timezone, message type, service type, and optionally by a specific phone number.
+      operationId: getDailyTabularReport
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date for the tabular report (YYYY-MM-DD).
+        example: '2025-02-01'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date for the tabular report (YYYY-MM-DD).
+        example: '2026-02-01'
+      - name: timezone
+        in: query
+        required: false
+        schema:
+          type: string
+          default: Asia/Calcutta
+        description: Timezone for interpreting date filters (e.g. `Asia/Kolkata`).
+        example: Asia/Calcutta
+      - name: message_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by message type.
+        example: all
+      - name: service_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+        description: Filter by service type.
+        example: all
+      - name: page_number
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination.
+        example: 1
+      - name: phone_no
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter results to a specific phone number.
+        example: '919769187972'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  records:
+                    type: array
+                    description: List of per-message records.
+                    items:
+                      type: object
+                      properties:
+                        phone_number:
+                          type: string
+                          description: The recipient phone number.
+                        message_type:
+                          type: string
+                          description: The type of message sent.
+                        service_type:
+                          type: string
+                          description: The service type used.
+                        status:
+                          type: string
+                          description: Delivery status of the message.
+                        sent_at:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the message was sent.
+                        request_id:
+                          type: string
+                          description: Unique identifier for the message request.
+                  total:
+                    type: integer
+                    description: Total number of records matching the filter.
+              examples:
+                Tabular report:
+                  value:
+                    records:
+                    - phone_number: '919769187972'
+                      message_type: text
+                      service_type: one_way
+                      status: delivered
+                      sent_at: '2025-06-01T08:30:00Z'
+                      request_id: 727591b0-e592-11ed-91d7-0242ac13xxxx
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-reports/api/v2/viber_templates:
+    get:
+      tags:
+      - Viber Reports API
+      summary: List Viber Templates
+      description: Returns a paginated list of approved Viber message templates associated with the account. Supports filtering by a specific template ID.
+      operationId: listViberTemplates
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: template_id
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by a specific template UUID.
+        example: 0aac888f-2ee2-4112-9659-1755a951966a
+      - name: page_number
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination.
+        example: 1
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Number of templates per page.
+        example: 10
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    description: List of template objects.
+                    items:
+                      type: object
+                      properties:
+                        template_id:
+                          type: string
+                          description: Unique identifier of the template.
+                        template_name:
+                          type: string
+                          description: Name of the template.
+                        template_syntax:
+                          type: string
+                          description: The template message text with parameter placeholders.
+                        message_type:
+                          type: string
+                          description: The type of message (e.g. `viber_otp`, `text_template`).
+                        operator_template_id:
+                          type: string
+                          description: The operator-assigned template ID.
+                        status:
+                          type: string
+                          description: Approval status of the template.
+                  total:
+                    type: integer
+                    description: Total number of templates matching the filter.
+              examples:
+                Templates list:
+                  value:
+                    templates:
+                    - template_id: 0aac888f-2ee2-4112-9659-1755a951966a
+                      template_name: Basic OTP
+                      template_syntax: Your code is {{pin}}. Please don't share it with anyone.
+                      message_type: viber_otp
+                      operator_template_id: '8437'
+                      status: approved
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+    post:
+      tags:
+      - Viber Reports API
+      summary: Add Viber Template
+      description: Creates a new Viber message template for the account. Templates must be submitted with a unique name, message syntax (with `{{parameter}}` placeholders), the message type, and the operator-assigned template ID. Templates require approval before they can be used in messages.
+      operationId: addViberTemplate
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vbs_template_create'
+            examples:
+              OTP template:
+                value:
+                  template_name: Basic OTP
+                  template_syntax: Your code is {{pin}}. *Please don't share your code with ANYONE.* We'll never call or message you and ask for it.
+                  message_type: viber_otp
+                  operator_template_id: '8437'
+              Promotional template:
+                value:
+                  template_name: Summer Sale
+                  template_syntax: Hi {{name}}, our summer sale is live! Use code {{promo_code}} for 20% off. Valid till {{expiry_date}}.
+                  message_type: text_template
+                  operator_template_id: '9120'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: UUID of the newly created template.
+                  status:
+                    type: string
+                    description: Approval status of the template.
+              examples:
+                Template created:
+                  value:
+                    template_id: 0aac888f-2ee2-4112-9659-1755a951966a
+                    status: pending_approval
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Validation error message.
+              examples:
+                Duplicate template name:
+                  value:
+                    error: A template with this name already exists.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-report-creator/v1/fetch_reports:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Fetch Reports
+      description: Returns a paginated list of generated report records for a given date range. Each record includes the report status, file path, and metadata. Use the `file_path` value from a completed report to call the Download Report endpoint.
+      operationId: fetchReports
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Start date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        example: '2025-01-23 00:00:00'
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+        description: End date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        example: '2026-01-23 00:00:00'
+      - name: page_number
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination.
+        example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    description: List of report objects.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Unique identifier for the report.
+                        campaign_name:
+                          type:
+                          - string
+                          - 'null'
+                          description: Campaign name if applicable, otherwise null.
+                        file_path:
+                          type: string
+                          description: Path to the generated report file. Use this to download.
+                        is_support:
+                          type: boolean
+                          description: Whether this is a support report.
+                        msisdn:
+                          type: string
+                          description: Phone number filter used, if any.
+                        status:
+                          type: string
+                          description: Report generation status (e.g. `completed`, `pending`).
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the report was generated.
+                        username:
+                          type: string
+                          description: Username that requested the report.
+                        payload:
+                          type: object
+                          description: Report configuration payload.
+                          properties:
+                            csv_max_lines:
+                              type: integer
+                              description: Maximum number of lines in the CSV output.
+                            filters:
+                              type: object
+                              properties:
+                                start_date:
+                                  type: string
+                                  description: Start date filter applied.
+                                end_date:
+                                  type: string
+                                  description: End date filter applied.
+                            projections:
+                              type: array
+                              items:
+                                type: string
+                              description: Fields projected in the report.
+                  total:
+                    type: integer
+                    description: Total number of reports matching the date range.
+              examples:
+                Reports list:
+                  value:
+                    result:
+                    - id: 42
+                      campaign_name: Summer Promo
+                      file_path: reports/6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip
+                      is_support: false
+                      msisdn: ''
+                      status: completed
+                      timestamp: '2025-06-01T10:30:00Z'
+                      username: demo
+                      payload:
+                        csv_max_lines: 10000
+                        filters:
+                          start_date: '2025-01-23 00:00:00'
+                          end_date: '2026-01-23 00:00:00'
+                        projections:
+                        - phone_number
+                        - status
+                        - sent_at
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-report-creator/v1/create_report:
+    post:
+      tags:
+      - Viber Reports API
+      summary: Create Report
+      description: Triggers the generation of a new downloadable report for a given date range. The report is created asynchronously — use the Fetch Reports endpoint to check status, then the Download Report endpoint once the status is `completed`.
+      operationId: createReport
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vbs_report_create'
+            examples:
+              Create date-range report:
+                value:
+                  start_date: '2025-01-23 00:00:00'
+                  end_date: '2026-01-23 00:00:00'
+                  filters:
+                    message_type: all
+                    service_type: all
+                  projections:
+                  - phone_number
+                  - message_type
+                  - status
+                  - sent_at
+                  - request_id
+      responses:
+        '200':
+          description: Report creation initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_id:
+                    type: integer
+                    description: ID of the newly created report job.
+                  status:
+                    type: string
+                    description: Initial status of the report (e.g. `pending`).
+              examples:
+                Report created:
+                  value:
+                    report_id: 42
+                    status: pending
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Missing date range:
+                  value:
+                    error: start_date and end_date are required.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+  /viber-report-creator/v1/download/{file_name}:
+    get:
+      tags:
+      - Viber Reports API
+      summary: Download Report
+      description: Downloads a generated report file by its file name. The file name is obtained from the `file_path` field in the Fetch Reports response. The report is returned as a ZIP archive containing a CSV file.
+      operationId: downloadReport
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      parameters:
+      - name: file_name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`).
+        example: 6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip
+      responses:
+        '200':
+          description: Report file download
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+                description: ZIP archive containing the report CSV file.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '404':
+          description: Report not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Not found:
+                  value:
+                    error: Report file not found.
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+components:
+  schemas:
+    vbs_template_create:
+      type: object
+      title: Create Template
+      required:
+      - template_name
+      - template_syntax
+      - message_type
+      - operator_template_id
+      properties:
+        template_name:
+          type: string
+          description: A unique name for the template.
+        template_syntax:
+          type: string
+          description: The template message text. Use {{parameter_name}} syntax for variable placeholders.
+        message_type:
+          type: string
+          description: The type of template (e.g. "viber_otp", "text_template").
+        operator_template_id:
+          type: string
+          description: The operator-assigned template ID provided by Viber.
+    vbs_report_create:
+      type: object
+      title: Create Report Request
+      required:
+      - start_date
+      - end_date
+      properties:
+        start_date:
+          type: string
+          description: Start date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        end_date:
+          type: string
+          description: End date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        filters:
+          type: object
+          description: Optional filters to apply to the report data.
+          properties:
+            message_type:
+              type: string
+              description: Filter by message type (e.g. "text", "image", "all").
+            service_type:
+              type: string
+              description: Filter by service type (e.g. "one_way", "two_way", "all").
+        projections:
+          type: array
+          description: List of fields to include in the report CSV.
+          items:
+            type: string
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header
+x-logo:
+  url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+  backgroundColor: '#FFFFFF'
+  altText: RouteMobile logo

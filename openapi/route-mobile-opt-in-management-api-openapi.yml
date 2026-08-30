@@ -1,0 +1,478 @@
+openapi: 3.2.0
+info:
+  version: 1.8.0
+  title: Route Mobile WhatsApp Business Opt-in Management API
+  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
+
+
+    ## Getting Started
+
+
+    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
+
+    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
+
+    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
+
+
+    ## Key Concepts
+
+
+    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
+
+    - **Session Messages** — Free-form messages within a 24-hour customer service window.
+
+    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
+
+    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
+
+
+    ## Authentication
+
+
+    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
+
+
+    ```
+
+    Authorization: <your-jwt-token>
+
+    ```
+
+
+    ## Rate Limits
+
+
+    API rate limits are governed by your account tier. Contact your account manager for details.
+
+
+    ## Support
+
+
+    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  contact:
+    name: Route Mobile Developer Support
+    url: https://developers.routemobile.com/
+    email: product-desk@routemobile.com
+  termsOfService: https://www.routemobile.com/terms-of-service/
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-of-service/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2023/04/route-mobile-logo.svg
+    altText: Route Mobile
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- BearerAuth: []
+tags:
+- name: Opt-in Management
+  description: Store and verify user opt-in and opt-out consent for WhatsApp messaging compliance.
+paths:
+  /wbo/v2/optin/store:
+    post:
+      tags:
+      - Opt-in Management
+      summary: Create Optin
+      description: Create optin for the WhatsApp Business account.
+      operationId: createOptin
+      requestBody:
+        description: Store opt-in consent for one or more phone numbers.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msisdn:
+                  type: string
+                  description: The phone number with '+' and country code for the user opting in.
+                optin_channel:
+                  type: string
+                  description: The channel through which the user opted in.
+                extra:
+                  type: string
+                  description: Any additional information related to the optin process.
+              required:
+              - msisdn
+              - optin_channel
+            examples:
+              default:
+                value:
+                  extra: '{extra}'
+                  msisdn: '{phone number with + and country code}'
+                  optin_channel: whatsapp-api/third-party/sms/landing-page/email/voice/missed-call/physical-form
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptinStoreResponse'
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    message: api execution successful
+                    details: given 'msisdn' is not opted in for user Demo8
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                Incorrect authorization token:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status for the optin.
+                  error:
+                    type: object
+                    description: The error for not processing the optin request.
+                    properties:
+                      optin_channel:
+                        type: array
+                        description: The channel through which the user opted in.
+                        items:
+                          type: string
+              examples:
+                Validation Error:
+                  value:
+                    message: unable to process request
+                    status: failed
+                    error:
+                      optin_channel:
+                      - Unknown field.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for creating optin.
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: reason
+      security:
+      - BearerAuth: []
+  /wbo/v2/optinout/store:
+    post:
+      tags:
+      - Opt-in Management
+      summary: Create Optin and Optout
+      description: Create optin/optout for the WhatsApp Business account.
+      operationId: createOptinOut
+      requestBody:
+        description: Store opt-in or opt-out consent for one or more phone numbers.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msisdn:
+                  type: string
+                  description: The phone number with '+' and country code for the user opting in.
+                optin_channel:
+                  type: string
+                  description: The channel through which the user opted in.
+                extra:
+                  type: string
+                  description: Any additional information related to the optin process.
+                status:
+                  type: string
+                  description: Status which implies whether user is being opt-in or opt out
+              required:
+              - msisdn
+              - optin_channel
+              - status
+            examples:
+              default:
+                value:
+                  extra: '{extra}'
+                  msisdn: '{phone number with + and country code}'
+                  optin_channel: whatsapp-api/third-party/sms/landing-page/email/voice/missed-call/physical-form
+                  status: optin/optout
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptinStoreResponse'
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    message: api execution successful
+                    details: given 'msisdn' is now opted out  for user <channel_name>
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                Incorrect authorization token:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status for the optin.
+                  error:
+                    type: object
+                    description: The error for not processing the optin request.
+                    properties:
+                      optin_channel:
+                        type: array
+                        description: The channel through which the user opted in.
+                        items:
+                          type: string
+              examples:
+                Validation Error:
+                  value:
+                    message: unable to process request
+                    status: failed
+                    error:
+                      optin_channel:
+                      - Unknown field.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for creating optin.
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: reason
+      security:
+      - BearerAuth: []
+  /wbo/v2/optin/check:
+    get:
+      tags:
+      - Opt-in Management
+      summary: Check Optin
+      description: Check optin if a particular phone number has opted-in to receive messages from the WhatsApp Business account.
+      operationId: checkOptin
+      parameters:
+      - name: msisdn
+        in: query
+        description: The phone number with '+' and country code for the user opting in.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for check optin.
+                  message:
+                    type: string
+                    description: The response message.
+                  details:
+                    type: string
+                    description: The optin details.
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    message: api execution successful
+                    details: Given 'msisdn' is not opted in  'channel' missed-call
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtExpiredError'
+              examples:
+                Example 1:
+                  value:
+                    message: Unable to process request
+                    status: Failed
+                    reason: Please check the integrity or validity of the token sent.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              examples:
+                Incorrect API URL:
+                  value:
+                    message: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptinValidationError'
+              examples:
+                Validation Error:
+                  value:
+                    message: unable to process request
+                    status: failed
+                    error:
+                      msisdn:
+                      - Field may not be null.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status for check optin.
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+                    reason: reason
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    OptinValidationErrorDetail:
+      type: object
+      properties:
+        msisdn:
+          type: array
+          description: The phone number of the customer.
+          items:
+            type: string
+    OptinStoreResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the message delivery.
+        message:
+          type: string
+          description: The message response.
+        details:
+          type: string
+          description: The details of the message.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    OptinValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The optin status of msisdn.
+        error:
+          $ref: '#/components/schemas/OptinValidationErrorDetail'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JSON Web Token obtained from the Login API. Include the token in the `Authorization` header as `Bearer <token>`. Tokens expire after one hour by default.
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

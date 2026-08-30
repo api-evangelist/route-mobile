@@ -1,0 +1,370 @@
+openapi: 3.2.0
+info:
+  title: SendClean Email Sending Domains API
+  description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
+
+    sending/tracking domains, webhooks, and account information.
+
+
+    ## Base URL
+
+    All API calls are relative to:
+
+    ```
+
+    https://api.sendclean.net/v1.0
+
+    ```
+
+
+    ## Authentication
+
+    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
+
+
+    ## Request Format
+
+    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
+
+    - Request bodies must be `Content-Type: application/json`.
+
+    - Any non-200 HTTP response code indicates an error.
+
+
+    ## Response Format
+
+    All responses return JSON with a `status` field of either `"success"` or `"error"`.
+
+
+    ## Error Types
+
+    | Type | Description |
+
+    |------|-------------|
+
+    | `ValidationError` | Invalid or missing required parameters |
+
+    | `GeneralError` | Unexpected server-side error |
+
+    | `AuthenticationError` | `owner_id` and `token` did not match |
+
+    '
+  version: 1.0.0
+  contact:
+    email: support@sendclean.com
+servers:
+- url: https://api.sendclean.net/v1.0
+  description: Production API server
+tags:
+- name: Sending Domains
+  description: Add, verify, list, and delete sending domains
+paths:
+  /settings/addSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Add a sending domain
+      description: Registers a new sending domain to the account.
+      operationId: addSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Sending domain added
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Sending Domain Added
+  /settings/checkSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Verify DKIM and SPF records
+      description: Checks whether DKIM and SPF DNS records are correctly configured for the domain.
+      operationId: checkSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Domain check result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/CheckSendingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    domain: abc.com
+                    dkim:
+                      valid: 'Yes'
+                    spf:
+                      valid: 'No'
+                    valid_signing: 'No'
+  /settings/verifySendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Verify sending domain via email
+      description: Sends a verification instruction email to `mailbox@domain`.
+      operationId: verifySendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifySendingDomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+              mailbox: john
+      responses:
+        '200':
+          description: Verification email sent
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Verification instruction has been sent to john@abc.com
+  /settings/listSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: List sending domains
+      description: Returns all sending domains registered to the account with their DNS validation status.
+      operationId: listSendingDomains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthFields'
+            example:
+              owner_id: example id
+              token: example token
+      responses:
+        '200':
+          description: List of sending domains
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ListSendingDomainResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+  /settings/deleteSendingDomain:
+    post:
+      tags:
+      - Sending Domains
+      summary: Delete a sending domain
+      description: Removes the specified sending domain from the account.
+      operationId: deleteSendingDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+            example:
+              owner_id: example id
+              token: example token
+              domain: abc.com
+      responses:
+        '200':
+          description: Sending domain deleted
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SuccessResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: Sending Domain Deleted
+components:
+  schemas:
+    ListSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        sending_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendingDomainListEntry'
+    CheckSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        domain:
+          type: string
+          example: abc.com
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'No'
+        valid_signing:
+          type: string
+          enum:
+          - 'Yes'
+          - 'No'
+          example: 'No'
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    VerifySendingDomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        - mailbox
+        properties:
+          domain:
+            type: string
+            example: abc.com
+          mailbox:
+            type: string
+            description: Mailbox name to send verification instructions to
+            example: john
+    SendingDomainListEntry:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: abc.com
+        create_date:
+          type: integer
+          format: int64
+          description: Creation timestamp in microseconds
+          example: 67457775764
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+        verify_domain:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'

@@ -1,0 +1,1085 @@
+openapi: 3.2.0
+info:
+  version: 2.1.0
+  title: Route Mobile Rich Communication Services (RCS) API Documentation Payment API
+  description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
+
+
+    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-and-conditions/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2021/07/RM-Logo.png
+    altText: Route Mobile Logo
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- jwt: []
+tags:
+- name: Payment API
+  description: Send RCS payment request messages to customers.
+paths:
+  /payments/v1/send_bill:
+    post:
+      tags:
+      - Payment API
+      summary: Payment API
+      description: 'The Payment Template API allows businesses to integrate payment functionality into their RCS messages. With this API, businesses can create payment templates that enable users to make secure payments directly within the RCS messaging experience.
+
+
+        The API will use the provided phone number to send the payment template message to the recipient via RCS. The template will include the specified variables and their corresponding values, allowing you to customize the payment details for each recipient.'
+      operationId: sendBillToUserRcs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/rcs_payments_india_template'
+              - $ref: '#/components/schemas/rcs_payments_text_template'
+              - $ref: '#/components/schemas/rcs_payments_media_template'
+              - $ref: '#/components/schemas/rcs_payments_richcrdstdle_template'
+              - $ref: '#/components/schemas/rcs_payments_richcrdcarousel_template'
+              - $ref: '#/components/schemas/rcs_payments_urlsugg_template'
+            examples:
+              India Template:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: template
+                    phone_no: '{Phone number with county code}'
+                    bot_name: Routemobile
+                    template:
+                      name: '{Template name}'
+                      variables:
+                        '{var1}': '{Name}'
+                        '{var2}': <PAYMENT_URL>
+              Text:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: text
+                    phone_no: '{mobile number with country code}'
+                    bot_name: '{RML agent name}'
+                    text: '{plain text}'
+                    suggestions:
+                    - type: url
+                      text: '{label}'
+                      url: <PAYMENT_URL>
+                      postback: '{postback label}'
+                    fallback_text: '{value {#var#} value}'
+              Media:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: media
+                    phone_no: '{mobile number with country code}'
+                    bot_name: '{RML agent name}'
+                    url: '{sample (image/video mp4) url starting with https://}'
+                    suggestions:
+                    - type: url
+                      text: '{label}'
+                      url: <PAYMENT_URL>
+                      postback: '{postback label}'
+                    fallback_text: '{value {#var#} value}'
+              Rich Card Standalone:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: card
+                    phone_no: '{mobile number with country code}'
+                    bot_name: '{RML agent name}'
+                    url: '{sample (image/video mp4) url starting with https://}'
+                    card:
+                      title: '{label}'
+                      description: '{plain text}'
+                      url: '{sample (image/video mp4) url starting with https://}'
+                      suggestions:
+                      - type: url
+                        text: '{label}'
+                        url: <PAYMENT_URL>
+                        postback: '{postback label}'
+                    fallback_text: '{value {#var#} value}'
+              Rich Card Carousel:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: multiple_cards
+                    phone_no: '{mobile number with country code}'
+                    bot_name: '{RML agent name}'
+                    cards:
+                    - card:
+                        title: '{label}'
+                        description: '{plain text}'
+                        url: '{sample (image/video mp4) url starting with https://}'
+                        suggestions:
+                        - type: url
+                          text: '{label}'
+                          url: <PAYMENT_URL>
+                          postback: '{postback label}'
+                    - card:
+                        title: '{label}'
+                        description: '{plain text}'
+                        url: '{sample (image/video mp4) url starting with https://}'
+                        suggestions:
+                        - type: dial
+                          text: '{label}'
+                          call_to: '{your number}'
+                          postback: '{postback label}'
+                    - card:
+                        title: '{label}'
+                        description: '{plain text}'
+                        url: '{sample (image/video mp4) url starting with https://}'
+                        suggestions:
+                        - type: url
+                          text: '{label}'
+                          url: '{url with http://}'
+                          postback: '{postback label}'
+                    fallback_text: '{value {#var#} value}'
+              URL Suggestion:
+                value:
+                  payment:
+                    amount:
+                      value: '{Amount in paise}'
+                      currency: INR
+                    mode: ALL
+                    region: INDIA
+                    merchant_name: Routemobile
+                    extra:
+                      some: key
+                  channels:
+                  - rcs
+                  rcs:
+                    type: media
+                    phone_no: '{mobile number with country code}'
+                    bot_name: '{RML agent name}'
+                    url: '{sample (image/video mp4) url starting with https://}'
+                    suggestions:
+                    - type: url
+                      text: '{label}'
+                      url: <PAYMENT_URL>
+                      postback: '{postback label}'
+                    fallback_text: '{value {#var#} value}'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_id:
+                    type: string
+                    description: 'The unique identifier for the original request or message.
+
+                      '
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  timestamp:
+                    type: string
+                    description: 'The timestamp of when the message was received or sent.
+
+                      '
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: object
+                    description: The error message.
+                    properties:
+                      payment:
+                        type: object
+                        description: The payment amount.
+                        properties:
+                          region:
+                            type: array
+                            description: 'The region for the payment. '
+                            items:
+                              type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+        '404':
+          description: Page Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: The page not found message.
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  errors:
+                    type: string
+                    description: The error message.
+      security:
+      - jwt: []
+components:
+  schemas:
+    rcs_payments_text_template:
+      type: object
+      title: Text
+      description: The API will use the provided phone number to send the text template message to the recipient via RCS.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: 'The payment mode.
+
+                '
+            region:
+              type: string
+              description: 'The region for the payment. (Example: "INDIA")
+
+                '
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The recipient''s phone number, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            text:
+              type: string
+              description: 'The main text content of the message to be sent via RCS.
+
+                '
+            suggestions:
+              type: array
+              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: The label name for the suggestion.
+                  text:
+                    type: string
+                    description: The plain text content of the suggestion.
+                  url:
+                    type: string
+                    description: The (image/video mp4) url starting with https://.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+                '
+          required:
+          - type
+          - phone_no
+          - bot_name
+          - text
+      required:
+      - payment
+    rcs_payments_india_template:
+      type: object
+      title: India Template
+      description: The API will use the provided phone number to send the payment template message to the recipient via RCS. The template will include the specified variables and their corresponding values, allowing you to customize the payment details for each recipient.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: "The payment mode. \n"
+            region:
+              type: string
+              description: 'The region for the payment. For example: "INDIA"
+
+                '
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The phone number of the recipient, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            template:
+              type: object
+              description: 'The details of the payment template.
+
+                '
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the template.
+
+                    '
+                variables:
+                  type: object
+                  description: 'The variables used in the template and their corresponding values. In this example, "{Name}" and "<PAYMENT_URL>" are placeholders for the actual values.
+
+                    '
+                  properties:
+                    '{var1}':
+                      type: string
+                      description: The variable used in the template and its corresponding value.
+                    '{var2}':
+                      type: string
+                      description: The variable used in the template and its corresponding value.
+          required:
+          - type
+          - phone_no
+          - bot_name
+          - template
+      required:
+      - payment
+      - channels
+    rcs_payments_urlsugg_template:
+      type: object
+      title: URL Suggestion
+      description: The API will use the provided phone number to send the URL suggestion message to the recipient via RCS.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: "The payment mode. \n"
+            region:
+              type: string
+              description: The region for the payment.
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The recipient''s phone number, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            url:
+              type: string
+              description: 'The (image/video mp4) url starting with https:// .
+
+                '
+            suggestions:
+              type: array
+              description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+                '
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: The label name for the suggestion.
+                  text:
+                    type: string
+                    description: The plain text content of the suggestion.
+                  url:
+                    type: string
+                    description: The (image/video mp4) url starting with https://.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+                '
+          required:
+          - type
+          - phone_no
+          - bot_name
+          - url
+      required:
+      - payment
+    rcs_payments_media_template:
+      type: object
+      title: Media
+      description: The API will use the provided phone number to send the media message to the recipient via RCS.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: 'The payment mode. For example: "ALL"
+
+                '
+            region:
+              type: string
+              description: 'The region for the payment. For example: "INDIA"
+
+                '
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The recipient''s phone number, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            url:
+              type: string
+              description: 'The (image/video mp4) url starting with https:// .
+
+                '
+            suggestions:
+              type: array
+              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: The label name for the suggestion.
+                  text:
+                    type: string
+                    description: The plain text content of the suggestion.
+                  url:
+                    type: string
+                    description: The (image/video mp4) url starting with https://.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+                '
+          required:
+          - type
+          - phone_no
+          - bot_name
+          - url
+      required:
+      - payment
+    rcs_payments_richcrdstdle_template:
+      type: object
+      title: Rich Card Standalone
+      description: The API will use the provided phone number to send the rich card standalone message to the recipient via RCS.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: "The payment mode. \n"
+            region:
+              type: string
+              description: "The region for the payment. \n"
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The recipient''s phone number, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            url:
+              type: string
+              description: The (image/video mp4) url starting with https:// .
+            card:
+              type: object
+              description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+              properties:
+                title:
+                  type: string
+                  description: The label name for the card.
+                description:
+                  type: string
+                  description: A short description of the card.
+                url:
+                  type: string
+                  description: The (image/video mp4) url starting with https:// .
+                suggestions:
+                  type: array
+                  description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: The label name for the suggestion.
+                      text:
+                        type: string
+                        description: The plain text content of the suggestion.
+                      url:
+                        type: string
+                        description: The (image/video mp4) url starting with https:// .
+                      postback:
+                        type: string
+                        description: The postback text or action associated with the suggestion.
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+                '
+          required:
+          - type
+          - phone_no
+          - bot_name
+          - url
+      required:
+      - payment
+    rcs_payments_richcrdcarousel_template:
+      type: object
+      title: Rich Card Carousel
+      description: The API will use the provided phone number to send the rich card carousel message to the recipient via RCS.
+      properties:
+        payment:
+          type: object
+          description: 'The details of the payment.
+
+            '
+          properties:
+            amount:
+              type: object
+              description: 'The payment amount.
+
+                '
+              properties:
+                value:
+                  type: string
+                  description: 'The value of the payment amount.
+
+                    '
+                currency:
+                  type: string
+                  description: 'The currency of the payment amount.
+
+                    '
+              required:
+              - value
+              - currency
+            mode:
+              type: string
+              description: 'The payment mode.
+
+                '
+            region:
+              type: string
+              description: "The region for the payment. \n"
+            merchant_name:
+              type: string
+              description: 'The name of the merchant.
+
+                '
+            extra:
+              type: object
+              description: 'Additional information or parameters related to the payment.
+
+                '
+              properties:
+                some:
+                  type: string
+                  description: 'A key-value pair representing additional information.
+
+                    '
+          required:
+          - amount
+          - mode
+          - region
+          - merchant_name
+        channels:
+          type: array
+          description: "An array specifying the channels through which the payment will be sent. \n"
+          items:
+            type: string
+        rcs:
+          type: object
+          description: 'The RCS-specific details for the payment.
+
+            '
+          properties:
+            type:
+              type: string
+              description: 'The message type as "template".
+
+                '
+            phone_no:
+              type: string
+              description: 'The recipient''s phone number, including the country code.
+
+                '
+            bot_name:
+              type: string
+              description: 'The name of the bot sending the message.
+
+                '
+            cards:
+              type: array
+              description: 'An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
+
+                '
+              items:
+                type: object
+                properties:
+                  card:
+                    type: object
+                    description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+                    properties:
+                      title:
+                        type: string
+                        description: The label name for the card.
+                      description:
+                        type: string
+                        description: A short description of the card.
+                      url:
+                        type: string
+                        description: The (image/video mp4) url starting with https:// .
+                      suggestions:
+                        type: array
+                        description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: The label name for the suggestion.
+                            text:
+                              type: string
+                              description: The plain text content of the suggestion.
+                            url:
+                              type: string
+                              description: The (image/video mp4) url starting with https:// .
+                            postback:
+                              type: string
+                              description: The postback text or action associated with the suggestion.
+                            call_to:
+                              type: string
+                              description: The sender phone number.
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+                '
+          required:
+          - type
+          - phone_no
+          - bot_name
+      required:
+      - payment
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,660 @@
+openapi: 3.2.0
+info:
+  version: 1.5.0
+  title: Route Mobile Viber OpenAPI Specification Viber Bulk Messaging API
+  description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-conditions/
+  x-logo:
+    url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+    backgroundColor: '#FFFFFF'
+    altText: RouteMobile logo
+servers:
+- url: https://apis.rmlconnect.net
+- url: '{client callback}'
+security:
+- jwt: []
+tags:
+- name: Viber Bulk Messaging API
+  description: Send bulk campaign messages to multiple Viber recipients at once using a file_code from the Campaign File Upload API. Supports all message types including fallback delivery to SMS or WhatsApp, and scheduled campaign dispatch.
+paths:
+  /vbs/api/v3/send_bulk:
+    post:
+      tags:
+      - Viber Bulk Messaging API
+      summary: Viber Send Bulk Messages API
+      description: 'The Viber Send Bulk Messages API allows businesses to send campaign messages to multiple recipients at once. The recipients are defined by a `file_code` returned from the Campaign File Upload API.
+
+
+        Supported bulk message types include text, image, text+image, text button, text button image, file, video, video+text, video+text+action button, and text template. Fallback delivery to SMS or WhatsApp is supported on any message type by including `fallback_channel` and the corresponding `fallback_sms` or `fallback_whatsapp` block inside the payload.
+
+
+        Campaigns can be scheduled by providing `schedule_datetime` (format: `YYYY-MM-DD HH:MM:SS`) and `timezone` (e.g. `Asia/Kolkata`).'
+      operationId: sendBulkMessages
+      x-readme:
+        samples-languages:
+        - curl
+        - python
+        - node
+        - java
+        - php
+      requestBody:
+        required: true
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/vbs_bulk_text_msg'
+              - $ref: '#/components/schemas/vbs_bulk_text_button_msg'
+              - $ref: '#/components/schemas/vbs_bulk_text_button_image_msg'
+              - $ref: '#/components/schemas/vbs_bulk_textimage_msg'
+              - $ref: '#/components/schemas/vbs_bulk_image_msg'
+              - $ref: '#/components/schemas/vbs_bulk_file_msg'
+              - $ref: '#/components/schemas/vbs_bulk_video_msg'
+              - $ref: '#/components/schemas/vbs_bulk_video_text_msg'
+              - $ref: '#/components/schemas/vbs_bulk_video_text_action_button_msg'
+              - $ref: '#/components/schemas/vbs_bulk_text_template_msg'
+              - $ref: '#/components/schemas/vbs_bulk_fallback_msg'
+            examples:
+              Bulk Text:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text
+                    method: transaction
+                    text: '{message text}'
+              Bulk Text Button:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: media
+                    method: promotion
+                    text: '{message text}'
+                    button_text: '{button text}'
+                    button_link: '{button url with https://}'
+              Bulk Text Button Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: template
+                    method: promotion
+                    text: '{message text}'
+                    button_text: '{button text}'
+                    button_link: '{button url with https://}'
+                    img: '{image link with https:// with extension}'
+              Bulk Text Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    text: '{body text}'
+              Bulk Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+              Bulk File:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: file
+                    method: transaction
+                    file_url: '{file link with https:// with extension}'
+                    file_name: '{file name with extension}'
+              Bulk Video:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: video
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+              Bulk Video Text:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_video
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    text: '{body text}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+              Bulk Video Text Action Button:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: video_text_action_button
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    text: '{body text}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+                    button:
+                      button_url: '{button url with https://}'
+                      button_text: '{button text}'
+              Bulk Text Template:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_template
+                    method: promotion
+                    text: '{message text}'
+                    tracking_data: '{tracking data}'
+              Bulk with Fallback to SMS:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: sms
+                    fallback_sms:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{sms username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{sms template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
+              Bulk with Fallback to WhatsApp:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: whatsapp
+                    fallback_whatsapp:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{whatsapp username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{whatsapp template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
+              Scheduled Bulk Campaign:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  schedule_datetime: '2025-06-01 10:00:00'
+                  timezone: Asia/Kolkata
+                  payload:
+                    message_type: text
+                    method: promotion
+                    text: '{message text}'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the bulk message submission.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Campaign accepted:
+                  value:
+                    status: success
+                    message: campaign with id ce078410-e593-11ed-9242-0242ac11xxxx is now processing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: array
+                    items:
+                      type: string
+                    description: List of validation errors.
+              examples:
+                Invalid file code:
+                  value:
+                    error:
+                    - file_code - Invalid or expired file code.
+                Campaign name too short:
+                  value:
+                    error:
+                    - campaign_name - Shorter than minimum length 3.
+                Invalid message type:
+                  value:
+                    status: failed
+                    message: Api execution not successful
+                    details: Please provide message type
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: Unauthorized access.
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the bulk send operation.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+      - jwt: []
+components:
+  schemas:
+    vbs_bulk_text_template_msg:
+      type: object
+      title: Bulk Text Template
+      description: Send an approved text template message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_template".
+            method:
+              type: string
+            text:
+              type: string
+            tracking_data:
+              type: string
+    vbs_bulk_video_msg:
+      type: object
+      title: Bulk Video
+      description: Send a video message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video".
+            method:
+              type: string
+            video:
+              type: string
+              description: The URL of the video file.
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL for the video preview.
+    vbs_bulk_video_text_action_button_msg:
+      type: object
+      title: Bulk Video Text Action Button
+      description: Send a video with text and a structured action button to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video_text_action_button".
+            method:
+              type: string
+            video:
+              type: string
+            text:
+              type: string
+            thumbnail_url:
+              type: string
+            button:
+              type: object
+              properties:
+                button_url:
+                  type: string
+                button_text:
+                  type: string
+    vbs_bulk_textimage_msg:
+      type: object
+      title: Bulk Text Image
+      description: Send a combined text and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_image".
+            method:
+              type: string
+            img:
+              type: string
+            text:
+              type: string
+    vbs_bulk_text_button_image_msg:
+      type: object
+      title: Bulk Text Button Image
+      description: Send a text, button, and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "template".
+            method:
+              type: string
+            text:
+              type: string
+            button_text:
+              type: string
+            button_link:
+              type: string
+            img:
+              type: string
+              description: The URL of the image.
+    vbs_bulk_file_msg:
+      type: object
+      title: Bulk File
+      description: Send a file or document attachment to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "file".
+            method:
+              type: string
+            file_url:
+              type: string
+              description: The URL of the file to send.
+            file_name:
+              type: string
+              description: The display file name including extension.
+    vbs_bulk_image_msg:
+      type: object
+      title: Bulk Image
+      description: Send a standalone image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "image".
+            method:
+              type: string
+            img:
+              type: string
+              description: The URL of the image.
+    vbs_bulk_text_msg:
+      type: object
+      title: Bulk Text
+      description: Send a plain text message to multiple recipients via the bulk send API.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+          description: Timezone for the scheduled send (e.g. "Asia/Kolkata").
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text".
+            method:
+              type: string
+              description: The send method (e.g. "transaction", "promotion").
+            text:
+              type: string
+              description: The message text.
+    vbs_bulk_text_button_msg:
+      type: object
+      title: Bulk Text Button
+      description: Send a text message with an action button to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "media".
+            method:
+              type: string
+            text:
+              type: string
+              description: The message text.
+            button_text:
+              type: string
+              description: The text label for the action button.
+            button_link:
+              type: string
+              description: The URL the button should open.
+    vbs_bulk_video_text_msg:
+      type: object
+      title: Bulk Video Text
+      description: Send a video with accompanying text to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_video".
+            method:
+              type: string
+            video:
+              type: string
+            text:
+              type: string
+            thumbnail_url:
+              type: string
+    vbs_bulk_fallback_msg:
+      type: object
+      title: Bulk Message with Fallback
+      description: Send a bulk Viber message with automatic fallback to WhatsApp or SMS for recipients unreachable on Viber.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: The Viber message type.
+            method:
+              type: string
+            fallback_channel:
+              type: string
+              enum:
+              - whatsapp
+              - sms
+            fallback_whatsapp:
+              type: object
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+            fallback_sms:
+              type: object
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header
+x-logo:
+  url: https://routemobile.github.io/Viber-Business-Messages-API/Logo.png
+  backgroundColor: '#FFFFFF'
+  altText: RouteMobile logo

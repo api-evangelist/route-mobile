@@ -1,0 +1,319 @@
+openapi: 3.2.0
+info:
+  version: 2.1.0
+  title: Route Mobile Rich Communication Services (RCS) API Documentation Capability Check API
+  description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
+
+
+    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-and-conditions/
+  x-logo:
+    url: https://www.routemobile.com/wp-content/uploads/2021/07/RM-Logo.png
+    altText: Route Mobile Logo
+  x-readme:
+    samples-languages:
+    - curl
+    - python
+    - node
+    - java
+    - php
+servers:
+- url: https://apis.rmlconnect.net
+security:
+- jwt: []
+tags:
+- name: Capability Check API
+  description: Check and retrieve RCS capability details for phone numbers in bulk.
+paths:
+  /v1/capabilityCheck/getCapabilityDetails:
+    get:
+      tags:
+      - Capability Check API
+      summary: Bulk Capability Check
+      description: The Bulk Capability Check API retrieves RCS capability details for phone numbers that were submitted for capability checking. Use the date range and optional status filter to paginate through results.
+      operationId: getCapabilityDetails
+      parameters:
+      - name: startDate
+        in: query
+        description: The start date for filtering capability check results (YYYY-MM-DD).
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: The end date for filtering capability check results (YYYY-MM-DD).
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: pageNo
+        in: query
+        description: The page number for paginated results (starts at 1).
+        required: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return per page.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of records matching the query.
+                  pageNo:
+                    type: integer
+                    description: Current page number.
+                  pageSize:
+                    type: integer
+                    description: Number of records per page.
+                  data:
+                    type: array
+                    description: List of capability check records.
+                    items:
+                      type: object
+                      properties:
+                        phone_no:
+                          type: string
+                          description: The phone number that was checked.
+                        status:
+                          type: string
+                          description: RCS capability status of the number.
+                          enum:
+                          - RCS_ENABLED
+                          - NOT_RCS_ENABLED
+                        checked_at:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the capability check was performed.
+              examples:
+                Example 1:
+                  value:
+                    total: 100
+                    pageNo: 1
+                    pageSize: 5
+                    data:
+                    - phone_no: '+919876543210'
+                      status: RCS_ENABLED
+                      checked_at: '2026-04-15T10:30:00Z'
+                    - phone_no: '+919876543211'
+                      status: NOT_RCS_ENABLED
+                      checked_at: '2026-04-15T10:30:01Z'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Missing Parameters:
+                  value:
+                    status: failed
+                    message: startDate and endDate are required parameters.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                JWT Token Expired:
+                  value:
+                    status: failed
+                    message: jwt token expired
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+      security:
+      - jwt: []
+  /v1/capabilityCheck/checkBulkCapability:
+    post:
+      tags:
+      - Capability Check API
+      summary: Check Bulk Capability
+      description: Upload a CSV file containing phone numbers to trigger a bulk RCS capability check. The file should contain one phone number per row. After submission, use the Fetch Bulk Capability Details API to retrieve the results once processing is complete.
+      operationId: checkBulkCapability
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: A CSV file containing the phone numbers to check for RCS capability. One phone number per row including country code.
+                botName:
+                  type: string
+                  description: The RCS agent (bot) name associated with your account.
+                  example: '{RML agent name}'
+              required:
+              - file
+              - botName
+            examples:
+              Upload CSV:
+                value:
+                  file: <binary CSV file>
+                  botName: '{RML agent name}'
+      responses:
+        '200':
+          description: Success — file accepted for capability checking
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Confirmation message for the submitted capability check.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    status: success
+                    message: File submitted for bulk capability check successfully.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Missing File:
+                  value:
+                    status: failed
+                    message: file and botName are required.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                JWT Token Expired:
+                  value:
+                    status: failed
+                    message: jwt token expired
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate Limit Exceeded:
+                  value:
+                    message: Rate limit exceeded. Please retry after the specified time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The error message.
+                  status:
+                    type: string
+                    description: The status of the request.
+              examples:
+                Example 1:
+                  value:
+                    status: failed
+                    message: unable to process request
+      security:
+      - jwt: []
+components:
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header

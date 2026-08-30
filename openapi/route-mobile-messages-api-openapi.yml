@@ -1,0 +1,658 @@
+openapi: 3.2.0
+info:
+  title: SendClean Email Messages API
+  description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
+
+    sending/tracking domains, webhooks, and account information.
+
+
+    ## Base URL
+
+    All API calls are relative to:
+
+    ```
+
+    https://api.sendclean.net/v1.0
+
+    ```
+
+
+    ## Authentication
+
+    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
+
+
+    ## Request Format
+
+    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
+
+    - Request bodies must be `Content-Type: application/json`.
+
+    - Any non-200 HTTP response code indicates an error.
+
+
+    ## Response Format
+
+    All responses return JSON with a `status` field of either `"success"` or `"error"`.
+
+
+    ## Error Types
+
+    | Type | Description |
+
+    |------|-------------|
+
+    | `ValidationError` | Invalid or missing required parameters |
+
+    | `GeneralError` | Unexpected server-side error |
+
+    | `AuthenticationError` | `owner_id` and `token` did not match |
+
+    '
+  version: 1.0.0
+  contact:
+    email: support@sendclean.com
+servers:
+- url: https://api.sendclean.net/v1.0
+  description: Production API server
+tags:
+- name: Messages
+  description: Send transactional emails and retrieve message info
+paths:
+  /messages/sendMail:
+    post:
+      tags:
+      - Messages
+      summary: Send a transactional email
+      description: 'Sends a new transactional email via the specified SMTP sub-user.
+
+
+        Either `html` or `text` content is required in the message body (both may be provided).
+
+
+        Use the `headers` object to control tracking, signing, and routing behaviour.
+
+        Use `X-Unique-Id` in headers to tag messages for later retrieval via `/messages/getMessageInfo`.
+
+        '
+      operationId: sendMail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMailRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              message:
+                html: <h1>Hello!</h1><p>Your order is confirmed.</p>
+                text: Hello! Your order is confirmed.
+                subject: Order Confirmation
+                from_email: noreply@yourdomain.com
+                from_name: Your Company
+                to:
+                - email: customer@example.com
+                  name: Customer Name
+                  type: to
+                headers:
+                  Reply-To: support@yourdomain.com
+                  X-Unique-Id: order-12345
+                attachments:
+                - type: application/pdf
+                  name: invoice.pdf
+                  content: ZXhhbXBsZSBmaWxl
+      responses:
+        '200':
+          description: Message queued for delivery
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: message have been Queued ...
+                error:
+                  value:
+                    status: error
+                    code: -1
+                    name: AuthenticationError
+                    message: Token MissMatch
+  /messages/sendTemplate:
+    post:
+      tags:
+      - Messages
+      summary: Send email using a saved template
+      description: 'Sends a transactional email using a pre-created template.
+
+        Use `dynamic_value` to replace template placeholders (case-sensitive field names).
+
+        '
+      operationId: sendTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTemplateRequest'
+            example:
+              owner_id: example id
+              token: example token
+              smtp_user_name: smtp12345
+              message:
+                template_id: Template_Id_123
+                subject: Welcome to our service
+                from_email: noreply@yourdomain.com
+                from_name: Your Company
+                to:
+                - email: customer@example.com
+                  name: Customer Name
+                  type: to
+                dynamic_value:
+                  NAME: John
+                  Email: customer@example.com
+                headers:
+                  Reply-To: support@yourdomain.com
+                  X-Unique-Id: welcome-john-001
+      responses:
+        '200':
+          description: Template message queued
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: 250 Message Queued...
+  /messages/sendTemplateHTTPGet:
+    get:
+      tags:
+      - Messages
+      summary: Send template email via HTTP GET
+      description: "Sends a transactional email using a template via HTTP GET. Designed for simple integrations\nsuch as IVR webhooks where POST with JSON body is not practical.\n\n**All parameter values must be URL-encoded.**\n\nExample:\n```\nGET https://api.sendclean.net/v1.0/messages/sendTemplateHTTPGet?owner_id=YOUR_ID&token=YOUR_TOKEN\n    &smtp_user_name=smtp12345&template_id=TMPL_ID&subject=Hello\n    &from_email=info%40example.com&to=customer%40example.com\n    &dynamic_value%5BNAME%5D=John&dynamic_value%5BEmail%5D=john%40example.com\n```\n"
+      operationId: sendTemplateHTTPGet
+      parameters:
+      - name: owner_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid SendClean User ID
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid API token
+      - name: smtp_user_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A valid SMTP user name
+        example: smtp12345
+      - name: template_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Previously created template ID
+      - name: subject
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded email subject
+      - name: from_email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded sender email address
+      - name: to
+        in: query
+        required: true
+        schema:
+          type: string
+        description: URL-encoded recipient email address
+      - name: dynamic_value[NAME]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: URL-encoded dynamic value for NAME placeholder
+      - name: dynamic_value[Email]
+        in: query
+        required: false
+        schema:
+          type: string
+        description: URL-encoded dynamic value for Email placeholder
+      responses:
+        '200':
+          description: Template message queued
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SendMailResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                success:
+                  value:
+                    status: success
+                    message: 250 Message Queued...
+  /messages/getMessageInfo:
+    post:
+      tags:
+      - Messages
+      summary: Get message delivery and engagement info
+      description: 'Retrieves delivery status, open data, and click data for messages matching a given `X-Unique-Id`.
+
+        Supports pagination via `skip_page`.
+
+        '
+      operationId: getMessageInfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageInfoRequest'
+            example:
+              owner_id: example id
+              token: example token
+              x_unique_id: order-12345
+              skip_page: 0
+      responses:
+        '200':
+          description: Message info records
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/MessageInfoResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    OpenData:
+      type: object
+      properties:
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the openers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each open event
+    MessageInfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageInfoEntry'
+    SendMailMessage:
+      type: object
+      description: The message payload for sendMail
+      properties:
+        html:
+          type: string
+          description: Full HTML content of the email. Either html or text is required.
+          example: <h1>Hello World</h1>
+        text:
+          type: string
+          description: Full plain-text content of the email. Either html or text is required.
+          example: Hello World
+        subject:
+          type: string
+          description: Message subject line
+          example: Your order confirmation
+        from_email:
+          type: string
+          format: email
+          description: Sender email address
+          example: noreply@yourdomain.com
+        from_name:
+          type: string
+          description: Optional sender display name
+          example: SendClean Notifications
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+        headers:
+          $ref: '#/components/schemas/MessageHeaders'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        images:
+          type: array
+          description: Embedded inline images (referenced by CID in HTML)
+          items:
+            $ref: '#/components/schemas/EmbeddedImage'
+    Attachment:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type of the attachment
+          example: text/plain
+        name:
+          type: string
+          description: File name of the attachment
+          example: myfile.txt
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded content of the attachment
+          example: ZXhhbXBsZSBmaWxl
+    SendMailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: message have been Queued ...
+    SendTemplateRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/TemplateMessage'
+    MessageInfoEntry:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: this is subject ..
+        sender:
+          type: string
+          format: email
+          example: xyz@sendclean.com
+        email:
+          type: string
+          format: email
+          example: abc@sendclean.com
+        sendFrom:
+          type: string
+          description: IP address the email was sent from
+          example: 0.0.0.0
+        mailSize:
+          type: integer
+          example: 1919
+        attchSize:
+          type: integer
+          example: 0
+        status:
+          type: string
+          enum:
+          - delivered
+          - soft_bounce
+          - hard_bounce
+          - spam
+          - open
+          - click
+          - send
+          example: delivered
+        time:
+          type: integer
+          format: int64
+          description: Send timestamp in milliseconds
+          example: 1458034022169
+        open:
+          type: integer
+          description: Total open count
+          example: 1
+        openData:
+          $ref: '#/components/schemas/OpenData'
+        click:
+          type: integer
+          description: Total click count
+          example: 1
+        clickData:
+          $ref: '#/components/schemas/ClickData'
+    ClickData:
+      type: object
+      properties:
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the clickers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each click event
+    EmbeddedImage:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type — must start with "image/"
+          example: image/png
+        name:
+          type: string
+          description: Content ID for the image. Reference in HTML as <img src="cid:THIS_VALUE">
+          example: IMAGECID
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded image content
+          example: ZXhhbXBsZSBmaWxl
+    SendMailRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/SendMailMessage'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    MessageHeaders:
+      type: object
+      description: Optional custom headers for the message
+      properties:
+        Reply-To:
+          type: string
+          format: email
+          example: reply@example.com
+        X-Unique-Id:
+          type: string
+          description: Custom message ID for tracking via getMessageInfo
+          example: my-unique-id-123
+        X-STes-TrackOpen:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Enable or disable open tracking
+        X-STes-TrackClick:
+          type: string
+          enum:
+          - html
+          - text
+          - both
+          - 'no'
+          description: Enable or disable click tracking
+        X-STes-Autotext:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate plain-text version from HTML
+        X-STes-AutoHtml:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate HTML version from plain text
+        X-STes-TrackingDomain:
+          type: string
+          description: Custom domain for tracking opens and clicks
+        X-STes-SigningDomain:
+          type: string
+          description: Custom domain for SPF/DKIM signing
+        X-STes-ReturnPathDomain:
+          type: string
+          description: Custom domain for the return-path
+    Recipient:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: recipient@example.com
+        name:
+          type: string
+          description: Optional display name
+          example: Recipient Name
+        type:
+          type: string
+          enum:
+          - to
+          - cc
+          - bcc
+          default: to
+          description: Header type for the recipient
+    MessageInfoRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - x_unique_id
+        properties:
+          x_unique_id:
+            type: string
+            description: The X-Unique-Id header value used when the message was sent
+            example: test
+          skip_page:
+            type: integer
+            description: Pagination offset (number of records to skip)
+            default: 0
+            example: 0
+    TemplateMessage:
+      type: object
+      required:
+      - template_id
+      properties:
+        template_id:
+          type: string
+          description: Previously created template ID
+          example: Template_Id_123
+        subject:
+          type: string
+          example: Order Confirmation
+        from_email:
+          type: string
+          format: email
+          example: noreply@yourdomain.com
+        from_name:
+          type: string
+          example: SendClean Notifications
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+        headers:
+          $ref: '#/components/schemas/MessageHeaders'
+        dynamic_value:
+          type: object
+          description: Key-value pairs to replace template placeholders. Field names are case-sensitive.
+          additionalProperties:
+            type: string
+          example:
+            NAME: John Doe
+            Email: john@example.com
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmbeddedImage'
