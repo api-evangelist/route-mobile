@@ -181,6 +181,8 @@ apis:
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
   baseURL: https://api.rmlconnect.net
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -569,6 +571,8 @@ apis:
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
   baseURL: https://api.rmlconnect.net
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -761,6 +765,8 @@ apis:
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
   baseURL: https://api.rmlconnect.net
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -1642,6 +1648,8 @@ apis:
   humanURL: https://developer.rmlconnect.net/route-mobile-project/docs/sms
   baseURL: https://api.rmlconnect.net
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
