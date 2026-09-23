@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   version: 2.1.0
-  title: Route Mobile Rich Communication Services (RCS) API Documentation RCS Template API
+  title: Route Mobile Rich Communication Services (RCS) API…
   description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
 
 
-    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+    For more information, see the Route Mobile Open API Specifications'
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
@@ -35,7 +35,7 @@ paths:
       tags:
       - RCS Template API
       summary: Create Template APi
-      description: RCS Create Template APIs allows businesses to create existing templates created by using RML Panel which can be used  efficiently send personalized and interactive messages to their customers at scale.
+      description: RCS Create Template APIs allows businesses to create existing templates created by using RML Panel which can be used efficiently send personalized and interactive messages to their customers at scale.
       operationId: createTemplateRCS
       responses:
         '202':
@@ -265,7 +265,7 @@ paths:
       tags:
       - RCS Template API
       summary: Update Template APi
-      description: 'RCS Update Template APIs  allows businesses to update existing templates created by using RML Panel which can be used  efficiently send personalized and interactive messages to their customers at scale. '
+      description: RCS Update Template APIs allows businesses to update existing templates created by using RML Panel which can be used efficiently send personalized and interactive messages to their customers at scale.
       operationId: updateTemplateRCS
       responses:
         '202':
@@ -495,7 +495,7 @@ paths:
       tags:
       - RCS Template API
       summary: Get Template API
-      description: 'RCS Get Template API is used to retrieve TEMPLATE specified when category,name,bot_name, user_name, template_id, page_no and limit are mentioned to locate the template for testing purpose for all RCS Components '
+      description: RCS Get Template API is used to retrieve TEMPLATE specified when category,name,bot_name, user_name, template_id, page_no and limit are mentioned to locate the template for testing purpose for all RCS Components
       operationId: getTemplateRCS
       responses:
         '202':
@@ -631,7 +631,7 @@ paths:
       tags:
       - RCS Template API
       summary: Delete Template API
-      description: 'RCS Delete Template API is used to delete TEMPLATE specified when name and bot_name are mentioned to locate the template for testing purpose for all RCS Components '
+      description: RCS Delete Template API is used to delete TEMPLATE specified when name and bot_name are mentioned to locate the template for testing purpose for all RCS Components
       operationId: deleteTemplateRCS
       responses:
         '202':
@@ -767,8 +767,8 @@ paths:
     get:
       tags:
       - RCS Template API
-      summary: Get Template  Status APi
-      description: RCS Get Template Status API allows businesses to get existing templates created by using RML Panel using parameters templateName and bot_name  which can be used  efficiently send personalized and interactive messages to their customers at scale.
+      summary: Get Template Status APi
+      description: RCS Get Template Status API allows businesses to get existing templates created by using RML Panel using parameters templateName and bot_name which can be used efficiently send personalized and interactive messages to their customers at scale.
       operationId: getTemplateStatusRCS
       responses:
         '202':
@@ -905,7 +905,7 @@ paths:
       tags:
       - RCS Template API
       summary: Get Single Template APi
-      description: RCS Get Single Template API allows businesses to get one of existing templates created by using RML Panel using parameters name and bot_name  which can be used  efficiently send personalized and interactive messages to their customers at scale.
+      description: RCS Get Single Template API allows businesses to get one of existing templates created by using RML Panel using parameters name and bot_name which can be used efficiently send personalized and interactive messages to their customers at scale.
       operationId: getSingleTemplateRCS
       responses:
         '202':
@@ -1039,6 +1039,167 @@ paths:
       - jwt: []
 components:
   schemas:
+    rcs_update_template_text:
+      type: object
+      title: Update Template  - Text
+      description: The API is used to update a template which uses text which can be used to be sent in  message to the recipient via RCS.
+      properties:
+        name:
+          type: string
+          description: 'The name of the template.
+
+            '
+        type:
+          type: string
+          description: 'The type of template to be created.
+
+            '
+        textMessageContent:
+          type: string
+          description: 'The  content of text message template.
+
+            '
+        suggestions:
+          type: array
+          description: 'Suggestions for text template.
+
+            '
+          items:
+            type: string
+        templateDetails:
+          type: object
+          description: 'The object defines the template details of text template.
+
+            '
+          properties:
+            user_name:
+              type: string
+              description: 'The username of the account using text template.
+
+                '
+            bot_name:
+              type: string
+              description: 'The bot name for the text template.
+
+                '
+            variables:
+              type: array
+              description: "The variables for text template \n"
+              items:
+                type: string
+            category:
+              type: string
+              description: 'Category for the text template which is text for this case.
+
+                '
+            system_ip:
+              type: string
+              description: 'The system ip for bot for text template.
+
+                '
+            payload:
+              type: object
+              description: 'Object containing payload for text template.
+
+                '
+          required:
+          - name
+          - type
+          - textMessageContent
+          - suggestions
+          - templateDetails
+    rcs_update_template_richcard:
+      type: object
+      title: Update Template  - Rich Card Standalone
+      description: The API is used to update a template which uses rich card Standalone which can be used to be sent in  message to the recipient via RCS.
+      properties:
+        name:
+          type: string
+          description: 'The name of the template.
+
+            '
+        type:
+          type: string
+          description: 'The type of template to be created.
+
+            '
+        orientation:
+          type: string
+          description: 'The  orientation of the rich card template.
+
+            '
+        height:
+          type: string
+          description: "The  height of the rich card template. Example : SHORT_HEIGHT \n"
+        standAlone:
+          type: object
+          description: 'The object defines the template details of rich card template.
+
+            '
+          properties:
+            cardTitle:
+              type: string
+              description: 'The title of the rich card in  template.
+
+                '
+            cardDescription:
+              type: string
+              description: 'The description of the rich card in the template.
+
+                '
+            fileName:
+              type: array
+              description: "The file Name for rich card images in template \n"
+              items:
+                type: string
+            thumbnailFileName:
+              type: string
+              description: 'The thumbnail image file Name for rich card in template .
+
+                '
+        templateDetails:
+          type: object
+          description: 'The object defines the template details of rich card template.
+
+            '
+          properties:
+            user_name:
+              type: string
+              description: 'The username of the account using rich card template.
+
+                '
+            bot_name:
+              type: string
+              description: 'The bot name for the ruch card template.
+
+                '
+            variables:
+              type: array
+              description: "The variables for rich card template \n"
+              items:
+                type: string
+            category:
+              type: string
+              description: 'Category for the rich card template which is rich_card for this case.
+
+                '
+            system_ip:
+              type: string
+              description: 'The system ip for bot for rich card template.
+
+                '
+            payload:
+              type: object
+              description: 'Object containing payload for rich card template.
+
+                '
+          required:
+          - name
+          - type
+          - orientation
+          - height
+          - standAlone
+          - templateDetails
     rcs_update_template_carousel:
       type: object
       title: Update Template  - Carousel
@@ -1195,10 +1356,10 @@ components:
           - textMessageContent
           - suggestions
           - templateDetails
-    rcs_update_template_text:
+    rcs_create_template_richcard:
       type: object
-      title: Update Template  - Text
-      description: The API is used to update a template which uses text which can be used to be sent in  message to the recipient via RCS.
+      title: Create Template  - Rich Card Standalone
+      description: The API is used to create a template which uses rich card Standalone which can be used to be sent in  message to the recipient via RCS.
       properties:
         name:
           type: string
@@ -1210,59 +1371,89 @@ components:
           description: 'The type of template to be created.
 
             '
-        textMessageContent:
+        orientation:
           type: string
-          description: 'The  content of text message template.
+          description: 'The  orientation of the rich card template.
 
             '
-        suggestions:
-          type: array
-          description: 'Suggestions for text template.
+        height:
+          type: string
+          description: "The  height of the rich card template. Example : SHORT_HEIGHT \n"
+        standAlone:
+          type: object
+          description: 'The object defines the template details of rich card template.
 
             '
-          items:
-            type: string
+          properties:
+            cardTitle:
+              type: string
+              description: 'The title of the rich card in  template.
+
+                '
+            cardDescription:
+              type: string
+              description: 'The description of the rich card in the template.
+
+                '
+            fileName:
+              type: array
+              description: "The file Name for rich card images in template \n"
+              items:
+                type: string
+            thumbnailFileName:
+              type: string
+              description: 'The thumbnail image file Name for rich card in template .
+
+                '
+            suggestions:
+              type: array
+              description: 'Suggestions for rich card template.
+
+                '
+              items:
+                type: object
         templateDetails:
           type: object
-          description: 'The object defines the template details of text template.
+          description: 'The object defines the template details of rich card template.
 
             '
           properties:
             user_name:
               type: string
-              description: 'The username of the account using text template.
+              description: 'The username of the account using rich card template.
 
                 '
             bot_name:
               type: string
-              description: 'The bot name for the text template.
+              description: 'The bot name for the ruch card template.
 
                 '
             variables:
               type: array
-              description: "The variables for text template \n"
+              description: "The variables for rich card template \n"
               items:
                 type: string
             category:
               type: string
-              description: 'Category for the text template which is text for this case.
+              description: 'Category for the rich card template which is rich_card for this case.
 
                 '
             system_ip:
               type: string
-              description: 'The system ip for bot for text template.
+              description: 'The system ip for bot for rich card template.
 
                 '
             payload:
               type: object
-              description: 'Object containing payload for text template.
+              description: 'Object containing payload for rich card template.
 
                 '
           required:
           - name
           - type
-          - textMessageContent
-          - suggestions
+          - orientation
+          - height
+          - standAlone
           - templateDetails
     rcs_create_template_carousel:
       type: object
@@ -1383,200 +1574,9 @@ components:
           - width
           - carouselList
           - templateDetails
-    rcs_create_template_richcard:
+    rcs_update_template_text_with_pdf:
       type: object
-      title: Create Template  - Rich Card Standalone
-      description: The API is used to create a template which uses rich card Standalone which can be used to be sent in  message to the recipient via RCS.
-      properties:
-        name:
-          type: string
-          description: 'The name of the template.
-
-            '
-        type:
-          type: string
-          description: 'The type of template to be created.
-
-            '
-        orientation:
-          type: string
-          description: 'The  orientation of the rich card template.
-
-            '
-        height:
-          type: string
-          description: "The  height of the rich card template. Example : SHORT_HEIGHT \n"
-        standAlone:
-          type: object
-          description: 'The object defines the template details of rich card template.
-
-            '
-          properties:
-            cardTitle:
-              type: string
-              description: 'The title of the rich card in  template.
-
-                '
-            cardDescription:
-              type: string
-              description: 'The description of the rich card in the template.
-
-                '
-            fileName:
-              type: array
-              description: "The file Name for rich card images in template \n"
-              items:
-                type: string
-            thumbnailFileName:
-              type: string
-              description: 'The thumbnail image file Name for rich card in template .
-
-                '
-            suggestions:
-              type: array
-              description: 'Suggestions for rich card template.
-
-                '
-              items:
-                type: object
-        templateDetails:
-          type: object
-          description: 'The object defines the template details of rich card template.
-
-            '
-          properties:
-            user_name:
-              type: string
-              description: 'The username of the account using rich card template.
-
-                '
-            bot_name:
-              type: string
-              description: 'The bot name for the ruch card template.
-
-                '
-            variables:
-              type: array
-              description: "The variables for rich card template \n"
-              items:
-                type: string
-            category:
-              type: string
-              description: 'Category for the rich card template which is rich_card for this case.
-
-                '
-            system_ip:
-              type: string
-              description: 'The system ip for bot for rich card template.
-
-                '
-            payload:
-              type: object
-              description: 'Object containing payload for rich card template.
-
-                '
-          required:
-          - name
-          - type
-          - orientation
-          - height
-          - standAlone
-          - templateDetails
-    rcs_update_template_richcard:
-      type: object
-      title: Update Template  - Rich Card Standalone
-      description: The API is used to update a template which uses rich card Standalone which can be used to be sent in  message to the recipient via RCS.
-      properties:
-        name:
-          type: string
-          description: 'The name of the template.
-
-            '
-        type:
-          type: string
-          description: 'The type of template to be created.
-
-            '
-        orientation:
-          type: string
-          description: 'The  orientation of the rich card template.
-
-            '
-        height:
-          type: string
-          description: "The  height of the rich card template. Example : SHORT_HEIGHT \n"
-        standAlone:
-          type: object
-          description: 'The object defines the template details of rich card template.
-
-            '
-          properties:
-            cardTitle:
-              type: string
-              description: 'The title of the rich card in  template.
-
-                '
-            cardDescription:
-              type: string
-              description: 'The description of the rich card in the template.
-
-                '
-            fileName:
-              type: array
-              description: "The file Name for rich card images in template \n"
-              items:
-                type: string
-            thumbnailFileName:
-              type: string
-              description: 'The thumbnail image file Name for rich card in template .
-
-                '
-        templateDetails:
-          type: object
-          description: 'The object defines the template details of rich card template.
-
-            '
-          properties:
-            user_name:
-              type: string
-              description: 'The username of the account using rich card template.
-
-                '
-            bot_name:
-              type: string
-              description: 'The bot name for the ruch card template.
-
-                '
-            variables:
-              type: array
-              description: "The variables for rich card template \n"
-              items:
-                type: string
-            category:
-              type: string
-              description: 'Category for the rich card template which is rich_card for this case.
-
-                '
-            system_ip:
-              type: string
-              description: 'The system ip for bot for rich card template.
-
-                '
-            payload:
-              type: object
-              description: 'Object containing payload for rich card template.
-
-                '
-          required:
-          - name
-          - type
-          - orientation
-          - height
-          - standAlone
-          - templateDetails
-    rcs_create_template_text_with_pdf:
-      type: object
-      title: Create Template  - Text with pdf
+      title: Update Template  - Text with pdf
       description: The API is used to create a template which uses text with pdf which can be used to be sent in  message to the recipient via RCS.
       properties:
         name:
@@ -1645,9 +1645,9 @@ components:
           - templateDetails
           - document filename
           - message order
-    rcs_update_template_text_with_pdf:
+    rcs_create_template_text_with_pdf:
       type: object
-      title: Update Template  - Text with pdf
+      title: Create Template  - Text with pdf
       description: The API is used to create a template which uses text with pdf which can be used to be sent in  message to the recipient via RCS.
       properties:
         name:

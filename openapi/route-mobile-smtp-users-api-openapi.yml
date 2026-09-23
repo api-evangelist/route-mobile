@@ -3,52 +3,7 @@ info:
   title: SendClean Email SMTP Users API
   description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
 
-    sending/tracking domains, webhooks, and account information.
-
-
-    ## Base URL
-
-    All API calls are relative to:
-
-    ```
-
-    https://api.sendclean.net/v1.0
-
-    ```
-
-
-    ## Authentication
-
-    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
-
-
-    ## Request Format
-
-    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
-
-    - Request bodies must be `Content-Type: application/json`.
-
-    - Any non-200 HTTP response code indicates an error.
-
-
-    ## Response Format
-
-    All responses return JSON with a `status` field of either `"success"` or `"error"`.
-
-
-    ## Error Types
-
-    | Type | Description |
-
-    |------|-------------|
-
-    | `ValidationError` | Invalid or missing required parameters |
-
-    | `GeneralError` | Unexpected server-side error |
-
-    | `AuthenticationError` | `owner_id` and `token` did not match |
-
-    '
+    sending/tracking domains, webhooks, and account information.'
   version: 1.0.0
   contact:
     email: support@sendclean.com
@@ -201,38 +156,27 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ResetSmtpPasswordResponse:
+    ErrorResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - success
-        message:
-          type: string
-          example: password reseted
-        smtp_user_name:
-          type: string
-          example: smtp12345
-        smtp_password:
-          type: string
-          example: 2fg345gy6r7
-    AddSmtpResponse:
-      type: object
-      properties:
-        status:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
           type: string
           enum:
-          - success
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
         message:
           type: string
-          example: SMTP User Created
-        smtp_user_name:
-          type: string
-          example: smtp12345
-        smtp_password:
-          type: string
-          example: asfsf4w343
+          example: Token MissMatch
     AddSmtpRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -249,6 +193,20 @@ components:
             type: integer
             description: Hourly sending limit (positive integer)
             example: 10
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
     ListSmtpResponse:
       type: object
       properties:
@@ -286,17 +244,22 @@ components:
             - Disable
             description: Enable or disable the SMTP user
             example: Disable
-    SuccessResponse:
+    ResetSmtpPasswordResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-          example: success
         message:
           type: string
-          example: Operation successful
+          example: password reseted
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: 2fg345gy6r7
     SmtpUser:
       type: object
       properties:
@@ -318,41 +281,17 @@ components:
         hourly_limit:
           type: integer
           example: 20
-    ErrorResponse:
+    SuccessResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
+          - success
+          example: success
         message:
           type: string
-          example: Token MissMatch
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
+          example: Operation successful
     ResetSmtpPasswordRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -364,3 +303,19 @@ components:
             type: string
             description: A valid SMTP user name
             example: smtp12345
+    AddSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: SMTP User Created
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: asfsf4w343

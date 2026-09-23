@@ -2,54 +2,7 @@ openapi: 3.2.0
 info:
   version: 1.8.0
   title: Route Mobile WhatsApp Business Authentication API
-  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
-
-
-    ## Getting Started
-
-
-    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
-
-    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
-
-    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
-
-
-    ## Key Concepts
-
-
-    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
-
-    - **Session Messages** — Free-form messages within a 24-hour customer service window.
-
-    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
-
-    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
-
-
-    ## Authentication
-
-
-    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
-
-
-    ```
-
-    Authorization: <your-jwt-token>
-
-    ```
-
-
-    ## Rate Limits
-
-
-    API rate limits are governed by your account tier. Contact your account manager for details.
-
-
-    ## Support
-
-
-    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  description: The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale.
   contact:
     name: Route Mobile Developer Support
     url: https://developers.routemobile.com/

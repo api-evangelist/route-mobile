@@ -1,77 +1,7 @@
 openapi: 3.2.0
 info:
   title: Route Mobile SMS Message Sending API
-  description: 'Complete API reference for Route Mobile''s SMS platform. Covers message submission,
-
-    OTP, account management, and third-party platform integrations.
-
-
-    ## Authentication
-
-
-    Most APIs authenticate via `username` and `password` query parameters.
-
-    Third-party integration APIs (Moengage, Webengage) use a static `Authorization`
-
-    header token provided by Route Mobile.
-
-
-    ## Base URLs
-
-
-    | URL | Description |
-
-    |-----|-------------|
-
-    | `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |
-
-    | `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |
-
-    | `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |
-
-    | `https://client.rmlconnect.net` | Client portal — coverage map only |
-
-
-    ## Platform Response Codes
-
-
-    SMS submission APIs return a plain text response with a platform status code prefix.
-
-
-    | Code | Meaning |
-
-    |------|---------|
-
-    | 1701 | Success — `1701\|<CELL_NO>\|<MESSAGE_ID>` |
-
-    | 1702 | Invalid URL / missing or blank parameter |
-
-    | 1703 | Invalid username or password |
-
-    | 1704 | Invalid value in `type` field |
-
-    | 1705 | Invalid message |
-
-    | 1706 | Invalid destination |
-
-    | 1707 | Invalid source (Sender ID) |
-
-    | 1708 | Invalid value in `dlr` field |
-
-    | 1709 | User validation failed |
-
-    | 1710 | Internal error |
-
-    | 1025 | Insufficient credit |
-
-    | 1715 | Response timeout |
-
-
-    > **Retry Policy:** Do NOT retry for any error code except `1709`.
-
-    > For `1715` specifically, do not re-submit the same message.
-
-    '
+  description: Complete API reference for Route Mobile's SMS platform.
   version: 1.0.0
   contact:
     name: Route Mobile Support
@@ -120,7 +50,7 @@ paths:
 
         ```
 
-        <Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...
+        ||,||,...
 
         ```
 
@@ -129,14 +59,12 @@ paths:
 
         - If any error other than an invalid destination occurs, the batch is aborted immediately.
 
-        - If credits are exhausted mid-batch, processing stops and `1025|<last_destination>` is appended.
+        - If credits are exhausted mid-batch, processing stops and `1025|` is appended.
 
 
         > **Retry Policy:** Do NOT retry for any error code except `1709`.
 
-        > For `1715`, do not re-submit the same message.
-
-        '
+        > For `1715`, do not re-submit the same message.'
       operationId: sendSmsSecured
       parameters:
       - name: username
@@ -478,16 +406,14 @@ paths:
 
         ```
 
-        <Error_Code>|<destination>|<message_id>,<Error_Code>|<destination>|<message_id>,...
+        ||,||,...
 
         ```
 
 
         **Mid-batch abort:** If credits are exhausted mid-batch, processing stops and
 
-        `1025|<last_destination>` is appended to the response.
-
-        '
+        `1025|` is appended to the response.'
       operationId: sendPersonalisedSms
       parameters:
       - name: username
@@ -646,9 +572,7 @@ paths:
 
         (`tagname`, `toshorten`, `tobeshorten`, `isCL`) to enable link shortening
 
-        and click tracking.
-
-        '
+        and click tracking.'
       operationId: sendUnicodeAcculyncSms
       parameters:
       - name: username
@@ -969,9 +893,7 @@ paths:
 
         passing credentials with every request. Obtain the token from the
 
-        Token Generation API.
-
-        '
+        Token Generation API.'
       operationId: submitSmsWithToken
       parameters:
       - name: token
@@ -1105,9 +1027,7 @@ paths:
 
         **Mid-batch abort:** If credits are exhausted mid-batch, processing stops
 
-        and the remaining messages will not be submitted.
-
-        '
+        and the remaining messages will not be submitted.'
       operationId: sendJsonBulkSms
       requestBody:
         required: true
@@ -1198,6 +1118,15 @@ paths:
           description: Internal server error. Please contact support if this persists.
 components:
   schemas:
+    BulkSmsRequest:
+      type: object
+      required:
+      - request
+      properties:
+        request:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsItem'
     SmsItem:
       type: object
       required:
@@ -1242,15 +1171,6 @@ components:
         message:
           type: string
           description: Message text content.
-    BulkSmsRequest:
-      type: object
-      required:
-      - request
-      properties:
-        request:
-          type: array
-          items:
-            $ref: '#/components/schemas/SmsItem'
   securitySchemes:
     AuthorizationToken:
       type: apiKey

@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: 1.5.0
-  title: Route Mobile Viber OpenAPI Specification Viber Client Callback API
+  title: Route Mobile Viber OpenAPI Specification Viber Client…
   description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
   contact:
     url: https://developers.routemobile.com/
@@ -125,9 +125,9 @@ paths:
       security: []
 components:
   schemas:
-    vbs_callback_incoming_text:
+    vbs_callback_incoming_videoimage:
       type: object
-      title: Incoming Text
+      title: Incoming Image or Video
       properties:
         phone_number:
           type: string
@@ -144,12 +144,15 @@ components:
           type: object
           description: The message object.
           properties:
-            text:
-              type: string
-              description: The text message sent by the user.
             tracking_data:
               type: string
               description: The tracking data associated with the message.
+            media:
+              type: string
+              description: The URL of the image or video file.
+            file_name:
+              type: string
+              description: The name of the file, including the extension.
         service_type:
           type: string
           description: 'The type of service that the Viber Business Account supports.
@@ -190,9 +193,9 @@ components:
           description: 'A unique identifier for the request.
 
             '
-    vbs_callback_incoming_videoimage:
+    vbs_callback_incoming_text:
       type: object
-      title: Incoming Image or Video
+      title: Incoming Text
       properties:
         phone_number:
           type: string
@@ -209,15 +212,12 @@ components:
           type: object
           description: The message object.
           properties:
+            text:
+              type: string
+              description: The text message sent by the user.
             tracking_data:
               type: string
               description: The tracking data associated with the message.
-            media:
-              type: string
-              description: The URL of the image or video file.
-            file_name:
-              type: string
-              description: The name of the file, including the extension.
         service_type:
           type: string
           description: 'The type of service that the Viber Business Account supports.

@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: 1.5.0
-  title: Route Mobile Viber OpenAPI Specification Viber Business Messaging API
+  title: Route Mobile Viber OpenAPI Specification Viber Business…
   description: Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!
   contact:
     url: https://developers.routemobile.com/
@@ -416,9 +416,7 @@ paths:
         - **Campaign with Fallback:** Send a Viber campaign with an automatic fallback to WhatsApp or SMS if recipients are unreachable on Viber.
 
 
-        Optionally include `schedule_datetime` and `timezone` to schedule the campaign for a future send time.
-
-        '
+        Optionally include `schedule_datetime` and `timezone` to schedule the campaign for a future send time.'
       operationId: campaignVideoText
       x-readme:
         samples-languages:
@@ -932,65 +930,18 @@ paths:
       - jwt: []
 components:
   schemas:
-    vbs_campaign_textimage_msg:
+    vbs_400_invalid_phone_number:
       type: object
-      title: Campaign Text Image
-      description: Send a campaign message combining text and an image to multiple recipients.
+      title: Invalid Phone Number
       properties:
-        file_code:
-          type: string
-          description: The file code returned from the Campaign File Upload API.
-        campaign_name:
-          type: string
-          description: The name of the campaign.
-        personalised:
-          type: boolean
-          description: Whether the message uses personalised fields from the contact file.
-        payload:
-          type: object
-          description: The message payload.
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "text_image".
-            method:
-              type: string
-              description: The send method (e.g. "promotion").
-            img:
-              type: string
-              description: The URL of the image.
-            text:
-              type: string
-              description: The body text to display alongside the image.
-    vbs_single_video_button_text_msg:
+        error:
+          type: array
+          description: Invalid phone number.
+          items:
+            type: string
+    vbs_campaign_text_button:
       type: object
-      title: Single Video Button Text
-      description: Send a single video message with accompanying text and an action button to a recipient.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        message_type:
-          type: string
-          description: The type of the message. Must be set to "video_action".
-        method:
-          type: string
-          description: The method of sending the message (e.g. "promotion").
-        video:
-          type: string
-          description: The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension such as ".mp4".
-        text:
-          type: string
-          description: The body text to display with the video.
-        thumbnail_url:
-          type: string
-          description: The thumbnail image URL for the video preview.
-        button_text:
-          type: string
-          description: The text label for the action button.
-    vbs_campaign_image_msg:
-      type: object
-      title: Campaign Image
+      title: Campaign Text Button
       properties:
         campaign_id:
           type: string
@@ -1026,82 +977,24 @@ components:
           type: object
           description: The payload of the message.
           properties:
-            img:
+            text:
               type: string
-              description: The URL of the image to be displayed in the message.
+              description: The message text.
+            button_text:
+              type: string
+              description: The text for the button associated with the message.
+            button_link:
+              type: string
+              description: The link to which the button should redirect.
             message_type:
               type: string
-              description: The type of the message.
+              description: The type of the message, which is "media".
             method:
               type: string
-              description: The method of sending the campaign message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
-    vbs_single_videotext_msg:
+              description: 'The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. '
+    vbs_campaign_video_msg:
       type: object
-      title: Single Video Text
-      description: Send a single message with text and a video to a recipient. You can specify the text and the URL of the video to be displayed in the message.
-      properties:
-        phone:
-          type: string
-          description: 'The recipient''s phone number in international format, including the country code.
-
-            '
-        video:
-          type: string
-          description: 'The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
-
-            '
-        text:
-          type: string
-          description: 'The text in the message.
-
-            '
-        ttl:
-          type: string
-          description: 'The time-to-live (TTL) of the message in seconds.
-
-            '
-        message_type:
-          type: string
-          description: 'The type of the message. In this case, it should be set to "video".
-
-            '
-        method:
-          type: string
-          description: 'The method of sending the message. If set to "two_way", the recipient will be able to reply to the message.
-
-            '
-    vbs_single_file_msg:
-      type: object
-      title: Single File
-      description: Send a single file message to a recipient. You can upload a file and specify its URL to be sent as a message attachment.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        message_type:
-          type: string
-          description: The type of the message. In this case, it should be set to "file".
-        method:
-          type: string
-          description: 'The method of sending the message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
-
-            '
-        ttl:
-          type: string
-          description: 'The time-to-live (TTL) of the message in seconds.
-
-            '
-        file_url:
-          type: string
-          description: The URL of the document file, hosted publicly and starting with "https://" and ending with the file extension.
-        file_name:
-          type: string
-          description: 'The name of the file.
-
-            '
-    vbs_campaign_video_text_msg:
-      type: object
-      title: Campaign Video Text
+      title: Campaign Video
       properties:
         campaign_id:
           type: string
@@ -1110,7 +1003,9 @@ components:
             '
         campaign_action:
           type: string
-          description: "The action to perform on the campaign. \n"
+          description: 'The action to perform on the campaign. In this case, it is "start" to initiate the campaign.
+
+            '
         campaign_name:
           type: string
           description: 'The name of the campaign.
@@ -1140,173 +1035,13 @@ components:
               description: The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
             message_type:
               type: string
-              description: The type of the message, which is "file or video".
+              description: The type of the message, which is "video".
             thumbnail_url:
               type: string
-              description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension.
-            text:
-              type: string
-              description: The text in the message.
+              description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".jpg".
             method:
               type: string
-              description: The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
-    vbs_400_unsupported_file_format:
-      type: object
-      title: Unsupported file format
-      properties:
-        error:
-          type: array
-          description: Unsupported file format.
-          items:
-            type: string
-    vbs_single_otp_msg:
-      type: object
-      title: OTP Verification Message
-      description: Send a one-time password or verification code to a recipient using a pre-approved Viber OTP template. Template parameters are passed as key-value pairs inside `template_params`.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        message_type:
-          type: string
-          description: The type of the message. Must be set to "verify_otp".
-        method:
-          type: string
-          description: The method of sending. Must be set to "verify".
-        template:
-          type: object
-          description: The OTP template configuration.
-          properties:
-            template_id:
-              type: string
-              description: The UUID of the approved OTP template.
-            template_params:
-              type: object
-              description: Key-value pairs of template parameter substitutions.
-              additionalProperties:
-                type: string
-            template_lang:
-              type: string
-              description: The language code for the template (e.g. "en").
-    vbs_campaign_video_text_action_button_msg:
-      type: object
-      title: Campaign Video Text Action Button
-      description: Send a campaign video message with text and a structured action button to multiple recipients.
-      properties:
-        file_code:
-          type: string
-          description: The file code returned from the Campaign File Upload API.
-        campaign_name:
-          type: string
-          description: The name of the campaign.
-        personalised:
-          type: boolean
-          description: Whether the message uses personalised fields from the contact file.
-        schedule_datetime:
-          type: string
-          description: Optional scheduled send time in the format "YYYY-MM-DD HH:MM:SS".
-        timezone:
-          type: string
-          description: Timezone for the scheduled send (e.g. "Asia/Kolkata").
-        payload:
-          type: object
-          description: The message payload.
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "video_text_action_button".
-            method:
-              type: string
-              description: The send method (e.g. "promotion").
-            video:
-              type: string
-              description: The URL of the video file.
-            text:
-              type: string
-              description: The body text to display with the video.
-            thumbnail_url:
-              type: string
-              description: The thumbnail image URL for the video preview.
-            button:
-              type: object
-              description: The structured action button object.
-              properties:
-                button_url:
-                  type: string
-                  description: The URL the button should open.
-                button_text:
-                  type: string
-                  description: The text label displayed on the button.
-    vbs_400_invalid_button_text:
-      type: object
-      title: Invalid button text
-      properties:
-        error:
-          type: array
-          description: Invalid button text.
-          items:
-            type: string
-    vbs_single_text_template_msg:
-      type: object
-      title: Single Text Template
-      description: Send a branded text message to a recipient using an approved Viber text template.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        message_type:
-          type: string
-          description: The type of the message. Must be set to "text_template".
-        method:
-          type: string
-          description: The method of sending the message (e.g. "transaction").
-        text:
-          type: string
-          description: The message text, matching the approved template syntax.
-        tracking_data:
-          type: string
-          description: Optional tracking identifier for the message.
-    vbs_single_text_msg:
-      type: object
-      title: Single Text
-      description: Send a single text message to a recipient without any additional elements such as buttons, images, or videos.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        text:
-          type: string
-          description: 'The text to display in the message.
-
-            '
-        message_type:
-          type: string
-          description: 'The type of the message. In this case, it should be set to "text".
-
-            '
-        method:
-          type: string
-          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
-
-            '
-    vbs_400_invalid_time_duration:
-      type: object
-      title: Invalid time duration criteria
-      properties:
-        error:
-          type: array
-          description: Invalid time duration criteria.
-          items:
-            type: string
-    vbs_400_invalid_text_msg:
-      type: object
-      title: Invalid text message
-      properties:
-        error:
-          type: array
-          description: Invalid text message.
-          items:
-            type: string
+              description: 'The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. '
     vbs_single_video_text_action_button_msg:
       type: object
       title: Single Video Text Action Button
@@ -1340,6 +1075,191 @@ components:
             button_text:
               type: string
               description: The text label displayed on the button.
+    vbs_single_textimage_msg:
+      type: object
+      title: Single Text Image
+      description: Send a single message combining a text body and an image to a recipient.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "text_image".
+        method:
+          type: string
+          description: The method of sending the message. Typically "promotion".
+        img:
+          type: string
+          description: The URL of the image, hosted publicly and starting with "https://".
+        text:
+          type: string
+          description: The body text to display alongside the image.
+        tracking_data:
+          type: string
+          description: Optional tracking identifier for the message.
+    vbs_400_unsupported_video_file:
+      type: object
+      title: Unsupported video file format
+      properties:
+        error:
+          type: array
+          description: Unsupported video file format.
+          items:
+            type: string
+    vbs_single_file_msg:
+      type: object
+      title: Single File
+      description: Send a single file message to a recipient. You can upload a file and specify its URL to be sent as a message attachment.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. In this case, it should be set to "file".
+        method:
+          type: string
+          description: 'The method of sending the message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
+
+            '
+        ttl:
+          type: string
+          description: 'The time-to-live (TTL) of the message in seconds.
+
+            '
+        file_url:
+          type: string
+          description: The URL of the document file, hosted publicly and starting with "https://" and ending with the file extension.
+        file_name:
+          type: string
+          description: 'The name of the file.
+
+            '
+    vbs_single_video_button_text_msg:
+      type: object
+      title: Single Video Button Text
+      description: Send a single video message with accompanying text and an action button to a recipient.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "video_action".
+        method:
+          type: string
+          description: The method of sending the message (e.g. "promotion").
+        video:
+          type: string
+          description: The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension such as ".mp4".
+        text:
+          type: string
+          description: The body text to display with the video.
+        thumbnail_url:
+          type: string
+          description: The thumbnail image URL for the video preview.
+        button_text:
+          type: string
+          description: The text label for the action button.
+    vbs_400_invalid_button_text:
+      type: object
+      title: Invalid button text
+      properties:
+        error:
+          type: array
+          description: Invalid button text.
+          items:
+            type: string
+    vbs_single_textbuttonimg_msg:
+      type: object
+      title: Single Text Button Image
+      description: Send a single message with text, a button, and an image to a recipient. You can specify the text, button text, button link, and image URL.
+      properties:
+        phone:
+          type: string
+          description: 'The recipient''s phone number in international format, including the country code.
+
+            '
+        text:
+          type: string
+          description: 'The text to display in the message.
+
+            '
+        button_text:
+          type: string
+          description: 'The text to display on the button that accompanies the message.
+
+            '
+        button_link:
+          type: string
+          description: The URL to include in the button.
+        img:
+          type: string
+          description: The URL of the image file, hosted publicly and starting with "https://" and ending with the file extension, such as ".png".
+        ttl:
+          type: string
+          description: The time-to-live (TTL) of the message in seconds.
+        message_type:
+          type: string
+          description: The type of the message. In this case, it should be set to "template".
+        method:
+          type: string
+          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
+
+            '
+    vbs_400_incorrect_message_method:
+      type: object
+      title: Incorrect message method
+      properties:
+        error:
+          type: array
+          description: Incorrect message method.
+          items:
+            type: string
+    vbs_400_incorrect_message_type:
+      type: object
+      title: Incorrect message type
+      properties:
+        status:
+          type: string
+          description: The status of the message.
+        message:
+          type: string
+          description: The response message.
+        details:
+          type: string
+          description: The message details.
+    vbs_campaign_textimage_msg:
+      type: object
+      title: Campaign Text Image
+      description: Send a campaign message combining text and an image to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        payload:
+          type: object
+          description: The message payload.
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_image".
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            img:
+              type: string
+              description: The URL of the image.
+            text:
+              type: string
+              description: The body text to display alongside the image.
     vbs_single_fallback_msg:
       type: object
       title: Single Message with Fallback
@@ -1410,13 +1330,13 @@ components:
             pe_id:
               type: string
               description: The PE ID for DLT compliance.
-    vbs_400_invalid_thumbnail_url:
+    vbs_400_invalid_time_duration:
       type: object
-      title: Invalid thumbnail URL
+      title: Invalid time duration criteria
       properties:
         error:
           type: array
-          description: Invalid thumbnail URL.
+          description: Invalid time duration criteria.
           items:
             type: string
     vbs_campaign_text_button_image:
@@ -1475,9 +1395,136 @@ components:
             method:
               type: string
               description: 'The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. '
-    vbs_campaign_video_msg:
+    vbs_single_text_msg:
       type: object
-      title: Campaign Video
+      title: Single Text
+      description: Send a single text message to a recipient without any additional elements such as buttons, images, or videos.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        text:
+          type: string
+          description: 'The text to display in the message.
+
+            '
+        message_type:
+          type: string
+          description: 'The type of the message. In this case, it should be set to "text".
+
+            '
+        method:
+          type: string
+          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
+
+            '
+    vbs_400_invalid_image_url:
+      type: object
+      title: Invalid image url
+      properties:
+        error:
+          type: array
+          description: Invalid image url.
+          items:
+            type: string
+    vbs_single_videotext_msg:
+      type: object
+      title: Single Video Text
+      description: Send a single message with text and a video to a recipient. You can specify the text and the URL of the video to be displayed in the message.
+      properties:
+        phone:
+          type: string
+          description: 'The recipient''s phone number in international format, including the country code.
+
+            '
+        video:
+          type: string
+          description: 'The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
+
+            '
+        text:
+          type: string
+          description: 'The text in the message.
+
+            '
+        ttl:
+          type: string
+          description: 'The time-to-live (TTL) of the message in seconds.
+
+            '
+        message_type:
+          type: string
+          description: 'The type of the message. In this case, it should be set to "video".
+
+            '
+        method:
+          type: string
+          description: 'The method of sending the message. If set to "two_way", the recipient will be able to reply to the message.
+
+            '
+    vbs_campaign_video_text_msg:
+      type: object
+      title: Campaign Video Text
+      properties:
+        campaign_id:
+          type: string
+          description: 'The ID of the campaign that was generated after uploading the contact list and campaign content files.
+
+            '
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. \n"
+        campaign_name:
+          type: string
+          description: 'The name of the campaign.
+
+            '
+        ttl:
+          type: string
+          description: 'The time-to-live (TTL) value in seconds for the campaign message.
+
+            '
+        file_mimetype:
+          type: string
+          description: 'The MIME type of the content file. For example, text/plain, text/csv.
+
+            '
+        filename:
+          type: string
+          description: 'The name of the content file with its extension.
+
+            '
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            video:
+              type: string
+              description: The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
+            message_type:
+              type: string
+              description: The type of the message, which is "file or video".
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension.
+            text:
+              type: string
+              description: The text in the message.
+            method:
+              type: string
+              description: The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
+    vbs_400_invalid_text_msg:
+      type: object
+      title: Invalid text message
+      properties:
+        error:
+          type: array
+          description: Invalid text message.
+          items:
+            type: string
+    vbs_campaign_file_msg:
+      type: object
+      title: Campaign File
       properties:
         campaign_id:
           type: string
@@ -1513,18 +1560,24 @@ components:
           type: object
           description: The payload of the message.
           properties:
-            video:
+            file:
               type: string
-              description: The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
+              description: The URL of the file, hosted publicly and starting with "https://" and ending with the file extension, such as ".pdf".
             message_type:
               type: string
-              description: The type of the message, which is "video".
-            thumbnail_url:
-              type: string
-              description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".jpg".
+              description: The type of the message, which is "file".
             method:
               type: string
-              description: 'The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. '
+              description: The method of sending the campaign message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
+    vbs_400_unsupported_file_format:
+      type: object
+      title: Unsupported file format
+      properties:
+        error:
+          type: array
+          description: Unsupported file format.
+          items:
+            type: string
     vbs_campaign_fallback_msg:
       type: object
       title: Campaign Message with Fallback
@@ -1587,140 +1640,6 @@ components:
                   type: string
                 pe_id:
                   type: string
-    vbs_single_textimage_msg:
-      type: object
-      title: Single Text Image
-      description: Send a single message combining a text body and an image to a recipient.
-      properties:
-        phone:
-          type: string
-          description: The recipient's phone number in international format, including the country code.
-        message_type:
-          type: string
-          description: The type of the message. Must be set to "text_image".
-        method:
-          type: string
-          description: The method of sending the message. Typically "promotion".
-        img:
-          type: string
-          description: The URL of the image, hosted publicly and starting with "https://".
-        text:
-          type: string
-          description: The body text to display alongside the image.
-        tracking_data:
-          type: string
-          description: Optional tracking identifier for the message.
-    vbs_single_textbuttonimg_msg:
-      type: object
-      title: Single Text Button Image
-      description: Send a single message with text, a button, and an image to a recipient. You can specify the text, button text, button link, and image URL.
-      properties:
-        phone:
-          type: string
-          description: 'The recipient''s phone number in international format, including the country code.
-
-            '
-        text:
-          type: string
-          description: 'The text to display in the message.
-
-            '
-        button_text:
-          type: string
-          description: 'The text to display on the button that accompanies the message.
-
-            '
-        button_link:
-          type: string
-          description: The URL to include in the button.
-        img:
-          type: string
-          description: The URL of the image file, hosted publicly and starting with "https://" and ending with the file extension, such as ".png".
-        ttl:
-          type: string
-          description: The time-to-live (TTL) of the message in seconds.
-        message_type:
-          type: string
-          description: The type of the message. In this case, it should be set to "template".
-        method:
-          type: string
-          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
-
-            '
-    vbs_campaign_file_msg:
-      type: object
-      title: Campaign File
-      properties:
-        campaign_id:
-          type: string
-          description: 'The ID of the campaign that was generated after uploading the contact list and campaign content files.
-
-            '
-        campaign_action:
-          type: string
-          description: 'The action to perform on the campaign. In this case, it is "start" to initiate the campaign.
-
-            '
-        campaign_name:
-          type: string
-          description: 'The name of the campaign.
-
-            '
-        ttl:
-          type: string
-          description: 'The time-to-live (TTL) value in seconds for the campaign message.
-
-            '
-        file_mimetype:
-          type: string
-          description: 'The MIME type of the content file. For example, text/plain, text/csv.
-
-            '
-        filename:
-          type: string
-          description: 'The name of the content file with its extension.
-
-            '
-        payload:
-          type: object
-          description: The payload of the message.
-          properties:
-            file:
-              type: string
-              description: The URL of the file, hosted publicly and starting with "https://" and ending with the file extension, such as ".pdf".
-            message_type:
-              type: string
-              description: The type of the message, which is "file".
-            method:
-              type: string
-              description: The method of sending the campaign message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
-    vbs_400_invalid_image_url:
-      type: object
-      title: Invalid image url
-      properties:
-        error:
-          type: array
-          description: Invalid image url.
-          items:
-            type: string
-    vbs_400_unsupported_video_file:
-      type: object
-      title: Unsupported video file format
-      properties:
-        error:
-          type: array
-          description: Unsupported video file format.
-          items:
-            type: string
-    vbs_400_incorrect_message_method:
-      type: object
-      title: Incorrect message method
-      properties:
-        error:
-          type: array
-          description: Incorrect message method.
-          items:
-            type: string
     vbs_campaign_text_template_msg:
       type: object
       title: Campaign Text Template
@@ -1751,52 +1670,82 @@ components:
             tracking_data:
               type: string
               description: Optional tracking identifier.
-    vbs_400_incorrect_message_type:
+    vbs_single_textbutton_msg:
       type: object
-      title: Incorrect message type
-      properties:
-        status:
-          type: string
-          description: The status of the message.
-        message:
-          type: string
-          description: The response message.
-        details:
-          type: string
-          description: The message details.
-    vbs_single_video_msg:
-      type: object
-      title: Single Video
-      description: Send a single video message to a recipient. You can specify the URL of the video to be displayed in the message.
+      title: Single Text Button
+      description: Send a single text message with a button to a recipient. The button can have a custom text and a URL link.
       properties:
         phone:
           type: string
-          description: 'The recipient''s phone number in international format, including the country code.
-
-            '
+          description: The recipient's phone number in international format, including the country code.
+        text:
+          type: string
+          description: The text to display in the message.
+        button_text:
+          type: string
+          description: The text to display on the button that accompanies the message.
+        button_link:
+          type: string
+          description: The URL to include in the button.
         message_type:
           type: string
-          description: 'The type of the message. In this case, it should be set to "video".
+          description: 'The type of the message. In this case, it should be set to "media".
 
             '
         method:
           type: string
-          description: 'The method of sending the message. If set to "two_way", the recipient will be able to reply to the message.
+          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
 
             '
-        ttl:
+    vbs_campaign_video_text_action_button_msg:
+      type: object
+      title: Campaign Video Text Action Button
+      description: Send a campaign video message with text and a structured action button to multiple recipients.
+      properties:
+        file_code:
           type: string
-          description: 'The time-to-live (TTL) of the message in seconds.
-
-            '
-        video:
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
           type: string
-          description: 'The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
-
-            '
-        thumbnail_url:
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        schedule_datetime:
           type: string
-          description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension.
+          description: Optional scheduled send time in the format "YYYY-MM-DD HH:MM:SS".
+        timezone:
+          type: string
+          description: Timezone for the scheduled send (e.g. "Asia/Kolkata").
+        payload:
+          type: object
+          description: The message payload.
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video_text_action_button".
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            video:
+              type: string
+              description: The URL of the video file.
+            text:
+              type: string
+              description: The body text to display with the video.
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL for the video preview.
+            button:
+              type: object
+              description: The structured action button object.
+              properties:
+                button_url:
+                  type: string
+                  description: The URL the button should open.
+                button_text:
+                  type: string
+                  description: The text label displayed on the button.
     vbs_single_image_msg:
       type: object
       title: Single Image
@@ -1825,15 +1774,44 @@ components:
           description: 'The method of sending the message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
 
             '
-    vbs_400_invalid_phone_number:
+    vbs_400_invalid_button_link:
       type: object
-      title: Invalid Phone Number
+      title: Invalid button link
       properties:
         error:
           type: array
-          description: Invalid phone number.
+          description: Invalid button link.
           items:
             type: string
+    vbs_single_otp_msg:
+      type: object
+      title: OTP Verification Message
+      description: Send a one-time password or verification code to a recipient using a pre-approved Viber OTP template. Template parameters are passed as key-value pairs inside `template_params`.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "verify_otp".
+        method:
+          type: string
+          description: The method of sending. Must be set to "verify".
+        template:
+          type: object
+          description: The OTP template configuration.
+          properties:
+            template_id:
+              type: string
+              description: The UUID of the approved OTP template.
+            template_params:
+              type: object
+              description: Key-value pairs of template parameter substitutions.
+              additionalProperties:
+                type: string
+            template_lang:
+              type: string
+              description: The language code for the template (e.g. "en").
     vbs_campaign_text_msg:
       type: object
       title: Campaign Text
@@ -1881,13 +1859,13 @@ components:
             method:
               type: string
               description: The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
-    vbs_400_invalid_button_link:
+    vbs_400_invalid_thumbnail_url:
       type: object
-      title: Invalid button link
+      title: Invalid thumbnail URL
       properties:
         error:
           type: array
-          description: Invalid button link.
+          description: Invalid thumbnail URL.
           items:
             type: string
     vbs_400_campaign_short_name:
@@ -1899,36 +1877,62 @@ components:
           description: Campaign name is too short.
           items:
             type: string
-    vbs_single_textbutton_msg:
+    vbs_single_video_msg:
       type: object
-      title: Single Text Button
-      description: Send a single text message with a button to a recipient. The button can have a custom text and a URL link.
+      title: Single Video
+      description: Send a single video message to a recipient. You can specify the URL of the video to be displayed in the message.
       properties:
         phone:
           type: string
-          description: The recipient's phone number in international format, including the country code.
-        text:
-          type: string
-          description: The text to display in the message.
-        button_text:
-          type: string
-          description: The text to display on the button that accompanies the message.
-        button_link:
-          type: string
-          description: The URL to include in the button.
+          description: 'The recipient''s phone number in international format, including the country code.
+
+            '
         message_type:
           type: string
-          description: 'The type of the message. In this case, it should be set to "media".
+          description: 'The type of the message. In this case, it should be set to "video".
 
             '
         method:
           type: string
-          description: 'The method of sending the message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message.
+          description: 'The method of sending the message. If set to "two_way", the recipient will be able to reply to the message.
 
             '
-    vbs_campaign_text_button:
+        ttl:
+          type: string
+          description: 'The time-to-live (TTL) of the message in seconds.
+
+            '
+        video:
+          type: string
+          description: 'The URL of the video file, hosted publicly and starting with "https://" and ending with the file extension, such as ".mp4".
+
+            '
+        thumbnail_url:
+          type: string
+          description: The thumbnail image URL of the video file, hosted publicly and starting with "https://" and ending with the file extension.
+    vbs_single_text_template_msg:
       type: object
-      title: Campaign Text Button
+      title: Single Text Template
+      description: Send a branded text message to a recipient using an approved Viber text template.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "text_template".
+        method:
+          type: string
+          description: The method of sending the message (e.g. "transaction").
+        text:
+          type: string
+          description: The message text, matching the approved template syntax.
+        tracking_data:
+          type: string
+          description: Optional tracking identifier for the message.
+    vbs_campaign_image_msg:
+      type: object
+      title: Campaign Image
       properties:
         campaign_id:
           type: string
@@ -1964,21 +1968,15 @@ components:
           type: object
           description: The payload of the message.
           properties:
-            text:
+            img:
               type: string
-              description: The message text.
-            button_text:
-              type: string
-              description: The text for the button associated with the message.
-            button_link:
-              type: string
-              description: The link to which the button should redirect.
+              description: The URL of the image to be displayed in the message.
             message_type:
               type: string
-              description: The type of the message, which is "media".
+              description: The type of the message.
             method:
               type: string
-              description: 'The method of sending the campaign message. It can be set to either "one_way" or "two_way". If set to "one_way", the recipient will not be able to reply to the message. If set to "two_way", the recipient will be able to reply to the message. '
+              description: The method of sending the campaign message. It can be set to either "two_way" or "session". If set to "two_way", the recipient will be able to reply to the message. If set to "session", the recipient will be able to respond to multiple interactions in the session chat bot.
   securitySchemes:
     jwt:
       type: apiKey

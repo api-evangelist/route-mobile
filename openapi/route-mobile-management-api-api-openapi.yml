@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   version: 2.1.0
-  title: Route Mobile Rich Communication Services (RCS) API Documentation Management API
+  title: Route Mobile Rich Communication Services (RCS) API…
   description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
 
 
-    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+    For more information, see the Route Mobile Open API Specifications'
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
@@ -36,7 +36,7 @@ paths:
       tags:
       - Management API
       summary: Make a Tester
-      description: 'Add Tester is a Management API used to add a bot for testing purpose for all RCS Components '
+      description: Add Tester is a Management API used to add a bot for testing purpose for all RCS Components
       operationId: ManagementRCS
       requestBody:
         description: ''
@@ -185,7 +185,7 @@ paths:
       tags:
       - Management API
       summary: List all Testers
-      description: 'List all Testers is a Management API used to retrieve  all bot number for testing purpose for all RCS Components '
+      description: List all Testers is a Management API used to retrieve all bot number for testing purpose for all RCS Components
       operationId: managementRCS
       responses:
         '202':
@@ -440,6 +440,21 @@ paths:
       - jwt: []
 components:
   schemas:
+    rcs_management_add_tester:
+      type: object
+      title: Management Add Tester API
+      properties:
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        phone_number:
+          type: string
+          description: "The phone number of the bot. \n"
+      required:
+      - bot_name
+      - file
     rcs_bulk_dnd_set_body:
       type: object
       title: Bulk DND Set (Whitelist / Blacklist)
@@ -462,21 +477,6 @@ components:
       - bot_name
       - file_url
       - dnd_mode
-    rcs_management_add_tester:
-      type: object
-      title: Management Add Tester API
-      properties:
-        bot_name:
-          type: string
-          description: 'The name of the bot.
-
-            '
-        phone_number:
-          type: string
-          description: "The phone number of the bot. \n"
-      required:
-      - bot_name
-      - file
   securitySchemes:
     jwt:
       type: apiKey

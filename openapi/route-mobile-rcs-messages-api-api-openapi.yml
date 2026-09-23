@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   version: 2.1.0
-  title: Route Mobile Rich Communication Services (RCS) API Documentation RCS Messages API
+  title: Route Mobile Rich Communication Services (RCS) API…
   description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
 
 
-    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+    For more information, see the Route Mobile Open API Specifications'
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
@@ -36,7 +36,17 @@ paths:
       tags:
       - RCS Messages API
       summary: RCS Messages API
-      description: "The Rich Communication Services (RCS) Business Messaging API is a communication protocol that allows businesses to send different types of messages beyond traditional text messages. \n\nThe RCS Business Messaging API allows businesses to send different types of messages that include:\n\n- **Notification API:** Standard messages that send plain text or media content. \n- **Session API:** Standard text messages that send plain text content as part of a campaign. \n- **India Template API:** Create interactive and visually rich content to engage customers."
+      description: 'The Rich Communication Services (RCS) Business Messaging API is a communication protocol that allows businesses to send different types of messages beyond traditional text messages.
+
+
+        The RCS Business Messaging API allows businesses to send different types of messages that include:
+
+
+        - **Notification API:** Standard messages that send plain text or media content.
+
+        - **Session API:** Standard text messages that send plain text content as part of a campaign.
+
+        - **India Template API:** Create interactive and visually rich content to engage customers.'
       operationId: textTemplate
       requestBody:
         description: "\n \n "
@@ -940,19 +950,17 @@ paths:
       - jwt: []
 components:
   schemas:
-    rcs_session_mediaid_msg:
+    rcs_template_sms_fallback_api_msg:
       type: object
-      title: Session - Media ID
-      description: Messages that support sending media id to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      title: India Template - SMS Fallback API Message
+      description: RCS template APIs allow businesses to leverage the advanced features of RCS messaging and create compelling, interactive, and visually rich content to engage with their customers more dynamically and interactively.
       properties:
         type:
           type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
+          description: "The type of the template.\n\n- **Text:** RCS text templates provide a way to create engaging and interactive messaging experiences for businesses. \n- **Rich Card Standalone:** Rich Card Standalone utilizes the Rich Card format to provide visually rich and interactive content. \n- **Rich Card Carousel:** A Rich Card Carousel in RCS allows businesses to present multiple rich media cards in a single message, providing a visually engaging and interactive experience.\n"
         phone_no:
           type: string
-          description: 'The recipient''s phone number, including the country code.
+          description: 'The mobile number to which the message will be sent, including the country code.
 
             '
         bot_name:
@@ -960,71 +968,67 @@ components:
           description: 'The name of the bot sending the message.
 
             '
-        id:
+        ttl:
+          type: integer
+          description: time to live.
+        expire_time:
           type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
+          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
 
             '
-        thumbnail_id:
-          type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
+        template:
+          type: object
+          description: 'An object containing the template information.
 
             '
-      required:
-      - type
-      - phone_no
-      - bot_name
-      - id
-    rcs_notification_urlsugg_msg:
-      type: object
-      title: Notification - URL Suggestion
-      description: Messages that provide suggestions for relevant URLs or links that users can easily access or interact with.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
+          properties:
+            name:
+              type: string
+              description: 'The name or identifier of the text template you want to use.
 
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
+                '
+            variables:
+              type: object
+              description: 'An object containing the variables to be replaced in the template.
 
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
+                '
+              properties:
+                '{var1}':
+                  type: string
+                  description: 'The value to replace the "{var1}" variable in the template.
 
-            '
-        url:
-          type: string
-          description: 'The URL of the media (image or video MP4) starting with https:// to be included in the message. This field is optional for "media" type messages.
+                    '
+                '{var2}':
+                  type: string
+                  description: 'The value to replace the "{var2}" variable in the template.
 
-            '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              url:
-                type: string
-                description: The (image/pdf/video mp4) url starting with https:// .
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
+                    '
+          required:
+          - name
         fallback_text:
           type: string
-          description: "The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. \n"
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+        sms:
+          type: object
+          description: 'An object containing the sms template fallback information.
+
+            '
+          properties:
+            fallback_text:
+              type: string
+              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
+
+                '
       required:
       - type
       - phone_no
       - bot_name
+      - template
     rcs_template_richcrdstdalone_msg:
       type: object
       title: India Template - Rich Card Standalone Message
@@ -1093,6 +1097,63 @@ components:
       - phone_no
       - bot_name
       - template
+    rcs_session_urlsugg_msg:
+      type: object
+      title: Session - URL Suggestion
+      description: Messages that provide suggestions for relevant URLs or links that users can easily access or interact with as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              url:
+                type: string
+                description: The (image/pdf/video mp4) url starting with https:// .
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
     rcs_notification_carslwithids_msg:
       type: object
       title: Notification - Rich Card Carousel With IDS
@@ -1148,14 +1209,14 @@ components:
       - type
       - phone_no
       - bot_name
-    rcs_session_richcrdcarousel_msg:
+    rcs_session_richcrdstdalone_msg:
       type: object
-      title: Session - Rich Card Carousel
-      description: Messages that include a carousel of multiple rich cards. Each card within the carousel can have its own unique content and actions, allowing for a dynamic and engaging campaign experience.
+      title: Session - Rich Card Standalone
+      description: Messages that contain a standalone rich card with structured content, such as images, titles, descriptions, and buttons. These cards can provide interactive experiences and support various actions within a campaign.
       properties:
         type:
           type: string
-          description: 'The type of message to be sent. It can be "multiple_cards".
+          description: 'The type of message to be sent. It can be "card".
 
             '
         phone_no:
@@ -1168,69 +1229,68 @@ components:
           description: 'The name of the bot sending the message.
 
             '
+        url:
+          type: string
+          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+
+            '
         extra:
           type: string
           description: 'An extra value that can be included in the message. This field is optional.
 
             '
-        cards:
-          type: array
-          description: An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
-          items:
-            type: object
-            properties:
-              card:
+        card:
+          type: object
+          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+          properties:
+            title:
+              type: string
+              description: The label name for the card.
+            description:
+              type: string
+              description: A short description of the card.
+            url:
+              type: string
+              description: The (image/pdf/video mp4) url starting with https:// .
+            suggestions:
+              type: array
+              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+              items:
                 type: object
-                description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
                 properties:
-                  title:
+                  type:
                     type: string
-                    description: The label name for the card.
-                  description:
+                    description: The label name for the suggestion.
+                  text:
                     type: string
-                    description: A short description of the card.
-                  url:
+                    description: The plain text content of the suggestion.
+                  latitude:
                     type: string
-                    description: The (image/pdf/video mp4) url starting with https:// .
-                  suggestions:
-                    type: array
-                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-                    items:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The label name for the suggestion.
-                        text:
-                          type: string
-                          description: The plain text content of the suggestion.
-                        postback:
-                          type: string
-                          description: The postback text or action associated with the suggestion.
-                        call_to:
-                          type: string
-                          description: The sender phone number.
-                        url:
-                          type: string
-                          description: The (image/pdf/video mp4) url starting with https:// .
-                        start:
-                          type: string
-                          description: 'The latitude value associated with the suggestion.
+                    description: The latitude value associated with the suggestion.
+                  longitude:
+                    type: string
+                    description: The longitude value associated with the suggestion.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+                  start:
+                    type: string
+                    description: 'The latitude value associated with the suggestion.
 
 
-                            '
-                        end:
-                          type: string
-                          description: 'The longitude value associated with the suggestion.
+                      '
+                  end:
+                    type: string
+                    description: 'The longitude value associated with the suggestion.
 
 
-                            '
-                        decription:
-                          type: string
-                          description: 'The description associated with the suggestion.
+                      '
+                  decription:
+                    type: string
+                    description: 'The description associated with the suggestion.
 
 
-                            '
+                      '
         fallback_text:
           type: string
           description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
@@ -1240,40 +1300,10 @@ components:
       - type
       - phone_no
       - bot_name
-    rcs_notification_mediaid_msg:
+    rcs_notification_locationsugg_msg:
       type: object
-      title: Notification - Media ID
-      description: Messages that support sending media id to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        id:
-          type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-      - id
-    rcs_notification_textsugg_msg:
-      type: object
-      title: Notification - Text Suggestion
-      description: Messages that offer a set of suggested response options for users to choose from, making it easier for them to respond to a message.
+      title: Notification - Location Suggestion
+      description: Messages that suggest specific locations or addresses, allow users to share or navigate to a particular place.
       properties:
         type:
           type: string
@@ -1295,6 +1325,11 @@ components:
           description: 'The plain text content of the message. This field is required for "text" type messages.
 
             '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
         suggestions:
           type: array
           description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
@@ -1307,25 +1342,35 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
+              latitude:
+                type: string
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
         fallback_text:
           type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. '
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
       required:
       - type
       - phone_no
       - bot_name
       - text
-    rcs_notification_dialsugg_msg:
+    rcs_session_mediaimagemp4_msg:
       type: object
-      title: Notification - Dial Suggestion
-      description: Messages that provide suggested phone numbers or prompts for users to initiate a phone call directly from the messaging app.
+      title: Notification - Media (Image/Video/pdf) image.png
+      description: Messages that support sending images to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
       properties:
         type:
           type: string
-          description: The type of message to be sent. It can be "media".
+          description: 'The type of message to be sent. It can be "media".
+
+            '
         phone_no:
           type: string
           description: 'The recipient''s phone number, including the country code.
@@ -1339,6 +1384,19 @@ components:
         url:
           type: string
           description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+
+            '
+        thumbnail_url:
+          type: string
+          description: The (image/pdf/video mp4) url starting with https:// .
+        id:
+          type: string
+          description: 'The id of the media (image or video MP4) to be included in the message.
+
+            '
+        thumbnail_id:
+          type: string
+          description: 'The id of the media (image or video MP4) to be included in the message.
 
             '
         extra:
@@ -1358,23 +1416,209 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
-              call_to:
+              latitude:
                 type: string
-                description: The sender phone number.
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
         fallback_text:
           type: string
-          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
       required:
       - type
       - phone_no
       - bot_name
-    rcs_notification_videothumbnailurl_msg:
+    rcs_session_text_msg:
       type: object
-      title: Notification - Video With Thumbnail URL
-      description: Messages that support sending media message with thumbnail url  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      title: Session - Text
+      description: Standard text messages that send plain text content as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "text".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        ttl:
+          type: integer
+          description: time to live.
+        expire_time:
+          type: string
+          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
+        text:
+          type: string
+          description: 'The plain text content of the message. This field is required for "text" type messages.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              latitude:
+                type: string
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+      - text
+    rcs_notification_calendarsugg_msg:
+      type: object
+      title: Notification - Calendar Suggestion
+      description: 'Messages that provide suggested calendar  or prompts for users to initiate a phone call directly from the messaging app as part of a campaign. '
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent.
+
+
+            '
+          example: Text. Media, Card, or Multiple Cards
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: The name of the bot sending the message.
+        text:
+          type: string
+          description: The plain text content of the message. This field is required for "text" type messages.
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              title:
+                type: string
+                description: 'The plain title of the suggestion.
+
+
+                  '
+              url:
+                type: string
+                description: 'The (image/pdf/video mp4) url starting with https:// .
+
+
+                  '
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+    rcs_notification_videothumbnailid_msg:
+      type: object
+      title: Notification - Video With Thumbnail ID
+      description: Messages that support sending media message with thumbnail id  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
       properties:
         type:
           type: string
@@ -1401,12 +1645,16 @@ components:
             description:
               type: string
               description: A short description of the card.
-            url:
+            id:
               type: string
-              description: The (image/video mp4) url starting with https:// .
-            thumbnail_url:
+              description: 'The id of the media (image or video MP4) to be included in the message.
+
+                '
+            thumbnail_id:
               type: string
-              description: The (image/video mp4) url starting with https:// .
+              description: 'The id of the media (image or video MP4) to be included in the message.
+
+                '
         suggestions:
           type: array
           description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
@@ -1488,6 +1736,816 @@ components:
           description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
 
             '
+      required:
+      - type
+      - phone_no
+      - bot_name
+      - text
+    rcs_template_text_msg:
+      type: object
+      title: India Template - Text Message
+      description: RCS template APIs allow businesses to leverage the advanced features of RCS messaging and create compelling, interactive, and visually rich content to engage with their customers more dynamically and interactively.
+      properties:
+        type:
+          type: string
+          description: "The type of the template.\n\n- **Text:** RCS text templates provide a way to create engaging and interactive messaging experiences for businesses. \n- **Rich Card Standalone:** Rich Card Standalone utilizes the Rich Card format to provide visually rich and interactive content. \n- **Rich Card Carousel:** A Rich Card Carousel in RCS allows businesses to present multiple rich media cards in a single message, providing a visually engaging and interactive experience.\n"
+        phone_no:
+          type: string
+          description: 'The mobile number to which the message will be sent, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        ttl:
+          type: integer
+          description: time to live.
+        expire_time:
+          type: string
+          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        template:
+          type: object
+          description: 'An object containing the template information.
+
+            '
+          properties:
+            name:
+              type: string
+              description: 'The name or identifier of the text template you want to use.
+
+                '
+            variables:
+              type: object
+              description: 'An object containing the variables to be replaced in the template.
+
+                '
+              properties:
+                '{var1}':
+                  type: string
+                  description: 'The value to replace the "{var1}" variable in the template.
+
+                    '
+                '{var2}':
+                  type: string
+                  description: 'The value to replace the "{var2}" variable in the template.
+
+                    '
+          required:
+          - name
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+      - template
+    rcs_session_dialsugg_msg:
+      type: object
+      title: Session - Dial Suggestion
+      description: Messages that provide suggested phone numbers or prompts for users to initiate a phone call directly from the messaging app as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              call_to:
+                type: string
+                description: The sender's phone number.
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_session_calendarsugg_msg:
+      type: object
+      title: Session - Calendar Suggestion
+      description: 'Messages that provide suggested calendar  or prompts for users to initiate a phone call directly from the messaging app as part of a campaign. '
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent.
+
+
+            '
+          example: Text. Media, Card, or Multiple Cards
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: The name of the bot sending the message.
+        text:
+          type: string
+          description: The plain text content of the message. This field is required for "text" type messages.
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              title:
+                type: string
+                description: 'The plain title of the suggestion.
+
+
+                  '
+              url:
+                type: string
+                description: 'The (image/pdf/video mp4) url starting with https:// .
+
+
+                  '
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+    rcs_notification_videothumbnailurl_msg:
+      type: object
+      title: Notification - Video With Thumbnail URL
+      description: Messages that support sending media message with thumbnail url  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        card:
+          type: object
+          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+          properties:
+            title:
+              type: string
+              description: The label name for the card.
+            description:
+              type: string
+              description: A short description of the card.
+            url:
+              type: string
+              description: The (image/video mp4) url starting with https:// .
+            thumbnail_url:
+              type: string
+              description: The (image/video mp4) url starting with https:// .
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_notification_common_msg:
+      type: object
+      title: Notification - Common
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent.
+
+
+            '
+          example: Text. Media, Card, or Multiple Cards
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: The name of the bot sending the message.
+        text:
+          type: string
+          description: The plain text content of the message. This field is required for "text" type messages.
+        url:
+          type: string
+          description: The URL of the media (image or video MP4) starting with https:// to be included in the message. This field is optional for "media" type messages.
+        extra:
+          type: string
+          description: An extra value that can be included in the message.
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              url:
+                type: string
+                description: 'The (image/pdf/video mp4) url starting with https:// .
+
+
+                  '
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+              latitude:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              longitude:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              call_to:
+                type: string
+                description: 'The sender phone number.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+        card:
+          type: object
+          description: 'An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+
+
+            '
+          properties:
+            title:
+              type: string
+              description: 'The label name for the card.
+
+
+                '
+            description:
+              type: string
+              description: 'A short description of the card.
+
+
+                '
+            url:
+              type: string
+              description: The (image/pdf/video mp4) url starting with https:// .
+            suggestions:
+              type: array
+              description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+                '
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: 'The label name for the suggestion.
+
+
+                      '
+                  text:
+                    type: string
+                    description: 'The plain text content of the suggestion.
+
+
+                      '
+                  latitude:
+                    type: string
+                    description: 'The latitude value associated with the suggestion.
+
+
+                      '
+                  longitude:
+                    type: string
+                    description: 'The longitude value associated with the suggestion.
+
+
+                      '
+                  postback:
+                    type: string
+                    description: 'The postback text or action associated with the suggestion.
+
+
+                      '
+          required:
+          - title
+          - description
+          - url
+        cards:
+          type: array
+          description: 'An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
+
+
+            '
+          items:
+            type: object
+            properties:
+              card:
+                type: object
+                description: 'An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+
+
+                  '
+                properties:
+                  title:
+                    type: string
+                    description: 'The label name for the card.
+
+
+                      '
+                  description:
+                    type: string
+                    description: 'A short description of the card.
+
+
+                      '
+                  url:
+                    type: string
+                    description: The (image/pdf/video mp4) url starting with https:// .
+                  suggestions:
+                    type: array
+                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The label name for the suggestion.
+                        text:
+                          type: string
+                          description: The plain text content of the suggestion.
+                        postback:
+                          type: string
+                          description: The postback text or action associated with the suggestion.
+                        call_to:
+                          type: string
+                          description: 'The sender phone number.
+
+
+                            '
+                        url:
+                          type: string
+                          description: The (image/pdf/video mp4) url starting with https:// .
+                        start:
+                          type: string
+                          description: 'The latitude value associated with the suggestion.
+
+
+                            '
+                        end:
+                          type: string
+                          description: 'The longitude value associated with the suggestion.
+
+
+                            '
+                        decription:
+                          type: string
+                          description: 'The description associated with the suggestion.
+
+
+                            '
+                required:
+                - title
+                - description
+                - url
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_notification_richcrdcarousel_msg:
+      type: object
+      title: Notification - Rich Card Carousel
+      description: Messages that include a carousel of multiple rich cards. Each card within the carousel can have its own unique content and actions.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "multiple_cards".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        cards:
+          type: array
+          description: An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
+          items:
+            type: object
+            properties:
+              card:
+                type: object
+                description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+                properties:
+                  title:
+                    type: string
+                    description: The label name for the card.
+                  description:
+                    type: string
+                    description: A short description of the card.
+                  url:
+                    type: string
+                    description: 'The (image/pdf/video mp4) url starting with https://
+
+                      '
+                  suggestions:
+                    type: array
+                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The label name for the suggestion.
+                        text:
+                          type: string
+                          description: The plain text content of the suggestion.
+                        postback:
+                          type: string
+                          description: The postback text or action associated with the suggestion.
+                        call_to:
+                          type: string
+                          description: The sender phone number.
+                        url:
+                          type: string
+                          description: The (image/pdf/video mp4) url starting with https://
+                        start:
+                          type: string
+                          description: 'The latitude value associated with the suggestion.
+
+
+                            '
+                        end:
+                          type: string
+                          description: 'The longitude value associated with the suggestion.
+
+
+                            '
+                        decription:
+                          type: string
+                          description: 'The description associated with the suggestion.
+
+
+                            '
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_session_videothumbnailid_msg:
+      type: object
+      title: Session - Video With Thumbnail ID
+      description: Messages that support sending media message with thumbnail id  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        card:
+          type: object
+          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+          properties:
+            title:
+              type: string
+              description: The label name for the card.
+            description:
+              type: string
+              description: A short description of the card.
+            id:
+              type: string
+              description: 'The id of the media (image or video MP4) to be included in the message.
+
+                '
+            thumbnail_id:
+              type: string
+              description: 'The id of the media (image or video MP4) to be included in the message.
+
+                '
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_session_locationsugg_msg:
+      type: object
+      title: Session - Location Suggestion
+      description: Messages that suggest specific locations or addresses, allowing users to share or navigate to a particular place as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "text".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        text:
+          type: string
+          description: 'The plain text content of the message. This field is required for "text" type messages.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              latitude:
+                type: string
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+      - text
+    rcs_notification_text_msg:
+      type: object
+      title: Notification - Text
+      description: Standard text messages that send plain text content.
+      properties:
+        type:
+          type: string
+          description: The type of message to be sent. It can be "text".
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: The name of the bot sending the message.
+        ttl:
+          type: integer
+          description: time to live.
+        expire_time:
+          type: string
+          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n  -Either ttl or expire time can be used in a single message"
+        text:
+          type: string
+          description: The plain text content of the message. This field is required for "text" type messages.
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              latitude:
+                type: string
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+        fallback_text:
+          type: string
+          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
       required:
       - type
       - phone_no
@@ -1752,6 +2810,148 @@ components:
       - type
       - phone_no
       - bot_name
+    rcs_notification_urlsugg_msg:
+      type: object
+      title: Notification - URL Suggestion
+      description: Messages that provide suggestions for relevant URLs or links that users can easily access or interact with.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the media (image or video MP4) starting with https:// to be included in the message. This field is optional for "media" type messages.
+
+            '
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              url:
+                type: string
+                description: The (image/pdf/video mp4) url starting with https:// .
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: "The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. \n"
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_session_richcrdcarousel_msg:
+      type: object
+      title: Session - Rich Card Carousel
+      description: Messages that include a carousel of multiple rich cards. Each card within the carousel can have its own unique content and actions, allowing for a dynamic and engaging campaign experience.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "multiple_cards".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        cards:
+          type: array
+          description: An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
+          items:
+            type: object
+            properties:
+              card:
+                type: object
+                description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+                properties:
+                  title:
+                    type: string
+                    description: The label name for the card.
+                  description:
+                    type: string
+                    description: A short description of the card.
+                  url:
+                    type: string
+                    description: The (image/pdf/video mp4) url starting with https:// .
+                  suggestions:
+                    type: array
+                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The label name for the suggestion.
+                        text:
+                          type: string
+                          description: The plain text content of the suggestion.
+                        postback:
+                          type: string
+                          description: The postback text or action associated with the suggestion.
+                        call_to:
+                          type: string
+                          description: The sender phone number.
+                        url:
+                          type: string
+                          description: The (image/pdf/video mp4) url starting with https:// .
+                        start:
+                          type: string
+                          description: 'The latitude value associated with the suggestion.
+
+
+                            '
+                        end:
+                          type: string
+                          description: 'The longitude value associated with the suggestion.
+
+
+                            '
+                        decription:
+                          type: string
+                          description: 'The description associated with the suggestion.
+
+
+                            '
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
     rcs_session_carslwithids_msg:
       type: object
       title: Session - Rich Card Carousel With IDs
@@ -1807,571 +3007,6 @@ components:
       - type
       - phone_no
       - bot_name
-    rcs_session_calendarsugg_msg:
-      type: object
-      title: Session - Calendar Suggestion
-      description: 'Messages that provide suggested calendar  or prompts for users to initiate a phone call directly from the messaging app as part of a campaign. '
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent.
-
-
-            '
-          example: Text. Media, Card, or Multiple Cards
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: The name of the bot sending the message.
-        text:
-          type: string
-          description: The plain text content of the message. This field is required for "text" type messages.
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              title:
-                type: string
-                description: 'The plain title of the suggestion.
-
-
-                  '
-              url:
-                type: string
-                description: 'The (image/pdf/video mp4) url starting with https:// .
-
-
-                  '
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
-    rcs_notification_media_imagemp4_msg:
-      type: object
-      title: Notification - Media (Image/Video/pdf) image.png
-      description: Messages that include images to enhance visual communication and short videos, or animated content in MP4 format.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the media (image or pdf or video MP4) to be included in the message. This field is optional for "media" type messages.
-
-            '
-        thumbnail_url:
-          type: string
-          description: The (image/pdf/video mp4) url starting with https:// .
-        id:
-          type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
-
-            '
-        thumbnail_id:
-          type: string
-          description: 'The id of the media (image or pdf orvideo MP4) to be included in the message.
-
-            '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              latitude:
-                type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_session_richcrdstdalone_msg:
-      type: object
-      title: Session - Rich Card Standalone
-      description: Messages that contain a standalone rich card with structured content, such as images, titles, descriptions, and buttons. These cards can provide interactive experiences and support various actions within a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "card".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
-
-            '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        card:
-          type: object
-          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-          properties:
-            title:
-              type: string
-              description: The label name for the card.
-            description:
-              type: string
-              description: A short description of the card.
-            url:
-              type: string
-              description: The (image/pdf/video mp4) url starting with https:// .
-            suggestions:
-              type: array
-              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-              items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    description: The label name for the suggestion.
-                  text:
-                    type: string
-                    description: The plain text content of the suggestion.
-                  latitude:
-                    type: string
-                    description: The latitude value associated with the suggestion.
-                  longitude:
-                    type: string
-                    description: The longitude value associated with the suggestion.
-                  postback:
-                    type: string
-                    description: The postback text or action associated with the suggestion.
-                  start:
-                    type: string
-                    description: 'The latitude value associated with the suggestion.
-
-
-                      '
-                  end:
-                    type: string
-                    description: 'The longitude value associated with the suggestion.
-
-
-                      '
-                  decription:
-                    type: string
-                    description: 'The description associated with the suggestion.
-
-
-                      '
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_session_mediaimagemp4_msg:
-      type: object
-      title: Notification - Media (Image/Video/pdf) image.png
-      description: Messages that support sending images to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
-
-            '
-        thumbnail_url:
-          type: string
-          description: The (image/pdf/video mp4) url starting with https:// .
-        id:
-          type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
-
-            '
-        thumbnail_id:
-          type: string
-          description: 'The id of the media (image or video MP4) to be included in the message.
-
-            '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              latitude:
-                type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_notification_richcrdstdalone_msg:
-      type: object
-      title: Notification - Rich Card Standalone
-      description: Messages that contain a standalone rich card with structured content, such as images, titles, descriptions, and buttons. These cards can provide interactive experiences and support various actions.
-      properties:
-        type:
-          type: string
-          description: The type of message to be sent. It can be "card".
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
-
-            '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        card:
-          type: object
-          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-          properties:
-            title:
-              type: string
-              description: The label name for the card.
-            description:
-              type: string
-              description: A short description of the card.
-            url:
-              type: string
-              description: The (image/pdf/video mp4) url starting with https://
-            suggestions:
-              type: array
-              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-              items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    description: The label name for the suggestion.
-                  text:
-                    type: string
-                    description: The plain text content of the suggestion.
-                  latitude:
-                    type: string
-                    description: The latitude value associated with the suggestion.
-                  longitude:
-                    type: string
-                    description: The longitude value associated with the suggestion.
-                  postback:
-                    type: string
-                    description: The postback text or action associated with the suggestion.
-                  start:
-                    type: string
-                    description: 'The latitude value associated with the suggestion.
-
-
-                      '
-                  end:
-                    type: string
-                    description: 'The longitude value associated with the suggestion.
-
-
-                      '
-                  decription:
-                    type: string
-                    description: 'The description associated with the suggestion.
-
-
-                      '
-        fallback_text:
-          type: string
-          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_session_videothumbnailid_msg:
-      type: object
-      title: Session - Video With Thumbnail ID
-      description: Messages that support sending media message with thumbnail id  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        card:
-          type: object
-          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-          properties:
-            title:
-              type: string
-              description: The label name for the card.
-            description:
-              type: string
-              description: A short description of the card.
-            id:
-              type: string
-              description: 'The id of the media (image or video MP4) to be included in the message.
-
-                '
-            thumbnail_id:
-              type: string
-              description: 'The id of the media (image or video MP4) to be included in the message.
-
-                '
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_notification_calendarsugg_msg:
-      type: object
-      title: Notification - Calendar Suggestion
-      description: 'Messages that provide suggested calendar  or prompts for users to initiate a phone call directly from the messaging app as part of a campaign. '
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent.
-
-
-            '
-          example: Text. Media, Card, or Multiple Cards
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: The name of the bot sending the message.
-        text:
-          type: string
-          description: The plain text content of the message. This field is required for "text" type messages.
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              title:
-                type: string
-                description: 'The plain title of the suggestion.
-
-
-                  '
-              url:
-                type: string
-                description: 'The (image/pdf/video mp4) url starting with https:// .
-
-
-                  '
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
     rcs_template_whatsapp_fallback_api_msg:
       type: object
       title: India Template - Whatsapp Fallback API Message
@@ -2470,10 +3105,10 @@ components:
       - phone_no
       - bot_name
       - template
-    rcs_notification_videothumbnailid_msg:
+    rcs_session_videothumbnailurl_msg:
       type: object
-      title: Notification - Video With Thumbnail ID
-      description: Messages that support sending media message with thumbnail id  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      title: Session - Video With Thumbnail URL
+      description: Messages that support sending media message with thumbnail url  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
       properties:
         type:
           type: string
@@ -2500,16 +3135,12 @@ components:
             description:
               type: string
               description: A short description of the card.
-            id:
+            url:
               type: string
-              description: 'The id of the media (image or video MP4) to be included in the message.
-
-                '
-            thumbnail_id:
+              description: The (image/video mp4) url starting with https:// .
+            thumbnail_url:
               type: string
-              description: 'The id of the media (image or video MP4) to be included in the message.
-
-                '
+              description: The (image/video mp4) url starting with https:// .
         suggestions:
           type: array
           description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
@@ -2541,16 +3172,99 @@ components:
       - type
       - phone_no
       - bot_name
-    rcs_session_text_msg:
+    rcs_notification_richcrdstdalone_msg:
       type: object
-      title: Session - Text
-      description: Standard text messages that send plain text content as part of a campaign.
+      title: Notification - Rich Card Standalone
+      description: Messages that contain a standalone rich card with structured content, such as images, titles, descriptions, and buttons. These cards can provide interactive experiences and support various actions.
       properties:
         type:
           type: string
-          description: 'The type of message to be sent. It can be "text".
+          description: The type of message to be sent. It can be "card".
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
 
             '
+        url:
+          type: string
+          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+
+            '
+        extra:
+          type: string
+          description: 'An extra value that can be included in the message. This field is optional.
+
+            '
+        card:
+          type: object
+          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+          properties:
+            title:
+              type: string
+              description: The label name for the card.
+            description:
+              type: string
+              description: A short description of the card.
+            url:
+              type: string
+              description: The (image/pdf/video mp4) url starting with https://
+            suggestions:
+              type: array
+              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: The label name for the suggestion.
+                  text:
+                    type: string
+                    description: The plain text content of the suggestion.
+                  latitude:
+                    type: string
+                    description: The latitude value associated with the suggestion.
+                  longitude:
+                    type: string
+                    description: The longitude value associated with the suggestion.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+                  start:
+                    type: string
+                    description: 'The latitude value associated with the suggestion.
+
+
+                      '
+                  end:
+                    type: string
+                    description: 'The longitude value associated with the suggestion.
+
+
+                      '
+                  decription:
+                    type: string
+                    description: 'The description associated with the suggestion.
+
+
+                      '
+        fallback_text:
+          type: string
+          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
+      required:
+      - type
+      - phone_no
+      - bot_name
+    rcs_notification_dialsugg_msg:
+      type: object
+      title: Notification - Dial Suggestion
+      description: Messages that provide suggested phone numbers or prompts for users to initiate a phone call directly from the messaging app.
+      properties:
+        type:
+          type: string
+          description: The type of message to be sent. It can be "media".
         phone_no:
           type: string
           description: 'The recipient''s phone number, including the country code.
@@ -2561,15 +3275,9 @@ components:
           description: 'The name of the bot sending the message.
 
             '
-        ttl:
-          type: integer
-          description: time to live.
-        expire_time:
+        url:
           type: string
-          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
-        text:
-          type: string
-          description: 'The plain text content of the message. This field is required for "text" type messages.
+          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
 
             '
         extra:
@@ -2589,183 +3297,23 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
-              latitude:
+              call_to:
                 type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
+                description: The sender phone number.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
         fallback_text:
           type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
+          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
       required:
       - type
       - phone_no
       - bot_name
-      - text
-    rcs_template_fallback_api_msg:
+    rcs_notification_textsugg_msg:
       type: object
-      title: India Template - Fallback API Message
-      description: RCS template APIs allow businesses to leverage the advanced features of RCS messaging and create compelling, interactive, and visually rich content to engage with their customers more dynamically and interactively.
-      properties:
-        type:
-          type: string
-          description: "The type of the template.\n\n- **Text:** RCS text templates provide a way to create engaging and interactive messaging experiences for businesses. \n- **Rich Card Standalone:** Rich Card Standalone utilizes the Rich Card format to provide visually rich and interactive content. \n- **Rich Card Carousel:** A Rich Card Carousel in RCS allows businesses to present multiple rich media cards in a single message, providing a visually engaging and interactive experience.\n"
-        phone_no:
-          type: string
-          description: 'The mobile number to which the message will be sent, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        ttl:
-          type: integer
-          description: time to live.
-        expire_time:
-          type: string
-          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        template:
-          type: object
-          description: 'An object containing the template information.
-
-            '
-          properties:
-            name:
-              type: string
-              description: 'The name or identifier of the text template you want to use.
-
-                '
-            variables:
-              type: object
-              description: 'An object containing the variables to be replaced in the template.
-
-                '
-              properties:
-                '{var1}':
-                  type: string
-                  description: 'The value to replace the "{var1}" variable in the template.
-
-                    '
-                '{var2}':
-                  type: string
-                  description: 'The value to replace the "{var2}" variable in the template.
-
-                    '
-          required:
-          - name
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-      - template
-    rcs_template_text_msg:
-      type: object
-      title: India Template - Text Message
-      description: RCS template APIs allow businesses to leverage the advanced features of RCS messaging and create compelling, interactive, and visually rich content to engage with their customers more dynamically and interactively.
-      properties:
-        type:
-          type: string
-          description: "The type of the template.\n\n- **Text:** RCS text templates provide a way to create engaging and interactive messaging experiences for businesses. \n- **Rich Card Standalone:** Rich Card Standalone utilizes the Rich Card format to provide visually rich and interactive content. \n- **Rich Card Carousel:** A Rich Card Carousel in RCS allows businesses to present multiple rich media cards in a single message, providing a visually engaging and interactive experience.\n"
-        phone_no:
-          type: string
-          description: 'The mobile number to which the message will be sent, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        ttl:
-          type: integer
-          description: time to live.
-        expire_time:
-          type: string
-          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n -Either ttl or expire time can be used in a single message"
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        template:
-          type: object
-          description: 'An object containing the template information.
-
-            '
-          properties:
-            name:
-              type: string
-              description: 'The name or identifier of the text template you want to use.
-
-                '
-            variables:
-              type: object
-              description: 'An object containing the variables to be replaced in the template.
-
-                '
-              properties:
-                '{var1}':
-                  type: string
-                  description: 'The value to replace the "{var1}" variable in the template.
-
-                    '
-                '{var2}':
-                  type: string
-                  description: 'The value to replace the "{var2}" variable in the template.
-
-                    '
-          required:
-          - name
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-      - template
-    rcs_notification_locationsugg_msg:
-      type: object
-      title: Notification - Location Suggestion
-      description: Messages that suggest specific locations or addresses, allow users to share or navigate to a particular place.
+      title: Notification - Text Suggestion
+      description: Messages that offer a set of suggested response options for users to choose from, making it easier for them to respond to a message.
       properties:
         type:
           type: string
@@ -2787,11 +3335,6 @@ components:
           description: 'The plain text content of the message. This field is required for "text" type messages.
 
             '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
         suggestions:
           type: array
           description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
@@ -2804,20 +3347,12 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
-              latitude:
-                type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
         fallback_text:
           type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. '
       required:
       - type
       - phone_no
@@ -2891,411 +3426,9 @@ components:
       - phone_no
       - bot_name
       - template
-    rcs_session_videothumbnailurl_msg:
+    rcs_template_fallback_api_msg:
       type: object
-      title: Session - Video With Thumbnail URL
-      description: Messages that support sending media message with thumbnail url  to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "media".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        card:
-          type: object
-          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-          properties:
-            title:
-              type: string
-              description: The label name for the card.
-            description:
-              type: string
-              description: A short description of the card.
-            url:
-              type: string
-              description: The (image/video mp4) url starting with https:// .
-            thumbnail_url:
-              type: string
-              description: The (image/video mp4) url starting with https:// .
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_notification_richcrdcarousel_msg:
-      type: object
-      title: Notification - Rich Card Carousel
-      description: Messages that include a carousel of multiple rich cards. Each card within the carousel can have its own unique content and actions.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "multiple_cards".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        cards:
-          type: array
-          description: An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
-          items:
-            type: object
-            properties:
-              card:
-                type: object
-                description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-                properties:
-                  title:
-                    type: string
-                    description: The label name for the card.
-                  description:
-                    type: string
-                    description: A short description of the card.
-                  url:
-                    type: string
-                    description: 'The (image/pdf/video mp4) url starting with https://
-
-                      '
-                  suggestions:
-                    type: array
-                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-                    items:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The label name for the suggestion.
-                        text:
-                          type: string
-                          description: The plain text content of the suggestion.
-                        postback:
-                          type: string
-                          description: The postback text or action associated with the suggestion.
-                        call_to:
-                          type: string
-                          description: The sender phone number.
-                        url:
-                          type: string
-                          description: The (image/pdf/video mp4) url starting with https://
-                        start:
-                          type: string
-                          description: 'The latitude value associated with the suggestion.
-
-
-                            '
-                        end:
-                          type: string
-                          description: 'The longitude value associated with the suggestion.
-
-
-                            '
-                        decription:
-                          type: string
-                          description: 'The description associated with the suggestion.
-
-
-                            '
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_notification_common_msg:
-      type: object
-      title: Notification - Common
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent.
-
-
-            '
-          example: Text. Media, Card, or Multiple Cards
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: The name of the bot sending the message.
-        text:
-          type: string
-          description: The plain text content of the message. This field is required for "text" type messages.
-        url:
-          type: string
-          description: The URL of the media (image or video MP4) starting with https:// to be included in the message. This field is optional for "media" type messages.
-        extra:
-          type: string
-          description: An extra value that can be included in the message.
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              url:
-                type: string
-                description: 'The (image/pdf/video mp4) url starting with https:// .
-
-
-                  '
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-              latitude:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              longitude:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              call_to:
-                type: string
-                description: 'The sender phone number.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
-        card:
-          type: object
-          description: 'An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-
-
-            '
-          properties:
-            title:
-              type: string
-              description: 'The label name for the card.
-
-
-                '
-            description:
-              type: string
-              description: 'A short description of the card.
-
-
-                '
-            url:
-              type: string
-              description: The (image/pdf/video mp4) url starting with https:// .
-            suggestions:
-              type: array
-              description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-                '
-              items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    description: 'The label name for the suggestion.
-
-
-                      '
-                  text:
-                    type: string
-                    description: 'The plain text content of the suggestion.
-
-
-                      '
-                  latitude:
-                    type: string
-                    description: 'The latitude value associated with the suggestion.
-
-
-                      '
-                  longitude:
-                    type: string
-                    description: 'The longitude value associated with the suggestion.
-
-
-                      '
-                  postback:
-                    type: string
-                    description: 'The postback text or action associated with the suggestion.
-
-
-                      '
-          required:
-          - title
-          - description
-          - url
-        cards:
-          type: array
-          description: 'An array of objects representing multiple rich cards. Each card object has a "title", "description", "url", and an array of "suggestions". This field is optional for "multiple_cards" type messages.
-
-
-            '
-          items:
-            type: object
-            properties:
-              card:
-                type: object
-                description: 'An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-
-
-                  '
-                properties:
-                  title:
-                    type: string
-                    description: 'The label name for the card.
-
-
-                      '
-                  description:
-                    type: string
-                    description: 'A short description of the card.
-
-
-                      '
-                  url:
-                    type: string
-                    description: The (image/pdf/video mp4) url starting with https:// .
-                  suggestions:
-                    type: array
-                    description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-                    items:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The label name for the suggestion.
-                        text:
-                          type: string
-                          description: The plain text content of the suggestion.
-                        postback:
-                          type: string
-                          description: The postback text or action associated with the suggestion.
-                        call_to:
-                          type: string
-                          description: 'The sender phone number.
-
-
-                            '
-                        url:
-                          type: string
-                          description: The (image/pdf/video mp4) url starting with https:// .
-                        start:
-                          type: string
-                          description: 'The latitude value associated with the suggestion.
-
-
-                            '
-                        end:
-                          type: string
-                          description: 'The longitude value associated with the suggestion.
-
-
-                            '
-                        decription:
-                          type: string
-                          description: 'The description associated with the suggestion.
-
-
-                            '
-                required:
-                - title
-                - description
-                - url
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_template_sms_fallback_api_msg:
-      type: object
-      title: India Template - SMS Fallback API Message
+      title: India Template - Fallback API Message
       description: RCS template APIs allow businesses to leverage the advanced features of RCS messaging and create compelling, interactive, and visually rich content to engage with their customers more dynamically and interactively.
       properties:
         type:
@@ -3356,26 +3489,15 @@ components:
           description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
 
             '
-        sms:
-          type: object
-          description: 'An object containing the sms template fallback information.
-
-            '
-          properties:
-            fallback_text:
-              type: string
-              description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
-
-                '
       required:
       - type
       - phone_no
       - bot_name
       - template
-    rcs_session_dialsugg_msg:
+    rcs_notification_media_imagemp4_msg:
       type: object
-      title: Session - Dial Suggestion
-      description: Messages that provide suggested phone numbers or prompts for users to initiate a phone call directly from the messaging app as part of a campaign.
+      title: Notification - Media (Image/Video/pdf) image.png
+      description: Messages that include images to enhance visual communication and short videos, or animated content in MP4 format.
       properties:
         type:
           type: string
@@ -3394,64 +3516,20 @@ components:
             '
         url:
           type: string
-          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+          description: 'The URL of the media (image or pdf or video MP4) to be included in the message. This field is optional for "media" type messages.
 
             '
-        extra:
+        thumbnail_url:
           type: string
-          description: 'An extra value that can be included in the message. This field is optional.
+          description: The (image/pdf/video mp4) url starting with https:// .
+        id:
+          type: string
+          description: 'The id of the media (image or video MP4) to be included in the message.
 
             '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              call_to:
-                type: string
-                description: The sender's phone number.
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-        fallback_text:
+        thumbnail_id:
           type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - phone_no
-      - bot_name
-    rcs_session_locationsugg_msg:
-      type: object
-      title: Session - Location Suggestion
-      description: Messages that suggest specific locations or addresses, allowing users to share or navigate to a particular place as part of a campaign.
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent. It can be "text".
-
-            '
-        phone_no:
-          type: string
-          description: 'The recipient''s phone number, including the country code.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        text:
-          type: string
-          description: 'The plain text content of the message. This field is required for "text" type messages.
+          description: 'The id of the media (image or pdf orvideo MP4) to be included in the message.
 
             '
         extra:
@@ -3482,91 +3560,15 @@ components:
                 description: The postback text or action associated with the suggestion.
         fallback_text:
           type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. '
       required:
       - type
       - phone_no
       - bot_name
-      - text
-    rcs_notification_text_msg:
+    rcs_session_mediaid_msg:
       type: object
-      title: Notification - Text
-      description: Standard text messages that send plain text content.
-      properties:
-        type:
-          type: string
-          description: The type of message to be sent. It can be "text".
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: The name of the bot sending the message.
-        ttl:
-          type: integer
-          description: time to live.
-        expire_time:
-          type: string
-          description: "The date and time at which the message should be expired and should be in the format YYYY-MM-DD HH:MM:SS.\n  -Either ttl or expire time can be used in a single message"
-        text:
-          type: string
-          description: The plain text content of the message. This field is required for "text" type messages.
-        extra:
-          type: string
-          description: 'An extra value that can be included in the message. '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              latitude:
-                type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-        fallback_text:
-          type: string
-          description: The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format.
-      required:
-      - type
-      - phone_no
-      - bot_name
-      - text
-    rcs_session_urlsugg_msg:
-      type: object
-      title: Session - URL Suggestion
-      description: Messages that provide suggestions for relevant URLs or links that users can easily access or interact with as part of a campaign.
+      title: Session - Media ID
+      description: Messages that support sending media id to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
       properties:
         type:
           type: string
@@ -3583,43 +3585,51 @@ components:
           description: 'The name of the bot sending the message.
 
             '
-        url:
+        id:
           type: string
-          description: 'The URL of the media (image or video MP4) to be included in the message. This field is optional for "media" type messages.
+          description: 'The id of the media (image or video MP4) to be included in the message.
 
             '
-        extra:
+        thumbnail_id:
           type: string
-          description: 'An extra value that can be included in the message. This field is optional.
-
-            '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              url:
-                type: string
-                description: The (image/pdf/video mp4) url starting with https:// .
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+          description: 'The id of the media (image or video MP4) to be included in the message.
 
             '
       required:
       - type
       - phone_no
       - bot_name
+      - id
+    rcs_notification_mediaid_msg:
+      type: object
+      title: Notification - Media ID
+      description: Messages that support sending media id to enhance visual communication and short videos or animated content in MP4 format as part of a campaign.
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent. It can be "media".
+
+            '
+        phone_no:
+          type: string
+          description: 'The recipient''s phone number, including the country code.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        id:
+          type: string
+          description: 'The id of the media (image or video MP4) to be included in the message.
+
+            '
+      required:
+      - type
+      - phone_no
+      - bot_name
+      - id
   securitySchemes:
     jwt:
       type: apiKey

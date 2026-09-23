@@ -1,77 +1,7 @@
 openapi: 3.2.0
 info:
   title: Route Mobile SMS Account API
-  description: 'Complete API reference for Route Mobile''s SMS platform. Covers message submission,
-
-    OTP, account management, and third-party platform integrations.
-
-
-    ## Authentication
-
-
-    Most APIs authenticate via `username` and `password` query parameters.
-
-    Third-party integration APIs (Moengage, Webengage) use a static `Authorization`
-
-    header token provided by Route Mobile.
-
-
-    ## Base URLs
-
-
-    | URL | Description |
-
-    |-----|-------------|
-
-    | `https://api.rmlconnect.net` | Secured HTTPS (port 443) — recommended |
-
-    | `https://api.rmlconnect.net:8443` | Secured HTTPS (port 8443) |
-
-    | `http://api.rmlconnect.net` | Non-secured HTTP — legacy only |
-
-    | `https://client.rmlconnect.net` | Client portal — coverage map only |
-
-
-    ## Platform Response Codes
-
-
-    SMS submission APIs return a plain text response with a platform status code prefix.
-
-
-    | Code | Meaning |
-
-    |------|---------|
-
-    | 1701 | Success — `1701\|<CELL_NO>\|<MESSAGE_ID>` |
-
-    | 1702 | Invalid URL / missing or blank parameter |
-
-    | 1703 | Invalid username or password |
-
-    | 1704 | Invalid value in `type` field |
-
-    | 1705 | Invalid message |
-
-    | 1706 | Invalid destination |
-
-    | 1707 | Invalid source (Sender ID) |
-
-    | 1708 | Invalid value in `dlr` field |
-
-    | 1709 | User validation failed |
-
-    | 1710 | Internal error |
-
-    | 1025 | Insufficient credit |
-
-    | 1715 | Response timeout |
-
-
-    > **Retry Policy:** Do NOT retry for any error code except `1709`.
-
-    > For `1715` specifically, do not re-submit the same message.
-
-    '
+  description: Complete API reference for Route Mobile's SMS platform.
   version: 1.0.0
   contact:
     name: Route Mobile Support
@@ -108,9 +38,7 @@ paths:
 
         Use `https://api.rmlconnect.net` or `https://api.rmlconnect.net:8443` for secured access,
 
-        or `http://api.rmlconnect.net` for non-secured access.
-
-        '
+        or `http://api.rmlconnect.net` for non-secured access.'
       operationId: checkCredits
       parameters:
       - name: username
@@ -151,9 +79,7 @@ paths:
 
         token with the Message Submission with Token API to avoid passing credentials
 
-        on every request.
-
-        '
+        on every request.'
       operationId: generateToken
       parameters:
       - name: username

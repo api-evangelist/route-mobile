@@ -3,52 +3,7 @@ info:
   title: SendClean Email Sending Domains API
   description: 'The SendClean Email API is a RESTful HTTP API for sending transactional emails, managing SMTP users,
 
-    sending/tracking domains, webhooks, and account information.
-
-
-    ## Base URL
-
-    All API calls are relative to:
-
-    ```
-
-    https://api.sendclean.net/v1.0
-
-    ```
-
-
-    ## Authentication
-
-    Every request requires `owner_id` and `token` fields in the request body (JSON POST).
-
-
-    ## Request Format
-
-    - All API calls use **HTTP POST** (except `sendTemplateHTTPGet` which uses HTTP GET).
-
-    - Request bodies must be `Content-Type: application/json`.
-
-    - Any non-200 HTTP response code indicates an error.
-
-
-    ## Response Format
-
-    All responses return JSON with a `status` field of either `"success"` or `"error"`.
-
-
-    ## Error Types
-
-    | Type | Description |
-
-    |------|-------------|
-
-    | `ValidationError` | Invalid or missing required parameters |
-
-    | `GeneralError` | Unexpected server-side error |
-
-    | `AuthenticationError` | `owner_id` and `token` did not match |
-
-    '
+    sending/tracking domains, webhooks, and account information.'
   version: 1.0.0
   contact:
     email: support@sendclean.com
@@ -216,87 +171,6 @@ paths:
                     message: Sending Domain Deleted
 components:
   schemas:
-    ListSendingDomainResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        sending_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendingDomainListEntry'
-    CheckSendingDomainResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        domain:
-          type: string
-          example: abc.com
-        dkim:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'Yes'
-        spf:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'No'
-        valid_signing:
-          type: string
-          enum:
-          - 'Yes'
-          - 'No'
-          example: 'No'
-    DomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        properties:
-          domain:
-            type: string
-            description: Fully qualified domain name
-            example: abc.com
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
     ErrorResponse:
       type: object
       properties:
@@ -333,6 +207,31 @@ components:
             type: string
             description: Mailbox name to send verification instructions to
             example: john
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
     SendingDomainListEntry:
       type: object
       properties:
@@ -368,3 +267,59 @@ components:
               enum:
               - 'Yes'
               - 'No'
+    ListSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        sending_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendingDomainListEntry'
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    CheckSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        domain:
+          type: string
+          example: abc.com
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'No'
+        valid_signing:
+          type: string
+          enum:
+          - 'Yes'
+          - 'No'
+          example: 'No'

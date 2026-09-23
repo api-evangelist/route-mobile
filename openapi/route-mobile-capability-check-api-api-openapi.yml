@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   version: 2.1.0
-  title: Route Mobile Rich Communication Services (RCS) API Documentation Capability Check API
+  title: Route Mobile Rich Communication Services (RCS) API…
   description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
 
 
-    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+    For more information, see the Route Mobile Open API Specifications'
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development

@@ -2,54 +2,7 @@ openapi: 3.2.0
 info:
   version: 1.8.0
   title: Route Mobile WhatsApp Business Account Management API
-  description: 'The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale. Use these APIs to integrate WhatsApp messaging into your applications for notifications, customer engagement, commerce, and support.
-
-
-    ## Getting Started
-
-
-    1. **Authenticate** — Call the [Login API](#tag/Authentication/operation/loginApi) to obtain a JWT token.
-
-    2. **Send Messages** — Use the [Send Messages API](#tag/Messaging/operation/sendMessages) to deliver template or session messages.
-
-    3. **Receive Callbacks** — Configure your webhook URL to receive [delivery reports and incoming messages](#tag/Webhooks).
-
-
-    ## Key Concepts
-
-
-    - **Template Messages** — Pre-approved message templates for outbound notifications (marketing, utility, authentication).
-
-    - **Session Messages** — Free-form messages within a 24-hour customer service window.
-
-    - **Bulk Campaigns** — Send messages to thousands of recipients via file upload.
-
-    - **Catalog & Commerce** — Product catalogs, payments, and order management via WhatsApp.
-
-
-    ## Authentication
-
-
-    All API endpoints (except Login) require a JWT bearer token in the `Authorization` header. Tokens are valid for **one hour** by default.
-
-
-    ```
-
-    Authorization: <your-jwt-token>
-
-    ```
-
-
-    ## Rate Limits
-
-
-    API rate limits are governed by your account tier. Contact your account manager for details.
-
-
-    ## Support
-
-
-    For API support, visit the [Route Mobile Developer Hub](https://developers.routemobile.com/) or reach out to [product-desk@routemobile.com](mailto:product-desk@routemobile.com).'
+  description: The Route Mobile WhatsApp Business API enables enterprises to programmatically send and receive WhatsApp messages at scale.
   contact:
     name: Route Mobile Developer Support
     url: https://developers.routemobile.com/
@@ -412,7 +365,7 @@ paths:
       tags:
       - Account Management
       summary: Profile Photo API
-      description: The Profile Photo API endpoint uploads the profile photo for account and updates  the account details for the WhatsApp business profile by entering the authorization token key.
+      description: The Profile Photo API endpoint uploads the profile photo for account and updates the account details for the WhatsApp business profile by entering the authorization token key.
       operationId: uploadProfilePhoto
       parameters:
       - name: source
@@ -544,12 +497,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    MessagePreviewMediaBody:
-      type: object
-      properties:
-        text:
-          type: string
-          description: The text to include in the message.
     MessagePreview:
       type: object
       description: A preview of the message or content associated with the campaign.
@@ -565,46 +512,23 @@ components:
           description: Additional information to include in the message.
         media:
           $ref: '#/components/schemas/MessagePreviewMedia'
-    ProfilePhotoRequest:
+    MessagePreviewMediaHeader:
       type: object
       properties:
-        file:
-          type: string
-          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
-          example: ABC.jpeg, ABC.jpg, ABC.png
-      required:
-      - file
-    FileMimetypeError:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+    MessagePreviewMediaImage:
       type: object
-      title: File Mimetype Error
       properties:
-        message:
+        link:
           type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the file upload.
-        reason:
-          type: object
-          description: The reason for not processing the file upload request.
-          properties:
-            file_mimetype:
-              type: array
-              description: The MIME type of the file containing the phone numbers of the recipients.
-              items:
-                type: string
-    JwtExpiredError:
+          description: The URL of the image file.
+    NotFoundError:
       type: object
       properties:
         message:
           type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
+          description: The message response.
     UnknownCampaignTypeError:
       type: object
       title: Unknown Campaign Type Error
@@ -624,38 +548,6 @@ components:
               description: The type of the campaign.
               items:
                 type: string
-    MessagePreviewMedia:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of message template.
-        template_name:
-          type: string
-          description: The name of the template to use.
-        lang_code:
-          type: string
-          description: Language code of language in which message text is written, such as "en" for English.
-        header:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessagePreviewMediaHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessagePreviewMediaBody'
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The message response.
-    MessagePreviewMediaImage:
-      type: object
-      properties:
-        link:
-          type: string
-          description: The URL of the image file.
     BulkUploadResponse:
       type: object
       properties:
@@ -691,11 +583,72 @@ components:
         country_code:
           type: string
           description: The country code.
-    MessagePreviewMediaHeader:
+    ProfilePhotoRequest:
       type: object
       properties:
-        image:
-          $ref: '#/components/schemas/MessagePreviewMediaImage'
+        file:
+          type: string
+          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
+          example: ABC.jpeg, ABC.jpg, ABC.png
+      required:
+      - file
+    FileMimetypeError:
+      type: object
+      title: File Mimetype Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            file_mimetype:
+              type: array
+              description: The MIME type of the file containing the phone numbers of the recipients.
+              items:
+                type: string
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    MessagePreviewMedia:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of message template.
+        template_name:
+          type: string
+          description: The name of the template to use.
+        lang_code:
+          type: string
+          description: Language code of language in which message text is written, such as "en" for English.
+        header:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaBody'
   securitySchemes:
     BearerAuth:
       type: http

@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   version: 2.1.0
-  title: Route Mobile Rich Communication Services (RCS) API Documentation RCS Optin API
+  title: Route Mobile Rich Communication Services (RCS) API…
   description: 'Welcome to the Route Mobile developer hub. You will find comprehensive RCS API documentation to help you start working with Route Mobile as quickly as possible and support if you get stuck. Let''s jump right in!
 
 
-    For more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/RCS-Business-Messaging-API/RCS.html)'
+    For more information, see the Route Mobile Open API Specifications'
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
@@ -35,7 +35,7 @@ paths:
       tags:
       - RCS Optin API
       summary: Create Optin API
-      description: 'Create Optin API is used to create optin for a given called bot name which is usually supported along with channel. '
+      description: Create Optin API is used to create optin for a given called bot name which is usually supported along with channel.
       operationId: optinRCS
       requestBody:
         description: ''
