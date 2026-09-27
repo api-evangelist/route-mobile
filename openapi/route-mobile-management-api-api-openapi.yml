@@ -440,21 +440,6 @@ paths:
       - jwt: []
 components:
   schemas:
-    rcs_management_add_tester:
-      type: object
-      title: Management Add Tester API
-      properties:
-        bot_name:
-          type: string
-          description: 'The name of the bot.
-
-            '
-        phone_number:
-          type: string
-          description: "The phone number of the bot. \n"
-      required:
-      - bot_name
-      - file
     rcs_bulk_dnd_set_body:
       type: object
       title: Bulk DND Set (Whitelist / Blacklist)
@@ -477,6 +462,21 @@ components:
       - bot_name
       - file_url
       - dnd_mode
+    rcs_management_add_tester:
+      type: object
+      title: Management Add Tester API
+      properties:
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        phone_number:
+          type: string
+          description: "The phone number of the bot. \n"
+      required:
+      - bot_name
+      - file
   securitySchemes:
     jwt:
       type: apiKey

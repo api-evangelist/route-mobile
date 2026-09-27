@@ -1219,30 +1219,14 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The message response.
-    DeleteProductFeedRequestAlt:
+    DeleteProductFeedRequest:
       type: object
       properties:
         product_feed_id:
           type: string
-          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
-    CatalogAuthError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the message.
-        reason:
-          type: string
-          description: The reason for not processing the message.
+          description: The unique ID of the product feed that should be deleted.
+      required:
+      - product_feed_id
     CreateProductFeedRequest:
       type: object
       properties:
@@ -1267,32 +1251,6 @@ components:
       required:
       - file_url
       - name
-    CatalogUnauthorizedError:
-      type: object
-      properties:
-        response:
-          type: string
-          description: The response message.
-    DeleteProductFeedRequest:
-      type: object
-      properties:
-        product_feed_id:
-          type: string
-          description: The unique ID of the product feed that should be deleted.
-      required:
-      - product_feed_id
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
     CatalogUploadRequest:
       type: object
       properties:
@@ -1312,6 +1270,12 @@ components:
       - action
       - file
       - file_name
+    DeleteProductFeedRequestAlt:
+      type: object
+      properties:
+        product_feed_id:
+          type: string
+          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
     UpdateProductFeedRequest:
       type: object
       properties:
@@ -1334,6 +1298,42 @@ components:
       required:
       - file_url
       - product_feed_id
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    CatalogUnauthorizedError:
+      type: object
+      properties:
+        response:
+          type: string
+          description: The response message.
+    CatalogAuthError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the message.
+        reason:
+          type: string
+          description: The reason for not processing the message.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
   securitySchemes:
     BearerAuth:
       type: http

@@ -137,41 +137,6 @@ paths:
                     message: Tracking Domain Deleted
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
     DomainRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -194,6 +159,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrackingDomainListEntry'
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
     CheckTrackingDomainResponse:
       type: object
       properties:
@@ -219,17 +209,27 @@ components:
               - 'Yes'
               - 'No'
               example: 'Yes'
-    SuccessResponse:
+    ErrorResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - success
-          example: success
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
         message:
           type: string
-          example: Operation successful
+          example: Token MissMatch
     TrackingDomainListEntry:
       type: object
       properties:

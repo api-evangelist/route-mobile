@@ -103,6 +103,20 @@ components:
           description: JSON Web Token Authentication
         user_data:
           $ref: '#/components/schemas/LoginUserData'
+    LoginRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: The secret code that users provide to the application during the login process.
+          example: password
+        username:
+          type: string
+          description: Unique identifier that users provide to the application during the login process. Usernames can be any string of characters.
+          example: username
+      required:
+      - password
+      - username
     LoginUserData:
       type: object
       properties:
@@ -139,20 +153,6 @@ components:
         parent_username:
           type: string
           description: The user of child's parent.
-    LoginRequest:
-      type: object
-      properties:
-        password:
-          type: string
-          description: The secret code that users provide to the application during the login process.
-          example: password
-        username:
-          type: string
-          description: Unique identifier that users provide to the application during the login process. Usernames can be any string of characters.
-          example: username
-      required:
-      - password
-      - username
   securitySchemes:
     BearerAuth:
       type: http

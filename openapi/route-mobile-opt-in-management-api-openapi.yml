@@ -370,6 +370,30 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    OptinStoreResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the message delivery.
+        message:
+          type: string
+          description: The message response.
+        details:
+          type: string
+          description: The details of the message.
     NotFoundError:
       type: object
       properties:
@@ -395,30 +419,6 @@ components:
           description: The phone number of the customer.
           items:
             type: string
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
-    OptinStoreResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          description: The status of the message delivery.
-        message:
-          type: string
-          description: The message response.
-        details:
-          type: string
-          description: The details of the message.
   securitySchemes:
     BearerAuth:
       type: http

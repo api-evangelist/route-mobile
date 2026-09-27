@@ -171,27 +171,87 @@ paths:
                     message: Sending Domain Deleted
 components:
   schemas:
-    ErrorResponse:
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
+    CheckSendingDomainResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
+          - success
+        domain:
+          type: string
+          example: abc.com
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'No'
+        valid_signing:
           type: string
           enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
+          - 'Yes'
+          - 'No'
+          example: 'No'
+    ListSendingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        sending_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendingDomainListEntry'
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
         message:
           type: string
-          example: Token MissMatch
+          example: Operation successful
     VerifySendingDomainRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -207,31 +267,6 @@ components:
             type: string
             description: Mailbox name to send verification instructions to
             example: john
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
-    DomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        properties:
-          domain:
-            type: string
-            description: Fully qualified domain name
-            example: abc.com
     SendingDomainListEntry:
       type: object
       properties:
@@ -267,59 +302,24 @@ components:
               enum:
               - 'Yes'
               - 'No'
-    ListSendingDomainResponse:
+    ErrorResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - success
-        sending_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendingDomainListEntry'
-    SuccessResponse:
-      type: object
-      properties:
-        status:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
           type: string
           enum:
-          - success
-          example: success
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
         message:
           type: string
-          example: Operation successful
-    CheckSendingDomainResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        domain:
-          type: string
-          example: abc.com
-        dkim:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'Yes'
-        spf:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'No'
-        valid_signing:
-          type: string
-          enum:
-          - 'Yes'
-          - 'No'
-          example: 'No'
+          example: Token MissMatch

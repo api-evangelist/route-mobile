@@ -41,27 +41,6 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
     AuthFields:
       type: object
       required:
@@ -87,3 +66,24 @@ components:
           type: object
           description: Account and user detail fields (varies by plan)
           additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
