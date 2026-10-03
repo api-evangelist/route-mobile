@@ -125,6 +125,36 @@ paths:
       security: []
 components:
   schemas:
+    vbs_callback_delivery_report:
+      type: object
+      title: Delivery Report
+      properties:
+        message_status:
+          type: string
+          description: 'The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.
+
+            '
+        message_time:
+          type: integer
+          format: date-time
+          description: 'The Unix timestamp when the message status was updated.
+
+            '
+        phone_number:
+          type: string
+          description: 'The phone number (with country code) of the recipient of the message.
+
+            '
+        service_type:
+          type: string
+          description: 'The type of Viber service being used. Possible values are one_way, two_way, or session.
+
+            '
+        request_id:
+          type: string
+          description: 'A unique identifier for the request.
+
+            '
     vbs_callback_incoming_videoimage:
       type: object
       title: Incoming Image or Video
@@ -156,36 +186,6 @@ components:
         service_type:
           type: string
           description: 'The type of service that the Viber Business Account supports.
-
-            '
-        request_id:
-          type: string
-          description: 'A unique identifier for the request.
-
-            '
-    vbs_callback_delivery_report:
-      type: object
-      title: Delivery Report
-      properties:
-        message_status:
-          type: string
-          description: 'The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.
-
-            '
-        message_time:
-          type: integer
-          format: date-time
-          description: 'The Unix timestamp when the message status was updated.
-
-            '
-        phone_number:
-          type: string
-          description: 'The phone number (with country code) of the recipient of the message.
-
-            '
-        service_type:
-          type: string
-          description: 'The type of Viber service being used. Possible values are one_way, two_way, or session.
 
             '
         request_id:

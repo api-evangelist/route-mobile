@@ -137,28 +137,38 @@ paths:
                     message: Tracking Domain Deleted
 components:
   schemas:
-    DomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        properties:
-          domain:
-            type: string
-            description: Fully qualified domain name
-            example: abc.com
-    ListTrackingDomainResponse:
+    SuccessResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-        tracking_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrackingDomainListEntry'
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
     AuthFields:
       type: object
       required:
@@ -173,17 +183,17 @@ components:
           type: string
           description: A valid API token
           example: example_token
-    SuccessResponse:
+    ListTrackingDomainResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
+        tracking_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingDomainListEntry'
     CheckTrackingDomainResponse:
       type: object
       properties:
@@ -209,27 +219,17 @@ components:
               - 'Yes'
               - 'No'
               example: 'Yes'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
     TrackingDomainListEntry:
       type: object
       properties:

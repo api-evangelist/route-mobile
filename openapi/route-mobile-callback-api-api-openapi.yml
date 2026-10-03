@@ -180,9 +180,9 @@ paths:
           description: OK
 components:
   schemas:
-    rcs_callback_fallback_whatsapp:
+    rcs_callback_incoming_image:
       type: object
-      title: Fallback To Whatsapp
+      title: Incoming Image
       properties:
         bot_name:
           type: string
@@ -192,71 +192,29 @@ components:
         event_type:
           type: string
           description: "The type of event or message. \n"
-        message_id:
+        media_name:
           type: string
-          description: "The unique identifier for the message that is being reported for its status. \n"
-        message_status:
-          type: string
-          description: 'The status of the message.
+          description: 'The name of the media file.
 
             '
-        timestamp:
+        media_size:
           type: string
-          description: 'The timestamp of when the message was received or sent.
+          description: 'The size of the media file in bytes.
 
             '
-        user_contact:
+        media_type:
           type: string
-          description: 'The contact information of the user.
+          description: 'The type of media. For an image, it is set to "image".
 
             '
-        extra:
+        media_uri:
           type: string
-          description: 'Additional information or parameters related to the payment.
+          description: 'The URI or URL where the media file is hosted or stored.
 
             '
-        username:
-          type: string
-          description: 'The name of the user.
-
-            '
-      required:
-      - bot_name
-      - event_type
-      - message_id
-      - message_status
-      - failure_reason
-      - timestamp
-      - user_contact
-      - extra
-      - username
-    rcs_callback_incoming_location:
-      type: object
-      title: Incoming Location
-      properties:
         request_id:
           type: string
           description: 'The unique identifier for the original request or message.
-
-            '
-        user_contact:
-          type: string
-          description: 'The contact information of the user.
-
-            '
-        timestamp:
-          type: string
-          description: 'The timestamp of when the message was received or sent.
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot.
-
-            '
-        username:
-          type: string
-          description: 'The name of the user.
 
             '
         session_id:
@@ -264,47 +222,6 @@ components:
           description: 'The session identifier for the conversation or interaction. It helps to associate multiple messages from the same user or session.
 
             '
-        event_type:
-          type: string
-          description: "The type of event or message. \n"
-        latitude:
-          type: number
-          description: "A decimal number representing the latitude coordinate of the location shared by the user. \n"
-        longitude:
-          type: number
-          description: 'A decimal number representing the longitude coordinate of the location shared by the user.
-
-            '
-      required:
-      - request_id
-      - user_contact
-      - timestamp
-      - bot_name
-      - username
-      - session_id
-      - event_type
-      - latitude
-      - longitude
-    rcs_callback_status_read_delivered:
-      type: object
-      title: Status (Read/Delivered)
-      properties:
-        bot_name:
-          type: string
-          description: 'The name of the bot.
-
-            '
-        event_type:
-          type: string
-          description: "The type of event or message. \n"
-        message_id:
-          type: string
-          description: "The unique identifier for the message that is being reported for its status. \n"
-        message_status:
-          type: string
-          description: 'The status of the message.
-
-            '
         timestamp:
           type: string
           description: 'The timestamp of when the message was received or sent.
@@ -315,33 +232,23 @@ components:
           description: 'The contact information of the user.
 
             '
-        extra:
-          type: string
-          description: 'Additional information or parameters related to the payment.
-
-            '
         username:
           type: string
           description: 'The name of the user.
 
             '
-        campaign_name:
-          type: string
-          description: "The name of the campaign. \n"
-        campaign_id:
-          type: string
-          description: "The id for the campaign sent. \n"
       required:
       - bot_name
       - event_type
-      - message_id
-      - message_status
+      - media_name
+      - media_size
+      - media_type
+      - media_uri
+      - request_id
+      - session_id
       - timestamp
       - user_contact
-      - extra
       - username
-      - campaign_name
-      - campaign_id
     rcs_callback_incoming_suggestion_reply:
       type: object
       title: Incoming Suggestion Reply
@@ -470,6 +377,63 @@ components:
       - timestamp
       - user_contact
       - username
+    rcs_callback_status_read_delivered:
+      type: object
+      title: Status (Read/Delivered)
+      properties:
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        event_type:
+          type: string
+          description: "The type of event or message. \n"
+        message_id:
+          type: string
+          description: "The unique identifier for the message that is being reported for its status. \n"
+        message_status:
+          type: string
+          description: 'The status of the message.
+
+            '
+        timestamp:
+          type: string
+          description: 'The timestamp of when the message was received or sent.
+
+            '
+        user_contact:
+          type: string
+          description: 'The contact information of the user.
+
+            '
+        extra:
+          type: string
+          description: 'Additional information or parameters related to the payment.
+
+            '
+        username:
+          type: string
+          description: 'The name of the user.
+
+            '
+        campaign_name:
+          type: string
+          description: "The name of the campaign. \n"
+        campaign_id:
+          type: string
+          description: "The id for the campaign sent. \n"
+      required:
+      - bot_name
+      - event_type
+      - message_id
+      - message_status
+      - timestamp
+      - user_contact
+      - extra
+      - username
+      - campaign_name
+      - campaign_id
     rcs_callback_incoming_suggaction:
       type: object
       title: Incoming Suggestion Action (URL/Dial)
@@ -596,9 +560,9 @@ components:
       - username
       - campaign_name
       - campaign_id
-    rcs_callback_incoming_image:
+    rcs_callback_incoming_text:
       type: object
-      title: Incoming Image
+      title: Incoming Text
       properties:
         bot_name:
           type: string
@@ -608,26 +572,6 @@ components:
         event_type:
           type: string
           description: "The type of event or message. \n"
-        media_name:
-          type: string
-          description: 'The name of the media file.
-
-            '
-        media_size:
-          type: string
-          description: 'The size of the media file in bytes.
-
-            '
-        media_type:
-          type: string
-          description: 'The type of media. For an image, it is set to "image".
-
-            '
-        media_uri:
-          type: string
-          description: 'The URI or URL where the media file is hosted or stored.
-
-            '
         request_id:
           type: string
           description: 'The unique identifier for the original request or message.
@@ -636,6 +580,11 @@ components:
         session_id:
           type: string
           description: 'The session identifier for the conversation or interaction. It helps to associate multiple messages from the same user or session.
+
+            '
+        text_message:
+          type: string
+          description: 'The text content of the message sent by the user.
 
             '
         timestamp:
@@ -656,12 +605,9 @@ components:
       required:
       - bot_name
       - event_type
-      - media_name
-      - media_size
-      - media_type
-      - media_uri
       - request_id
       - session_id
+      - text_message
       - timestamp
       - user_contact
       - username
@@ -730,9 +676,64 @@ components:
       - timestamp
       - user_contact
       - username
-    rcs_callback_incoming_text:
+    rcs_callback_incoming_location:
       type: object
-      title: Incoming Text
+      title: Incoming Location
+      properties:
+        request_id:
+          type: string
+          description: 'The unique identifier for the original request or message.
+
+            '
+        user_contact:
+          type: string
+          description: 'The contact information of the user.
+
+            '
+        timestamp:
+          type: string
+          description: 'The timestamp of when the message was received or sent.
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot.
+
+            '
+        username:
+          type: string
+          description: 'The name of the user.
+
+            '
+        session_id:
+          type: string
+          description: 'The session identifier for the conversation or interaction. It helps to associate multiple messages from the same user or session.
+
+            '
+        event_type:
+          type: string
+          description: "The type of event or message. \n"
+        latitude:
+          type: number
+          description: "A decimal number representing the latitude coordinate of the location shared by the user. \n"
+        longitude:
+          type: number
+          description: 'A decimal number representing the longitude coordinate of the location shared by the user.
+
+            '
+      required:
+      - request_id
+      - user_contact
+      - timestamp
+      - bot_name
+      - username
+      - session_id
+      - event_type
+      - latitude
+      - longitude
+    rcs_callback_fallback_whatsapp:
+      type: object
+      title: Fallback To Whatsapp
       properties:
         bot_name:
           type: string
@@ -742,19 +743,12 @@ components:
         event_type:
           type: string
           description: "The type of event or message. \n"
-        request_id:
+        message_id:
           type: string
-          description: 'The unique identifier for the original request or message.
-
-            '
-        session_id:
+          description: "The unique identifier for the message that is being reported for its status. \n"
+        message_status:
           type: string
-          description: 'The session identifier for the conversation or interaction. It helps to associate multiple messages from the same user or session.
-
-            '
-        text_message:
-          type: string
-          description: 'The text content of the message sent by the user.
+          description: 'The status of the message.
 
             '
         timestamp:
@@ -767,6 +761,11 @@ components:
           description: 'The contact information of the user.
 
             '
+        extra:
+          type: string
+          description: 'Additional information or parameters related to the payment.
+
+            '
         username:
           type: string
           description: 'The name of the user.
@@ -775,11 +774,12 @@ components:
       required:
       - bot_name
       - event_type
-      - request_id
-      - session_id
-      - text_message
+      - message_id
+      - message_status
+      - failure_reason
       - timestamp
       - user_contact
+      - extra
       - username
   securitySchemes:
     jwt:

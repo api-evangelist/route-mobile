@@ -95,14 +95,6 @@ paths:
                     status: <exception>
 components:
   schemas:
-    LoginResponse:
-      type: object
-      properties:
-        JWTAUTH:
-          type: string
-          description: JSON Web Token Authentication
-        user_data:
-          $ref: '#/components/schemas/LoginUserData'
     LoginRequest:
       type: object
       properties:
@@ -153,6 +145,14 @@ components:
         parent_username:
           type: string
           description: The user of child's parent.
+    LoginResponse:
+      type: object
+      properties:
+        JWTAUTH:
+          type: string
+          description: JSON Web Token Authentication
+        user_data:
+          $ref: '#/components/schemas/LoginUserData'
   securitySchemes:
     BearerAuth:
       type: http

@@ -361,10 +361,9 @@ paths:
       - jwt: []
 components:
   schemas:
-    rcs_bulkcamp_urlsugg_msg:
+    rcs_bulkcamp_dialsugg_msg:
       type: object
-      title: URL Suggestion
-      description: A message type that includes a suggested URL or link for the user to click. It can be used to direct users to specific web pages, landing pages, or external content.
+      title: Dial Suggestion
       properties:
         type:
           type: string
@@ -409,9 +408,9 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
-              url:
+              call_to:
                 type: string
-                description: The (image/pdf/video mp4) url starting with https:// .
+                description: The sender's phone number.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
@@ -502,6 +501,229 @@ components:
       - campaign_name
       - bot_name
       - text
+    rcs_bulkcamp_richcrdstd_msg:
+      type: object
+      title: Rich Card Standalone
+      description: A message type that supports a wide range of interactive components such as images, buttons, links, forms, and more.
+      properties:
+        type:
+          type: string
+          description: 'The type of the message.
+
+            '
+        country_code:
+          type: string
+          description: "The country code to be used for the recipient phone numbers. The user can include the country code in the upload file or select it from the user interface. \n"
+        file_url:
+          type: string
+          description: 'The URL of the file containing the list of recipient phone numbers. The file should be in plain text format with each phone number on a new line.
+
+            '
+        campaign_name:
+          type: string
+          description: 'The name of the campaign for identification purposes.
+
+            '
+        scheduled_time:
+          type: string
+          description: 'The date and time at which the message should be scheduled to be sent in the format "YYYY-MM-DD HH:MM:SS".
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        url:
+          type: string
+          description: The URL of the media file starting with https:// to be included in the message.
+        card:
+          type: object
+          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
+          properties:
+            title:
+              type: string
+              description: The label name for the card.
+            description:
+              type: string
+              description: A short description of the card.
+            url:
+              type: string
+              description: The (image/pdf/video mp4) url starting with https:// .
+            suggestions:
+              type: array
+              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: The label name for the suggestion.
+                  text:
+                    type: string
+                    description: The plain text content of the suggestion.
+                  latitude:
+                    type: string
+                    description: The latitude value associated with the suggestion.
+                  longitude:
+                    type: string
+                    description: The longitude value associated with the suggestion.
+                  postback:
+                    type: string
+                    description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - file_url
+      - campaign_name
+      - bot_name
+      - url
+    rcs_bulkcamp_calendarsugg_msg:
+      type: object
+      title: Calendar Suggestion
+      properties:
+        type:
+          type: string
+          description: 'The type of message to be sent.
+
+
+            '
+          example: Text. Media, Card, or Multiple Cards
+        phone_no:
+          type: string
+          description: The recipient's phone number, including the country code.
+        bot_name:
+          type: string
+          description: The name of the bot sending the message.
+        text:
+          type: string
+          description: The plain text content of the message. This field is required for "text" type messages.
+        suggestions:
+          type: array
+          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+
+
+            '
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 'The label name for the suggestion.
+
+
+                  '
+              text:
+                type: string
+                description: 'The plain text content of the suggestion.
+
+
+                  '
+              title:
+                type: string
+                description: 'The plain title of the suggestion.
+
+
+                  '
+              url:
+                type: string
+                description: 'The (image/pdf/video mp4) url starting with https:// .
+
+
+                  '
+              start:
+                type: string
+                description: 'The latitude value associated with the suggestion.
+
+
+                  '
+              end:
+                type: string
+                description: 'The longitude value associated with the suggestion.
+
+
+                  '
+              decription:
+                type: string
+                description: 'The description associated with the suggestion.
+
+
+                  '
+              postback:
+                type: string
+                description: 'The postback text or action associated with the suggestion.
+
+
+                  '
+    rcs_bulkcamp_urlsugg_msg:
+      type: object
+      title: URL Suggestion
+      description: A message type that includes a suggested URL or link for the user to click. It can be used to direct users to specific web pages, landing pages, or external content.
+      properties:
+        type:
+          type: string
+          description: 'The type of the message.
+
+            '
+        country_code:
+          type: string
+          description: "The country code to be used for the recipient phone numbers. The user can include the country code in the upload file or select it from the user interface. \n"
+        file_url:
+          type: string
+          description: 'The URL of the file containing the list of recipient phone numbers. The file should be in plain text format with each phone number on a new line.
+
+            '
+        campaign_name:
+          type: string
+          description: 'The name of the campaign for identification purposes.
+
+            '
+        scheduled_time:
+          type: string
+          description: 'The date and time at which the message should be scheduled to be sent in the format "YYYY-MM-DD HH:MM:SS".
+
+            '
+        bot_name:
+          type: string
+          description: 'The name of the bot sending the message.
+
+            '
+        url:
+          type: string
+          description: The URL of the media file starting with https:// to be included in the message.
+        suggestions:
+          type: array
+          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The label name for the suggestion.
+              text:
+                type: string
+                description: The plain text content of the suggestion.
+              url:
+                type: string
+                description: The (image/pdf/video mp4) url starting with https:// .
+              postback:
+                type: string
+                description: The postback text or action associated with the suggestion.
+        fallback_text:
+          type: string
+          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
+
+            '
+      required:
+      - type
+      - file_url
+      - campaign_name
+      - bot_name
+      - url
     rcs_bulkcamp_richcardcarsl_msg:
       type: object
       title: Rich Card Carousel
@@ -587,152 +809,6 @@ components:
       - file_url
       - campaign_name
       - bot_name
-    rcs_bulkcamp_calendarsugg_msg:
-      type: object
-      title: Calendar Suggestion
-      properties:
-        type:
-          type: string
-          description: 'The type of message to be sent.
-
-
-            '
-          example: Text. Media, Card, or Multiple Cards
-        phone_no:
-          type: string
-          description: The recipient's phone number, including the country code.
-        bot_name:
-          type: string
-          description: The name of the bot sending the message.
-        text:
-          type: string
-          description: The plain text content of the message. This field is required for "text" type messages.
-        suggestions:
-          type: array
-          description: 'An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-
-
-            '
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 'The label name for the suggestion.
-
-
-                  '
-              text:
-                type: string
-                description: 'The plain text content of the suggestion.
-
-
-                  '
-              title:
-                type: string
-                description: 'The plain title of the suggestion.
-
-
-                  '
-              url:
-                type: string
-                description: 'The (image/pdf/video mp4) url starting with https:// .
-
-
-                  '
-              start:
-                type: string
-                description: 'The latitude value associated with the suggestion.
-
-
-                  '
-              end:
-                type: string
-                description: 'The longitude value associated with the suggestion.
-
-
-                  '
-              decription:
-                type: string
-                description: 'The description associated with the suggestion.
-
-
-                  '
-              postback:
-                type: string
-                description: 'The postback text or action associated with the suggestion.
-
-
-                  '
-    rcs_bulkcamp_locsugg_msg:
-      type: object
-      title: Location Suggestion
-      properties:
-        type:
-          type: string
-          description: 'The type of the message.
-
-            '
-        country_code:
-          type: string
-          description: "The country code to be used for the recipient phone numbers. The user can include the country code in the upload file or select it from the user interface. \n"
-        file_url:
-          type: string
-          description: 'The URL of the file containing the list of recipient phone numbers. The file should be in plain text format with each phone number on a new line.
-
-            '
-        campaign_name:
-          type: string
-          description: 'The name of the campaign for identification purposes.
-
-            '
-        scheduled_time:
-          type: string
-          description: 'The date and time at which the message should be scheduled to be sent in the format "YYYY-MM-DD HH:MM:SS".
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        text:
-          type: string
-          description: 'The main text content of the message to be sent via RCS.
-
-            '
-        suggestions:
-          type: array
-          description: An array of suggestions shown as actions for the endpoint.
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The label name for the suggestion.
-              text:
-                type: string
-                description: The plain text content of the suggestion.
-              latitude:
-                type: string
-                description: The latitude value associated with the suggestion.
-              longitude:
-                type: string
-                description: The longitude value associated with the suggestion.
-              postback:
-                type: string
-                description: The postback text or action associated with the suggestion.
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - file_url
-      - campaign_name
-      - bot_name
-      - text
     rcs_bulkcamp_textsugg_msg:
       type: object
       title: Text Suggestion
@@ -865,9 +941,9 @@ components:
       - campaign_name
       - bot_name
       - url
-    rcs_bulkcamp_dialsugg_msg:
+    rcs_bulkcamp_locsugg_msg:
       type: object
-      title: Dial Suggestion
+      title: Location Suggestion
       properties:
         type:
           type: string
@@ -897,12 +973,14 @@ components:
           description: 'The name of the bot sending the message.
 
             '
-        url:
+        text:
           type: string
-          description: The URL of the media file starting with https:// to be included in the message.
+          description: 'The main text content of the message to be sent via RCS.
+
+            '
         suggestions:
           type: array
-          description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
+          description: An array of suggestions shown as actions for the endpoint.
           items:
             type: object
             properties:
@@ -912,9 +990,12 @@ components:
               text:
                 type: string
                 description: The plain text content of the suggestion.
-              call_to:
+              latitude:
                 type: string
-                description: The sender's phone number.
+                description: The latitude value associated with the suggestion.
+              longitude:
+                type: string
+                description: The longitude value associated with the suggestion.
               postback:
                 type: string
                 description: The postback text or action associated with the suggestion.
@@ -928,88 +1009,7 @@ components:
       - file_url
       - campaign_name
       - bot_name
-      - url
-    rcs_bulkcamp_richcrdstd_msg:
-      type: object
-      title: Rich Card Standalone
-      description: A message type that supports a wide range of interactive components such as images, buttons, links, forms, and more.
-      properties:
-        type:
-          type: string
-          description: 'The type of the message.
-
-            '
-        country_code:
-          type: string
-          description: "The country code to be used for the recipient phone numbers. The user can include the country code in the upload file or select it from the user interface. \n"
-        file_url:
-          type: string
-          description: 'The URL of the file containing the list of recipient phone numbers. The file should be in plain text format with each phone number on a new line.
-
-            '
-        campaign_name:
-          type: string
-          description: 'The name of the campaign for identification purposes.
-
-            '
-        scheduled_time:
-          type: string
-          description: 'The date and time at which the message should be scheduled to be sent in the format "YYYY-MM-DD HH:MM:SS".
-
-            '
-        bot_name:
-          type: string
-          description: 'The name of the bot sending the message.
-
-            '
-        url:
-          type: string
-          description: The URL of the media file starting with https:// to be included in the message.
-        card:
-          type: object
-          description: An object representing a standalone rich card. It includes a "title", "description", "url", and an array of "suggestions". This field is optional for "card" type messages.
-          properties:
-            title:
-              type: string
-              description: The label name for the card.
-            description:
-              type: string
-              description: A short description of the card.
-            url:
-              type: string
-              description: The (image/pdf/video mp4) url starting with https:// .
-            suggestions:
-              type: array
-              description: An array of suggestions shown as actions for the endpoint. Each suggestion can have a "text" field with plain text content. This field is optional.
-              items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    description: The label name for the suggestion.
-                  text:
-                    type: string
-                    description: The plain text content of the suggestion.
-                  latitude:
-                    type: string
-                    description: The latitude value associated with the suggestion.
-                  longitude:
-                    type: string
-                    description: The longitude value associated with the suggestion.
-                  postback:
-                    type: string
-                    description: The postback text or action associated with the suggestion.
-        fallback_text:
-          type: string
-          description: 'The fallback text that is displayed on devices. The fallback text to be sent if the RCS message cannot be delivered. This field supports variable substitution using {#var#} format. It is optional.
-
-            '
-      required:
-      - type
-      - file_url
-      - campaign_name
-      - bot_name
-      - url
+      - text
   securitySchemes:
     jwt:
       type: apiKey

@@ -497,59 +497,21 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    MessagePreviewMediaBody:
+    MessagePreview:
       type: object
+      description: A preview of the message or content associated with the campaign.
       properties:
-        text:
+        phone:
           type: string
-          description: The text to include in the message.
-    ProfilePhotoRequest:
-      type: object
-      properties:
-        file:
+          description: The mobile number of the recipient in full international format.
+        enable_acculync:
+          type: boolean
+          description: A boolean indicating whether or not to enable Acculync.
+        extra:
           type: string
-          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
-          example: ABC.jpeg, ABC.jpg, ABC.png
-      required:
-      - file
-    UnknownCampaignTypeError:
-      type: object
-      title: Unknown Campaign Type Error
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the file upload.
-        reason:
-          type: object
-          description: The reason for not processing the file upload request.
-          properties:
-            campaign_type:
-              type: array
-              description: The type of the campaign.
-              items:
-                type: string
-    FileMimetypeError:
-      type: object
-      title: File Mimetype Error
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the file upload.
-        reason:
-          type: object
-          description: The reason for not processing the file upload request.
-          properties:
-            file_mimetype:
-              type: array
-              description: The MIME type of the file containing the phone numbers of the recipients.
-              items:
-                type: string
+          description: Additional information to include in the message.
+        media:
+          $ref: '#/components/schemas/MessagePreviewMedia'
     MessagePreviewMedia:
       type: object
       properties:
@@ -570,50 +532,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MessagePreviewMediaBody'
-    NotFoundError:
+    ProfilePhotoRequest:
       type: object
       properties:
-        message:
+        file:
           type: string
-          description: The message response.
+          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
+          example: ABC.jpeg, ABC.jpg, ABC.png
+      required:
+      - file
     MessagePreviewMediaImage:
       type: object
       properties:
         link:
           type: string
           description: The URL of the image file.
-    MessagePreviewMediaHeader:
-      type: object
-      properties:
-        image:
-          $ref: '#/components/schemas/MessagePreviewMediaImage'
-    MessagePreview:
-      type: object
-      description: A preview of the message or content associated with the campaign.
-      properties:
-        phone:
-          type: string
-          description: The mobile number of the recipient in full international format.
-        enable_acculync:
-          type: boolean
-          description: A boolean indicating whether or not to enable Acculync.
-        extra:
-          type: string
-          description: Additional information to include in the message.
-        media:
-          $ref: '#/components/schemas/MessagePreviewMedia'
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
     BulkUploadResponse:
       type: object
       properties:
@@ -649,6 +582,73 @@ components:
         country_code:
           type: string
           description: The country code.
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+    MessagePreviewMediaHeader:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+    FileMimetypeError:
+      type: object
+      title: File Mimetype Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            file_mimetype:
+              type: array
+              description: The MIME type of the file containing the phone numbers of the recipients.
+              items:
+                type: string
+    UnknownCampaignTypeError:
+      type: object
+      title: Unknown Campaign Type Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            campaign_type:
+              type: array
+              description: The type of the campaign.
+              items:
+                type: string
   securitySchemes:
     BearerAuth:
       type: http

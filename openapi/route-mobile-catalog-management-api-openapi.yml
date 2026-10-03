@@ -1219,14 +1219,12 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    DeleteProductFeedRequest:
+    DeleteProductFeedRequestAlt:
       type: object
       properties:
         product_feed_id:
           type: string
-          description: The unique ID of the product feed that should be deleted.
-      required:
-      - product_feed_id
+          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
     CreateProductFeedRequest:
       type: object
       properties:
@@ -1251,6 +1249,42 @@ components:
       required:
       - file_url
       - name
+    CatalogAuthError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the message.
+        reason:
+          type: string
+          description: The reason for not processing the message.
+    CatalogUnauthorizedError:
+      type: object
+      properties:
+        response:
+          type: string
+          description: The response message.
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
     CatalogUploadRequest:
       type: object
       properties:
@@ -1270,12 +1304,6 @@ components:
       - action
       - file
       - file_name
-    DeleteProductFeedRequestAlt:
-      type: object
-      properties:
-        product_feed_id:
-          type: string
-          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
     UpdateProductFeedRequest:
       type: object
       properties:
@@ -1298,42 +1326,14 @@ components:
       required:
       - file_url
       - product_feed_id
-    NotFoundError:
+    DeleteProductFeedRequest:
       type: object
       properties:
-        message:
+        product_feed_id:
           type: string
-          description: The message response.
-    CatalogUnauthorizedError:
-      type: object
-      properties:
-        response:
-          type: string
-          description: The response message.
-    CatalogAuthError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the message.
-        reason:
-          type: string
-          description: The reason for not processing the message.
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
+          description: The unique ID of the product feed that should be deleted.
+      required:
+      - product_feed_id
   securitySchemes:
     BearerAuth:
       type: http

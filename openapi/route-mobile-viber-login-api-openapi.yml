@@ -127,6 +127,14 @@ paths:
       security: []
 components:
   schemas:
+    inline_response_201_2:
+      type: object
+      properties:
+        JWTAUTH:
+          type: string
+          description: JSON Web Token Authentication
+        user_data:
+          $ref: '#/components/schemas/inline_response_201_2_user_data'
     inline_response_201_2_user_data:
       type: object
       properties:
@@ -177,14 +185,6 @@ components:
       required:
       - password
       - username
-    inline_response_201_2:
-      type: object
-      properties:
-        JWTAUTH:
-          type: string
-          description: JSON Web Token Authentication
-        user_data:
-          $ref: '#/components/schemas/inline_response_201_2_user_data'
   securitySchemes:
     jwt:
       type: apiKey

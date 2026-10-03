@@ -370,6 +370,23 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    OptinValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The optin status of msisdn.
+        error:
+          $ref: '#/components/schemas/OptinValidationErrorDetail'
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
     JwtExpiredError:
       type: object
       properties:
@@ -382,6 +399,14 @@ components:
         status:
           type: string
           description: The status of the product feed update.
+    OptinValidationErrorDetail:
+      type: object
+      properties:
+        msisdn:
+          type: array
+          description: The phone number of the customer.
+          items:
+            type: string
     OptinStoreResponse:
       type: object
       properties:
@@ -394,31 +419,6 @@ components:
         details:
           type: string
           description: The details of the message.
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The message response.
-    OptinValidationError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The optin status of msisdn.
-        error:
-          $ref: '#/components/schemas/OptinValidationErrorDetail'
-    OptinValidationErrorDetail:
-      type: object
-      properties:
-        msisdn:
-          type: array
-          description: The phone number of the customer.
-          items:
-            type: string
   securitySchemes:
     BearerAuth:
       type: http

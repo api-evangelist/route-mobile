@@ -252,22 +252,38 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    EmbeddedImage:
+    MessageInfoResponse:
       type: object
       properties:
-        type:
+        status:
           type: string
-          description: MIME type — must start with "image/"
-          example: image/png
+          enum:
+          - success
+        message_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageInfoEntry'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
         name:
           type: string
-          description: Content ID for the image. Reference in HTML as <img src="cid:THIS_VALUE">
-          example: IMAGECID
-        content:
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
           type: string
-          format: byte
-          description: Base64-encoded image content
-          example: ZXhhbXBsZSBmaWxl
+          example: Token MissMatch
     SendTemplateRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -281,78 +297,22 @@ components:
             example: smtp12345
           message:
             $ref: '#/components/schemas/TemplateMessage'
-    MessageInfoEntry:
+    Attachment:
       type: object
       properties:
-        subject:
+        type:
           type: string
-          example: this is subject ..
-        sender:
+          description: MIME type of the attachment
+          example: text/plain
+        name:
           type: string
-          format: email
-          example: xyz@sendclean.com
-        email:
+          description: File name of the attachment
+          example: myfile.txt
+        content:
           type: string
-          format: email
-          example: abc@sendclean.com
-        sendFrom:
-          type: string
-          description: IP address the email was sent from
-          example: 0.0.0.0
-        mailSize:
-          type: integer
-          example: 1919
-        attchSize:
-          type: integer
-          example: 0
-        status:
-          type: string
-          enum:
-          - delivered
-          - soft_bounce
-          - hard_bounce
-          - spam
-          - open
-          - click
-          - send
-          example: delivered
-        time:
-          type: integer
-          format: int64
-          description: Send timestamp in milliseconds
-          example: 1458034022169
-        open:
-          type: integer
-          description: Total open count
-          example: 1
-        openData:
-          $ref: '#/components/schemas/OpenData'
-        click:
-          type: integer
-          description: Total click count
-          example: 1
-        clickData:
-          $ref: '#/components/schemas/ClickData'
-    ClickData:
-      type: object
-      properties:
-        ip:
-          type: array
-          items:
-            type: string
-          example:
-          - 0.0.0.0
-        ua:
-          type: array
-          items:
-            type: string
-          description: User-agent strings of the clickers
-        time:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: Timestamps of each click event
+          format: byte
+          description: Base64-encoded content of the attachment
+          example: ZXhhbXBsZSBmaWxl
     SendMailMessage:
       type: object
       description: The message payload for sendMail
@@ -393,32 +353,6 @@ components:
           description: Embedded inline images (referenced by CID in HTML)
           items:
             $ref: '#/components/schemas/EmbeddedImage'
-    Attachment:
-      type: object
-      properties:
-        type:
-          type: string
-          description: MIME type of the attachment
-          example: text/plain
-        name:
-          type: string
-          description: File name of the attachment
-          example: myfile.txt
-        content:
-          type: string
-          format: byte
-          description: Base64-encoded content of the attachment
-          example: ZXhhbXBsZSBmaWxl
-    SendMailResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        message:
-          type: string
-          example: message have been Queued ...
     MessageHeaders:
       type: object
       description: Optional custom headers for the message
@@ -480,6 +414,22 @@ components:
           type: string
           description: A valid API token
           example: example_token
+    MessageInfoRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - x_unique_id
+        properties:
+          x_unique_id:
+            type: string
+            description: The X-Unique-Id header value used when the message was sent
+            example: test
+          skip_page:
+            type: integer
+            description: Pagination offset (number of records to skip)
+            default: 0
+            example: 0
     OpenData:
       type: object
       properties:
@@ -501,6 +451,22 @@ components:
             type: integer
             format: int64
           description: Timestamps of each open event
+    EmbeddedImage:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type — must start with "image/"
+          example: image/png
+        name:
+          type: string
+          description: Content ID for the image. Reference in HTML as <img src="cid:THIS_VALUE">
+          example: IMAGECID
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded image content
+          example: ZXhhbXBsZSBmaWxl
     SendMailRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -515,6 +481,89 @@ components:
             example: smtp12345
           message:
             $ref: '#/components/schemas/SendMailMessage'
+    Recipient:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: recipient@example.com
+        name:
+          type: string
+          description: Optional display name
+          example: Recipient Name
+        type:
+          type: string
+          enum:
+          - to
+          - cc
+          - bcc
+          default: to
+          description: Header type for the recipient
+    SendMailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: message have been Queued ...
+    MessageInfoEntry:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: this is subject ..
+        sender:
+          type: string
+          format: email
+          example: xyz@sendclean.com
+        email:
+          type: string
+          format: email
+          example: abc@sendclean.com
+        sendFrom:
+          type: string
+          description: IP address the email was sent from
+          example: 0.0.0.0
+        mailSize:
+          type: integer
+          example: 1919
+        attchSize:
+          type: integer
+          example: 0
+        status:
+          type: string
+          enum:
+          - delivered
+          - soft_bounce
+          - hard_bounce
+          - spam
+          - open
+          - click
+          - send
+          example: delivered
+        time:
+          type: integer
+          format: int64
+          description: Send timestamp in milliseconds
+          example: 1458034022169
+        open:
+          type: integer
+          description: Total open count
+          example: 1
+        openData:
+          $ref: '#/components/schemas/OpenData'
+        click:
+          type: integer
+          description: Total click count
+          example: 1
+        clickData:
+          $ref: '#/components/schemas/ClickData'
     TemplateMessage:
       type: object
       required:
@@ -556,72 +605,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EmbeddedImage'
-    MessageInfoRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - x_unique_id
-        properties:
-          x_unique_id:
-            type: string
-            description: The X-Unique-Id header value used when the message was sent
-            example: test
-          skip_page:
-            type: integer
-            description: Pagination offset (number of records to skip)
-            default: 0
-            example: 0
-    MessageInfoResponse:
+    ClickData:
       type: object
       properties:
-        status:
-          type: string
-          enum:
-          - success
-        message_data:
+        ip:
           type: array
           items:
-            $ref: '#/components/schemas/MessageInfoEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    Recipient:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          format: email
-          example: recipient@example.com
-        name:
-          type: string
-          description: Optional display name
-          example: Recipient Name
-        type:
-          type: string
-          enum:
-          - to
-          - cc
-          - bcc
-          default: to
-          description: Header type for the recipient
+            type: string
+          example:
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the clickers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each click event
