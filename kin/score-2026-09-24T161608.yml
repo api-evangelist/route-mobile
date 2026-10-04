@@ -1,21 +1,19 @@
-# Kin Score artifact — route-mobile — 2026-08-25T133943
+# Kin Score artifact — route-mobile — 2026-09-24T161608
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: route-mobile
-  schema_version: 0.14.0
-  scored_at: '2026-08-25'
-  run_ts: 2026-08-25T133943
-  composite: 57.2
+  schema_version: 0.22.0
+  scored_at: '2026-09-24'
+  run_ts: 2026-09-24T161608
+  composite: 54.7
   band: strong
   facets:
-    discoverability: 81.5
-    contract_quality: 67.3
-    governance: 30.3
+    discoverability: 75.9
+    contract_quality: 65.5
+    contract_governance: 18.2
     operational_transparency: 42.1
-    developer_ergonomics: 53.0
-    commercial_clarity: 42.1
-    contract_governance: 30.3
+    developer_ergonomics: 56.5
     access_clarity: 42.1
   agent_readiness:
     score: 35.8
@@ -52,7 +50,7 @@ kin_score:
     agentic_access: derived
     conformance: first-party
     contracts:
-      total: 5
+      total: 33
       derived: 0
       coverage: 0.0
       callable: 100.0
