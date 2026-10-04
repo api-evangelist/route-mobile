@@ -1048,50 +1048,17 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    InvalidEndDateError:
+    CampaignMessagePayload:
       type: object
       properties:
-        status:
+        country_code:
           type: string
-          description: The status of the report.
-        errors:
-          type: object
-          description: The error message details.
-          properties:
-            filters:
-              type: object
-              description: A JSON object that contains the end date for the report.
-              properties:
-                end_date:
-                  type: array
-                  description: The end date for the report in the format of YYYY-MM-DD.
-                  items:
-                    type: string
-    CampaignReportFilters:
-      type: object
-      description: An object containing the filters to apply to the report.
-      properties:
-        campaign_id:
+          description: The country code.
+        media:
+          $ref: '#/components/schemas/CampaignMessagePayloadMedia'
+        phone:
           type: string
-          description: The ID of the campaign for which to generate the report.
-          example: '{campaign-id}'
-        campaign_name:
-          type: string
-          description: The name of the campaign for which to generate the report.
-          example: '{campaign-name}'
-        end_date:
-          type: string
-          description: The end date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
-          example: '{end-date}'
-        start_date:
-          type: string
-          description: The start date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
-          example: '{start-date}'
-      required:
-      - campaign_id
-      - campaign_name
-      - end_date
-      - start_date
+          description: The phone number in international format.
     CampaignDetail:
       type: object
       properties:
@@ -1139,6 +1106,112 @@ components:
         user_name:
           type: string
           description: The name of the user.
+    CreateReportRequest:
+      type: object
+      properties:
+        csv_max_lines:
+          type: number
+          description: An integer representing the maximum number of lines to include in the CSV file.
+          example: 10000
+        filters:
+          $ref: '#/components/schemas/ReportFilters'
+        projections:
+          type: array
+          description: An array of fields that you want to include in the report.
+          items:
+            type: string
+            example: country_code
+          example:
+          - country_code
+          - msisdn
+          - message_type
+          - message_payload
+          - request_id
+          - conversation_id
+          - message_id
+          - submit_timestamp
+          - sent_timestamp
+          - delivery_timestamp
+          - read_timestamp
+          - failed_timestamp
+          - deleted_timestamp
+          - extra
+          - pricing_model
+      required:
+      - csv_max_lines
+      - filters
+      - projections
+    InvalidEndDateError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the report.
+        errors:
+          type: object
+          description: The error message details.
+          properties:
+            filters:
+              type: object
+              description: A JSON object that contains the end date for the report.
+              properties:
+                end_date:
+                  type: array
+                  description: The end date for the report in the format of YYYY-MM-DD.
+                  items:
+                    type: string
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    ReportFilters:
+      type: object
+      description: A JSON object that contains the start and end dates for the report. The format of the dates should be in YYYY-MM-DD format.
+      properties:
+        end_date:
+          type: string
+          description: The end date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{end-date}'
+        start_date:
+          type: string
+          description: The start date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{start-date}'
+      required:
+      - end_date
+      - start_date
+    CampaignReportFilters:
+      type: object
+      description: An object containing the filters to apply to the report.
+      properties:
+        campaign_id:
+          type: string
+          description: The ID of the campaign for which to generate the report.
+          example: '{campaign-id}'
+        campaign_name:
+          type: string
+          description: The name of the campaign for which to generate the report.
+          example: '{campaign-name}'
+        end_date:
+          type: string
+          description: The end date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{end-date}'
+        start_date:
+          type: string
+          description: The start date for the campaign specific report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
+          example: '{start-date}'
+      required:
+      - campaign_id
+      - campaign_name
+      - end_date
+      - start_date
     CreateCampaignReportRequest:
       type: object
       properties:
@@ -1175,41 +1248,6 @@ components:
       - csv_max_lines
       - filters
       - projections
-    CreateReportRequest:
-      type: object
-      properties:
-        csv_max_lines:
-          type: number
-          description: An integer representing the maximum number of lines to include in the CSV file.
-          example: 10000
-        filters:
-          $ref: '#/components/schemas/ReportFilters'
-        projections:
-          type: array
-          description: An array of fields that you want to include in the report.
-          items:
-            type: string
-            example: country_code
-          example:
-          - country_code
-          - msisdn
-          - message_type
-          - message_payload
-          - request_id
-          - conversation_id
-          - message_id
-          - submit_timestamp
-          - sent_timestamp
-          - delivery_timestamp
-          - read_timestamp
-          - failed_timestamp
-          - deleted_timestamp
-          - extra
-          - pricing_model
-      required:
-      - csv_max_lines
-      - filters
-      - projections
     CampaignDetailsResponse:
       type: object
       properties:
@@ -1217,39 +1255,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CampaignDetail'
-    ReportFilters:
-      type: object
-      description: A JSON object that contains the start and end dates for the report. The format of the dates should be in YYYY-MM-DD format.
-      properties:
-        end_date:
-          type: string
-          description: The end date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
-          example: '{end-date}'
-        start_date:
-          type: string
-          description: The start date for the report in "YYYY-MM-DD" order, followed by the time in the "HH:MM:SS" format.
-          example: '{start-date}'
-      required:
-      - end_date
-      - start_date
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The message response.
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
     InvalidStartDateError:
       type: object
       properties:
@@ -1281,17 +1286,12 @@ components:
         type:
           type: string
           description: The template type.
-    CampaignMessagePayload:
+    NotFoundError:
       type: object
       properties:
-        country_code:
+        message:
           type: string
-          description: The country code.
-        media:
-          $ref: '#/components/schemas/CampaignMessagePayloadMedia'
-        phone:
-          type: string
-          description: The phone number in international format.
+          description: The message response.
   securitySchemes:
     BearerAuth:
       type: http

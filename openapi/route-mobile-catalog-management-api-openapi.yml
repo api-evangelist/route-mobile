@@ -1219,36 +1219,14 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    DeleteProductFeedRequestAlt:
+    DeleteProductFeedRequest:
       type: object
       properties:
         product_feed_id:
           type: string
-          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
-    CreateProductFeedRequest:
-      type: object
-      properties:
-        file_url:
-          type: string
-          description: The URL of the file that contains the product feed, hosted publicly and starting with "https://" and ending with the file extension.
-          example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-        name:
-          type: string
-          description: The name of the product feed.
-          example: product_feed_name
-        schedule:
-          type: string
-          description: 'The schedule for updating the product feed. It contains a JSON object with two keys:
-
-
-            a. interval: This key specifies the interval at which the product feed should be updated. In this case, it is set to "HOURLY", indicating that the feed should be updated hourly.
-
-
-            b. scheduled_time: This key specifies the date and time at which the first update of the product feed should occur, in UTC format.'
-          example: ' "\"interval\":\"HOURLY\",\"scheduled_time\":\"2022-09-06 11:38:00\""'
+          description: The unique ID of the product feed that should be deleted.
       required:
-      - file_url
-      - name
+      - product_feed_id
     CatalogAuthError:
       type: object
       properties:
@@ -1261,18 +1239,6 @@ components:
         reason:
           type: string
           description: The reason for not processing the message.
-    CatalogUnauthorizedError:
-      type: object
-      properties:
-        response:
-          type: string
-          description: The response message.
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The message response.
     JwtExpiredError:
       type: object
       properties:
@@ -1304,6 +1270,36 @@ components:
       - action
       - file
       - file_name
+    CreateProductFeedRequest:
+      type: object
+      properties:
+        file_url:
+          type: string
+          description: The URL of the file that contains the product feed, hosted publicly and starting with "https://" and ending with the file extension.
+          example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
+        name:
+          type: string
+          description: The name of the product feed.
+          example: product_feed_name
+        schedule:
+          type: string
+          description: 'The schedule for updating the product feed. It contains a JSON object with two keys:
+
+
+            a. interval: This key specifies the interval at which the product feed should be updated. In this case, it is set to "HOURLY", indicating that the feed should be updated hourly.
+
+
+            b. scheduled_time: This key specifies the date and time at which the first update of the product feed should occur, in UTC format.'
+          example: ' "\"interval\":\"HOURLY\",\"scheduled_time\":\"2022-09-06 11:38:00\""'
+      required:
+      - file_url
+      - name
+    CatalogUnauthorizedError:
+      type: object
+      properties:
+        response:
+          type: string
+          description: The response message.
     UpdateProductFeedRequest:
       type: object
       properties:
@@ -1326,14 +1322,18 @@ components:
       required:
       - file_url
       - product_feed_id
-    DeleteProductFeedRequest:
+    DeleteProductFeedRequestAlt:
       type: object
       properties:
         product_feed_id:
           type: string
-          description: The unique ID of the product feed that should be deleted.
-      required:
-      - product_feed_id
+          description: Specify the identification of the product feed to delete from WhatsApp business messaging APIs.
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
   securitySchemes:
     BearerAuth:
       type: http

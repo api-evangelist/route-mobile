@@ -1118,15 +1118,6 @@ paths:
           description: Internal server error. Please contact support if this persists.
 components:
   schemas:
-    BulkSmsRequest:
-      type: object
-      required:
-      - request
-      properties:
-        request:
-          type: array
-          items:
-            $ref: '#/components/schemas/SmsItem'
     SmsItem:
       type: object
       required:
@@ -1171,6 +1162,15 @@ components:
         message:
           type: string
           description: Message text content.
+    BulkSmsRequest:
+      type: object
+      required:
+      - request
+      properties:
+        request:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsItem'
   securitySchemes:
     AuthorizationToken:
       type: apiKey

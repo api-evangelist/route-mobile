@@ -1340,27 +1340,6 @@ paths:
       - jwt: []
 components:
   schemas:
-    vbs_template_create:
-      type: object
-      title: Create Template
-      required:
-      - template_name
-      - template_syntax
-      - message_type
-      - operator_template_id
-      properties:
-        template_name:
-          type: string
-          description: A unique name for the template.
-        template_syntax:
-          type: string
-          description: The template message text. Use {{parameter_name}} syntax for variable placeholders.
-        message_type:
-          type: string
-          description: The type of template (e.g. "viber_otp", "text_template").
-        operator_template_id:
-          type: string
-          description: The operator-assigned template ID provided by Viber.
     vbs_report_create:
       type: object
       title: Create Report Request
@@ -1389,6 +1368,27 @@ components:
           description: List of fields to include in the report CSV.
           items:
             type: string
+    vbs_template_create:
+      type: object
+      title: Create Template
+      required:
+      - template_name
+      - template_syntax
+      - message_type
+      - operator_template_id
+      properties:
+        template_name:
+          type: string
+          description: A unique name for the template.
+        template_syntax:
+          type: string
+          description: The template message text. Use {{parameter_name}} syntax for variable placeholders.
+        message_type:
+          type: string
+          description: The type of template (e.g. "viber_otp", "text_template").
+        operator_template_id:
+          type: string
+          description: The operator-assigned template ID provided by Viber.
   securitySchemes:
     jwt:
       type: apiKey

@@ -156,38 +156,57 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SuccessResponse:
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    SmtpUser:
+      type: object
+      properties:
+        smtp_user_name:
+          type: string
+          example: smtps456546
+        password:
+          type: string
+          example: cgvddgrsd
+        status:
+          type: string
+          enum:
+          - Enable
+          - Disable
+          example: Enable
+        total_limit:
+          type: integer
+          example: 200
+        hourly_limit:
+          type: integer
+          example: 20
+    AddSmtpResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-          example: success
         message:
           type: string
-          example: Operation successful
-    ErrorResponse:
-      type: object
-      properties:
-        status:
+          example: SMTP User Created
+        smtp_user_name:
           type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
+          example: smtp12345
+        smtp_password:
           type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
+          example: asfsf4w343
     EditSmtpRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -214,95 +233,17 @@ components:
             - Disable
             description: Enable or disable the SMTP user
             example: Disable
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
-    AddSmtpResponse:
+    SuccessResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
+          example: success
         message:
           type: string
-          example: SMTP User Created
-        smtp_user_name:
-          type: string
-          example: smtp12345
-        smtp_password:
-          type: string
-          example: asfsf4w343
-    ResetSmtpPasswordRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - smtp_user_name
-        properties:
-          smtp_user_name:
-            type: string
-            description: A valid SMTP user name
-            example: smtp12345
-    ListSmtpResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        smtp_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SmtpUser'
-    ResetSmtpPasswordResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        message:
-          type: string
-          example: password reseted
-        smtp_user_name:
-          type: string
-          example: smtp12345
-        smtp_password:
-          type: string
-          example: 2fg345gy6r7
-    SmtpUser:
-      type: object
-      properties:
-        smtp_user_name:
-          type: string
-          example: smtps456546
-        password:
-          type: string
-          example: cgvddgrsd
-        status:
-          type: string
-          enum:
-          - Enable
-          - Disable
-          example: Enable
-        total_limit:
-          type: integer
-          example: 200
-        hourly_limit:
-          type: integer
-          example: 20
+          example: Operation successful
     AddSmtpRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -319,3 +260,62 @@ components:
             type: integer
             description: Hourly sending limit (positive integer)
             example: 10
+    ResetSmtpPasswordResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: password reseted
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: 2fg345gy6r7
+    ResetSmtpPasswordRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    ListSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        smtp_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpUser'

@@ -497,56 +497,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    MessagePreview:
-      type: object
-      description: A preview of the message or content associated with the campaign.
-      properties:
-        phone:
-          type: string
-          description: The mobile number of the recipient in full international format.
-        enable_acculync:
-          type: boolean
-          description: A boolean indicating whether or not to enable Acculync.
-        extra:
-          type: string
-          description: Additional information to include in the message.
-        media:
-          $ref: '#/components/schemas/MessagePreviewMedia'
-    MessagePreviewMedia:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of message template.
-        template_name:
-          type: string
-          description: The name of the template to use.
-        lang_code:
-          type: string
-          description: Language code of language in which message text is written, such as "en" for English.
-        header:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessagePreviewMediaHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessagePreviewMediaBody'
-    ProfilePhotoRequest:
-      type: object
-      properties:
-        file:
-          type: string
-          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
-          example: ABC.jpeg, ABC.jpg, ABC.png
-      required:
-      - file
-    MessagePreviewMediaImage:
-      type: object
-      properties:
-        link:
-          type: string
-          description: The URL of the image file.
     BulkUploadResponse:
       type: object
       properties:
@@ -582,12 +532,50 @@ components:
         country_code:
           type: string
           description: The country code.
-    NotFoundError:
+    MessagePreviewMedia:
       type: object
       properties:
-        message:
+        type:
           type: string
-          description: The message response.
+          description: The type of message template.
+        template_name:
+          type: string
+          description: The name of the template to use.
+        lang_code:
+          type: string
+          description: Language code of language in which message text is written, such as "en" for English.
+        header:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessagePreviewMediaBody'
+    MessagePreview:
+      type: object
+      description: A preview of the message or content associated with the campaign.
+      properties:
+        phone:
+          type: string
+          description: The mobile number of the recipient in full international format.
+        enable_acculync:
+          type: boolean
+          description: A boolean indicating whether or not to enable Acculync.
+        extra:
+          type: string
+          description: Additional information to include in the message.
+        media:
+          $ref: '#/components/schemas/MessagePreviewMedia'
+    ProfilePhotoRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
+          example: ABC.jpeg, ABC.jpg, ABC.png
+      required:
+      - file
     JwtExpiredError:
       type: object
       properties:
@@ -600,36 +588,12 @@ components:
         status:
           type: string
           description: The status of the product feed update.
-    MessagePreviewMediaBody:
+    MessagePreviewMediaImage:
       type: object
       properties:
-        text:
+        link:
           type: string
-          description: The text to include in the message.
-    MessagePreviewMediaHeader:
-      type: object
-      properties:
-        image:
-          $ref: '#/components/schemas/MessagePreviewMediaImage'
-    FileMimetypeError:
-      type: object
-      title: File Mimetype Error
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the file upload.
-        reason:
-          type: object
-          description: The reason for not processing the file upload request.
-          properties:
-            file_mimetype:
-              type: array
-              description: The MIME type of the file containing the phone numbers of the recipients.
-              items:
-                type: string
+          description: The URL of the image file.
     UnknownCampaignTypeError:
       type: object
       title: Unknown Campaign Type Error
@@ -649,6 +613,42 @@ components:
               description: The type of the campaign.
               items:
                 type: string
+    FileMimetypeError:
+      type: object
+      title: File Mimetype Error
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            file_mimetype:
+              type: array
+              description: The MIME type of the file containing the phone numbers of the recipients.
+              items:
+                type: string
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+    MessagePreviewMediaHeader:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
   securitySchemes:
     BearerAuth:
       type: http

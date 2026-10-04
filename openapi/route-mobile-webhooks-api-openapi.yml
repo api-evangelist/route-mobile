@@ -561,143 +561,6 @@ paths:
     - url: https://apis.rmlconnect.net
 components:
   schemas:
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
-    WebhookListEntry:
-      type: object
-      properties:
-        webhook_id:
-          type: string
-          example: '424353445757557577457'
-        url:
-          type: string
-          example: http://abc.com/wh1.php
-        event:
-          type: string
-          example: open,click
-        key:
-          type: string
-          example: cgvddgrsd
-        store_log:
-          type: string
-          enum:
-          - Enable
-          - Disable
-        description:
-          type: string
-          example: this webhook for only open and click
-        create_date:
-          type: integer
-          format: int64
-          example: 754453534
-    KeyResetWebhookResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        message:
-          type: string
-          example: Webhook key reseted
-        webhook_id:
-          type: string
-          example: '424353445757557577457'
-        key:
-          type: string
-          example: 2fg345gy6r7
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    ListWebhookResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        webhook_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookListEntry'
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
-    WebhookIdRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - webhook_id
-        properties:
-          webhook_id:
-            type: string
-            description: A valid webhook ID
-            example: '424353445757557577457'
-    EditWebhookRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - webhook_id
-        - url
-        properties:
-          webhook_id:
-            type: string
-            example: '424353445757557577457'
-          url:
-            type: string
-            description: Updated webhook URL. Must respond with 'God bless you, SendClean'
-            example: https://example.com/webhook
-          event:
-            type: string
-            example: open,click
-          description:
-            type: string
-            example: Updated description
-          store_log:
-            type: string
-            enum:
-            - Enable
-            - Disable
     WebhookInfoResponse:
       type: object
       properties:
@@ -741,6 +604,143 @@ components:
               type: integer
               description: Total events sent to this webhook URL
               example: 23
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
+    ListWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        webhook_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookListEntry'
+    WebhookIdRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - webhook_id
+        properties:
+          webhook_id:
+            type: string
+            description: A valid webhook ID
+            example: '424353445757557577457'
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
+    WebhookListEntry:
+      type: object
+      properties:
+        webhook_id:
+          type: string
+          example: '424353445757557577457'
+        url:
+          type: string
+          example: http://abc.com/wh1.php
+        event:
+          type: string
+          example: open,click
+        key:
+          type: string
+          example: cgvddgrsd
+        store_log:
+          type: string
+          enum:
+          - Enable
+          - Disable
+        description:
+          type: string
+          example: this webhook for only open and click
+        create_date:
+          type: integer
+          format: int64
+          example: 754453534
+    EditWebhookRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - webhook_id
+        - url
+        properties:
+          webhook_id:
+            type: string
+            example: '424353445757557577457'
+          url:
+            type: string
+            description: Updated webhook URL. Must respond with 'God bless you, SendClean'
+            example: https://example.com/webhook
+          event:
+            type: string
+            example: open,click
+          description:
+            type: string
+            example: Updated description
+          store_log:
+            type: string
+            enum:
+            - Enable
+            - Disable
+    KeyResetWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: Webhook key reseted
+        webhook_id:
+          type: string
+          example: '424353445757557577457'
+        key:
+          type: string
+          example: 2fg345gy6r7
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
     AddWebhookRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -766,134 +766,71 @@ components:
             - Enable
             - Disable
             example: Enable
-    CallbackBusinessSingleProduct:
+    CallbackIncomingQuickReply:
       type: object
-      title: Session Message Business for Single Product
+      title: Incoming Session Quick Reply
       properties:
-        contact_no:
-          type: string
-          description: The phone number of the WhatsApp user who sent the message.
-        data:
-          type: object
-          description: A JSON object containing the message data.
-          properties:
-            contacts:
-              type: array
-              description: An array of contact objects that contains an array of WhatsApp contacts for whom the message is intended.
-              items:
-                type: object
-                properties:
-                  profile:
-                    type: object
-                    description: An object that contains the contact's profile information, such as, name, photo, and so on.
-                    properties:
-                      name:
-                        type: string
-                        description: The name of the contact.
-                  wa_id:
-                    type: string
-                    description: The WhatsApp ID of the contact.
-            messages:
-              type: array
-              description: An array of message objects that contains information about the incoming text message and its parameters.
-              items:
-                type: object
-                properties:
-                  context:
-                    type: object
-                    description: An object that represents the context of the message; that is the information about the referred product.
-                    properties:
-                      referred_product:
-                        type: object
-                        description: An object that represents the referred product.
-                        properties:
-                          catalog_id:
-                            type: string
-                            description: The ID of the catalog the product belongs to.
-                          product_retailer_id:
-                            type: string
-                            description: The ID of the retailer selling the product.
-                  from:
-                    type: string
-                    description: The phone number of the sender.
-                  id:
-                    type: string
-                    description: A unique ID for the message.
-                  text:
-                    type: object
-                    description: An object that contains the text of the message.
-                    properties:
-                      body:
-                        type: string
-                        description: The text of the message.
-                  timestamp:
-                    type: string
-                    description: The Unix timestamp of the message.
-                  type:
-                    type: string
-                    description: The type of message, which is image.
-            brand_msisdn:
-              type: string
-              description: The phone number associated with the WhatsApp Business account in international format.
-        time:
-          type: string
-          description: The timestamp of the message in the format YYYY-MM-DD HH:MM:SS.mmmmmm.
-        source:
-          type: string
-          description: The source of the message, which will be "FROM_CALLBACK" in this case.
-    CallbackIncomingImage:
-      type: object
-      title: Incoming Image
-      properties:
-        apiKey:
-          type: string
-          description: The API key to authenticate the callback request.
-        messages:
+        contacts:
           type: array
-          description: An array of message objects that contains information about the incoming image message and its parameters.
+          description: An array of contact objects that contains information about the sender of the message and its parameters.
           items:
             type: object
             properties:
-              from:
-                type: string
-                description: The phone number of the sender in international format.
-              id:
-                type: string
-                description: A unique ID for the message.
-              image:
+              profile:
                 type: object
-                description: An object that contains information about the incoming image.
+                description: An object that contains the contact's profile information, such as, name, photo, and so on.
                 properties:
-                  file:
+                  name:
                     type: string
-                    description: The absolute path to the image file.
+                    description: The name of the contact.
+              wa_id:
+                type: string
+                description: The WhatsApp ID of the contact.
+        messages:
+          type: array
+          description: An array of message objects that contains information about the message and its parameters.
+          items:
+            type: object
+            properties:
+              context:
+                type: object
+                description: An object that represents the context of the message.
+                properties:
+                  from:
+                    type: string
+                    description: The WhatsApp ID of the contact.
                   id:
                     type: string
-                    description: A unique ID for the image.
-                  mime_type:
+                    description: The ID of the message and the WhatsApp ID of the sender.
+              from:
+                type: string
+                description: The WhatsApp ID of the contact.
+              id:
+                type: string
+                description: The ID of the message.
+              interactive:
+                type: object
+                description: A JSON object representing the interactive message, with a button_reply field containing the ID and title of the button that was clicked and a type field set to "button_reply".
+                properties:
+                  button_reply:
+                    type: object
+                    description: The button reply text.
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the button.
+                      title:
+                        type: string
+                        description: The title of the button.
+                  type:
                     type: string
-                    description: The MIME type of the image.
-                  sha256:
-                    type: string
-                    description: The SHA256 hash of the image.
-                  caption:
-                    type: string
-                    description: The caption of the image.
-                  media_url:
-                    type: string
-                    description: The URL of the image.
+                    description: A string indicating the type of the message, which is set to "interactive" for an incoming session quick reply.
               timestamp:
                 type: string
-                description: The timestamp of the incoming message.
+                description: A string indicating the type of the message, which is set to "interactive" for an incoming session quick reply.
               type:
                 type: string
-                description: The type of the incoming message. In this case, "image".
-        brand_msisdn:
-          type: string
-          description: The phone number associated with the WhatsApp Business account in international format.
-        request_id:
-          type: string
-          description: A unique ID for the callback request.
+                description: The type of the message.
     CallbackIncomingAudio:
       type: object
       title: Incoming Audio
@@ -941,259 +878,6 @@ components:
         request_id:
           type: string
           description: A unique ID for the callback request.
-    CallbackIncomingLocation:
-      type: object
-      title: Incoming Location
-      properties:
-        contacts:
-          type: array
-          description: An array of contact objects that contains information about the sender of the message and its parameters.
-          items:
-            type: object
-            properties:
-              profile:
-                type: object
-                description: An object that contains the contact's profile information, such as, name, photo, and so on.
-                properties:
-                  name:
-                    type: string
-                    description: The contact's profile name.
-              wa_id:
-                type: string
-                description: The WhatsApp ID of the contact.
-        messages:
-          type: array
-          description: An array of message objects that contains information about the incoming message location and its parameters.
-          items:
-            type: object
-            properties:
-              from:
-                type: string
-                description: The phone number of the sender.
-              id:
-                type: string
-                description: A unique ID for the message.
-              location:
-                type: object
-                description: An object that contains the location of the message. The location message include parameters.
-                properties:
-                  address:
-                    type: string
-                    description: The address of the sender.
-                  latitude:
-                    type: number
-                    description: The latitude coordinates of the location.
-                  longitude:
-                    type: number
-                    description: The longitude coordinates of the location.
-                  name:
-                    type: string
-                    description: The name of the location.
-                  url:
-                    type: string
-                    description: The URL of the location (if available).
-              timestamp:
-                type: string
-                description: The Unix timestamp of the message.
-              type:
-                type: string
-                description: The type of message. For example, text, image, video, and so on.
-        brand_msisdn:
-          type: string
-          description: The phone number associated with the WhatsApp Business account in international format.
-        request_id:
-          type: string
-          description: A unique ID for the callback request.
-    CallbackSentDeliveryReport:
-      type: object
-      title: Sent/Delivery Report
-      properties:
-        statuses:
-          type: array
-          description: An array containing information about the message status.
-          items:
-            type: object
-            properties:
-              conversation:
-                type: object
-                description: Information about the conversation.
-                properties:
-                  expiration_timestamp:
-                    type: integer
-                    description: The timestamp for when the conversation expires.
-                  id:
-                    type: string
-                    description: The ID of the conversation. For example, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                  origin:
-                    type: object
-                    description: Information about the origin of the conversation.
-                    properties:
-                      type:
-                        type: string
-                        description: The type of origin. Possible values are "user_initiated", "business_initiated", or "referral_conversion".
-              id:
-                type: string
-                description: A unique ID for the message.
-              pricing:
-                type: object
-                description: Information about the pricing for the message.
-                properties:
-                  billable:
-                    type: string
-                    description: A boolean value indicating whether the message is billable or not.
-                  category:
-                    type: string
-                    description: The category of the message. Possible values are "user_initiated", "business_initiated", or "referral_conversion".
-                  pricing_model:
-                    type: string
-                    description: The pricing model for the message. Possible values are "CBP" (conversation based pricing) or "FBP" (fixed billing period).
-              recipient_id:
-                type: string
-                description: The ID of the recipient.
-              status:
-                type: string
-                description: The status of the message. Possible values are "sent" or "delivered".
-              timestamp:
-                type: string
-                description: The timestamp for the message.
-              type:
-                type: string
-                description: The type of message.
-              extra:
-                type: string
-                description: Any extra information about the message.
-              message_id:
-                type: string
-                description: The ID of the message.
-        brand_msisdn:
-          type: string
-          description: The phone number associated with the WhatsApp Business account in international format.
-    CallbackIncomingVideo:
-      type: object
-      title: Incoming Video
-      properties:
-        messages:
-          type: array
-          description: An array of message objects that contains information about the incoming video message and its parameters.
-          items:
-            type: object
-            properties:
-              from:
-                type: string
-                description: The phone number of the sender.
-              id:
-                type: string
-                description: A unique ID for the message.
-              timestamp:
-                type: string
-                description: The Unix timestamp of the message.
-              type:
-                type: string
-                description: The type of message. For example, text, image, video, and so on.
-              voice:
-                type: object
-                description: An object that contains the audio message parameters.
-                properties:
-                  file:
-                    type: string
-                    description: The path to the video file on your server.
-                  id:
-                    type: string
-                    description: A unique ID for the video message.
-                  mime_type:
-                    type: string
-                    description: The MIME type of the video file.
-                  sha256:
-                    type: string
-                    description: The SHA-256 hash of the video file.
-                  media_url:
-                    type: string
-                    description: The media URL for the video file.
-        brand_msisdn:
-          type: string
-          description: The phone number associated with the WhatsApp Business account in international format.
-        request_id:
-          type: string
-          description: A unique ID for the callback request.
-    CallbackMultiProductCart:
-      type: object
-      title: Add Multi Product to Cart
-      properties:
-        contact_no:
-          type: string
-          description: The phone number of the WhatsApp user who initiated the action.
-        data:
-          type: object
-          description: A JSON object containing the message data.
-          properties:
-            contacts:
-              type: array
-              description: An array of JSON objects representing the contacts involved in the interaction.
-              items:
-                type: object
-                properties:
-                  profile:
-                    type: object
-                    description: An object that contains the contact's profile information, such as, name, photo, and so on.
-                    properties:
-                      name:
-                        type: string
-                        description: The name of the contact.
-                  wa_id:
-                    type: string
-                    description: The WhatsApp ID of the contact.
-            messages:
-              type: array
-              description: An array of JSON objects representing the messages sent during the interaction.
-              items:
-                type: object
-                properties:
-                  from:
-                    type: string
-                    description: The phone number of the sender.
-                  id:
-                    type: string
-                    description: A unique ID for the message.
-                  order:
-                    type: object
-                    description: An object that contains the details of the product added to the cart by the user.
-                    properties:
-                      catalog_id:
-                        type: string
-                        description: The ID of the catalog the product belongs to.
-                      product_items:
-                        type: array
-                        description: An array of product item objects that contains the details of the product added to the cart.
-                        items:
-                          type: object
-                          properties:
-                            currency:
-                              type: string
-                              description: The currency of the product item.
-                            item_price:
-                              type: integer
-                              description: The price of the product item.
-                            product_retailer_id:
-                              type: string
-                              description: The ID of the retailer selling the product.
-                            quantity:
-                              type: integer
-                              description: The quantity of the product item being added to the cart.
-                  timestamp:
-                    type: string
-                    description: The Unix timestamp of the message.
-                  type:
-                    type: string
-                    description: The type of message, which is "order" in this case.
-            brand_msisdn:
-              type: string
-              description: The phone number associated with the WhatsApp Business account in international format.
-        time:
-          type: string
-          description: The timestamp of the message in the format YYYY-MM-DD HH:MM:SS.mmmmmm.
-        source:
-          type: string
-          description: The source of the message, which will be "FROM_CALLBACK" in this case.
     CallbackFailedDeliveryReport:
       type: object
       title: Failed Delivery Report
@@ -1292,6 +976,174 @@ components:
         request_id:
           type: string
           description: A unique ID for the callback request.
+    CallbackReadReceipt:
+      type: object
+      title: Read Report
+      properties:
+        display_no:
+          type: string
+          description: The phone number of the WhatsApp Business Account in E.164 format.
+        statuses:
+          type: array
+          description: An array of status objects representing the read status of the messages.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: A unique identifier for the message.
+              recipient_id:
+                type: string
+                description: The WhatsApp ID of the recipient who has read the message.
+              status:
+                type: string
+                description: The status of the message, which is "read" in this case.
+              timestamp:
+                type: string
+                description: The timestamp in seconds when the message was read.
+              type:
+                type: string
+                description: The type of the message, which is "message" in this case.
+              conversation:
+                type: object
+                description: An object containing information about the conversation where the message was read.
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the conversation.
+                  origin:
+                    type: object
+                    description: An object representing the origin of the conversation.
+                    properties:
+                      type:
+                        type: string
+                        description: The type of the conversation origin, which can be "user_initiated", "business_initiated", or "referral_conversion".
+              pricing:
+                type: object
+                description: An object representing the pricing information for the message.
+                properties:
+                  billable:
+                    type: string
+                    description: A boolean value indicating whether the message is billable or not.
+                  pricing_model:
+                    type: string
+                    description: The pricing model for the message, which is "CBP" in this case.
+                  category:
+                    type: string
+                    description: The category of the conversation origin, which can be "user_initiated", "business_initiated", or "referral_conversion".
+              extra:
+                type: string
+                description: A string containing additional metadata for the message.
+        brand_msisdn:
+          type: string
+          description: The phone number associated with the WhatsApp Business account in international format.
+    CallbackIncomingDocument:
+      type: object
+      title: Incoming Document
+      properties:
+        apiKey:
+          type: string
+          description: The API key to authenticate the callback request.
+        messages:
+          type: array
+          description: An array of message objects that contains information about the incoming document and its parameters.
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+                description: The phone number of the sender.
+              id:
+                type: string
+                description: A unique ID for the message.
+              timestamp:
+                type: string
+                description: The Unix timestamp of the message.
+              type:
+                type: string
+                description: The type of the message, which is "document" for incoming documents.
+              document:
+                type: object
+                description: An array of contact objects that contains the details of the incoming document message.
+                properties:
+                  caption:
+                    type: string
+                    description: The caption of the document.
+                  file:
+                    type: string
+                    description: The absolute path to the document file on the server.
+                  id:
+                    type: string
+                    description: A unique ID assigned to the incoming document.
+                  mime_type:
+                    type: string
+                    description: The MIME type of the document, such as "application/pdf".
+                  sha256:
+                    type: string
+                    description: The SHA-256 hash of the document.
+                  media_url:
+                    type: string
+                    description: The URL of the media file that can be downloaded using the Media Download API.
+        brand_msisdn:
+          type: string
+          description: The phone number associated with the WhatsApp Business account in international format.
+        request_id:
+          type: string
+          description: A unique ID for the callback request.
+    CallbackIncomingText:
+      type: object
+      title: Incoming Text
+      properties:
+        messages:
+          type: array
+          description: An array of message objects that contains information about the incoming text message and its parameters.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: A unique ID for the message.
+              from:
+                type: string
+                description: The phone number of the sender.
+              type:
+                type: string
+                description: The type of message. For example, text, image, video, and so on.
+              timestamp:
+                type: string
+                description: The Unix timestamp of the message.
+              text:
+                type: object
+                description: An object that contains the text of the message. The text message includes a single parameter, body, which contains the text of the message.
+                properties:
+                  body:
+                    type: string
+                    description: The text of the message.
+              message_id:
+                type: string
+                description: The unique ID for the message that was generated by WhatsApp.
+        contacts:
+          type: array
+          description: An array of contact objects that contains information about the sender of the message and its parameters.
+          items:
+            type: object
+            properties:
+              profile:
+                type: object
+                description: An object that contains the contact's profile information, such as, name, photo, and so on.
+                properties:
+                  name:
+                    type: string
+                    description: The contact's profile name.
+              wa_id:
+                type: string
+                description: The WhatsApp ID of the contact.
+        brand_msisdn:
+          type: string
+          description: The phone number associated with the WhatsApp Business account in international format.
+        request_id:
+          type: string
+          description: A unique ID for the callback request.
     CallbackIncomingInteractiveList:
       type: object
       title: Incoming Interactive List
@@ -1366,38 +1218,10 @@ components:
         request_id:
           type: string
           description: A unique ID for the callback request.
-    CallbackIncomingText:
+    CallbackIncomingLocation:
       type: object
-      title: Incoming Text
+      title: Incoming Location
       properties:
-        messages:
-          type: array
-          description: An array of message objects that contains information about the incoming text message and its parameters.
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: A unique ID for the message.
-              from:
-                type: string
-                description: The phone number of the sender.
-              type:
-                type: string
-                description: The type of message. For example, text, image, video, and so on.
-              timestamp:
-                type: string
-                description: The Unix timestamp of the message.
-              text:
-                type: object
-                description: An object that contains the text of the message. The text message includes a single parameter, body, which contains the text of the message.
-                properties:
-                  body:
-                    type: string
-                    description: The text of the message.
-              message_id:
-                type: string
-                description: The unique ID for the message that was generated by WhatsApp.
         contacts:
           type: array
           description: An array of contact objects that contains information about the sender of the message and its parameters.
@@ -1414,22 +1238,9 @@ components:
               wa_id:
                 type: string
                 description: The WhatsApp ID of the contact.
-        brand_msisdn:
-          type: string
-          description: The phone number associated with the WhatsApp Business account in international format.
-        request_id:
-          type: string
-          description: A unique ID for the callback request.
-    CallbackIncomingDocument:
-      type: object
-      title: Incoming Document
-      properties:
-        apiKey:
-          type: string
-          description: The API key to authenticate the callback request.
         messages:
           type: array
-          description: An array of message objects that contains information about the incoming document and its parameters.
+          description: An array of message objects that contains information about the incoming message location and its parameters.
           items:
             type: object
             properties:
@@ -1439,40 +1250,112 @@ components:
               id:
                 type: string
                 description: A unique ID for the message.
+              location:
+                type: object
+                description: An object that contains the location of the message. The location message include parameters.
+                properties:
+                  address:
+                    type: string
+                    description: The address of the sender.
+                  latitude:
+                    type: number
+                    description: The latitude coordinates of the location.
+                  longitude:
+                    type: number
+                    description: The longitude coordinates of the location.
+                  name:
+                    type: string
+                    description: The name of the location.
+                  url:
+                    type: string
+                    description: The URL of the location (if available).
               timestamp:
                 type: string
                 description: The Unix timestamp of the message.
               type:
                 type: string
-                description: The type of the message, which is "document" for incoming documents.
-              document:
-                type: object
-                description: An array of contact objects that contains the details of the incoming document message.
-                properties:
-                  caption:
-                    type: string
-                    description: The caption of the document.
-                  file:
-                    type: string
-                    description: The absolute path to the document file on the server.
-                  id:
-                    type: string
-                    description: A unique ID assigned to the incoming document.
-                  mime_type:
-                    type: string
-                    description: The MIME type of the document, such as "application/pdf".
-                  sha256:
-                    type: string
-                    description: The SHA-256 hash of the document.
-                  media_url:
-                    type: string
-                    description: The URL of the media file that can be downloaded using the Media Download API.
+                description: The type of message. For example, text, image, video, and so on.
         brand_msisdn:
           type: string
           description: The phone number associated with the WhatsApp Business account in international format.
         request_id:
           type: string
           description: A unique ID for the callback request.
+    CallbackBusinessSingleProduct:
+      type: object
+      title: Session Message Business for Single Product
+      properties:
+        contact_no:
+          type: string
+          description: The phone number of the WhatsApp user who sent the message.
+        data:
+          type: object
+          description: A JSON object containing the message data.
+          properties:
+            contacts:
+              type: array
+              description: An array of contact objects that contains an array of WhatsApp contacts for whom the message is intended.
+              items:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    description: An object that contains the contact's profile information, such as, name, photo, and so on.
+                    properties:
+                      name:
+                        type: string
+                        description: The name of the contact.
+                  wa_id:
+                    type: string
+                    description: The WhatsApp ID of the contact.
+            messages:
+              type: array
+              description: An array of message objects that contains information about the incoming text message and its parameters.
+              items:
+                type: object
+                properties:
+                  context:
+                    type: object
+                    description: An object that represents the context of the message; that is the information about the referred product.
+                    properties:
+                      referred_product:
+                        type: object
+                        description: An object that represents the referred product.
+                        properties:
+                          catalog_id:
+                            type: string
+                            description: The ID of the catalog the product belongs to.
+                          product_retailer_id:
+                            type: string
+                            description: The ID of the retailer selling the product.
+                  from:
+                    type: string
+                    description: The phone number of the sender.
+                  id:
+                    type: string
+                    description: A unique ID for the message.
+                  text:
+                    type: object
+                    description: An object that contains the text of the message.
+                    properties:
+                      body:
+                        type: string
+                        description: The text of the message.
+                  timestamp:
+                    type: string
+                    description: The Unix timestamp of the message.
+                  type:
+                    type: string
+                    description: The type of message, which is image.
+            brand_msisdn:
+              type: string
+              description: The phone number associated with the WhatsApp Business account in international format.
+        time:
+          type: string
+          description: The timestamp of the message in the format YYYY-MM-DD HH:MM:SS.mmmmmm.
+        source:
+          type: string
+          description: The source of the message, which will be "FROM_CALLBACK" in this case.
     CallbackSingleProductCart:
       type: object
       title: Add Single Product to Cart
@@ -1552,129 +1435,246 @@ components:
         source:
           type: string
           description: The source of the message, which will be "FROM_CALLBACK" in this case.
-    CallbackIncomingQuickReply:
+    CallbackMultiProductCart:
       type: object
-      title: Incoming Session Quick Reply
+      title: Add Multi Product to Cart
       properties:
-        contacts:
-          type: array
-          description: An array of contact objects that contains information about the sender of the message and its parameters.
-          items:
-            type: object
-            properties:
-              profile:
+        contact_no:
+          type: string
+          description: The phone number of the WhatsApp user who initiated the action.
+        data:
+          type: object
+          description: A JSON object containing the message data.
+          properties:
+            contacts:
+              type: array
+              description: An array of JSON objects representing the contacts involved in the interaction.
+              items:
                 type: object
-                description: An object that contains the contact's profile information, such as, name, photo, and so on.
                 properties:
-                  name:
+                  profile:
+                    type: object
+                    description: An object that contains the contact's profile information, such as, name, photo, and so on.
+                    properties:
+                      name:
+                        type: string
+                        description: The name of the contact.
+                  wa_id:
                     type: string
-                    description: The name of the contact.
-              wa_id:
-                type: string
-                description: The WhatsApp ID of the contact.
-        messages:
-          type: array
-          description: An array of message objects that contains information about the message and its parameters.
-          items:
-            type: object
-            properties:
-              context:
+                    description: The WhatsApp ID of the contact.
+            messages:
+              type: array
+              description: An array of JSON objects representing the messages sent during the interaction.
+              items:
                 type: object
-                description: An object that represents the context of the message.
                 properties:
                   from:
                     type: string
-                    description: The WhatsApp ID of the contact.
+                    description: The phone number of the sender.
                   id:
                     type: string
-                    description: The ID of the message and the WhatsApp ID of the sender.
-              from:
-                type: string
-                description: The WhatsApp ID of the contact.
-              id:
-                type: string
-                description: The ID of the message.
-              interactive:
-                type: object
-                description: A JSON object representing the interactive message, with a button_reply field containing the ID and title of the button that was clicked and a type field set to "button_reply".
-                properties:
-                  button_reply:
+                    description: A unique ID for the message.
+                  order:
                     type: object
-                    description: The button reply text.
+                    description: An object that contains the details of the product added to the cart by the user.
                     properties:
-                      id:
+                      catalog_id:
                         type: string
-                        description: The ID of the button.
-                      title:
-                        type: string
-                        description: The title of the button.
+                        description: The ID of the catalog the product belongs to.
+                      product_items:
+                        type: array
+                        description: An array of product item objects that contains the details of the product added to the cart.
+                        items:
+                          type: object
+                          properties:
+                            currency:
+                              type: string
+                              description: The currency of the product item.
+                            item_price:
+                              type: integer
+                              description: The price of the product item.
+                            product_retailer_id:
+                              type: string
+                              description: The ID of the retailer selling the product.
+                            quantity:
+                              type: integer
+                              description: The quantity of the product item being added to the cart.
+                  timestamp:
+                    type: string
+                    description: The Unix timestamp of the message.
                   type:
                     type: string
-                    description: A string indicating the type of the message, which is set to "interactive" for an incoming session quick reply.
-              timestamp:
-                type: string
-                description: A string indicating the type of the message, which is set to "interactive" for an incoming session quick reply.
-              type:
-                type: string
-                description: The type of the message.
-    CallbackReadReceipt:
-      type: object
-      title: Read Report
-      properties:
-        display_no:
+                    description: The type of message, which is "order" in this case.
+            brand_msisdn:
+              type: string
+              description: The phone number associated with the WhatsApp Business account in international format.
+        time:
           type: string
-          description: The phone number of the WhatsApp Business Account in E.164 format.
-        statuses:
+          description: The timestamp of the message in the format YYYY-MM-DD HH:MM:SS.mmmmmm.
+        source:
+          type: string
+          description: The source of the message, which will be "FROM_CALLBACK" in this case.
+    CallbackIncomingImage:
+      type: object
+      title: Incoming Image
+      properties:
+        apiKey:
+          type: string
+          description: The API key to authenticate the callback request.
+        messages:
           type: array
-          description: An array of status objects representing the read status of the messages.
+          description: An array of message objects that contains information about the incoming image message and its parameters.
           items:
             type: object
             properties:
+              from:
+                type: string
+                description: The phone number of the sender in international format.
               id:
                 type: string
-                description: A unique identifier for the message.
-              recipient_id:
-                type: string
-                description: The WhatsApp ID of the recipient who has read the message.
-              status:
-                type: string
-                description: The status of the message, which is "read" in this case.
-              timestamp:
-                type: string
-                description: The timestamp in seconds when the message was read.
-              type:
-                type: string
-                description: The type of the message, which is "message" in this case.
-              conversation:
+                description: A unique ID for the message.
+              image:
                 type: object
-                description: An object containing information about the conversation where the message was read.
+                description: An object that contains information about the incoming image.
                 properties:
+                  file:
+                    type: string
+                    description: The absolute path to the image file.
                   id:
                     type: string
-                    description: A unique identifier for the conversation.
+                    description: A unique ID for the image.
+                  mime_type:
+                    type: string
+                    description: The MIME type of the image.
+                  sha256:
+                    type: string
+                    description: The SHA256 hash of the image.
+                  caption:
+                    type: string
+                    description: The caption of the image.
+                  media_url:
+                    type: string
+                    description: The URL of the image.
+              timestamp:
+                type: string
+                description: The timestamp of the incoming message.
+              type:
+                type: string
+                description: The type of the incoming message. In this case, "image".
+        brand_msisdn:
+          type: string
+          description: The phone number associated with the WhatsApp Business account in international format.
+        request_id:
+          type: string
+          description: A unique ID for the callback request.
+    CallbackIncomingVideo:
+      type: object
+      title: Incoming Video
+      properties:
+        messages:
+          type: array
+          description: An array of message objects that contains information about the incoming video message and its parameters.
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+                description: The phone number of the sender.
+              id:
+                type: string
+                description: A unique ID for the message.
+              timestamp:
+                type: string
+                description: The Unix timestamp of the message.
+              type:
+                type: string
+                description: The type of message. For example, text, image, video, and so on.
+              voice:
+                type: object
+                description: An object that contains the audio message parameters.
+                properties:
+                  file:
+                    type: string
+                    description: The path to the video file on your server.
+                  id:
+                    type: string
+                    description: A unique ID for the video message.
+                  mime_type:
+                    type: string
+                    description: The MIME type of the video file.
+                  sha256:
+                    type: string
+                    description: The SHA-256 hash of the video file.
+                  media_url:
+                    type: string
+                    description: The media URL for the video file.
+        brand_msisdn:
+          type: string
+          description: The phone number associated with the WhatsApp Business account in international format.
+        request_id:
+          type: string
+          description: A unique ID for the callback request.
+    CallbackSentDeliveryReport:
+      type: object
+      title: Sent/Delivery Report
+      properties:
+        statuses:
+          type: array
+          description: An array containing information about the message status.
+          items:
+            type: object
+            properties:
+              conversation:
+                type: object
+                description: Information about the conversation.
+                properties:
+                  expiration_timestamp:
+                    type: integer
+                    description: The timestamp for when the conversation expires.
+                  id:
+                    type: string
+                    description: The ID of the conversation. For example, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                   origin:
                     type: object
-                    description: An object representing the origin of the conversation.
+                    description: Information about the origin of the conversation.
                     properties:
                       type:
                         type: string
-                        description: The type of the conversation origin, which can be "user_initiated", "business_initiated", or "referral_conversion".
+                        description: The type of origin. Possible values are "user_initiated", "business_initiated", or "referral_conversion".
+              id:
+                type: string
+                description: A unique ID for the message.
               pricing:
                 type: object
-                description: An object representing the pricing information for the message.
+                description: Information about the pricing for the message.
                 properties:
                   billable:
                     type: string
                     description: A boolean value indicating whether the message is billable or not.
-                  pricing_model:
-                    type: string
-                    description: The pricing model for the message, which is "CBP" in this case.
                   category:
                     type: string
-                    description: The category of the conversation origin, which can be "user_initiated", "business_initiated", or "referral_conversion".
+                    description: The category of the message. Possible values are "user_initiated", "business_initiated", or "referral_conversion".
+                  pricing_model:
+                    type: string
+                    description: The pricing model for the message. Possible values are "CBP" (conversation based pricing) or "FBP" (fixed billing period).
+              recipient_id:
+                type: string
+                description: The ID of the recipient.
+              status:
+                type: string
+                description: The status of the message. Possible values are "sent" or "delivered".
+              timestamp:
+                type: string
+                description: The timestamp for the message.
+              type:
+                type: string
+                description: The type of message.
               extra:
                 type: string
-                description: A string containing additional metadata for the message.
+                description: Any extra information about the message.
+              message_id:
+                type: string
+                description: The ID of the message.
         brand_msisdn:
           type: string
           description: The phone number associated with the WhatsApp Business account in international format.

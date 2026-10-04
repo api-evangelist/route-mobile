@@ -125,29 +125,34 @@ paths:
       security: []
 components:
   schemas:
-    vbs_callback_delivery_report:
+    vbs_callback_incoming_text:
       type: object
-      title: Delivery Report
+      title: Incoming Text
       properties:
-        message_status:
-          type: string
-          description: 'The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.
-
-            '
-        message_time:
-          type: integer
-          format: date-time
-          description: 'The Unix timestamp when the message status was updated.
-
-            '
         phone_number:
           type: string
-          description: 'The phone number (with country code) of the recipient of the message.
+          description: 'The phone number of the user who sent the text message.
 
             '
+        time:
+          type: integer
+          format: date-time
+          description: 'The timestamp when the message was sent.
+
+            '
+        message:
+          type: object
+          description: The message object.
+          properties:
+            text:
+              type: string
+              description: The text message sent by the user.
+            tracking_data:
+              type: string
+              description: The tracking data associated with the message.
         service_type:
           type: string
-          description: 'The type of Viber service being used. Possible values are one_way, two_way, or session.
+          description: 'The type of service that the Viber Business Account supports.
 
             '
         request_id:
@@ -193,34 +198,29 @@ components:
           description: 'A unique identifier for the request.
 
             '
-    vbs_callback_incoming_text:
+    vbs_callback_delivery_report:
       type: object
-      title: Incoming Text
+      title: Delivery Report
       properties:
-        phone_number:
+        message_status:
           type: string
-          description: 'The phone number of the user who sent the text message.
+          description: 'The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.
 
             '
-        time:
+        message_time:
           type: integer
           format: date-time
-          description: 'The timestamp when the message was sent.
+          description: 'The Unix timestamp when the message status was updated.
 
             '
-        message:
-          type: object
-          description: The message object.
-          properties:
-            text:
-              type: string
-              description: The text message sent by the user.
-            tracking_data:
-              type: string
-              description: The tracking data associated with the message.
+        phone_number:
+          type: string
+          description: 'The phone number (with country code) of the recipient of the message.
+
+            '
         service_type:
           type: string
-          description: 'The type of service that the Viber Business Account supports.
+          description: 'The type of Viber service being used. Possible values are one_way, two_way, or session.
 
             '
         request_id:

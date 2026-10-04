@@ -137,38 +137,6 @@ paths:
                     message: Tracking Domain Deleted
 components:
   schemas:
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
     AuthFields:
       type: object
       required:
@@ -183,17 +151,6 @@ components:
           type: string
           description: A valid API token
           example: example_token
-    ListTrackingDomainResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        tracking_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrackingDomainListEntry'
     CheckTrackingDomainResponse:
       type: object
       properties:
@@ -219,6 +176,17 @@ components:
               - 'Yes'
               - 'No'
               example: 'Yes'
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
     DomainRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -230,6 +198,38 @@ components:
             type: string
             description: Fully qualified domain name
             example: abc.com
+    ListTrackingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        tracking_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingDomainListEntry'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
     TrackingDomainListEntry:
       type: object
       properties:
