@@ -77,7 +77,7 @@ tags:
 - OTP
 - Aggregator
 created: '2026-07-25'
-modified: '2026-07-25'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: route-mobile:route-mobile-enterprise-voice-api
@@ -1714,6 +1714,10 @@ apis:
   - type: Documentation
     url: https://routemobile.github.io/Route-Mailer-API/
 common:
+- url: https://routemobile.com/blogs/
+  type: Blog
+- url: https://routemobile.com/feed/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/route-mobile-capability-edges.yml
   name: Route Mobile Business Capability Map
