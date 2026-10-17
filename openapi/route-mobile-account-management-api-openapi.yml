@@ -532,6 +532,44 @@ components:
         country_code:
           type: string
           description: The country code.
+    MessagePreviewMediaBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text to include in the message.
+    JwtExpiredError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    ProfilePhotoRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
+          example: ABC.jpeg, ABC.jpg, ABC.png
+      required:
+      - file
+    MessagePreviewMediaHeader:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/MessagePreviewMediaImage'
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message response.
     MessagePreviewMedia:
       type: object
       properties:
@@ -552,6 +590,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MessagePreviewMediaBody'
+    MessagePreviewMediaImage:
+      type: object
+      properties:
+        link:
+          type: string
+          description: The URL of the image file.
     MessagePreview:
       type: object
       description: A preview of the message or content associated with the campaign.
@@ -567,52 +611,6 @@ components:
           description: Additional information to include in the message.
         media:
           $ref: '#/components/schemas/MessagePreviewMedia'
-    ProfilePhotoRequest:
-      type: object
-      properties:
-        file:
-          type: string
-          description: This Paramter contains Profile Photo which has image file which can be uploaded with the formats as mentioned in facebook documentation
-          example: ABC.jpeg, ABC.jpg, ABC.png
-      required:
-      - file
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
-    MessagePreviewMediaImage:
-      type: object
-      properties:
-        link:
-          type: string
-          description: The URL of the image file.
-    UnknownCampaignTypeError:
-      type: object
-      title: Unknown Campaign Type Error
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the file upload.
-        reason:
-          type: object
-          description: The reason for not processing the file upload request.
-          properties:
-            campaign_type:
-              type: array
-              description: The type of the campaign.
-              items:
-                type: string
     FileMimetypeError:
       type: object
       title: File Mimetype Error
@@ -632,23 +630,25 @@ components:
               description: The MIME type of the file containing the phone numbers of the recipients.
               items:
                 type: string
-    MessagePreviewMediaBody:
+    UnknownCampaignTypeError:
       type: object
-      properties:
-        text:
-          type: string
-          description: The text to include in the message.
-    MessagePreviewMediaHeader:
-      type: object
-      properties:
-        image:
-          $ref: '#/components/schemas/MessagePreviewMediaImage'
-    NotFoundError:
-      type: object
+      title: Unknown Campaign Type Error
       properties:
         message:
           type: string
-          description: The message response.
+          description: The response message.
+        status:
+          type: string
+          description: The status of the file upload.
+        reason:
+          type: object
+          description: The reason for not processing the file upload request.
+          properties:
+            campaign_type:
+              type: array
+              description: The type of the campaign.
+              items:
+                type: string
   securitySchemes:
     BearerAuth:
       type: http

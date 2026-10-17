@@ -171,40 +171,60 @@ paths:
                     message: Sending Domain Deleted
 components:
   schemas:
-    CheckSendingDomainResponse:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    ListSendingDomainResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-        domain:
-          type: string
-          example: abc.com
-        dkim:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'Yes'
-        spf:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
-              example: 'No'
-        valid_signing:
+        sending_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendingDomainListEntry'
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
+    SuccessResponse:
+      type: object
+      properties:
+        status:
           type: string
           enum:
-          - 'Yes'
-          - 'No'
-          example: 'No'
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
     AuthFields:
       type: object
       required:
@@ -219,43 +239,6 @@ components:
           type: string
           description: A valid API token
           example: example_token
-    VerifySendingDomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        - mailbox
-        properties:
-          domain:
-            type: string
-            example: abc.com
-          mailbox:
-            type: string
-            description: Mailbox name to send verification instructions to
-            example: john
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
-    DomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        properties:
-          domain:
-            type: string
-            description: Fully qualified domain name
-            example: abc.com
     SendingDomainListEntry:
       type: object
       properties:
@@ -291,35 +274,52 @@ components:
               enum:
               - 'Yes'
               - 'No'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    ListSendingDomainResponse:
+    CheckSendingDomainResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-        sending_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendingDomainListEntry'
+        domain:
+          type: string
+          example: abc.com
+        dkim:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'Yes'
+        spf:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
+              example: 'No'
+        valid_signing:
+          type: string
+          enum:
+          - 'Yes'
+          - 'No'
+          example: 'No'
+    VerifySendingDomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        - mailbox
+        properties:
+          domain:
+            type: string
+            example: abc.com
+          mailbox:
+            type: string
+            description: Mailbox name to send verification instructions to
+            example: john

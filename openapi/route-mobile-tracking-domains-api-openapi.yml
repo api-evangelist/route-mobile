@@ -137,20 +137,68 @@ paths:
                     message: Tracking Domain Deleted
 components:
   schemas:
-    AuthFields:
+    ErrorResponse:
       type: object
-      required:
-      - owner_id
-      - token
       properties:
-        owner_id:
+        status:
           type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
           type: string
-          description: A valid API token
-          example: example_token
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    ListTrackingDomainResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        tracking_domain_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingDomainListEntry'
+    DomainRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+            description: Fully qualified domain name
+            example: abc.com
+    TrackingDomainListEntry:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: abc.com
+        create_date:
+          type: integer
+          format: int64
+          description: Creation timestamp in microseconds
+          example: 67457775764
+        cname:
+          type: object
+          properties:
+            valid:
+              type: string
+              enum:
+              - 'Yes'
+              - 'No'
     CheckTrackingDomainResponse:
       type: object
       properties:
@@ -187,65 +235,17 @@ components:
         message:
           type: string
           example: Operation successful
-    DomainRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - domain
-        properties:
-          domain:
-            type: string
-            description: Fully qualified domain name
-            example: abc.com
-    ListTrackingDomainResponse:
+    AuthFields:
       type: object
+      required:
+      - owner_id
+      - token
       properties:
-        status:
+        owner_id:
           type: string
-          enum:
-          - success
-        tracking_domain_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrackingDomainListEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
           type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    TrackingDomainListEntry:
-      type: object
-      properties:
-        domain:
-          type: string
-          example: abc.com
-        create_date:
-          type: integer
-          format: int64
-          description: Creation timestamp in microseconds
-          example: 67457775764
-        cname:
-          type: object
-          properties:
-            valid:
-              type: string
-              enum:
-              - 'Yes'
-              - 'No'
+          description: A valid API token
+          example: example_token

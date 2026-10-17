@@ -1219,57 +1219,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    DeleteProductFeedRequest:
-      type: object
-      properties:
-        product_feed_id:
-          type: string
-          description: The unique ID of the product feed that should be deleted.
-      required:
-      - product_feed_id
-    CatalogAuthError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The status of the message.
-        reason:
-          type: string
-          description: The reason for not processing the message.
-    JwtExpiredError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        reason:
-          type: string
-          description: The reason for not processing the product feed update request.
-        status:
-          type: string
-          description: The status of the product feed update.
-    CatalogUploadRequest:
-      type: object
-      properties:
-        action:
-          type: string
-          description: The action to be taken on the catalog.
-          example: Update
-        file:
-          type: string
-          description: "The data of the product feed file that contains catalog details such as ID, name, and image URL. \nSee the sample [catalog file](https://github.com/routemobile/WhatsApp-Business-API/blob/master/Sample%20Catalog%20File.csv) for more information on catalog details and its format."
-          example: ABC.csv
-        file_name:
-          type: string
-          description: The name of the product feed file that contains the updated catalog.
-          example: file_name
-      required:
-      - action
-      - file
-      - file_name
     CreateProductFeedRequest:
       type: object
       properties:
@@ -1294,12 +1243,30 @@ components:
       required:
       - file_url
       - name
-    CatalogUnauthorizedError:
+    JwtExpiredError:
       type: object
       properties:
-        response:
+        message:
           type: string
           description: The response message.
+        reason:
+          type: string
+          description: The reason for not processing the product feed update request.
+        status:
+          type: string
+          description: The status of the product feed update.
+    CatalogAuthError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The status of the message.
+        reason:
+          type: string
+          description: The reason for not processing the message.
     UpdateProductFeedRequest:
       type: object
       properties:
@@ -1334,6 +1301,39 @@ components:
         message:
           type: string
           description: The message response.
+    CatalogUnauthorizedError:
+      type: object
+      properties:
+        response:
+          type: string
+          description: The response message.
+    CatalogUploadRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          description: The action to be taken on the catalog.
+          example: Update
+        file:
+          type: string
+          description: "The data of the product feed file that contains catalog details such as ID, name, and image URL. \nSee the sample [catalog file](https://github.com/routemobile/WhatsApp-Business-API/blob/master/Sample%20Catalog%20File.csv) for more information on catalog details and its format."
+          example: ABC.csv
+        file_name:
+          type: string
+          description: The name of the product feed file that contains the updated catalog.
+          example: file_name
+      required:
+      - action
+      - file
+      - file_name
+    DeleteProductFeedRequest:
+      type: object
+      properties:
+        product_feed_id:
+          type: string
+          description: The unique ID of the product feed that should be deleted.
+      required:
+      - product_feed_id
   securitySchemes:
     BearerAuth:
       type: http

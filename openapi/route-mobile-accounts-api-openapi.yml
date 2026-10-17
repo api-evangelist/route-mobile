@@ -52,20 +52,6 @@ components:
           type: object
           description: Account and user detail fields (varies by plan)
           additionalProperties: true
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
     ErrorResponse:
       type: object
       properties:
@@ -87,3 +73,17 @@ components:
         message:
           type: string
           example: Token MissMatch
+    AuthFields:
+      type: object
+      required:
+      - owner_id
+      - token
+      properties:
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token

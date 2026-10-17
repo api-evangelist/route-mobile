@@ -252,162 +252,27 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SendMailMessage:
-      type: object
-      description: The message payload for sendMail
-      properties:
-        html:
-          type: string
-          description: Full HTML content of the email. Either html or text is required.
-          example: <h1>Hello World</h1>
-        text:
-          type: string
-          description: Full plain-text content of the email. Either html or text is required.
-          example: Hello World
-        subject:
-          type: string
-          description: Message subject line
-          example: Your order confirmation
-        from_email:
-          type: string
-          format: email
-          description: Sender email address
-          example: noreply@yourdomain.com
-        from_name:
-          type: string
-          description: Optional sender display name
-          example: SendClean Notifications
-        to:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recipient'
-        headers:
-          $ref: '#/components/schemas/MessageHeaders'
-        attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
-        images:
-          type: array
-          description: Embedded inline images (referenced by CID in HTML)
-          items:
-            $ref: '#/components/schemas/EmbeddedImage'
-    SendMailRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - smtp_user_name
-        - message
-        properties:
-          smtp_user_name:
-            type: string
-            description: A valid SMTP user name
-            example: smtp12345
-          message:
-            $ref: '#/components/schemas/SendMailMessage'
-    SendMailResponse:
+    ErrorResponse:
       type: object
       properties:
         status:
           type: string
           enum:
-          - success
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
         message:
           type: string
-          example: message have been Queued ...
-    AuthFields:
-      type: object
-      required:
-      - owner_id
-      - token
-      properties:
-        owner_id:
-          type: string
-          description: A valid SendClean User ID
-          example: example_owner_id
-        token:
-          type: string
-          description: A valid API token
-          example: example_token
-    MessageInfoResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        message_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageInfoEntry'
-    ClickData:
-      type: object
-      properties:
-        ip:
-          type: array
-          items:
-            type: string
-          example:
-          - 0.0.0.0
-        ua:
-          type: array
-          items:
-            type: string
-          description: User-agent strings of the clickers
-        time:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: Timestamps of each click event
-    MessageHeaders:
-      type: object
-      description: Optional custom headers for the message
-      properties:
-        Reply-To:
-          type: string
-          format: email
-          example: reply@example.com
-        X-Unique-Id:
-          type: string
-          description: Custom message ID for tracking via getMessageInfo
-          example: my-unique-id-123
-        X-STes-TrackOpen:
-          type: string
-          enum:
-          - 'yes'
-          - 'no'
-          description: Enable or disable open tracking
-        X-STes-TrackClick:
-          type: string
-          enum:
-          - html
-          - text
-          - both
-          - 'no'
-          description: Enable or disable click tracking
-        X-STes-Autotext:
-          type: string
-          enum:
-          - 'yes'
-          - 'no'
-          description: Auto-generate plain-text version from HTML
-        X-STes-AutoHtml:
-          type: string
-          enum:
-          - 'yes'
-          - 'no'
-          description: Auto-generate HTML version from plain text
-        X-STes-TrackingDomain:
-          type: string
-          description: Custom domain for tracking opens and clicks
-        X-STes-SigningDomain:
-          type: string
-          description: Custom domain for SPF/DKIM signing
-        X-STes-ReturnPathDomain:
-          type: string
-          description: Custom domain for the return-path
+          example: Token MissMatch
     MessageInfoEntry:
       type: object
       properties:
@@ -460,43 +325,47 @@ components:
           example: 1
         clickData:
           $ref: '#/components/schemas/ClickData'
-    ErrorResponse:
+    ClickData:
       type: object
       properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    Attachment:
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the clickers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each click event
+    OpenData:
       type: object
       properties:
-        type:
-          type: string
-          description: MIME type of the attachment
-          example: text/plain
-        name:
-          type: string
-          description: File name of the attachment
-          example: myfile.txt
-        content:
-          type: string
-          format: byte
-          description: Base64-encoded content of the attachment
-          example: ZXhhbXBsZSBmaWxl
+        ip:
+          type: array
+          items:
+            type: string
+          example:
+          - 0.0.0.0
+          - 0.0.0.0
+        ua:
+          type: array
+          items:
+            type: string
+          description: User-agent strings of the openers
+        time:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Timestamps of each open event
     MessageInfoRequest:
       allOf:
       - $ref: '#/components/schemas/AuthFields'
@@ -554,6 +423,106 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EmbeddedImage'
+    MessageHeaders:
+      type: object
+      description: Optional custom headers for the message
+      properties:
+        Reply-To:
+          type: string
+          format: email
+          example: reply@example.com
+        X-Unique-Id:
+          type: string
+          description: Custom message ID for tracking via getMessageInfo
+          example: my-unique-id-123
+        X-STes-TrackOpen:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Enable or disable open tracking
+        X-STes-TrackClick:
+          type: string
+          enum:
+          - html
+          - text
+          - both
+          - 'no'
+          description: Enable or disable click tracking
+        X-STes-Autotext:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate plain-text version from HTML
+        X-STes-AutoHtml:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          description: Auto-generate HTML version from plain text
+        X-STes-TrackingDomain:
+          type: string
+          description: Custom domain for tracking opens and clicks
+        X-STes-SigningDomain:
+          type: string
+          description: Custom domain for SPF/DKIM signing
+        X-STes-ReturnPathDomain:
+          type: string
+          description: Custom domain for the return-path
+    Attachment:
+      type: object
+      properties:
+        type:
+          type: string
+          description: MIME type of the attachment
+          example: text/plain
+        name:
+          type: string
+          description: File name of the attachment
+          example: myfile.txt
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded content of the attachment
+          example: ZXhhbXBsZSBmaWxl
+    SendMailRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/SendMailMessage'
+    SendMailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: message have been Queued ...
+    SendTemplateRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        - message
+        properties:
+          smtp_user_name:
+            type: string
+            example: smtp12345
+          message:
+            $ref: '#/components/schemas/TemplateMessage'
     EmbeddedImage:
       type: object
       properties:
@@ -570,40 +539,20 @@ components:
           format: byte
           description: Base64-encoded image content
           example: ZXhhbXBsZSBmaWxl
-    SendTemplateRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - smtp_user_name
-        - message
-        properties:
-          smtp_user_name:
-            type: string
-            example: smtp12345
-          message:
-            $ref: '#/components/schemas/TemplateMessage'
-    OpenData:
+    AuthFields:
       type: object
+      required:
+      - owner_id
+      - token
       properties:
-        ip:
-          type: array
-          items:
-            type: string
-          example:
-          - 0.0.0.0
-          - 0.0.0.0
-        ua:
-          type: array
-          items:
-            type: string
-          description: User-agent strings of the openers
-        time:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: Timestamps of each open event
+        owner_id:
+          type: string
+          description: A valid SendClean User ID
+          example: example_owner_id
+        token:
+          type: string
+          description: A valid API token
+          example: example_token
     Recipient:
       type: object
       required:
@@ -625,3 +574,54 @@ components:
           - bcc
           default: to
           description: Header type for the recipient
+    SendMailMessage:
+      type: object
+      description: The message payload for sendMail
+      properties:
+        html:
+          type: string
+          description: Full HTML content of the email. Either html or text is required.
+          example: <h1>Hello World</h1>
+        text:
+          type: string
+          description: Full plain-text content of the email. Either html or text is required.
+          example: Hello World
+        subject:
+          type: string
+          description: Message subject line
+          example: Your order confirmation
+        from_email:
+          type: string
+          format: email
+          description: Sender email address
+          example: noreply@yourdomain.com
+        from_name:
+          type: string
+          description: Optional sender display name
+          example: SendClean Notifications
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+        headers:
+          $ref: '#/components/schemas/MessageHeaders'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        images:
+          type: array
+          description: Embedded inline images (referenced by CID in HTML)
+          items:
+            $ref: '#/components/schemas/EmbeddedImage'
+    MessageInfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageInfoEntry'

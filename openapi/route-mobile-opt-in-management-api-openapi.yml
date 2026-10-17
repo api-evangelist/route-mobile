@@ -390,6 +390,17 @@ components:
           description: The phone number of the customer.
           items:
             type: string
+    OptinValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message.
+        status:
+          type: string
+          description: The optin status of msisdn.
+        error:
+          $ref: '#/components/schemas/OptinValidationErrorDetail'
     OptinStoreResponse:
       type: object
       properties:
@@ -402,17 +413,6 @@ components:
         details:
           type: string
           description: The details of the message.
-    OptinValidationError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The response message.
-        status:
-          type: string
-          description: The optin status of msisdn.
-        error:
-          $ref: '#/components/schemas/OptinValidationErrorDetail'
     NotFoundError:
       type: object
       properties:

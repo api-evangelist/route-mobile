@@ -156,6 +156,118 @@ paths:
                 - $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AddSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - total_limit
+        - hourly_limit
+        properties:
+          total_limit:
+            type: integer
+            description: Total sending limit (positive integer)
+            example: 100
+          hourly_limit:
+            type: integer
+            description: Hourly sending limit (positive integer)
+            example: 10
+    ResetSmtpPasswordResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        message:
+          type: string
+          example: password reseted
+        smtp_user_name:
+          type: string
+          example: smtp12345
+        smtp_password:
+          type: string
+          example: 2fg345gy6r7
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+          example: error
+        code:
+          type: integer
+          example: -1
+        name:
+          type: string
+          enum:
+          - ValidationError
+          - GeneralError
+          - AuthenticationError
+          example: AuthenticationError
+        message:
+          type: string
+          example: Token MissMatch
+    ResetSmtpPasswordRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+    ListSmtpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        smtp_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpUser'
+    EditSmtpRequest:
+      allOf:
+      - $ref: '#/components/schemas/AuthFields'
+      - type: object
+        required:
+        - smtp_user_name
+        properties:
+          smtp_user_name:
+            type: string
+            description: A valid SMTP user name
+            example: smtp12345
+          total_limit:
+            type: integer
+            description: New total limit (positive integer)
+            example: 80
+          hourly_limit:
+            type: integer
+            description: New hourly limit (positive integer)
+            example: 15
+          status:
+            type: string
+            enum:
+            - Enable
+            - Disable
+            description: Enable or disable the SMTP user
+            example: Disable
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        message:
+          type: string
+          example: Operation successful
     AuthFields:
       type: object
       required:
@@ -207,115 +319,3 @@ components:
         smtp_password:
           type: string
           example: asfsf4w343
-    EditSmtpRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - smtp_user_name
-        properties:
-          smtp_user_name:
-            type: string
-            description: A valid SMTP user name
-            example: smtp12345
-          total_limit:
-            type: integer
-            description: New total limit (positive integer)
-            example: 80
-          hourly_limit:
-            type: integer
-            description: New hourly limit (positive integer)
-            example: 15
-          status:
-            type: string
-            enum:
-            - Enable
-            - Disable
-            description: Enable or disable the SMTP user
-            example: Disable
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          example: success
-        message:
-          type: string
-          example: Operation successful
-    AddSmtpRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - total_limit
-        - hourly_limit
-        properties:
-          total_limit:
-            type: integer
-            description: Total sending limit (positive integer)
-            example: 100
-          hourly_limit:
-            type: integer
-            description: Hourly sending limit (positive integer)
-            example: 10
-    ResetSmtpPasswordResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        message:
-          type: string
-          example: password reseted
-        smtp_user_name:
-          type: string
-          example: smtp12345
-        smtp_password:
-          type: string
-          example: 2fg345gy6r7
-    ResetSmtpPasswordRequest:
-      allOf:
-      - $ref: '#/components/schemas/AuthFields'
-      - type: object
-        required:
-        - smtp_user_name
-        properties:
-          smtp_user_name:
-            type: string
-            description: A valid SMTP user name
-            example: smtp12345
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-          example: error
-        code:
-          type: integer
-          example: -1
-        name:
-          type: string
-          enum:
-          - ValidationError
-          - GeneralError
-          - AuthenticationError
-          example: AuthenticationError
-        message:
-          type: string
-          example: Token MissMatch
-    ListSmtpResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-        smtp_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SmtpUser'

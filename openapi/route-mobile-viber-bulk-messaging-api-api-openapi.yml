@@ -316,41 +316,10 @@ paths:
       - jwt: []
 components:
   schemas:
-    vbs_bulk_text_button_image_msg:
+    vbs_bulk_file_msg:
       type: object
-      title: Bulk Text Button Image
-      description: Send a text, button, and image message to multiple recipients.
-      properties:
-        file_code:
-          type: string
-          description: The file code returned from the Campaign File Upload API.
-        campaign_name:
-          type: string
-          description: The campaign name.
-        personalised:
-          type: boolean
-          description: Whether the message uses personalised fields.
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "template".
-            method:
-              type: string
-            text:
-              type: string
-            button_text:
-              type: string
-            button_link:
-              type: string
-            img:
-              type: string
-              description: The URL of the image.
-    vbs_bulk_video_text_msg:
-      type: object
-      title: Bulk Video Text
-      description: Send a video with accompanying text to multiple recipients.
+      title: Bulk File
+      description: Send a file or document attachment to multiple recipients.
       properties:
         file_code:
           type: string
@@ -358,56 +327,20 @@ components:
           type: string
         personalised:
           type: boolean
-        schedule_datetime:
-          type: string
-          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
-        timezone:
-          type: string
         payload:
           type: object
           properties:
             message_type:
               type: string
-              description: Must be set to "text_video".
+              description: Must be set to "file".
             method:
               type: string
-            video:
+            file_url:
               type: string
-            text:
+              description: The URL of the file to send.
+            file_name:
               type: string
-            thumbnail_url:
-              type: string
-    vbs_bulk_text_button_msg:
-      type: object
-      title: Bulk Text Button
-      description: Send a text message with an action button to multiple recipients.
-      properties:
-        file_code:
-          type: string
-          description: The file code returned from the Campaign File Upload API.
-        campaign_name:
-          type: string
-          description: The campaign name.
-        personalised:
-          type: boolean
-          description: Whether the message uses personalised fields.
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "media".
-            method:
-              type: string
-            text:
-              type: string
-              description: The message text.
-            button_text:
-              type: string
-              description: The text label for the action button.
-            button_link:
-              type: string
-              description: The URL the button should open.
+              description: The display file name including extension.
     vbs_bulk_fallback_msg:
       type: object
       title: Bulk Message with Fallback
@@ -462,10 +395,10 @@ components:
                   type: string
                 pe_id:
                   type: string
-    vbs_bulk_video_msg:
+    vbs_bulk_image_msg:
       type: object
-      title: Bulk Video
-      description: Send a video message to multiple recipients.
+      title: Bulk Image
+      description: Send a standalone image message to multiple recipients.
       properties:
         file_code:
           type: string
@@ -478,15 +411,12 @@ components:
           properties:
             message_type:
               type: string
-              description: Must be set to "video".
+              description: Must be set to "image".
             method:
               type: string
-            video:
+            img:
               type: string
-              description: The URL of the video file.
-            thumbnail_url:
-              type: string
-              description: The thumbnail image URL for the video preview.
+              description: The URL of the image.
     vbs_bulk_text_msg:
       type: object
       title: Bulk Text
@@ -519,99 +449,6 @@ components:
             text:
               type: string
               description: The message text.
-    vbs_bulk_image_msg:
-      type: object
-      title: Bulk Image
-      description: Send a standalone image message to multiple recipients.
-      properties:
-        file_code:
-          type: string
-        campaign_name:
-          type: string
-        personalised:
-          type: boolean
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "image".
-            method:
-              type: string
-            img:
-              type: string
-              description: The URL of the image.
-    vbs_bulk_file_msg:
-      type: object
-      title: Bulk File
-      description: Send a file or document attachment to multiple recipients.
-      properties:
-        file_code:
-          type: string
-        campaign_name:
-          type: string
-        personalised:
-          type: boolean
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "file".
-            method:
-              type: string
-            file_url:
-              type: string
-              description: The URL of the file to send.
-            file_name:
-              type: string
-              description: The display file name including extension.
-    vbs_bulk_text_template_msg:
-      type: object
-      title: Bulk Text Template
-      description: Send an approved text template message to multiple recipients.
-      properties:
-        file_code:
-          type: string
-        campaign_name:
-          type: string
-        personalised:
-          type: boolean
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "text_template".
-            method:
-              type: string
-            text:
-              type: string
-            tracking_data:
-              type: string
-    vbs_bulk_textimage_msg:
-      type: object
-      title: Bulk Text Image
-      description: Send a combined text and image message to multiple recipients.
-      properties:
-        file_code:
-          type: string
-        campaign_name:
-          type: string
-        personalised:
-          type: boolean
-        payload:
-          type: object
-          properties:
-            message_type:
-              type: string
-              description: Must be set to "text_image".
-            method:
-              type: string
-            img:
-              type: string
-            text:
-              type: string
     vbs_bulk_video_text_action_button_msg:
       type: object
       title: Bulk Video Text Action Button
@@ -649,6 +486,169 @@ components:
                   type: string
                 button_text:
                   type: string
+    vbs_bulk_video_msg:
+      type: object
+      title: Bulk Video
+      description: Send a video message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video".
+            method:
+              type: string
+            video:
+              type: string
+              description: The URL of the video file.
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL for the video preview.
+    vbs_bulk_text_button_image_msg:
+      type: object
+      title: Bulk Text Button Image
+      description: Send a text, button, and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "template".
+            method:
+              type: string
+            text:
+              type: string
+            button_text:
+              type: string
+            button_link:
+              type: string
+            img:
+              type: string
+              description: The URL of the image.
+    vbs_bulk_textimage_msg:
+      type: object
+      title: Bulk Text Image
+      description: Send a combined text and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_image".
+            method:
+              type: string
+            img:
+              type: string
+            text:
+              type: string
+    vbs_bulk_text_template_msg:
+      type: object
+      title: Bulk Text Template
+      description: Send an approved text template message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_template".
+            method:
+              type: string
+            text:
+              type: string
+            tracking_data:
+              type: string
+    vbs_bulk_text_button_msg:
+      type: object
+      title: Bulk Text Button
+      description: Send a text message with an action button to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "media".
+            method:
+              type: string
+            text:
+              type: string
+              description: The message text.
+            button_text:
+              type: string
+              description: The text label for the action button.
+            button_link:
+              type: string
+              description: The URL the button should open.
+    vbs_bulk_video_text_msg:
+      type: object
+      title: Bulk Video Text
+      description: Send a video with accompanying text to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_video".
+            method:
+              type: string
+            video:
+              type: string
+            text:
+              type: string
+            thumbnail_url:
+              type: string
   securitySchemes:
     jwt:
       type: apiKey
