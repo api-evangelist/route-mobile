@@ -1,4 +1,4 @@
-# Route Mobile (route-mobile)
+# Route Mobile
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,150 +64,172 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Route Mobile Limited is a Mumbai-headquartered cloud communications platform (CPaaS) provider and one of India's largest A2P messaging aggregators, listed on the BSE and NSE and now majority-owned by Belgium's Proximus Group, where it sits alongside BICS and Telesign inside Proximus Global. It sells enterprise messaging (SMS, WhatsApp Business Platform, RCS, Viber, Google Business Messages, Telegram, Instagram), OTP and identity verification, voice and cloud telephony, transactional email through SendClean, URL shortening through Acculync, and a telecom-operator product line (SMSC-as-a-service, the Route Shield SMS firewall, Route Hub, and Instant Virtual Numbers) that puts it on both sides of the carrier relationship.
+Route Mobile Limited is a Mumbai-headquartered cloud communications platform (CPaaS) provider and one of India's largest A2P messaging aggregators, listed on the BSE and NSE and now majority-owned by Belgium's Proximus Group, where it sits alongside BICS and Telesign inside Proximus Global. It sells enterprise messaging (SMS, WhatsApp Business Platform, RCS, Viber, Google Business Messages, Telegram, Instagram), OTP and identity verification, voice and cloud telephony, transactional email through SendClean, URL shortening through Acculync, and a telecom-operator product line (SMSC-as-a-service, the Route Shield SMS firewall, Route Hub, and Instant Virtual Numbers) that puts it on both sides of the carrier relationship — reselling operator connectivity to enterprises while also selling infrastructure back to operators. Its API posture is genuinely self-serve and public: a ReadMe-hosted developer portal at developer.rmlconnect.net documents roughly 108 REST operations across SMS, WhatsApp, RCS, Viber and email, backed by five downloadable OpenAPI 3.0 definitions that are also mirrored in first-party GitHub repositories with Postman collections and Redoc pages. That places Route Mobile firmly in the CPaaS-aggregator half of telecom rather than the partner-gated operator half. On the sector's defining standards question it is thinner than its marketing suggests: nothing in its public documentation references CAMARA, GSMA Open Gateway, Number Verification, SIM Swap, Device Location or CIBA, and its network-API story lives entirely at the parent level, in Proximus Global's Konera aggregation platform announced as "aligned with GSMA's CAMARA standardization initiative" — a press release, not a callable Route Mobile endpoint. Authentication across its live APIs is legacy-CPaaS rather than telco-standard: username and password query parameters for SMS, JWT bearer tokens minted by product-level login endpoints for WhatsApp, RCS and Viber, and owner_id plus token in the request body for email.
 
-Its API posture is genuinely self-serve and public. A ReadMe-hosted developer portal at [developer.rmlconnect.net](https://developer.rmlconnect.net/) documents roughly 108 REST operations across five product families, backed by five downloadable OpenAPI 3.0 definitions — all harvested into `openapi/` here — and mirrored with Postman collections in first-party GitHub repositories. That places Route Mobile firmly in the CPaaS-aggregator half of telecom rather than the partner-gated mobile-operator half.
+**Areas:** Telecommunications · India · CPaaS · Messaging · SMS · A2P Messaging · WhatsApp Business · RCS · Voice · Email · Identity Verification · OTP
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/route-mobile/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/route-mobile/refs/heads/main/apis.yml)
+## Route Mobile on APIs.io
 
-## CAMARA and GSMA Open Gateway
+Everything profiled for Route Mobile is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/route-mobile/](https://apis.io/providers/route-mobile/)** — or go straight to one of the APIs or properties below.
 
-Telecom is the only sector with a live, multi-operator, globally coordinated API standardisation programme — CAMARA under the Linux Foundation, with GSMA Open Gateway as the operator commitment layer. Route Mobile's position on it is worth stating plainly:
+### APIs (34)
 
-- **No CAMARA implementation of its own.** Nothing in the 300-entry index of the developer portal, the five OpenAPI definitions, or the routemobile.com API and Developers pages mentions CAMARA, Open Gateway, Number Verification, Silent Authentication, SIM Swap, Device Location, Quality on Demand, Carrier Billing, KYC Match or CIBA.
-- **Alignment claimed only at the parent level.** Proximus Global launched **Konera**, a network API aggregation platform, at Global Fintech Fest 2025 in Mumbai, described as "aligned with the GSMA's CAMARA standardization initiative" and targeting 92% of India by end of 2025. The announcement names no individual CAMARA API and links to no documentation. It is a press release, not an implementation.
-- **Not a GSMA Open Gateway participant.** Route Mobile does not appear on GSMA's operator or channel-partner lists; the group's carrier relationships sit with BICS.
-- **No TM Forum Open API conformance certification** was found, and no NEF/SCEF, network-slicing or edge/MEC surface is documented.
+- [Route Mobile Enterprise Voice 2.0 API](https://apis.io/apis/route-mobile/route-mobile-enterprise-voice-api/) — Route Mobile's enterprise voice and cloud telephony surface, documented as narrative guides on the developer portal (send message and template management…
+- [Route Mobile Account API](https://apis.io/apis/route-mobile/route-mobile-account-api/) — APIs for account management, credit queries, and authentication tokens.
+- [Route Mobile Account Management API](https://apis.io/apis/route-mobile/route-mobile-account-management-api/) — Manage your WhatsApp Business profile settings, account details, and profile photo.
+- [Route Mobile Accounts API](https://apis.io/apis/route-mobile/route-mobile-accounts-api/) — Retrieve account/user details
+- [Route Mobile Authentication API](https://apis.io/apis/route-mobile/route-mobile-authentication-api/) — Authenticate with the Route Mobile WhatsApp Business API to obtain a JWT token for subsequent API calls.
+- [Route Mobile Bulk Campaigns API](https://apis.io/apis/route-mobile/route-mobile-bulk-campaigns-api/) — Upload files, create, start, pause, and resume bulk messaging campaigns to reach large audiences.
+- [Route Mobile Bulk Upload Campaign API](https://apis.io/apis/route-mobile/route-mobile-bulk-upload-campaign-api-api/) — Upload campaign files and manage bulk RCS messaging campaigns at scale.
+- [Route Mobile Callback API](https://apis.io/apis/route-mobile/route-mobile-callback-api-api/) — Webhook receiver endpoints for real-time RCS message delivery and event notifications.
+- [Route Mobile Capability Check API](https://apis.io/apis/route-mobile/route-mobile-capability-check-api-api/) — Check and retrieve RCS capability details for phone numbers in bulk.
+- [Route Mobile Catalog Management API](https://apis.io/apis/route-mobile/route-mobile-catalog-management-api/) — Create, update, delete, and fetch product feeds and catalog details for WhatsApp Commerce.
+- [Route Mobile File Server API](https://apis.io/apis/route-mobile/route-mobile-file-server-api-api/) — Upload media files (images, videos, PDFs) to the RCS file server for use in messages.
+- [Route Mobile Integrations API](https://apis.io/apis/route-mobile/route-mobile-integrations-api/) — APIs for third-party platform integrations.
+- [Route Mobile Login API](https://apis.io/apis/route-mobile/route-mobile-login-api/) — Authenticate users and obtain JWT tokens for RCS API access.
+- [Route Mobile Management API](https://apis.io/apis/route-mobile/route-mobile-management-api-api/) — APIs for managing RCS bot testers, templates, and account configuration.
+- [Route Mobile Message Sending API](https://apis.io/apis/route-mobile/route-mobile-message-sending-api/) — APIs for submitting SMS messages.
+- [Route Mobile Messages API](https://apis.io/apis/route-mobile/route-mobile-messages-api/) — Send transactional emails and retrieve message info
+- [Route Mobile Messaging API](https://apis.io/apis/route-mobile/route-mobile-messaging-api/) — Send template messages (marketing, utility, authentication) and session messages (text, media, interactive, payments, flows) to individual recipients.
+- [Route Mobile Opt-in Management API](https://apis.io/apis/route-mobile/route-mobile-opt-in-management-api/) — Store and verify user opt-in and opt-out consent for WhatsApp messaging compliance.
+- [Route Mobile OTP API](https://apis.io/apis/route-mobile/route-mobile-otp-api/) — APIs for OTP generation and verification.
+- [Route Mobile Payment API](https://apis.io/apis/route-mobile/route-mobile-payment-api-api/) — Send RCS payment request messages to customers.
+- [Route Mobile RCS Messages API](https://apis.io/apis/route-mobile/route-mobile-rcs-messages-api-api/) — Send RCS notification, session, and India template messages including text, media, rich cards, carousels, and interactive suggestions.
+- [Route Mobile RCS Messages Request API](https://apis.io/apis/route-mobile/route-mobile-rcs-messages-request-api-api/) — APIs for managing RCS message requests and retrieving request status.
+- [Route Mobile RCS Optin API](https://apis.io/apis/route-mobile/route-mobile-rcs-optin-api-api/) — The RCS Optin API API from Route Mobile — 1 operation(s) for rcs optin api.
+- [Route Mobile RCS Template API](https://apis.io/apis/route-mobile/route-mobile-rcs-template-api-api/) — The RCS Template API API from Route Mobile — 3 operation(s) for rcs template api.
+- [Route Mobile Reports API](https://apis.io/apis/route-mobile/route-mobile-reports-api/) — Generate, download, and query messaging reports including delivery stats, campaign metrics, opt-in data, and template usage counts.
+- [Route Mobile Sending Domains API](https://apis.io/apis/route-mobile/route-mobile-sending-domains-api/) — Add, verify, list, and delete sending domains
+- [Route Mobile SMTP Users API](https://apis.io/apis/route-mobile/route-mobile-smtp-users-api/) — Manage SMTP sub-users (create, edit, reset password, list)
+- [Route Mobile Tracking Domains API](https://apis.io/apis/route-mobile/route-mobile-tracking-domains-api/) — Add, check, list, and delete tracking domains
+- [Route Mobile Viber Bulk Messaging API](https://apis.io/apis/route-mobile/route-mobile-viber-bulk-messaging-api-api/) — Send bulk campaign messages to multiple Viber recipients at once using a file_code from the Campaign File Upload API. Supports all message types including…
+- [Route Mobile Viber Business Messaging API](https://apis.io/apis/route-mobile/route-mobile-viber-business-messaging-api-api/) — Send single messages to individual Viber users including text, images, videos, files, OTP verification, and interactive buttons. Also manage campaign file…
+- [Route Mobile Viber Client Callback API](https://apis.io/apis/route-mobile/route-mobile-viber-client-callback-api-api/) — Receive real-time webhook notifications for incoming messages and delivery reports from the Viber platform. Configure your callback URL in the webhook settings.
+- [Route Mobile Viber Login API](https://apis.io/apis/route-mobile/route-mobile-viber-login-api/) — Authenticate and obtain a JWT token to access the Viber Business Messaging APIs. Tokens are valid for one hour by default.
+- [Route Mobile Viber Reports API](https://apis.io/apis/route-mobile/route-mobile-viber-reports-api-api/) — Access delivery reports, campaign performance metrics, summary dashboards, and message-level tabular data. Create and download detailed CSV reports. Manage…
+- [Route Mobile Webhooks API](https://apis.io/apis/route-mobile/route-mobile-webhooks-api/) — Configure event webhooks for email delivery events
 
-## Authentication
+### Published properties
 
-Legacy CPaaS credentials rather than the OIDC/CIBA authorization CAMARA specifies:
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Product | Scheme |
-| --- | --- |
-| SMS | `username` + `password` query parameters |
-| SMS (MoEngage / WebEngage) | Static `Authorization` header token |
-| WhatsApp Business | Bearer JWT from the Login API |
-| RCS | JWT in `Authorization`, from `/auth/v1/login/` |
-| Viber | JWT in `Authorization`, from `/auth/v1/login/` |
-| SendClean Email | `owner_id` + `token` in the JSON request body |
+#### AsyncAPI (1)
 
-No OAuth or OpenID Connect discovery document is served on `api.rmlconnect.net` or `apis.rmlconnect.net` (both `/.well-known/openid-configuration` probes return 404).
+Event-driven and webhook contracts.
 
-## Tags
+- [Route Mobile Webhooks](https://apis.io/asyncapis/route-mobile/route-mobile-webhooks/)
 
-- Telecommunications
-- India
-- CPaaS
-- Messaging
-- SMS
-- A2P Messaging
-- WhatsApp Business
-- RCS
-- Voice
-- Email
-- Identity Verification
-- OTP
-- Aggregator
+#### MCP servers (1)
 
-## Timestamps
+Model Context Protocol servers that expose the API to agents.
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+- [route-mobile](https://apis.io/servers/route-mobile/route-mobile/)
 
-## APIs
+#### Agentic access (1)
 
-### Route Mobile SMS API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Single, bulk, scheduled and personalised SMS submission over HTTPS, credit checks, account details, OTP generation and verification, DND/whitelist management, coverage map download, and pre-built submission endpoints for MoEngage and WebEngage. 14 documented operations.
+- [Route Mobile Agentic Access](https://apis.io/agentic-access/route-mobile/route-mobile-agentic-access/)
 
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/sms](https://developer.rmlconnect.net/route-mobile-project/docs/sms)
-- **Base URL:** `https://api.rmlconnect.net`
+#### Collections (5)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [OpenAPI](openapi/route-mobile-sms.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/sms)
-- [API Reference](https://developer.rmlconnect.net/route-mobile-project/reference/sendsmssecured)
+- [Route Mobile Rich Communication Services (RCS) API Documentation](https://apis.io/collections/route-mobile/open-route-mobile-rcs/)
+- [SendClean Email API](https://apis.io/collections/route-mobile/open-route-mobile-sendclean-email/)
+- [Route Mobile SMS APIs](https://apis.io/collections/route-mobile/open-route-mobile-sms/)
+- [Route Mobile Viber OpenAPI Specification](https://apis.io/collections/route-mobile/open-route-mobile-viber/)
+- [Route Mobile WhatsApp Business API](https://apis.io/collections/route-mobile/open-route-mobile-whatsapp-business/)
 
-### Route Mobile WhatsApp Business API
+#### Overlays (5)
 
-JWT login, account management, template and session messaging, bulk campaign upload, catalog and product-feed management for commerce, media ID generation, opt-in management, reporting and client callbacks. 33 documented operations.
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp](https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp)
-- **Base URL:** `https://apis.rmlconnect.net`
+- [Route Mobile Rcs Overlay](https://apis.io/overlays/route-mobile/route-mobile-rcs-overlay/)
+- [Route Mobile Sendclean Email Overlay](https://apis.io/overlays/route-mobile/route-mobile-sendclean-email-overlay/)
+- [Route Mobile Sms Overlay](https://apis.io/overlays/route-mobile/route-mobile-sms-overlay/)
+- [Route Mobile Viber Overlay](https://apis.io/overlays/route-mobile/route-mobile-viber-overlay/)
+- [Route Mobile Whatsapp Business Overlay](https://apis.io/overlays/route-mobile/route-mobile-whatsapp-business-overlay/)
 
-#### Properties
+#### Security (2)
 
-- [OpenAPI](openapi/route-mobile-whatsapp-business.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/whatsapp)
-- [Source Code](https://github.com/routemobile/WhatsApp-Business-API)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Route Mobile RCS Business Messaging API
+- [Route Mobile Authentication](https://apis.io/security/route-mobile/route-mobile-authentication/)
+- [Route Mobile Domain Security](https://apis.io/security/route-mobile/route-mobile-domain-security/)
 
-Verified-sender RCS with rich cards, carousels and suggested replies; single and bulk message submission, an RCS bill/payment endpoint, typing events, media file server, tester and agent management, handset capability checks, opt-in management and inbound callbacks. 21 operations across 18 paths.
+#### Rate limits (1)
 
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/rcs](https://developer.rmlconnect.net/route-mobile-project/docs/rcs)
-- **Base URL:** `https://apis.rmlconnect.net`
+Published request limits.
 
-#### Properties
+- [Route Mobile Rate Limits](https://apis.io/rate-limits/route-mobile/route-mobile-rate-limits/)
 
-- [OpenAPI](openapi/route-mobile-rcs.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/rcs)
-- [Source Code](https://github.com/routemobile/RCS-Business-Messaging-API)
+## Where to find this API
 
-### Route Mobile Viber Business Messages API
-
-Login, single and bulk Viber message submission (text, image, video, file, template), campaign management, media upload, summary and graph reporting, report generation and download, and a client callback channel. 16 operations across 15 paths.
-
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/viber](https://developer.rmlconnect.net/route-mobile-project/docs/viber)
-- **Base URL:** `https://apis.rmlconnect.net`
-
-#### Properties
-
-- [OpenAPI](openapi/route-mobile-viber.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/viber)
-- [Source Code](https://github.com/routemobile/Viber-Business-Messages-API)
-
-### SendClean Email API
-
-Route Mobile's transactional and bulk email product as a JSON-over-HTTP-POST REST API: SMTP users, sending and tracking domains, webhook registration and key rotation, message send and lookup, error retrieval and account details. 24 documented operations.
-
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/email](https://developer.rmlconnect.net/route-mobile-project/docs/email)
-- **Base URL:** `https://api.sendclean.net/v1.0`
-
-#### Properties
-
-- [OpenAPI](openapi/route-mobile-sendclean-email.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/email)
-- [Source Code](https://github.com/routemobile/Route-Mailer-API)
-
-### Route Mobile Enterprise Voice 2.0 API
-
-Enterprise voice and cloud telephony, documented as narrative guides on the developer portal and published as a first-party Postman collection. No OpenAPI definition is published for voice.
-
-- **Human URL:** [https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis](https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis)
-
-#### Properties
-
-- [Documentation](https://developer.rmlconnect.net/route-mobile-project/docs/voice-apis)
-- [Postman Collection](https://github.com/routemobile/Enterprise-Voice-2.0-APIs)
-
-## Other Protocols
-
-Beyond REST, Route Mobile documents **SMPP** (RouteMobile SMPP Gateway Manual) and a **SOAP** web service (SOAP Access Service v1.0.0) as PDFs on [routemobile.com/api/](https://routemobile.com/api/) — the carrier-era interfaces that still carry a large share of A2P traffic in India. No WebSocket, GraphQL, gRPC or AsyncAPI surface is documented.
-
-## Gaps
-
-Several marketed products have no public API documentation at all: Number Lookup, Brandi5, Verified Messages, Verified Calls, Truecaller Verified Business, VoicEX/CCaaS, OmniCent payments, Route Shield, Route Hub, SMSC as a Service, Instant Virtual Number, and the 365 ECM/Detect/Analytics telecom line. Two cards on the developer portal home page — "OTP & Verify" and "Roubot" — return HTTP 404.
-
-## Links
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://routemobile.com/)
-- [Developer Portal](https://developer.rmlconnect.net/)
-- [Legacy API Documents](https://routemobile.com/api/)
+- [Documentation](https://developer.rmlconnect.net/)
+- [Getting started](https://developer.rmlconnect.net/route-mobile-project/docs/getting-started-on-route-mobile-panel)
+- [Sign up](https://routemobile.com/contact-us/)
+- [Support](https://routemobile.com/contact-us/)
+- [Blog](https://routemobile.com/blogs/)
+- [Compliance](https://routemobile.com/company-profile/)
+- [Terms of service](https://routemobile.com/terms-condition/)
+- [Privacy policy](https://routemobile.com/privacy-policy/)
 - [GitHub](https://github.com/routemobile)
-- [Postman Workspace](https://www.postman.com/routemobile/route-mobile-s-public-workspace)
-- [llms.txt](https://developer.rmlconnect.net/llms.txt)
-- [Blog](https://routemobile.com/blog/)
-- [LinkedIn](https://www.linkedin.com/company/routemobilelimited/)
+
+## API Evangelist rating
+
+**Kin Score 51.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 59.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 56.5 |
+| Access clarity | 42.1 |
+
+**Agent readiness 37.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 34.2** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/route-mobile/](https://apis.io/providers/route-mobile/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Route Mobile: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/route-mobile/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
